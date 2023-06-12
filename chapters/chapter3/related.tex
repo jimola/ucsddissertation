@@ -1,0 +1,95 @@
+\section{Related Work}
+\label{sec:related}
+% \smallskip
+\noindent{\textbf{Non-private Subgraph Counting.}}~~Subgraph counting has been extensively studied in a non-private setting (see \cite{Ribeiro_CS21} for a recent survey). 
+% Differentially priate graph analysis has been widely studied in the literature. 
+% In particular, triangle counting is considered one of the most basic task 
+Examples of subgraphs include triangles \cite{Bera_PODS20,Eden_FOCS15,Kolountzakis_IM12,Wu_TKDE16},  4-cycles \cite{Bera_STACS17,Kallaugher_PODS19,Manjunath_ESA11,McGregor_PODS20}, $k$-stars \cite{Aliakbarpour_Alg18,Gonen_DM11}, and 
+$k$-hop paths \cite{Bjorklund_ICALP19,Kartun-Giles_TWC18}. 
+
+Here, the main challenge is to reduce the computational time of counting these subgraphs in large-scale graph data. 
+One of the simplest approaches is edge sampling \cite{Bera_PODS20,Eden_FOCS15,Wu_TKDE16}, which randomly 
+% and independently 
+samples edges in a graph. 
+Edge sampling outperforms other sampling methods 
+% approaches 
+(e.g., node sampling, triangle sampling) \cite{Wu_TKDE16} and is also adopted in \cite{Imola_USENIX22} 
+% to improve communication efficiency in 
+for private triangle counting. 
+
+Although our triangle algorithm also samples user-pairs, ours is different from edge sampling in two ways. 
+First, our algorithm does not sample an edge but samples a pair of users who may or may not be a friend. 
+% have an edge between them. 
+Second, our algorithm samples user-pairs that share no common users to avoid the increase of the privacy budget $\epsilon$ as well as to reduce the time complexity 
+(see Section~\ref{sec:triangle} for details). 
+
+\smallskip
+\noindent{\textbf{Private Subgraph Counting.}}~~Differentially private subgraph counting has been widely studied, and the previous work assumes either the central \cite{Ding_TKDE21,Karwa_PVLDB11,Kasiviswanathan_TCC13} or local \cite{Imola_USENIX21,Imola_USENIX22,Sun_CCS19,Ye_ICDE20,Ye_TKDE21} models. 
+The central model assumes a centralized social network and has a data breach issue, as explained in Section~\ref{sec:intro}. 
+
+Subgraph counting in the local model has recently attracted attention. 
+Sun \textit{et al.} \cite{Sun_CCS19} propose subgraph counting algorithms 
+% under the assumption 
+assuming 
+that each user knows all friends' friends. 
+However, this assumption does not hold in many social networks; e.g., Facebook users can change their settings so that anyone cannot see their friend lists. 
+Therefore, we make a minimal assumption -- each user knows only her friends. 
+
+% Some studies \cite{Imola_USENIX21,Imola_USENIX22,Ye_ICDE20,Ye_TKDE21} focus on this setting. 
+
+In this setting, recent studies propose triangle \cite{Imola_USENIX21,Imola_USENIX22,Ye_ICDE20,Ye_TKDE21} and $k$-star \cite{Imola_USENIX21} counting algorithms. 
+% As described in Section~\ref{sec:intro}, 
+For $k$-stars, Imola \textit{et al.} \cite{Imola_USENIX21} propose a one-round algorithm that is order optimal and show that it provides a very small estimation error. 
+% Triangles are much more challenging than $k$-stars. 
+% Ye \textit{et al.} \cite{Ye_ICDE20} propose a one-round algorithm that applies the RR to each bit of the neighbor list and then counts the number of triangles in the noisy graph. 
+% They also propose an algorithm to reduce the bias in the estimate \cite{Ye_TKDE21} (though there is no proof that the estimate is unbiased). 
+% Imola \textit{et al.} \cite{Imola_USENIX21} 
+For triangles, they
+propose a one-round algorithm that applies the RR to 
+% bits for smaller user IDs in 
+each bit of the neighbor list 
+and then calculates an unbiased estimate of triangles from the noisy graph. 
+We call this algorithm \AlgRRTri{}. 
+Imola \textit{et al.} \cite{Imola_USENIX22} show that \AlgRRTri{} provides a much smaller estimation error than the one-round triangle algorithms in \cite{Ye_ICDE20,Ye_TKDE21}. 
+In \cite{Imola_USENIX22}, they also reduce the time complexity of \AlgRRTri{} 
+% from $O(n^3)$ to $O(n^2)$ 
+by using the ARR (Asymmetric RR), which samples each 1 (edge) after applying the RR. 
+We call this algorithm \AlgARRTri{}. 
+In this paper, we use \AlgRRTri{} and \AlgARRTri{} as baselines in triangle counting. 
+% compare our triangle algorithms with \AlgRRTri{} and \AlgARRTri{} in our theoretical analysis and with \AlgARRTri{} in our experiments (we cannot apply \AlgRRTri{} to large-scale graphs, as it is too inefficient; see ). 
+For 4-cycles, there is no existing algorithm under LDP, to our knowledge. 
+Thus, we compare our shuffle algorithm with its local version, which does not shuffle the obfuscated data. 
+
+For triangles, Imola \textit{et al.} also propose a two-round local algorithm in \cite{Imola_USENIX21} and significantly reduce its download cost in \cite{Imola_USENIX22}. 
+Although we focus on one-round algorithms, 
+% as described in Section~\ref{sec:intro}. 
+we show in 
+% Section~\ref{sec:experiments} 
+\conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sec:two-round}} 
+that our one-round algorithm is comparable to the two-round algorithm in \cite{Imola_USENIX22}, which requires a lot of user effort and synchronization, in terms of accuracy. 
+
+% In this paper, we compare our triangle algorithms with \AlgRRTri{} and \AlgARRTri{} in our theoretical analysis and with \AlgARRTri{} in our experiments (we cannot apply \AlgRRTri{} to large-scale graphs, as it is too inefficient; see ). 
+
+% one-round local triangle counting \cite{Imola_USENIX21,Imola_USENIX22,Ye_ICDE20,Ye_TKDE21}, \AlgARRTri{} \cite{Imola_USENIX22}, \AlgRRTri{} \cite{Imola_USENIX21}. Explain  and \AlgARRTri{} in detail because they are compared with our algorithms.
+
+\smallskip
+\noindent{\textbf{Shuffle Model.}}~~The privacy amplification by shuffling has been recently studied in \cite{Balle_CRYPTO19,Cheu_EUROCRYPT19,Erlingsson_SODA19,Feldman_FOCS21}. 
+Among them, the privacy amplification bound by Feldman \textit{et al.} \cite{Feldman_FOCS21} is the state-of-the-art -- it provides a smaller $\epsilon$ than other bounds, such as \cite{Balle_CRYPTO19,Cheu_EUROCRYPT19,Erlingsson_SODA19}. 
+%and is more general than the bound in \cite{Cheu_EUROCRYPT19} that is specific to binary RR. 
+Girgis \textit{et al.} \cite{Girgis_CCS21} 
+consider multiple interactions between users and the data collector and 
+show a better bound than the bound in \cite{Feldman_FOCS21} when used with composition. 
+However, the bound in \cite{Feldman_FOCS21} outperforms the bound in \cite{Girgis_CCS21} when used without composition. 
+% (which is the case with this work that considers a single interaction). 
+Because our work focuses on a single interaction and does not use the composition, 
+% Therefore, 
+we use the bound in \cite{Feldman_FOCS21}. 
+
+The shuffle model has been applied to tabular data \cite{Meehan_ICLR22,Wang_PVLDB20} and gradients \cite{Girgis_AISTATS21,Liu_AAAI21} in federated learning. 
+Meehan \textit{et al.} \cite{Meehan_ICLR22} construct a graph from public auxiliary information and determine a permutation of obfuscated data using the graph to reduce re-identification risks. 
+Liew \textit{et al.} \cite{Liew_SIGMOD22} propose network shuffling, which shuffles obfuscated data via random walks on a graph. 
+%, where users exchange their obfuscated data 
+%each user relays her obfuscated data to her neighbor
+Note that both \cite{Meehan_ICLR22} and \cite{Liew_SIGMOD22} use graph data to shuffle another type of data. 
+% neither \cite{Meehan_ICLR22} or \cite{Liew_SIGMOD22} shuffles graph data itself (they shuffle another data using graph data). 
+To our knowledge, our work is the first to shuffle graph data itself. 

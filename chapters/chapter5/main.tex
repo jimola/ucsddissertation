@@ -1,0 +1,120 @@
+\documentclass{article}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subcaption} 
+\usepackage{booktabs} % for professional tables
+
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools, amsthm, amssymb}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{comment}
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2023} with \usepackage[nohyperref]{icml2023} above.
+\usepackage{hyperref}
+
+
+% Use the following line for the initial blind version submitted for review:
+\usepackage[accepted]{icml2023}
+
+
+\include{macros}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+\newtheorem{coro}{Corollary}
+\newtheorem{defn}{Definition}
+\newtheorem{prop}{Proposition}
+\newtheorem{obs}{Observation}
+\newtheorem{fact}{Fact}
+
+\icmltitlerunning{Differentially-Private Hierarchical Clustering with Provable Approximation Guarantees}
+
+\begin{document}
+
+\twocolumn[
+\icmltitle{Differentially Private Hierarchical Clustering \\with Provable Approximation Guarantees}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2023
+% package.
+
+% List of affiliations: The first argument should be a (short)
+% identifier you will use later to specify author affiliations
+% Academic affiliations should list Department, University, City, Region, Country
+% Industry affiliations should list Company, City, Region, Country
+
+% You can specify symbols, otherwise they are numbered in order.
+% Ideally, you should not use this facility. Affiliations will be numbered
+% in order of appearance and this is the preferred way.
+
+\begin{icmlauthorlist}
+\icmlauthor{Jacob Imola}{yyy}
+\icmlauthor{Alessandro Epasto}{comp}
+\icmlauthor{Mohammad Mahdian}{comp}
+\icmlauthor{Vincent Cohen-Addad}{comp}
+\icmlauthor{Vahab Mirrokni}{comp}
+%\icmlauthor{}{sch}
+%\icmlauthor{}{sch}
+\end{icmlauthorlist}
+
+\icmlaffiliation{yyy}{Department of Computer Science and Engineering, UCSD, La Jolla, USA. Work partially done while an intern at Google.}
+\icmlaffiliation{comp}{Google, New York City, USA}
+
+\icmlcorrespondingauthor{Jacob Imola}{jimola@eng.ucsd.edu}
+
+% You may provide any keywords that you
+% find helpful for describing your paper; these are used to populate
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{privacy, clustering, machine learning}
+
+\vskip 0.3in
+]
+
+\printAffiliationsAndNotice{} % otherwise use the standard text.
+
+\begin{abstract}
+
+
+%Hierarchical Clustering is a popular  unsupervised machine learning method with decades of history  and numerous applications. Despite its wide use, almost no work exists for {\it privacy-preserving} algorithms for the problem. 
+ 
+%In this paper, we initiate the study of {\it differentially-private} approximation algorithms for hierarchical clustering under the rigorous optimization framework introduced by~\citet{dasgupta2016cost}. 
+
+%On the theoretical side, first, we show that strong inapproximability lower-bounds exists for the problem under privacy constraints: any $\epsilon$-DP algorithm must exhibit $O(|V|^2/ \epsilon)$ additive error for input data set $V$. Then, we provide the first edge-level differentially-private algorithm for Dasgupta's cost with polynomial time and  matching the multiplicative approximation of the best non-private algorithm (but with additive error due to privacy).
+
+%Then, motivated by the lower bounds for arbitrary graphs, we study a popular model of graphs with planted hierarchical clusters based on the stochastic block model. For graphs in such model, we present a $1+o(1)$ approximation algorithm recovering almost exactly the hierarchy on the ground-truth communities under separation assumptions on the clusters.
+
+Hierarchical Clustering is a popular unsupervised machine learning method with decades of history and numerous applications.
+We initiate the study of {\it differentially private} approximation algorithms for hierarchical clustering under the rigorous framework introduced by~\citet{dasgupta2016cost}. We show strong lower bounds for the problem: that any $\epsilon$-DP algorithm must exhibit $O(|V|^2/ \epsilon)$-additive error for an input dataset $V$. Then, we exhibit a polynomial-time approximation algorithm with $O(|V|^{2.5}/ \epsilon)$-additive error, and an exponential-time algorithm that meets the lower bound. To overcome the lower bound, we focus on the stochastic block model, a popular model of graphs, and, with a separation assumption on the blocks, propose a private $1+o(1)$ approximation algorithm which also recovers the bottom-level blocks exactly. Finally, we perform an empirical study of our algorithms and validate their performance.
+\end{abstract}
+
+\section{Introduction}\label{sec:introduction}
+\input{1_introduction.tex}
+
+\section{Preliminaries}\label{sec:preliminaries}
+\input{2_preliminaries}
+
+\section{Lower Bounds}\label{sec:lower-bounds}
+\input{3_lower-bounds}
+
+\section{Algorithms for Private Hierarchical Clustering}\label{sec:algorithms}
+\input{4_algorithms}
+
+\section{Private Hierarchical Clustering in the Stochastic Block Model}\label{sec:algorithms-hsbm}
+\input{5_algorithms-hsbm}
+
+\section{Experiments} \label{sec:experiments}
+\input{6_experiments}
+
+\bibliographystyle{icml2023}
+\bibliography{citations}
+\appendix
+\onecolumn
+\input{7_appendix}
+
+\end{document}

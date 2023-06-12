@@ -1,0 +1,215 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for USENIX papers.
+%
+% History:
+%
+% - TEMPLATE for Usenix papers, specifically to meet requirements of
+%   USENIX '05. originally a template for producing IEEE-format
+%   articles using LaTeX. written by Matthew Ward, CS Department,
+%   Worcester Polytechnic Institute. adapted by David Beazley for his
+%   excellent SWIG paper in Proceedings, Tcl 96. turned into a
+%   smartass generic template by De Clarke, with thanks to both the
+%   above pioneers. Use at your own risk. Complaints to /dev/null.
+%   Make it two column with no page numbering, default is 10 point.
+%
+% - Munged by Fred Douglis <douglis@research.att.com> 10/97 to
+%   separate the .sty file from the LaTeX source template, so that
+%   people can more easily include the .sty file into an existing
+%   document. Also changed to more closely follow the style guidelines
+%   as represented by the Word sample file.
+%
+% - Note that since 2010, USENIX does not require endnotes. If you
+%   want foot of page notes, don't include the endnotes package in the
+%   usepackage command, below.
+% - This version uses the latex2e styles, not the very ancient 2.09
+%   stuff.
+%
+% - Updated July 2018: Text block size changed from 6.5" to 7"
+%
+% - Updated Dec 2018 for ATC'19:
+%
+%   * Revised text to pass HotCRP's auto-formatting check, with
+%     hotcrp.settings.submission_form.body_font_size=10pt, and
+%     hotcrp.settings.submission_form.line_height=12pt
+%
+%   * Switched from \endnote-s to \footnote-s to match Usenix's policy.
+%
+%   * \section* => \begin{abstract} ... \end{abstract}
+%
+%   * Make template self-contained in terms of bibtex entires, to allow
+%     this file to be compiled. (And changing refs style to 'plain'.)
+%
+%   * Make template self-contained in terms of figures, to
+%     allow this file to be compiled. 
+%
+%   * Added packages for hyperref, embedding fonts, and improving
+%     appearance.
+%   
+%   * Removed outdated text.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper,twocolumn,10pt]{article}
+% \usepackage{usenix2019_v3}
+\usepackage{usenix-2020-09}
+
+% to be able to draw some self-contained figs
+\usepackage{tikz}
+\usepackage{amsmath}
+
+\usepackage{filecontents}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{thmtools}
+\usepackage{color}
+
+\usepackage[linesnumbered, lined, boxed]{algorithm2e}
+
+\usepackage[normalem]{ulem}
+
+\input{macros}
+
+\usepackage{hyperref}
+\newcommand{\footremember}[2]{%
+    \thanks{#2}
+    \newcounter{#1}
+    \setcounter{#1}{\value{footnote}}%
+}
+\newcommand{\footrecall}[1]{%
+    \footnotemark[\value{#1}]%
+}
+
+\hypersetup{
+  colorlinks,
+  linkcolor={black},
+  citecolor={red!70!black},
+  urlcolor={blue!70!black}
+}
+
+% Switch conference/arXiv versions
+%\newif\ifconferenceon\conferenceonfalse
+\newif\ifconferenceon\conferenceontrue
+\ifconferenceon
+\newcommand{\conference}[1]{#1}
+\newcommand{\arxiv}[1]{}
+\else
+\newcommand{\conference}[1]{}
+\newcommand{\arxiv}[1]{#1}
+\usepackage{balance}
+\fi
+
+\pagestyle{empty}
+
+%-------------------------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------------------------
+
+% %don't want date printed
+% \date{}
+
+% make title bold and 14 pt font (Latex default is non-bold, 16 pt)
+\title{\Large \bf Locally Differentially Private Analysis of Graph Statistics}
+% \thanks{This study was supported in part by JSPS KAKENHI JP19H04113.}}
+
+\author{
+{\rm Jacob Imola}\footremember{contributions}{The first and second authors made equal contributions.}\\
+% and are listed alphabetically.}\\
+UC San Diego
+\and
+{\rm Takao Murakami}\footrecall{contributions}\\
+AIST
+\and
+{\rm Kamalika Chaudhuri}\\
+UC San Diego
+} % end author
+
+\maketitle
+
+%-------------------------------------------------------------------------------
+\begin{abstract}
+%-------------------------------------------------------------------------------
+% Graph data often involve sensitive data, 
+% Privacy-preserving graph analysis 
+%Differentially private analysis of graphs has been widely studied to release graph statistics 
+% such as subgraph counts and the clustering coefficient 
+%while strongly protecting user privacy. 
+%Most of the existing algorithms assume the centralized model, where a trusted data collector holds the entire graph. 
+% and releases a noisy version of the graph statistics. 
+%However, 
+% the entire graph can be leaked from the data collector in this model, and 
+%they suffer from a data breach issue in which the entire graph might leaked from the data collector. 
+%Thus it is desirable for algorithms to be applicable to decentralized social networks where no server has access to the entire graph. 
+%In this paper, 
+% we focus on counting subgraphs (e.g., triangles, $k$-stars), which is a fundamental task of analyzing the connection patterns in a graph, and propose algorithms for counting subgraphs under LDP (Local Differential Privacy). 
+%we present algorithms for counting subgraphs, 
+% (e.g., triangles, $k$-stars), 
+%which is a fundamental task of analyzing the connection patterns in a graph, while providing 
+% local differential privacy. 
+%LDP (Local Differential Privacy). 
+% differential privacy in the local model. 
+%For triangle counts, we 
+% show an algorithm based on the randomized response and empirical estimation 
+%present algorithms that use one and two rounds of interaction, and show that an additional round can significantly improve the utility. 
+% propose an algorithm using the interaction between users and a data collector. 
+% and theoretically show that it significantly reduces the estimation error
+%For $k$-star counts, we present an algorithm using the Laplacian mechanism, and show that it achieves an order optimal estimation error in the non-interactive local model. 
+% Your abstract text goes here. Just a few facts. Whet our appetites.
+% Not more than 200 words, if possible, and preferably closer to 150.
+%We also show lower-bounds on the estimation error for general functions including triangle counts and $k$-star counts. 
+%We perform extensive experiments using two real datasets, and show that 
+% our algorithms can accurately estimate 
+% triangle counts, $k$-star counts, and the clustering coefficient. 
+%it is indeed possible to accurately estimate 
+%subgraph counts 
+%in the local model. 
+% for a large number of users.
+
+Differentially private analysis of graphs is widely used for releasing statistics from sensitive graphs while still preserving user privacy. Most existing algorithms however are in a centralized privacy model, where a trusted data curator holds the entire graph. As this model raises a number of privacy and security issues -- such as, the trustworthiness of the curator and the possibility of data breaches, it is desirable to consider algorithms in a more decentralized local model where no server holds the entire graph. 
+
+
+In this work, we consider a local model, and present algorithms for counting subgraphs -- a fundamental task for analyzing the connection patterns in a graph -- with LDP (Local Differential Privacy). For triangle counts, we present algorithms that use one and two rounds of interaction, and show that an additional round can significantly improve the utility. For $k$-star counts, we present an algorithm that achieves an order optimal estimation error in the non-interactive local model. 
+We provide new lower-bounds on the estimation error for general graph statistics including triangle counts and $k$-star counts. 
+Finally, we perform extensive experiments on two real datasets, and show that it is indeed possible to accurately estimate 
+subgraph counts in the local differential privacy model. 
+% for a large number of users.
+
+\end{abstract}
+
+\input{intro}
+\input{related}
+\input{preliminaries}
+\input{algorithms}
+% \input{theoretical}
+\input{experiments}
+
+\section{Conclusions}
+\label{sec:conclusions}
+% In this paper, 
+We presented a series of algorithms for counting triangles and $k$-stars under LDP. 
+We 
+% analyzed the upper-bounds on the expected $l_2$ loss for these algorithms, and 
+showed that an additional round can significantly reduce the estimation error in triangles, and the algorithm based on the Laplacian mechanism provides an order optimal error in the non-interactive local model. 
+We also showed lower-bounds for general functions including triangles and $k$-stars. 
+We conducted experiments using two real datasets, and showed that our algorithms achieve small relative errors, especially when the number of users is large.
+
+As future work, we would like to develop algorithms for other subgraph counts such as cliques and $k$-triangles \cite{Karwa_PVLDB11}. 
+
+% %-------------------------------------------------------------------------------
+\section*{Acknowledgments}
+Kamalika Chaudhuri and Jacob Imola would like to thank ONR under N00014-20-1-2334 and UC Lab Fees under LFR 18-548554  for research support. 
+Takao Murakami was supported in part by JSPS KAKENHI JP19H04113.
+
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
+\bibliographystyle{plain}
+%\bibliographystyle{abbrv}
+% \bibliography{main}
+\bibliography{main_short}
+
+\input{appendix}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

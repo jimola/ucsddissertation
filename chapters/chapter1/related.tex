@@ -1,0 +1,85 @@
+%-------------------------------------------------------------------------------
+\section{Related Work}
+\label{sec:related}
+%-------------------------------------------------------------------------------
+% Here we review the prior work related to ours. 
+% Here we review the previous work on graph DP (Differential Privacy), LDP (Local DP), and upper/lower-bounds.
+
+\smallskip
+\noindent{\textbf{Graph DP.}}~~DP on graphs has been widely studied, with most prior work being in the centralized model \cite{Blocki_FOCS12,Chen_PoPETs20,Day_SIGMOD16,Hay_ICDM09,Karwa_PVLDB11,Kasiviswanathan_TCC13,Nissim_STOC07,Raskhodnikova_arXiv15,Raskhodnikova_Encyclopedia16,Song_arXiv18,Wang_PAKDD13,Wang_TDP13}. 
+% Some studies proposed algorithms for counting subgraphs in this model. 
+% For example, Karwa \textit{et al.} \cite{Karwa_PVLDB11} proposed an algorithm for counting triangles and $k$-stars by adding the Cauchy noise to the true count. 
+% Day \textit{et al.} \cite{Day_SIGMOD16} ...
+% Kasiviswanathan \textit{et al.} \cite{Kasiviswanathan_TCC13} 
+In this model, a number of algorithms have been proposed for releasing subgraph counts \cite{Karwa_PVLDB11,Kasiviswanathan_TCC13,Song_arXiv18}, degree distributions \cite{Day_SIGMOD16,Hay_ICDM09,Raskhodnikova_arXiv15}, eigenvalues and eigenvectors 
+\cite{Wang_PAKDD13}, and synthetic graphs \cite{Chen_PoPETs20,Wang_TDP13}. 
+
+% Algorithms for graph DP in the local model are much fewer, and \cite{Qin_CCS17,Ye_ICDE20,Zhang_USENIX20} are such examples. 
+% Some studies proposed 
+There has also been a handful of work on graph algorithms in the local DP model~\cite{Qin_CCS17,Sun_CCS19,Ye_ICDE20,Ye_TKDE21,Zhang_USENIX20}. 
+For example, Qin \textit{et al.} \cite{Qin_CCS17} propose an algorithm for generating synthetic graphs. 
+% while
+% Ye \textit{et al.} \cite{Ye_ICDE20} 
+% provide a method
+% for graph metric estimation under LDP. 
+% that perturbs 
+% a neighbor list 
+% an adjacency matrix by the RR (Randomized Response) 
+% and each user's degree by the Laplacian noise. 
+Zhang \textit{et al.} \cite{Zhang_USENIX20} propose an algorithm for software usage analysis under LDP, where a node represents a software component (e.g., function in a code) and an edge represents a control-flow between components. 
+% None of these works focus on subgraph counts. 
+Neither of these works focus on subgraph counts. 
+
+Sun \textit{et al.} \cite{Sun_CCS19} propose an algorithm for counting subgraphs in the local model under the assumption that each user allows her friends to see all her connections. 
+However, this assumption does not hold in many practical scenarios; e.g., a Facebook user can change her setting so that friends cannot see her connections. Therefore, we assume that each user knows only her friends rather than all of her friends' friends. 
+The algorithms in \cite{Sun_CCS19} cannot be applied to this setting.
+
+Ye \textit{et al.} \cite{Ye_ICDE20} propose a one-round algorithm for estimating graph metrics including the clustering coefficient. 
+Here they apply Warner's RR (Randomized Response) to an adjacency matrix. 
+However, it introduces a very large bias for triangle counts.
+In \cite{Ye_TKDE21}, they propose a method for reducing the bias in the estimate of triangle counts. 
+However, the method in \cite{Ye_TKDE21} introduces some approximation, and it is unclear whether their estimate is unbiased. 
+In this paper, we propose a one-round algorithm for triangles that uses empirical estimation as a post-processing step, and prove that our estimate is unbiased. 
+We also show in Appendix~\ref{sec:RR_emp} that our one-round algorithm significantly outperforms the one-round algorithm in \cite{Ye_ICDE20}. 
+Moreover, we show in Section~\ref{sec:experiments} that our two-rounds algorithm significantly outperforms our one-round algorithm.
+
+Our work also differs from \cite{Sun_CCS19,Ye_ICDE20,Ye_TKDE21} in that we provide lower-bounds on the estimation error.
+
+% Our work differs from these in two ways: (i) our work provides algorithms and theoretical performance guarantees for subgraph counts, 
+% (ii) we also 
+% \colorB{provide} 
+% lower-bounds on the estimation error. 
+% We note that although Warner's RR (Randomized Response) has been applied to an adjacency matrix in \cite{Qin_CCS17,Ye_ICDE20} for different purposes than ours, it can be used for counting triangles. 
+% However, it suffers from a very large estimation error. 
+% Our one-round algorithm for triangles uses empirical estimation as a post-processing step, and we show in Appendix~\ref{sec:RR_emp} that this empirical estimation step significantly reduces the estimation error.
+
+\smallskip
+\noindent{\textbf{LDP.}}~~Apart from graphs, a number of works have looked at analyzing statistics (e.g., discrete distribution estimation\cite{Acharya_AISTATS19,Fanti_PoPETs16,Kairouz_ICML16,Kairouz_JMLR16,Murakami_USENIX19,Wang_USENIX17,Ye_ISIT17}, 
+% and 
+heavy hitters \cite{Bassily_STOC15,Bassily_NIPS17,Qin_CCS16}) under LDP. 
+% Warner's RR \cite{Warner_JASA65}, $k$-ary RR \cite{Kairouz_ICML16}, RAPPOR \cite{Erlingsson_CCS14}, ...
+
+However, they use LDP in the context of tabular data, and do not consider the kind of complex interdependency in graph data (as described in Section~\ref{sec:intro}). 
+% it can happen that their algorithms do not work well for graph data which have complex interdependency. 
+For example, the RR with empirical estimation is optimal in the low privacy regimes for estimating a distribution for tabular data \cite{Kairouz_ICML16,Kairouz_JMLR16}. 
+We apply the RR and empirical estimation to counting triangles, and show that it is suboptimal and significantly outperformed by a more sophisticated 
+two-rounds 
+algorithm. 
+% with more interaction between users and a data collector. 
+% This example shows that directly applying existing LDP techniques does not work well. 
+
+\smallskip
+\noindent{\textbf{Upper/lower-bounds.}}~~Finally, we note that existing work on upper-bounds and lower-bounds cannot be directly applied to our setting. 
+For example, there are upper-bounds
+\cite{Acharya_AISTATS19,Kairouz_ICML16,Kairouz_JMLR16,Ye_ISIT17,Joseph_ArXiv19,Joseph_ArXiv19_Gauss} and
+lower-bounds
+\cite{Acharya_arXiv20,Duchi_ArXiv14,Duchi_ArXiv17,Joseph_ArXiv19,Duchi_ArXiv19,
+Joseph_ArXiv19_Gauss, Joseph_SODA20} on the estimation error (or sample complexity) in 
+% estimating a discrete distribution on personal data. 
+distribution estimation of tabular data. 
+% can be found in \cite{Acharya_AISTATS19,Duchi_ArXiv14,Kairouz_ICML16,Kairouz_JMLR16,Ye_ISIT17}. 
+However, they assume that each original data value is independently sampled from an underlying distribution. 
+They cannot be directly applied to our graph setting, because each triangle and each $k$-star involve multiple edges and are not independent (as described in Section~\ref{sec:intro}). 
+% Acharya \textit{et al.} \cite{Acharya_arXiv20} provides lower-bounds on ...
+Rashtchian \textit{et al.} \cite{Rashtchian_arXiv20} provide lower-bounds on communication complexity (i.e., number of queries) of vector-matrix-vector queries for estimating subgraph counts. 
+However, their lower-bounds are not on the estimation error, and cannot be applied to our problem.

@@ -1,0 +1,672 @@
+%%
+%% WinShell 3.3.2.6
+%% http://www.winshell.org/
+%%
+
+% Strings
+
+
+% Preamble
+
+
+% BibTeX Entries
+@book{DP,
+ author               = {Cynthia Dwork and Aaron Roth},
+ publisher            = {Now Publishers},
+ title                = {The Algorithmic Foundations of Differential Privacy},
+ year                 = {2014},
+ }
+
+@book{DP_Li,
+ author               = {Ninghui Li and Min Lyu and Dong Su},
+ publisher            = {Morgan \& Claypool Publishers},
+ title                = {Differential Privacy: From Theory to Practice},
+ year                 = {2016},
+ }
+
+@inproceedings{Dwork_ICALP06,
+ author               = {Cynthia Dwork},
+ booktitle            = {Proc. ICALP'06},
+ pages                = {1--12},
+ title                = {Differential Privacy},
+ year                 = {2006},
+ }
+
+@article{Dwork_JPC09,
+ author               = {Cynthia Dwork and Adam Smith},
+ journal              = {Journal of Privacy and Confidentiality},
+ number               = {2},
+ pages                = {135--154},
+ title                = {Differential Privacy for Statistics: What we Know and What we Want to Learn},
+ volume               = {1},
+ year                 = {2009},
+ }
+
+@inproceedings{Duchi_FOCS13,
+ author               = {John C. Duchi and Michael I. Jordan and Martin J. Wainwright},
+ booktitle            = {Proc. FOCS'13},
+ pages                = {429--438},
+ title                = {Local Privacy and Statistical Minimax Rates},
+ year                 = {2013},
+ }
+
+@article{Duchi_arXiv14,
+ author               = {John C. Duchi and Michael I. Jordan and Martin J. Wainwright},
+ journal              = {CoRR},
+ title                = {Local Privacy, Data Processing Inequalities, and Minimax Rates},
+ url                  = {https://arxiv.org/abs/1302.3203},
+ volume               = {1302.3203},
+ year                 = {2014},
+ }
+
+@inproceedings{Avent_USENIX17,
+ author               = {Brendan Avent and Aleksandra Korolova and David Zeber and Torgeir Hovden and Benjamin Livshits},
+ booktitle            = {Proc. USENIX Security'17},
+ pages                = {747--764},
+ title                = {{BLENDER}: Enabling Local Search with a Hybrid Differential Privacy Model},
+ year                 = {2017},
+}
+
+@inproceedings{Wang_USENIX17,
+ author               = {Tianhao Wang and Jeremiah Blocki and Ninghui Li and Somesh Jha},
+ booktitle            = {Proc. USENIX Security'17},
+ pages                = {729--745},
+ title                = {Locally Differentially Private Protocols for Frequency Estimation},
+ year                 = {2017},
+}
+@inproceedings{Murakami_USENIX19,
+ author               = {Takao Murakami and Yusuke Kawamoto},
+ booktitle            = {Proc. USENIX Security'19},
+ pages                = {1877--1894},
+ title                = {Utility-Optimized Local Differential Privacy Mechanisms for Distribution Estimation},
+ year                 = {2019},
+}
+
+@inproceedings{Jayaraman_USENIX19,
+  author    = {Bargav Jayaraman and David Evans},
+  title     = {Evaluating Differentially Private Machine Learning in Practice},
+  booktitle = {Proc. USENIX Security'19},
+  pages     = {1895--1912},
+  year      = {2019},
+ }
+
+@inproceedings{Agrawal_SIGMOD05,
+ author               = {Rakesh Agrawal and Ramakrishnan Srikant and Dilys Thomas},
+ booktitle            = {Proc. SIGMOD'05},
+ pages                = {251--262},
+ title                = {Privacy preserving {OLAP}},
+ year                 = {2005},
+ }
+
+@inproceedings{Erlingsson_CCS14,
+ author               = {\'{U}lfar Erlingsson and Vasyl Pihur and Aleksandra Korolova},
+ booktitle            = {Proc. CCS'14},
+ pages                = {1054--1067},
+ title                = {{RAPPOR}: Randomized Aggregatable Privacy-Preserving Ordinal Response},
+ year                 = {2014},
+ }
+
+@inproceedings{Kairouz_ICML16,
+ author               = {Peter Kairouz and Keith Bonawitz and Daniel Ramage},
+ booktitle            = {Proc. ICML'16},
+ pages                = {2436--2444},
+ title                = {Discrete Distribution Estimation under Local Privacy},
+ year                 = {2016},
+ }
+
+@article{Kairouz_JMLR16,
+ author               = {Peter Kairouz and Sewoong Oh and Pramod Viswanath},
+ journal              = {Journal of Machine Learning Research},
+ number               = {1},
+ pages                = {492--542},
+ title                = {Extremal Mechanisms for Local Differential Privacy},
+ volume               = {17},
+ year                 = {2016},
+ }
+
+@inproceedings{Bassily_STOC15,
+ author               = {Raef Bassily and Adam Smith},
+ booktitle            = {Proc. STOC'15},
+ pages                = {127--135},
+ title                = {Local, Private, Efficient Protocols for Succinct Histograms},
+ year                 = {2015},
+}
+
+% author               = {Giulia Fanti and Vasyl Pihur and \'{U}lfar Erlingsson},
+@article{Fanti_PoPETs16,
+ author               = {Giulia Fanti and Vasyl Pihur and Ulfar Erlingsson},
+ journal              = {Proceedings on Privacy Enhancing Technologies (PoPETs)},
+ number               = {3},
+ pages                = {1-21},
+ title                = {Building a {RAPPOR} with the Unknown: Privacy-Preserving Learning of Associations and Data Dictionaries},
+ volume               = {2016},
+ year                 = {2016},
+ }
+
+@inproceedings{Hay_ICDM09,
+ author               = {Michael Hay and Chao Li and Gerome Miklau and David Jensen},
+ booktitle            = {Proc. ICDM'09},
+ pages                = {169--178},
+ title                = {Accurate Estimation of the Degree Distribution of Private Networks},
+ year                 = {2009},
+}
+
+@inbook{Raskhodnikova_Encyclopedia16,
+ author               = {Sofya Raskhodnikova and Adam Smith},
+ bookTitle            = {Encyclopedia of Algorithms},
+ pages                = {543--547},
+ publisher            = {Springer},
+ title                = {Differentially Private Analysis of Graphs},
+ year                 = {2016},
+}
+
+@inproceedings{Qin_CCS17,
+ author               = {Zhan Qin and Ting Yu and Yin Yang and Issa Khalil and Xiaokui Xiao and Kui Ren},
+ booktitle            = {Proc. CCS'17},
+ pages                = {425--438},
+ title                = {Generating Synthetic Decentralized Social Graphs with Local Differential Privacy},
+ year                 = {2017},
+}
+
+@inproceedings{Kasiviswanathan_FOCS08,
+ author               = {Shiva Prasad Kasiviswanathan and Homin K. Lee and Kobbi Nissim and Sofya Raskhodnikova},
+ booktitle            = {Proc. FOCS'08},
+ pages                = {531--540},
+ title                = {What Can We Learn Privately?},
+ year                 = {2008},
+}
+
+@article{Warner_JASA65,
+ author               = {Stanley L. Warner},
+ journal              = {Journal of the American Statistical Association},
+ number               = {309},
+ pages                = {63--69},
+ title                = {Randomized Response: A Survey Technique for Eliminating Evasive Answer Bias},
+ volume               = {60},
+ year                 = {1965},
+ }
+
+@inproceedings{Chen_CCS12,
+ author               = {Rui Chen and Gergely Acs and Claude Castelluccia},
+ booktitle            = {Proc. CCS'12},
+ pages                = {638--649},
+ title                = {Differentially Private Sequential Data Publication via Variable-Length N-Grams},
+ year                 = {2012},
+}
+
+@inproceedings{Xiao_SIGMOD11,
+ author               = {Xiaokui Xiao and Gabriel Bender and Michael Hay and Johannes Gehrke},
+ booktitle            = {Proc. SIGMOD'11},
+ pages                = {229--240},
+ title                = {iReduct: Differential Privacy with Reduced Relative Errors},
+ year                 = {2011},
+}
+
+@inproceedings{Bindschaedler_SP16,
+ author               = {Vincent Bindschaedler and Reza Shokri},
+ booktitle            = {Proc. S\&P'16},
+ pages                = {546--563},
+ title                = {Synthesizing Plausible Privacy-preserving Location Traces},
+ year                 = {2016},
+ }
+
+@misc{IMDB_GD05,
+ howpublished         = {\url{http://mozart.diei.unipg.it/gdcontest/contest2005/index.html}},
+ title                = {{12th Annual Graph Drawing Contest}},
+ year                 = {2005},
+ }
+
+@misc{snapnets,
+ author               = {Jure Leskovec and Andrej Krevl},
+ title                = {{SNAP Datasets}: {Stanford} Large Network Dataset Collection},
+ howpublished         = {\url{http://snap.stanford.edu/data}},
+ year                 = 2014
+ }
+
+@misc{triangle_counts,
+ howpublished         = {\url{https://stats.stackexchange.com/questions/338267/distribution-and-variance-of-count-of-triangles-in-random-graph}},
+ title                = {{Distribution and Variance of Count of Triangles in Random Graph}},
+ year                 = {2018},
+ }
+
+@article{Karwa_PVLDB11,
+ author               = {Vishesh Karwa and Sofya Raskhodnikova and Adam Smith and Grigory Yaroslavtsev},
+ journal              = {Proceedings of the {VLDB} Endowment},
+ number               = {11},
+ pages                = {1146--1157},
+ title                = {Private Analysis of Graph Structure},
+ volume               = {4},
+ year                 = {2011},
+ }
+
+@inproceedings{Joseph_SODA20,
+ author               = {Matthew Joseph and Jieming Mao and Aaron Roth},
+ booktitle            = {Proc. SODA'20},
+ pages                = {515--527},
+ title                = {Exponential Separations in Local Differential Privacy},
+ year                 = {2020},
+ }
+
+@misc{Facebook_Limit,
+ howpublished         = {\url{https://authoritypublishing.com/social-media/what-to-do-when-your-facebook-profile-is-maxed-out-on-friends/}},
+ title                = {{What to Do When Your Facebook Profile is Maxed Out on Friends}},
+ year                 = {2012},
+ }
+
+@inproceedings{Day_SIGMOD16,
+ author               = {Wei-Yen Day and Ninghui Li and Min Lyu},
+ booktitle            = {Proc. SIGMOD'16},
+ pages                = {123--138},
+ title                = {Publishing Graph Degree Distribution with Node Differential Privacy},
+ year                 = {2016},
+}
+
+@article{Raskhodnikova_arXiv15,
+ author               = {Sofya Raskhodnikova and Adam Smith},
+ journal              = {CoRR},
+ title                = {Efficient Lipschitz Extensions for High-Dimensional Graph Statistics and Node Private Degree Distributions},
+ url                  = {https://arxiv.org/abs/1504.07912},
+ volume               = {1504.07912},
+ year                 = {2015},
+ }
+
+@inproceedings{Nissim_STOC07,
+ author               = {Kobbi Nissim and Sofya Raskhodnikova and Adam Smith},
+ booktitle            = {Proc. STOC'07},
+ pages                = {75--84},
+ title                = {Smooth Sensitivity and Sampling in Private Data Analysis},
+ year                 = {2007},
+ }
+
+@misc{ABCI,
+ howpublished         = {\url{https://abci.ai/}},
+ title                = {{AI} Bridging Cloud Infrastructure ({ABCI})},
+ year                 = {2020},
+ }
+
+@inproceedings{Zhang_USENIX20,
+ author               = {Hailong Zhang and Sufian Latif and Raef Bassily and Atanas Rountev},
+ booktitle            = {Proc. USENIX Security'20},
+ pages                = {1021--1038},
+ title                = {Differentially-Private Control-Flow Node Coverage for Software Usage Analysis},
+ year                 = {2020},
+}
+
+@inproceedings{Blocki_FOCS12,
+ author               = {Jeremiah Blocki and Avrim Blum and Anupam Datta and Or Sheffet},
+ booktitle            = {Proc. FOCS'12},
+ pages                = {410--419},
+ title                = {The Johnson-Lindenstrauss Transform Itself Preserves Differential Privacy},
+ year                 = {2012},
+}
+
+@inproceedings{Kasiviswanathan_TCC13,
+ author               = {Shiva Prasad Kasiviswanathan and Kobbi Nissim and Sofya Raskhodnikova and Adam Smith},
+ booktitle            = {Proc. TCC'13},
+ pages                = {457--476},
+ title                = {Analyzing Graphs with Node Differential Privacy},
+ year                 = {2013},
+ }
+
+@inproceedings{Wang_PAKDD13,
+ author               = {Yue Wang and Xintao Wu and Leting Wu},
+ booktitle            = {Proc. PAKDD'13},
+ pages                = {329--340},
+ title                = {Differential Privacy Preserving Spectral Graph Analysis},
+ year                 = {2013},
+ }
+
+@article{Gao_TCSS18,
+ author               = {Tianchong Gao and Feng Li and Yu Chen and XuKai Zou},
+ journal              = {IEEE Transactions on Computational Social Systems},
+ number               = {4},
+ pages                = {1009--1020},
+ title                = {Local Differential Privately Anonymizing Online Social Networks Under HRG-Based Model},
+ volume               = {5},
+ year                 = {2018},
+ }
+
+@article{Chen_PoPETs20,
+ author               = {Xihui Chen and Sjouke Mauw and Yunior Ram\'{i}rez-Cruz},
+ journal              = {Proceedings on Privacy Enhancing Technologies (PoPETs)},
+ number               = {4},
+ pages                = {131--152},
+ title                = {Publishing Community-Preserving Attributed Social Graphs with a Differential Privacy Guarantee},
+ year                 = {2020},
+ }
+
+@inproceedings{Qin_CCS16,
+ author               = {Zhan Qin and Yin Yang and Ting Yu and Issa Khalil and Xiaokui Xiao and Kui Ren},
+ booktitle            = {Proc. CCS'16},
+ pages                = {192--203},
+ title                = {Heavy Hitter Estimation over Set-Valued Data with Local Differential Privacy},
+ year                 = {2016},
+ }
+
+@inproceedings{Bassily_NIPS17,
+ author               = {Raef Bassily and Kobbi Nissim and Uri Stemmer and Abhradeep Thakurta},
+ booktitle            = {Proc. NIPS'17},
+ pages                = {2285–-2293},
+ title                = {Practical Locally Private Heavy Hitters},
+ year                 = {2017},
+ }
+
+@inproceedings{Ye_ISIT17,
+ author               = {Min Ye and Alexander Barga},
+ booktitle            = {Proc. ISIT'17},
+ pages                = {759–-763},
+ title                = {Optimal Schemes for Discrete Distribution Estimation under Local Differential Privacy},
+ year                 = {2017},
+ }
+
+@inproceedings{Acharya_AISTATS19,
+ author               = {Jayadev Acharya and Ziteng Sun and Huanyu Zhang},
+ booktitle            = {Proc. AISTATS'19},
+ pages                = {1120--1129},
+ title                = {Hadamard Response: Estimating Distributions Privately, Efficiently, and with Little Communication},
+ year                 = {2019},
+ }
+
+@article{Rashtchian_arXiv20,
+ author               = {Cyrus Rashtchian and David P. Woodruff and Hanlin Zhu},
+ journal              = {CoRR},
+ title                = {Vector-Matrix-Vector Queries for Solving Linear Algebra, Statistics, and Graph Problems},
+ url                  = {https://arxiv.org/abs/2006.14015},
+ volume               = {2006.14015},
+ year                 = {2020},
+ }
+
+@article{Acharya_arXiv20,
+ author               = {Jayadev Acharya and Cl\'{e}ment L. Canonne and Yuhan Liu and Ziteng Sun and Himanshu Tyagi},
+ journal              = {CoRR},
+ title                = {Interactive Inference under Information Constraints},
+ url                  = {https://arxiv.org/abs/2007.10976},
+ volume               = {2007.10976},
+ year                 = {2020},
+ }
+
+@book{mlpp,
+ author               = {Kevin P. Murphy},
+ publisher            = {The {MIT} Press},
+ title                = {Machine Learning: A Probabilistic Perspective},
+ year                 = {2012},
+ }
+
+@article{Ribeiro_arXiv19,
+ author               = {Pedro Ribeiro and Pedro Paredes and Miguel E.P. Silva and David Apar\'{i}cio and Fernando Silva},
+ journal              = {CoRR},
+ title                = {A Survey on Subgraph Counting: Concepts, Algorithms and Applications to Network Motifs and Graphlets},
+ url                  = {https://arxiv.org/abs/1910.13011},
+ volume               = {1910.13011},
+ year                 = {2019},
+ }
+
+@inproceedings{Mislove_WSDM10,
+ author               = {Alan Mislove and Bimal Viswanath and Krishna P. Gummadi and Peter Druschel},
+ booktitle            = {Proc. WSDM'10},
+ pages                = {251--260},
+ title                = {You Are Who You Know: Inferring User Profiles in Online Social Networks},
+ year                 = {2010},
+ }
+
+@inproceedings{Dougnon_AI15,
+ author               = {Ra\"{i}ssa Yapan Dougnon and Philippe Fournier-Viger and Roger Nkambou},
+ booktitle            = {Proceedings of the 28th Canadian Conference on Artificial Intelligence (AI'15)},
+ pages                = {84--99},
+ title                = {Inferring User Profiles in Online Social Networks using a Partial Social Graph},
+ year                 = {2015},
+ }
+
+@article{Song_arXiv18,
+ author               = {Shuang Song and Susan Little and Sanjay Mehta and Staal Vinterboy and Kamalika Chaudhuri},
+ journal              = {CoRR},
+ title                = {Differentially Private Continual Release of Graph Statistics},
+ url                  = {https://arxiv.org/abs/1809.02575},
+ volume               = {1809.02575},
+ year                 = {2018},
+ }
+
+@inproceedings{Lu_KDD14,
+ author               = {Wentian Lu and Gerome Miklau},
+ booktitle            = {Proc. KDD'14},
+ pages                = {921--930},
+ title                = {Exponential Random Graph Estimation under Differential Privacy},
+ year                 = {2014},
+ }
+
+@article{Wang_TDP13,
+ author               = {Yue Wang and Xintao Wu},
+ journal              = {Transactions on Data Privacy},
+ number               = {2},
+ title                = {Preserving Differential Privacy in Degree-Correlation based Graph Generation},
+ url                  = {https://arxiv.org/abs/1809.02575},
+ volume               = {6},
+ year                 = {2013},
+ }
+
+@misc{data_breach1,
+ author               = {Chris Morris},
+ title                = {Hackers had a banner year in 2019},
+ howpublished         = {\url{https://fortune.com/2020/01/28/2019-data-breach-increases-hackers/}},
+ year                 = {2020}
+ }
+
+@misc{data_breach2,
+ author               = {Tara Seals},
+ howpublished         = {\url{https://www.infosecurity-magazine.com/news/data-breaches-increase-40-in-2016/}},
+ title                = {Data Breaches Increase 40\% in 2016},
+ year                 = {2017},
+ }
+
+@inproceedings{Ye_ICDE20,
+ author               = {Qingqing Ye and Haibo Hu and Man Ho Au and Xiaofeng Meng and Xiaokui Xiao},
+ booktitle            = {Proc. ICDE'20},
+ pages                = {1922--1925},
+ title                = {Towards Locally Differentially Private Generic Graph Metric Estimation},
+ year                 = {2020},
+ }
+
+@techreport{Konforty_Synereo15,
+ author               = {Dor Konforty and Yuval Adam and Daniel Estrada and Lucius Gregory Meredith},
+ title                = {Synereo: The Decentralized and Distributed Social Network},
+ institution          = {Synereo},
+ year                 = {2015},
+}
+
+@misc{Diaspora,
+ howpublished         = {\url{https://diasporafoundation.org/}},
+ title                = {The diaspora* Project},
+ year                 = {2020},
+ }
+
+@misc{Mastodon,
+ howpublished         = {\url{https://joinmastodon.org/}},
+ title                = {Mastodon: Giving Social Networking back to You},
+ year                 = {2020},
+ }
+
+@inproceedings{Ding_NIPS17,
+ author               = {Bolin Ding and Janardhan Kulkarni and Sergey Yekhanin},
+ booktitle            = {Proc. NIPS'17},
+ pages                = {3574--3583},
+ title                = {Collecting Telemetry Data Privately},
+ year                 = {2017},
+ }
+
+@misc{Thakurta_USPatent17,
+ author               = {Abhradeep Guha Thakurta and Andrew H. Vyrros and Umesh S. Vaishampayan and Gaurav Kapoor and Julien Freudiger and Vivek Rangarajan Sridhar and Doug Davidson},
+ note                 = {Learning New Words, US Patent 9,594,741, Mar. 14 2017}
+}
+
+@article{Paul_CN14,
+ author               = {Thomas Paul and  Antonino Famulari and Thorsten Strufe},
+ journal              = {Computer Networks},
+ pages                = {437--452},
+ title                = {A Survey on Decentralized Online Social Networks},
+ volume               = {75},
+ year                 = {2014},
+ }
+
+@article{Salve_CSR18,
+ author               = {Andrea De Salve and Paolo Mori and Laura Ricci},
+ journal              = {Computer Science Review},
+ pages                = {154--176},
+ title                = {A Survey on Privacy in Decentralized Online Social Networks},
+ volume               = {27},
+ year                 = {2018},
+ }
+
+@inproceedings{Abadi_CCS16,
+ author               = {Mart\'{i}n Abadi and Andy Chu and Ian Goodfellow},
+ booktitle            = {Proc. CCS'16},
+ pages                = {308--318},
+ title                = {Deep Learning with Differential Privacy},
+ year                 = {2016},
+ }
+
+@article{Thakkar_arXiv19,
+ author               = {Om Thakkar and Galen Andrew and H. Brendan McMahan},
+ journal              = {CoRR},
+ title                = {Differentially Private Learning with Adaptive Clipping},
+ url                  = {https://arxiv.org/abs/1905.03871},
+ volume               = {1905.03871},
+ year                 = {2019},
+ }
+
+@misc{Facebook_reports20,
+ howpublished         = {\url{https://investor.fb.com/investor-news/press-release-details/2020/Facebook-Reports-Third-Quarter-2020-Results/default.aspx}},
+ title                = {{Facebook Reports Third Quarter 2020 Results}},
+ year                 = {2020},
+ }
+
+@inproceedings{Sun_CCS19,
+ author               = {Haipei Sun and Xiaokui Xiao and Issa Khalil and Yin Yang and Zhan Qui and Hui (Wendy) Wang and Ting Yu},
+ booktitle            = {Proc. CCS'19},
+ pages                = {703--717},
+ title                = {Analyzing Subgraph Statistics from Extended Local Views with Decentralized Differential Privacy},
+ year                 = {2019},
+ }
+
+@article{Ye_TKDE21,
+ author               = {Qingqing Ye and Haibo Hu and Man Ho Au and Xiaofeng Meng and Xiaokui Xiao},
+ journal              = {IEEE Transactions on Knowledge and Data Engineering (Early Access)},
+ pages                = {1--16},
+ title                = {{LF-GDPR}: A Framework for Estimating Graph Metrics with Local Differential Privacy},
+ url                  = {https://doi.org/10.1109/TKDE.2020.3047124},
+ year                 = {2021},
+ }
+
+@article{Newman_PRL09,
+ author               = {M. E. J. Newman},
+ journal              = {Physical Review Letters},
+ number               = {5},
+ pages                = {058701},
+ title                = {Random Graphs with Clustering},
+ volume               = {103},
+ year                 = {2009},
+ }
+
+@misc{LDPGraphStatistics,
+ title                = {Tool: {LDP} Graph Statistics},
+ howpublished         = {\url{https://github.com/LDPGraphStatistics/LDPGraphStatistics}},
+ }
+
+@book{NetworkScience,
+ author               = {Albert-L\'{a}szl\'{o} Barab\'{a}si},
+ publisher            = {Cambridge University Press},
+ title                = {Network Science},
+ year                 = {2016},
+ }
+
+@inproceedings{Hagberg_SciPy08,
+ author               = {Aric A. Hagberg and Daniel A. Schult and Pieter J. Swart},
+ booktitle            = {Proceedings of the 7th Python in Science Conference (SciPy'08)},
+ pages                = {11--15},
+ title                = {Exploring Network Structure, Dynamics, and Function Using NetworkX},
+ year                 = {2008},
+ }
+
+@article{Imola_arXiv21,
+ author               = {Jacob Imola and Takao Murakami and Kamalika Chaudhuri},
+ journal              = {CoRR},
+ title                = {Locally Differentially Private Analysis of Graph Statistics},
+ url                  = {https://arxiv.org/abs/2010.08688},
+ volume               = {2010.08688},
+ year                 = {2021},
+ }
+
+@article{Ganesan_arXiv18,
+ author               = {Ghurumuruhan Ganesan},
+ journal              = {CoRR},
+ title                = {Existence of Connected Regular and Nearly Regular Graphs},
+ url                  = {https://arxiv.org/abs/1801.08345},
+ volume               = {1801.08345},
+ year                 = {2018},
+ }
+
+
+@article{Pichapati_arXiv19,
+ author               = {Venkatadheeraj Pichapati and Ananda Theertha Suresh and Felix X. Yu and Sashank J. Reddi and Sanjiv Kumar},
+ journal              = {CoRR},
+ title                = {{AdaCliP}: Adaptive Clipping for Private {SGD}},
+ url                  = {https://arxiv.org/abs/1908.07643},
+ volume               = {1908.07643},
+ year                 = {2019},
+ }
+
+@article{Joseph_ArXiv19,
+	title = {The {Role} of {Interactivity} in {Local} {Differential} {Privacy}},
+	url = {http://arxiv.org/abs/1904.03564},
+	urldate = {2020-07-10},
+	journal = {arXiv:1904.03564 [cs, stat]},
+	author = {Joseph, Matthew and Mao, Jieming and Neel, Seth and Roth, Aaron},
+	month = nov,
+	year = {2019},
+	note = {arXiv: 1904.03564},
+	keywords = {Computer Science - Machine Learning, Statistics - Machine Learning, Computer Science - Cryptography and Security},
+	file = {Joseph et al_2019_The Role of Interactivity in Local Differential Privacy.pdf:/home/jacob/Zotero/storage/ZAGFTQYN/Joseph et al_2019_The Role of Interactivity in Local Differential Privacy.pdf:application/pdf;arXiv.org Snapshot:/home/jacob/Zotero/storage/XQ7GSMGX/1904.html:text/html}
+}
+
+@article{Joseph_ArXiv19_Gauss,
+	title = {Locally {Private} {Gaussian} {Estimation}},
+	url = {http://arxiv.org/abs/1811.08382},
+	urldate = {2020-07-10},
+	journal = {arXiv:1811.08382 [cs, stat]},
+	author = {Joseph, Matthew and Kulkarni, Janardhan and Mao, Jieming and Wu, Zhiwei Steven},
+	month = oct,
+	year = {2019},
+	note = {arXiv: 1811.08382},
+	keywords = {Computer Science - Machine Learning, Statistics - Machine Learning},
+	file = {Joseph et al_2019_Locally Private Gaussian Estimation.pdf:/home/jacob/Zotero/storage/346AU5EP/Joseph et al_2019_Locally Private Gaussian Estimation.pdf:application/pdf;arXiv.org Snapshot:/home/jacob/Zotero/storage/EH7HNJTZ/1811.html:text/html}
+}
+
+@article{Duchi_ArXiv17,
+	title = {Minimax {Optimal} {Procedures} for {Locally} {Private} {Estimation}},
+	url = {http://arxiv.org/abs/1604.02390},
+	language = {en},
+	urldate = {2020-07-10},
+	journal = {arXiv:1604.02390 [cs, math, stat]},
+	author = {Duchi, John and Wainwright, Martin and Jordan, Michael},
+	month = nov,
+	year = {2017},
+	note = {arXiv: 1604.02390},
+	keywords = {Computer Science - Information Theory, Mathematics - Statistics Theory, Statistics - Methodology},
+	annote = {Comment: 64 pages, 8 figures. arXiv admin note: substantial text overlap with arXiv:1302.3203},
+	file = {Duchi et al. - 2017 - Minimax Optimal Procedures for Locally Private Est.pdf:/home/jacob/Zotero/storage/HFE7BCJS/Duchi et al. - 2017 - Minimax Optimal Procedures for Locally Private Est.pdf:application/pdf}
+}
+
+@article{Duchi_ArXiv19,
+	title = {Lower {Bounds} for {Locally} {Private} {Estimation} via {Communication} {Complexity}},
+	url = {http://arxiv.org/abs/1902.00582},
+	abstract = {We develop lower bounds for estimation under local privacy constraints---including differential privacy and its relaxations to approximate or R{\textbackslash}'\{e\}nyi differential privacy---by showing an equivalence between private estimation and communication-restricted estimation problems. Our results apply to arbitrarily interactive privacy mechanisms, and they also give sharp lower bounds for all levels of differential privacy protections, that is, privacy mechanisms with privacy levels \${\textbackslash}varepsilon {\textbackslash}in [0, {\textbackslash}infty)\$. As a particular consequence of our results, we show that the minimax mean-squared error for estimating the mean of a bounded or Gaussian random vector in \$d\$ dimensions scales as \${\textbackslash}frac\{d\}\{n\} {\textbackslash}cdot {\textbackslash}frac\{d\}\{ {\textbackslash}min{\textbackslash}\{{\textbackslash}varepsilon, {\textbackslash}varepsilon{\textasciicircum}2{\textbackslash}\}\}\$.},
+	language = {en},
+	urldate = {2020-07-09},
+	journal = {arXiv:1902.00582 [math, stat]},
+	author = {Duchi, John and Rogers, Ryan},
+	month = may,
+	year = {2019},
+	note = {arXiv: 1902.00582},
+	keywords = {Mathematics - Statistics Theory},
+	annote = {Comment: To appear in Conference on Learning Theory 2019},
+	file = {Duchi and Rogers - 2019 - Lower Bounds for Locally Private Estimation via Co.pdf:/home/jacob/Zotero/storage/3GMFSCVQ/Duchi and Rogers - 2019 - Lower Bounds for Locally Private Estimation via Co.pdf:application/pdf}
+}

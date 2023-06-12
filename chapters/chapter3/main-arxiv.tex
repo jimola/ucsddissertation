@@ -1,0 +1,288 @@
+\documentclass[sigconf]{acmart}
+
+%\settopmatter{printacmref=false} % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+%\pagestyle{plain} % removes running headers
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsthm}
+%\usepackage{amssymb}
+\usepackage{thmtools}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{bm}
+\usepackage{multirow}
+\usepackage[linesnumbered, lined, boxed]{algorithm2e}
+
+\input{macros}
+
+\SetKwInput{KwData}{Input}
+\SetKwInput{KwResult}{Output}
+
+% \newtheorem{definition}{Definition}
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{lemma}{Lemma}
+% \newtheorem{proposition}{Proposition}
+% \newtheorem{corollary}{Corollary}
+% \newtheorem{remark}{Remark}
+
+% Switch conference/arXiv versions
+\newif\ifconferenceon\conferenceonfalse
+%\newif\ifconferenceon\conferenceontrue
+\ifconferenceon
+\newcommand{\conference}[1]{#1}
+\newcommand{\arxiv}[1]{}
+\else
+\newcommand{\conference}[1]{}
+\newcommand{\arxiv}[1]{#1}
+\usepackage{balance}
+\fi
+
+%%
+%% \BibTeX command to typeset BibTeX logo in the docs
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    Bib\TeX}}}
+
+%% Rights management information.  This information is sent to you
+%% when you complete the rights form.  These commands have SAMPLE
+%% values in them; it is your responsibility as an author to replace
+%% the commands and values with those provided to you when you
+%% complete the rights form.
+% \setcopyright{acmcopyright}
+% \copyrightyear{2018}
+% \acmYear{2018}
+% \acmDOI{XXXXXXX.XXXXXXX}
+
+%% These commands are for a PROCEEDINGS abstract or paper.
+% \acmConference[Conference acronym 'XX]{Make sure to enter the correct
+%   conference title from your rights confirmation emai}{June 03--05,
+%   2018}{Woodstock, NY}
+% \acmPrice{15.00}
+% \acmISBN{978-1-4503-XXXX-X/18/06}
+
+% \copyrightyear{2022}
+% \acmYear{2022}
+% \setcopyright{acmcopyright}
+% \acmConference[CCS '22] {Proceedings of the 2022 ACM SIGSAC Conference on Computer and Communications Security}{November 7--11, 2022}{Los Angeles, CA, USA.}
+% \acmBooktitle{Proceedings of the 2022 ACM SIGSAC Conference on Computer and Communications Security (CCS '22), November 7--11, 2022, Los Angeles, CA, USA}
+% \acmPrice{15.00}
+% \acmISBN{978-1-4503-9450-5/22/11}
+% \acmDOI{10.1145/XXXXXX.XXXXXX}
+% Authors, replace the red X's with your assigned DOI string during the rightsreview eform process.
+%% Your DOI link will become active when the proceedings appears in the DL.
+
+% \settopmatter{printacmref=true}
+\settopmatter{printacmref=false, printccs=true, printfolios=true} % We want page numbers on submissions
+
+
+%%
+%% Submission ID.
+%% Use this when submitting an article to a sponsored event. You'll
+%% receive a unique submission ID from the organizers
+%% of the event, and this ID should be used as the parameter to this command.
+%%\acmSubmissionID{123-A56-BU3}
+
+%%
+%% For managing citations, it is recommended to use bibliography
+%% files in BibTeX format.
+%%
+%% You can then either use BibTeX with the ACM-Reference-Format style,
+%% or BibLaTeX with the acmnumeric or acmauthoryear sytles, that include
+%% support for advanced citation of software artefact from the
+%% biblatex-software package, also separately available on CTAN.
+%%
+%% Look at the sample-*-biblatex.tex files for templates showcasing
+%% the biblatex styles.
+%%
+
+%%
+%% The majority of ACM publications use numbered citations and
+%% references.  The command \citestyle{authoryear} switches to the
+%% "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
+%% citations and references.
+%% Uncommenting
+%% the next command will enable that style.
+%%\citestyle{acmauthoryear}
+
+
+
+%%
+%% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+\title{Differentially Private Triangle and 4-Cycle Counting in the Shuffle Model}
+
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
+\author{Jacob Imola}
+\authornote{The first and second authors made equal contribution and are listed alphabetically.}
+\email{jimola@eng.ucsd.edu}
+\affiliation{%
+%   \institution{University of California, San Diego}
+  \institution{UC San Diego}
+%  \streetaddress{P.O. Box 1212}
+%  \city{Dublin}
+%  \state{Ohio}
+  \country{USA}
+%  \postcode{43017-6221}
+}
+
+\author{Takao Murakami}
+\authornotemark[1]
+\email{takao-murakami@aist.go.jp}
+\affiliation{%
+%  \institution{National Institute of Advanced Industrial Science and Technology}
+  \institution{AIST}
+  \country{Japan}
+}
+
+\author{Kamalika Chaudhuri}
+\email{kamalika@cs.ucsd.edu}
+\affiliation{%
+%   \institution{University of California, San Diego}
+  \institution{UC San Diego}
+  \country{USA}
+}
+
+%%
+%% By default, the full list of authors will be used in the page
+%% headers. Often, this list is too long, and will overlap
+%% other information printed in the page headers. This command allows
+%% the author to define a more concise list
+%% of authors' names for this purpose.
+%\renewcommand{\shortauthors}{Trovato et al.}
+
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+\begin{abstract}
+Subgraph counting is fundamental for analyzing connection patterns or clustering tendencies in 
+graph data. 
+% a social graph. 
+Recent studies have applied LDP (Local Differential Privacy) to subgraph counting to protect user privacy 
+even against a data collector 
+in 
+% both centralized and decentralized 
+social networks. 
+However, existing local algorithms suffer from extremely large estimation errors or assume multi-round interaction between users and the data collector, which requires a lot of user effort and synchronization. 
+
+In this paper, we focus on a one-round of interaction and propose accurate subgraph counting algorithms by introducing a recently studied shuffle model. 
+We first propose a basic technique called \textit{wedge shuffling} to send wedge information, the main component of several subgraphs, with small noise. 
+Then we apply our wedge shuffling to counting triangles and 4-cycles -- basic subgraphs for analyzing clustering tendencies -- with several additional techniques. 
+% For triangles, we propose three 
+% with several additional techniques, such as sending local edges to enable triangle counting, sampling independent user-pairs 
+We also show upper bounds on the estimation error for each algorithm. 
+We show through comprehensive experiments that our one-round shuffle algorithms significantly outperform the one-round local algorithms in terms of accuracy and achieve small estimation errors with a reasonable privacy budget, e.g., smaller than 1 in edge DP. 
+%, e.g., a relative error much smaller than 1.
+%with a reasonable privacy budget, e.g., smaller than 1 in edge DP. 
+% our shuffle algorithms dramatically reduce the estimation error of the one-round local algorithms and achieve the relative error much smaller than 1 with a reasonable privacy budget, e.g., smaller than 1 in edge DP. 
+\end{abstract}
+
+%%
+%% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
+%% Please copy and paste the code instead of the example below.
+%%
+% \begin{CCSXML}
+% <ccs2012>
+%   <concept>
+%       <concept_id>10002978.10002991.10002995</concept_id>
+%       <concept_desc>Security and privacy~Privacy-preserving protocols</concept_desc>
+%       <concept_significance>500</concept_significance>
+%       </concept>
+%   <concept>
+%       <concept_id>10002978.10003022.10003027</concept_id>
+%       <concept_desc>Security and privacy~Social network security and privacy</concept_desc>
+%       <concept_significance>500</concept_significance>
+%       </concept>
+%  </ccs2012>
+% \end{CCSXML}
+
+% \ccsdesc[500]{Security and privacy~Privacy-preserving protocols}
+% \ccsdesc[500]{Security and privacy~Social network security and privacy}
+
+%%
+%% Keywords. The author(s) should pick words that accurately describe
+%% the work being presented. Separate the keywords with commas.
+% \keywords{differential privacy, shuffle model, subgraph counting, wedges}
+%% A "teaser" image appears between the author and affiliation
+%% information and the body of the document, and typically spans the
+%% page.
+% \begin{teaserfigure}
+%   \includegraphics[width=\textwidth]{sampleteaser}
+%   \caption{Seattle Mariners at Spring Training, 2010.}
+%   \Description{Enjoying the baseball game from the third-base
+%   seats. Ichiro Suzuki preparing to bat.}
+%   \label{fig:teaser}
+% \end{teaserfigure}
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
+\maketitle
+\pagestyle{plain}
+
+\input{intro}
+\input{related}
+\input{preliminary}
+\input{shuffle}
+\input{triangle}
+\input{cycle}
+% \input{lower}
+\input{experiment}
+
+\section{Conclusion}
+\label{sec:conclusion}
+In this paper, we made the first attempt (to our knowledge) to 
+shuffle graph data for privacy amplification. 
+% apply the shuffle model to graph data. 
+We proposed wedge shuffling as a basic technique and then applied it to 
+% to enable the privacy amplification of graph data. 
+% Then we proposed 
+one-round triangle and 4-cycle counting with several additional techniques. 
+% algorithms based on wedge shuffling. 
+We showed upper bounds on 
+% the expected $l_2$ loss 
+the MSE 
+for each algorithm. 
+We also showed through comprehensive experiments that our one-round shuffle algorithms significantly outperform the one-round local algorithms and achieve a small relative error with a reasonable privacy budget, e.g., smaller than $1$ in edge DP. 
+
+For future work, we would like to apply wedge shuffling to other subgraphs such as 3-hop paths \cite{Sun_CCS19} and $k$-triangles \cite{Karwa_PVLDB11}. 
+
+%%
+%% The acknowledgments section is defined using the "acks" environment
+%% (and NOT an unnumbered section). This ensures the proper
+%% identification of the section in the article metadata, and the
+%% consistent spelling of the heading.
+%\section*{Acknowledgments}
+\begin{acks}
+Kamalika Chaudhuri and Jacob Imola would like to thank ONR under N00014-20-1-2334 and UC Lab Fees under LFR 18-548554  for research support.
+Takao Murakami was supported in part by JSPS KAKENHI JP22H00521 and JP19H01109.
+\end{acks}
+
+%%
+%% The next two lines define the bibliography style to be used, and
+%% the bibliography file.
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{main}
+
+%%
+%% If your work has an appendix, this is the place to put it.
+% \appendix
+\input{appendix}
+
+\end{document}
+\endinput
+%%
+%% End of file `sample-sigconf.tex'.

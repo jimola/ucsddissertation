@@ -1,0 +1,44 @@
+\graphicspath{{./chapters/chapter2/}}
+
+\chapter{Communication-Efficient Triangle Counting under Local Differential Privacy}
+
+\input{chapters/chapter2/macros}
+\input{chapters/chapter2/intro}
+\input{chapters/chapter2/related}
+\input{chapters/chapter2/preliminaries}
+\input{chapters/chapter2/algorithms}
+\input{chapters/chapter2/double_clip}
+\input{chapters/chapter2/experiments}
+
+\section{Conclusions}
+\label{sec:conclusions}
+% In this paper, we proposed
+% locally private
+We proposed
+triangle counting algorithms under edge LDP with a small estimation error and small communication cost.
+We showed that
+% the estimation error can be significantly reduced by our 4-cycle trick and double clipping, and that
+our entire algorithms with the 4-cycle trick and double clipping
+% can 
+dramatically reduce the download cost
+% when compared with
+of
+\cite{Imola_USENIX21},
+% (e.g., from $400$ Gbits to $100$ Mbits).
+e.g., from 6 hours to 8 seconds or less. 
+% when $20$ Mbps).
+% In \cite{Imola_USENIX21},
+
+% In this paper,
+We assumed that each user $v_i$ honestly inputs her neighbor list $\bma_i$, as in most previous work on LDP.
+However, recent studies \cite{Cao_USENIX21,Cheu_SP21} show that the estimate in LDP can be skewed by data poisoning attacks.
+% with a number of malicious accounts.
+As future work, we would like to analyze the impact of data poisoning on our algorithms and develop defenses (e.g., detection) against it.
+
+
+% %-------------------------------------------------------------------------------
+\section*{Acknowledgments}
+Kamalika Chaudhuri and Jacob Imola would like to thank ONR under N00014-20-1-2334 and UC Lab Fees under LFR 18-548554  for research support.
+Takao Murakami was supported in part by JSPS KAKENHI JP19H04113.
+
+

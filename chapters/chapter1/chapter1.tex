@@ -1,0 +1,30 @@
+\graphicspath{{./chapters/chapter1}}
+
+\chapter{Locally Differentially Private Analysis of Graph Statistics}
+
+\input{chapters/chapter1/macros}
+\input{chapters/chapter1/intro}
+\input{chapters/chapter1/related}
+\input{chapters/chapter1/preliminaries}
+\input{chapters/chapter1/algorithms}
+% \input{theoretical}
+\input{chapters/chapter1/experiments}
+
+\section{Conclusions}
+\label{sec:conclusions}
+% In this paper, 
+We presented a series of algorithms for counting triangles and $k$-stars under LDP. 
+We 
+% analyzed the upper-bounds on the expected $l_2$ loss for these algorithms, and 
+showed that an additional round can significantly reduce the estimation error in triangles, and the algorithm based on the Laplacian mechanism provides an order optimal error in the non-interactive local model. 
+We also showed lower-bounds for general functions including triangles and $k$-stars. 
+We conducted experiments using two real datasets, and showed that our algorithms achieve small relative errors, especially when the number of users is large.
+
+As future work, we would like to develop algorithms for other subgraph counts such as cliques and $k$-triangles \cite{Karwa_PVLDB11}. 
+
+% %-------------------------------------------------------------------------------
+\section*{Acknowledgments}
+Kamalika Chaudhuri and Jacob Imola would like to thank ONR under N00014-20-1-2334 and UC Lab Fees under LFR 18-548554  for research support. 
+Takao Murakami was supported in part by JSPS KAKENHI JP19H04113.
+
+

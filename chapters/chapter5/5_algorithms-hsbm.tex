@@ -1,0 +1,151 @@
+
+In this section, we propose a hierarchical clustering algorithm designed for input graph generated from the hierarchical stochastic block model (HSBM), a graph model with planted communities arranged in a hierarchical structure. We define this model in Section~\ref{sec:hsbm-setup}. Next, in Section~\ref{sec:priv-hc-hsbm}, we outline \dphcblocks{}, a lightweight private hierarchical clustering algorithm in the HSBM, which uses community detection as a black box. This approach enables any DP community detection algorithm to be used as a sub-routine. Finally, in Section~\ref{sec:dp-comm-detection}, we propose a practical, private community detection algorithm which is the first to work in the general HSBM. Combining the results in Sections~\ref{sec:priv-hc-hsbm} and~\ref{sec:dp-comm-detection}, we obtain a private, $1+o(1)$-approximation algorithm to the Dasgupta cost function.
+
+\subsection{Hierarchical Stochastic Block Model of Graphs}\label{sec:hsbm-setup}
+
+In this section, we consider unweighted graphs $(V,E)$ where each edge has weight $1$. Observe that differential privacy (Definition~\ref{def:privacy}) corresponds to adding or removing an edge from $G$. In the HSBM~\citep{cohen2017hierarchical}, there is a partition of $V$ into blocks (communities) $B_1, B_2, \ldots, B_k$ of $V$ with the properties that two items in the same block have the same set of edge probabilities, and that items in different blocks are less likely to be connected with these probabilities following a hierarchical structure.
+
+The probabilities of the edges in $B$ are specified by a tree $P$ with leaves $B = B_1, \ldots, B_k$, internal nodes $N$, and a function $f : N \cup B \rightarrow [0,1]$. To capture the decreasing probability of edges,  $f$ must satisfy $f(n_1) < f(n_2)$ whenever $n_1$ is an ancestor of $n_2$ in $P$. Formally, we have~\citep{cohen2017hierarchical}:
+
+\begin{defn}
+Let $B = B_1, \ldots, B_k$; $P$ be a tree with leaves in $B$ and internal nodes $N$; and $f: N \cup B \rightarrow [0,1]$ be a function satisfying that $f(n_1) < f(n_2)$ whenever $n_1$ is an ancestor of $n_2$ in $P$. We refer to the triplet $(B,P,f)$ as a ground-truth tree. Then, $\hsbm(B,P,f)$ is a distribution over graphs $G$ whose edges are drawn independently, such that for $u,v \in P$, we have 
+\[
+\Pr[(u,v) \in G] = f(LCA_P(B_u, B_v)),
+\]
+where $LCA_P$ denotes the least common ancestor of the blocks $B_u, B_v$ containing $u,v$ in $P$. 
+\end{defn}
+
+Due to the randomness of the graph $G$, it would be unreasonable to expect to be able to recover the exact $(B,P,f)$ from $G$. Our algorithms will recover an approximate ground-truth tree, according to the following definition:
+
+\begin{defn} (From~\citet{cohen2017hierarchical}):
+Let $(B,P,f)$ be a ground-truth tree, and let $(B,T,f')$ be another ground-truth tree with the same set of blocks. We say $(B,T, f')$ is a $\gamma$ approximate ground-truth tree if for all $u, v \in B$, $
+\gamma^{-1} f(LCA_P(u,v)) \leq f'(LCA_{P'}(u,v)) \leq \gamma f(LCA_P(u,v))$.
+\end{defn}
+For $\gamma \approx 1$, an approximate ground-truth tree means that $\hsbm(B,P,f)$ and $\hsbm(B,P',f')$ are essentially the same distribution.
+
+\subsection{Producing a DP Hierarchical Clustering Given Communities}\label{sec:priv-hc-hsbm}
+
+Given the blocks (communities) of an HSBM, we now propose \dphcblocks{}, a lightweight, private algorithm for returning a $1+o(1)$-approximation to the Dasgupta cost. Our algorithm uses some ideas from the non-private algorithm proposed in~\citet{cohen2017hierarchical,cohen2019hierarchical}.
+
+\dphcblocks{} takes in $G$ generated from $\hsbm(B,P,f)$, as well as the blocks $B$. 
+To produce an approximate ground-truth tree, it considers similarities $sim(B_i, B_j) = \frac{w_G(B_i, B_j)}{|B_i||B_j|}$ for every pair of blocks. It then performs a process similar to single linkage: until all blocks are merged, it greedily merges the groups with the highest similarity, and considers the similarity between this new group and any other groups to be the maximum similarity of any pair of blocks between the groups. Privacy comes from addition of Laplace noise in the similarity calculation, which is the only place in which the private graph $G$ is used. \dphcblocks{} appears as Algorithm~\ref{alg:priv-hc-hsbm}.
+
+\dphcblocks{} accesses the graph via the initial similarities $sim(B_i, B_j)$. By observing the sensitivity $\max_{B_i, B_j} |w_{G'}(B_i, B_j) - w_G(B_i, B_j)|$ is at most $1$, we are able to prove its privacy. We also use the fact that adding an edge can only affect $sim(B_i, B_j)$ for just one choice of $B_i, B_j$.
+\begin{thm}
+\dphcblocks{} satisfies $\epsilon$-edge DP in the parameter $G$.
+\end{thm}
+\begin{proof}
+Observe the algorithm can be viewed as a post-processing of the set $\calB = \{sim(B_i, B_j) + \calL_{ij} : i,j \in k\}$ where $\calL_{ij} \sim Lap(\frac{1}{\epsilon})$ i.i.d. Suppose an edge is added between $B_{i}, B_{j}$. Then, $sim(B_{i}, B_{j}) + \calL_{ij}$ is protected by $\epsilon$-edge DP by the Laplace mechanism, observing the sensitivity of $w_G(B_{i}, B_{j})$ is $1$. The other quantities in $\calB$ follow the same distribution, so $\calB$ itself satisfies $\epsilon$-edge DP.
+\end{proof}
+We stress that, crucially,
+Algorithm~\ref{alg:priv-hc-hsbm} and all our algorithms are DP for any input graph $G$, even if the graphs do not come from the HSBM model. We will use the input distribution assumptions only in the utility proofs.
+
+We are also able to show a utility guarantee that \dphcblocks{} is a $(1+o(1), 0)$-approximation to the cost objective. In order to prove this, we need to assume that the blocks in the HSBM are sufficiently large (at least $n^{2/3}$) and that the edge probabilities are at least $\frac{\log n}{\sqrt{n}}$. These assumptions are necessary to ensure concentration of the graph cuts between blocks, so that an accurate approximate tree may be formed. Also, it requires that $\epsilon \geq \frac{1}{\sqrt{n}}$---this is an extremely light assumption, and it still permits us to use a small, constant value of $\epsilon$ to guarantee strong privacy. Formally,
+
+\begin{thm}\label{thm:hc-hsbm-util}
+For $\epsilon \geq \frac{1}{\sqrt{n}}$ and a graph $G$ drawn from $\hsbm(B, P, f)$ such that $|B_i| \geq n^{2/3}$ and $f \geq \frac{\log n}{\sqrt{n}}$, with probability $1-\frac{2}{n}$, the tree $T$ outputted by \dphcblocks{} satisfies
+$\cost_G(T) \leq (1 + o(1)) \cost_G(T')$.
+\end{thm}
+In fact, we show a stronger result that the tuple $(B,T,f')$ returned by \dphcblocks{} is a $1+o(1)$-approximate ground-truth tree for $\hsbm(B,P,f)$. By a result from~\citet{cohen2019hierarchical}, this implies it achieves the approximation guarantee. We defer the proof to Appendix~\ref{sec:hc-hsbm-util}.
+
+\begin{algorithm}
+\caption{\dphcblocks{}, a hierarchical clustering algorithm in the HSBM given the blocks.}\label{alg:priv-hc-hsbm}
+\begin{algorithmic}
+\STATE{\textbf{Input:} $G = (V,E)$ drawn from the HSBM; blocks $B_1, \ldots B_k$ partitioning $V$, privacy parameter $\epsilon$}
+\STATE{\textbf{Output:} Tree $T$.}
+\FOR{$i = 1$ to $k$}
+    \STATE{$T_i$ is a random HC with leaves $B_i$}
+\ENDFOR
+\STATE{$sim(B_i, B_j) \gets \frac{w_G(B_i, B_j) + \calL_{ij}}{|B_i||B_j|}$, where $\calL_{ij} \sim Lap(\frac{1}{\epsilon})$.}
+\STATE{$\calC = \{B_1, \ldots, B_k\}$}
+\STATE{$T = forest(T_1, \ldots, T_k)$}
+\WHILE{$|\calC| \geq 1$}
+\STATE{$A_1, A_2 = \arg \max_{A_1, A_2 \in \calC} sim(A_1, A_2)$}
+\STATE{Merge $A_1,A_2$ in $T$; $C = A_1 \cup A_2$}
+\STATE{$f'(C) = sim(A_1, A_2)$}
+\STATE{$\calC = (\calC \setminus \{A_1, A_2\}) \cup \{C\}$}
+\FOR{$S \in \calC \setminus \{C\}$:}
+\STATE{$sim(S,C) \gets \max_{B_i \in S, B_j \in C} sim(B_i, B_j)$}
+\ENDFOR
+\ENDWHILE
+\STATE{\textbf{Return:} $(B,T,f')$.}
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsection{DP Community Detection in the HSBM}\label{sec:dp-comm-detection}
+
+We now develop a DP method of identifying the blocks $B$ of graph drawn from the HSBM. Combined with our clustering algorithm $\dphcblocks{}$, this forms an end-to-end algorithm for hierarchical clustering in the HSBM in which the communities are not known. 
+
+In order to describe our algorithm, \dpcom{}, we introduce some notation. For a model $\hsbm{}(B,P,f)$, we associate an $n \times n$ expectation matrix $A$ given by the probabilities that edge $(i,j)$ appears in $G$. We then let $\hat{A}$ be a randomized rounding of $A$ to $\{0,1\}$ which is simply the adjacency matrix of $G$. \dpcom{} recovers communities when they are separated in the sense defined by 
+\[
+    \Delta = \min_{u \in B_i, v \in B_j : i \neq j} \|A_u - A_v\|_2,
+\]
+where $A_u$ is the $u$th column of $A$. Next, we let $\sigma_1(A), \ldots, \sigma_n(A)$ denote the singular values of $A$ in order of decreasing magnitude. Finally, we let $\Pi_A^{(k)}$ denote the projection onto the top $k$ left singular values of $A$---formally, if $U_k$ consists of the top $k$ singular values of $A$, then $\Pi_A^{(k)} = U_kU_k^T$.
+
+\dpcom{} is given the adjacency matrix $\hat{A}$ of a graph drawn from $\hsbm(B,P,f)$, as well as $k$, the number of blocks. In practice, $k$ may be treated as a hyperparameter to be optimized. \dpcom{} uses the spectral method~\citep{mcsherry2001spectral, vu2014simple} to cluster the columns of $\hat{A}$. These results show that the columns in $F = \Pi_{\hat{A}}^{(k)}(\hat{A})$ forms a clustering of the points into their original blocks. To make this private, we use stability results of the SVD to compute (an upper bound of) the sensitivity $\Gamma$ of $F$, and add noise $N$ via the Gaussian mechanism. Since $N,F$ are both $n \times n$ matrices, the $l_2$ error introduced by $N$ grows with $\sqrt{n}$, which is large. Our final observation is that, since the distances in $F$ are all that matter, we may project $F$ to $\log(n)$-dimensional space using Johnson-Lindenstrauss~\citep{johnson1984extensions}, and then add Gaussian noise whose error grows with $\sqrt{\log n}$. \dpcom{} is shown in Algorithm~\ref{alg:priv-hsbm}.
+
+There are two important remarks about \dpcom{}. First, to ensure an accurate, private upper bound on $\Gamma$, we need the mild assumption that the spectral gap $\sigma_k(\hat{A}) - \sigma_{k+1}(\hat{A})$ is not too small, and if it is, the algorithm returns $\perp$. For most choices of parameters in the SBM, the spectral gap is always much larger than needed---the check is only to ensure privacy even for input graphs not from the SBM. Second, due to ease of theoretical analysis, $\hat{A}$ is split into two parts, and one part is projected onto the top $k$ singular vectors of the other. This removes probabilistic dependence between variables, but the high level ideas are the same.
+
+\begin{algorithm}
+\caption{\dpcom{}, a community recovery Algorithm}\label{alg:priv-hsbm}
+\begin{algorithmic}
+\STATE{\textbf{Input:} $\hat{A}$, adjacency matrix generated from $\hsbm(B,P,f)$, privacy parameter $\epsilon$.}
+\STATE{\textbf{Output:} $f_z$, an estimate of blocks on a set $Z_2 \subseteq V$.}
+\STATE{Compute a random partition $Y \sqcup Z_1 \sqcup Z_2$ of $V$ such that $|Y| = \frac{n}{2}$, $|Z_1| = |Z_2| = \frac{n}{4}$.}
+\STATE{$\tilde{A}_1 \gets \tilde{A}_{YZ_1}$ (submatrix of $\hat{A}$ with rows $Y$, cols. $Z_1$).}
+\STATE{$\tilde{A}_2 \gets \tilde{A}_{YZ_2}$}
+\STATE{$\tilde{d}_k \gets \sigma_{k}(\hat{A}_1) - \sigma_{k+1}(\hat{A}_1) - \frac{8}{\epsilon}\ln \frac{4}{\delta} + Lap(\frac 8 \epsilon)$}
+\STATE{$\tilde{\sigma}_1 \gets \sigma_1(\hat{A}_2) + \frac{4}\epsilon \ln \frac{4}{\delta} + Lap(\frac{4}{\epsilon})$}
+\IF{$\hat{d}_k \leq 10(\tfrac{8}{\epsilon} \ln \tfrac{4}{\delta})$}
+\RETURN{$\perp$}
+\ENDIF
+\STATE{$\tilde{\Gamma} \gets \frac{\tilde{\sigma}_1}{\hat{d}_k}, m \gets 64 \ln \frac{2n}{\delta}$.}
+\STATE{$F \gets P \Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$, where $P \sim \calN(0, \frac 1 {\sqrt{m}})^{m \times n/2}$.}
+\STATE{$\tilde{F} \gets F + N$, where $N \sim \frac{3k\tilde{\Gamma}}{\epsilon} \sqrt{2\ln \tfrac{5}{\delta}} \calN(0,1)^{m \times n/4}$.}
+\RETURN{$\hat{F}$}
+\end{algorithmic}
+\end{algorithm}
+We now analyze privacy and utility. Full proofs of the results in this section appear in Appendix~\ref{sec:algorithms-hsbm}.
+Our privacy analysis involves analyzing the release of the singular values $\sigma_1, \sigma_k, \sigma_{k+1}$, and $\tilde{F}$. The bulk of this analysis comes from analyzing the sensitivity of $\tilde{F}$, which uses the accuracy of the Johnson-Lindenstrauss transform and spectral perturbation bounds.
+\begin{thm}\label{thm:com-hsbm-priv}
+(Privacy): For $\epsilon < 1$, Algorithm~\ref{alg:priv-hsbm} satisfies $(\epsilon, \delta)$-DP with respect to a change of one edge in $\hat{A}$.
+\end{thm}
+To prove the utility of \dpcom{}, we prove that recovery is possible provided that $\Delta$ is larger than some threshold depending on $\epsilon$, the singular values of $A$, the minimum edge probability, and the minimum block size, along with other mild assumptions on $k$ and the block sizes. These assumptions are necessary, as there will be too little data for concentration otherwise. Formally,
+\begin{thm}\label{thm:com-hsbm-util-inf}
+(Utility): 
+Let $\hat{A}$ be drawn from $\hsbm(B,P,f)$, $\tau = \max f(x)$, and $s = \min_{i=1}^k |B_i|$. There is a universal constant $C$ such that if $\tau \geq C \frac{\log n}{n}$, $s \geq C \sqrt{n \log n}$, $k < n^{1/4}$, $\delta < \frac{1}{n}$, $\sigma_k(A) \geq C \max\{ \sqrt{n\tau}, \frac{1}{\epsilon} \ln \frac{4}{\delta}\}$, and 
+\[\Delta > C\max\left\{\tfrac{ k (\ln \frac{1}{\delta})^{3/2}}\epsilon \tfrac{\sigma_1(A)}{\sigma_{k}(A)},  \sqrt{\tfrac{n\tau}{s}} + \sqrt{k\tau \log n} + \tfrac{\sqrt{nk\tau}}{\sigma_k}\right\},\]
+then with probability at least $1 - 3n^{-1}$, \dpcom{} returns a set of points $\tilde{F} = \{f_i : i \in Z_2\}$ such that
+\begin{align*}
+    \|f_{i} - f_{j}\|_2 &\leq \tfrac{2\Delta}{5}  \ \ \ \text{if $\exists u.~i,j \in B_u$} \\
+    \|f_{i} - f_{j}\|_2 &\geq \tfrac{4\Delta}{5}  \ \ \ \text{otherwise}.
+\end{align*}
+\end{thm}
+Thus, if the assumptions are met, then $\tilde{F}$ consists of $k$ well-separated clusters which indicate the communities of each point in the sampled set $Z_2 \subset V$. These communities can be found using a simple routine such as $k$-centers. In order to cluster all of $V$, we can simply divide the privacy budget into $\log n$ parts, run \dpcom{} $\log n$ times, and merge the clusters.
+
+To illustrate our theorem in a simple example, consider the HSBM with $k$ equal-sized blocks, and let $f_P(n) = p$ when $n$ is a parent of a leaf in $P$, and $f_P(n) = q$ otherwise, with $p \geq q$. This corresponds to probability $p$ of an edge within a block and probability $q$ of an edge between any two blocks. In this case, we obtain the following.
+\begin{coro}\label{cor:com-hsbm-util}
+    In the above HSBM, \dpcom{} recovers the exact communities when $\delta \leq \frac{1}{n}$, $k < n^{1/4}$, and $\sqrt{p} - \sqrt{q} \geq \Omega(\frac{k \ln \frac{1}{\delta}}{\sqrt{\epsilon}n^{1/4}})$.
+\end{coro}
+Compared to previous work in the SBM with privacy, our algorithm requires a larger assumption on $\sqrt{p} - \sqrt{q}$ (\citet{seif2022differentially,chen2023private} require $\sqrt{p} - \sqrt{q} \geq \sqrt{\frac{k}{\epsilon n}})$. However, previous work either uses semi-definite programming or does not run in polynomial time, whereas \dpcom{} is a practical use of the significantly more efficient Singular Vector Decomposition. Furthermore, our algorithm works in the fully-general HSBM, whereas previous work has no analogue of Theorem~\ref{thm:com-hsbm-util-inf}.
+
+\begin{algorithm}
+\caption{\dphchsbm{} a hierarchical clustering algorithm in the HSBM given the blocks.}\label{alg:priv-hsbm-final}
+\begin{algorithmic}
+\STATE{\textbf{Input:} $\hat{A}$, adjacency matrix generated from $\hsbm(B,P,f)$, number of blocks $k$, privacy parameter $\epsilon$.}
+\STATE{\textbf{Output:} An hierarchical clustering $T$ of $\hat{A}$.}
+\FOR{$i \in \{1, \ldots, \log n\}$}
+\STATE{$\hat{F} \gets \dpcom{}(\hat{A}, \frac{\epsilon}{2 \log n})$}
+\STATE{$B_1^{i}, \ldots, B_k^i \gets \textsf{k-centers}(\hat{F}, k)$}
+\ENDFOR
+\STATE{$B_1, \ldots, B_k \gets \textsf{Union-Find}(B_1^1, \ldots, B_k^1, \ldots, B_k^{\log n})$}
+\STATE{$T \gets \dphcblocks{}(\hat{A}, \{B_1, \ldots, B_k\}, \frac{\epsilon}{2})$}
+\RETURN{$T$}
+\end{algorithmic}
+\end{algorithm}
+Combining Theorems~\ref{thm:hc-hsbm-util} and~\ref{thm:com-hsbm-util-inf}, we are able to obtain \dphchsbm{}, an end-to-end hierarchical clustering algorithm in the HSBM (Algorithm~\ref{alg:priv-hsbm-final}). This algorithm runs $\dpcom{}$ $\log n$ times, using $k$-centers each run to find the well-separated communities in the subset $Z_2 \subseteq V$ returned by $\dpcom{}$. Running $\log n$ times ensures that with high probability, each point in $V$ will participate in at least one $Z_2$; these clusters may then be merged using a union-find data structure.
+\begin{coro}\label{coro:hc-hsbm}
+    Let $\hat{A}$ be drawn from $\hsbm(B,P,f)$, and let $\tau = \max f(x)$ and $s = \min_{i=1}^k|B_i|$. Then, if $\epsilon > \frac{1}{\sqrt{n}}$, $\delta < \frac{1}{n}$, $s \geq n^{3/4}$, $f \geq \frac{\log n}{\sqrt{n}}$, and the parameters $s,\tau,A,\Delta$ satisfy the conditions of Theorem~\ref{thm:com-hsbm-util-inf}, then \dphchsbm{} satisfies $(\epsilon, \delta)$-edge DP and is a $1+o(1)$ approximation to the Dasgupta cost. 
+\end{coro}
+Corollary~\ref{coro:hc-hsbm} gives a $1+o(1)$ multiplicative approximation the the Dasgupta cost for the given parameter regimes of the HSBM. This is a nearly-optimal cost that avoids the additive error of the algorithms in Section~\ref{sec:algorithms}.

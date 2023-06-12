@@ -1,0 +1,893 @@
+\appendix
+
+% \section{Extension of the Two-Rounds Algorithm}
+% \label{sec:modified_two_rounds}
+% aaa
+
+\section{Proof of Statements in Section~\ref{sec:algorithms}}
+\label{sec:proof}
+Here we prove the statements in Section~\ref{sec:algorithms}. 
+Our proofs will repeatedly use the well-known bias-variance decomposition \cite{mlpp}, which we briefly explain below. 
+We denote the variance of the random variable $X$ by $\mathbb{V}[X]$. 
+If we are producing a private, randomized estimate $\hat{f}(G)$ of the graph function $f(G)$, then the expected $l_2$ loss can be written as: 
+\begin{equation}\label{eq:bias-var}
+  \E[l_2^2(\hat{f}(G),f(G))] = \left(\E[\hat{f}(G)] - f(G)\right)^2
+  + \V[\hat{f}(G)].
+\end{equation}
+The first term is the bias, and the second term is the variance. 
+If the estimate is unbiased (i.e., $\E[\hat{f}(G)] = f(G)$), then the expected $l_2$ loss is equal to the variance.
+
+\subsection{Proof of Theorem~\ref{thm:k-stars_LDP}}
+Let $\calR_i$ be \alg{LocalLap$_{k\star}$}. 
+Let $d_i,d'_i \in \nnints$ be the number of ``1''s in two neighbor lists $\bma_i,\bma'_i \in \{0,1\}^n$ that differ in one bit. 
+% Consider two neighbor lists $\bma_i,\bma'_i \in \{0,1\}^n$ that differ in one bit. 
+% Let $d_i$ (resp.~$d'_i$) $\in \nnints$ be the number of ``1''s in $\bma_i$ (resp.~$\bma'_i$). 
+Let $r_i = \binom{d_i}{k}$ and $r'_i = \binom{d'_i}{k}$. 
+Below we consider two cases about $d_i$: when $d_i < \td_{max}$ and when $d_i \geq \td_{max}$.
+
+\smallskip
+\noindent{\textbf{Case 1: $d_i < \td_{max}$.}}~~In this case, both $\bma_i$ and $\bma'_i$ do not change after graph projection, as $d'_i \leq d_i + 1 \leq \td_{max}$. 
+Then we obtain:
+\begin{align*}
+\Pr[\calR_i(\bma_i) = \hr_i] &= \exp\left(-\frac{\epsilon |\hr_i- r_i|}{\Delta}\right) \\
+\Pr[\calR_i(\bma'_i) = \hr_i] &= \exp\left(-\frac{\epsilon |\hr_i- r'_i|}{\Delta}\right),
+\end{align*}
+where $\Delta = \binom{\td_{max}}{k-1}$. 
+Therefore, 
+% and hence 
+\begin{align}
+\frac{\Pr[\calR_i(\bma_i) = \hr_i]}{\Pr[\calR_i(\bma'_i) = \hr_i]} 
+&= \exp\left( \frac{\epsilon |\hr_i- r'_i|}{\Delta} - \frac{\epsilon |\hr_i- r_i|}{\Delta}\right) \nonumber\\
+&\leq  \exp\left( \frac{\epsilon |r'_i- r_i|}{\Delta} \right) \label{eq:Pr_R_i_a'_i_a_i}\\
+& \hspace{4mm} (\text{by the triangle inequality}). \nonumber
+\end{align}
+If $d'_i = d_i + 1$, then $|r'_i- r_i|$ in (\ref{eq:Pr_R_i_a'_i_a_i}) can be written as follows:
+\begin{align*}
+|r'_i- r_i| 
+= \binom{d_i+1}{k} - \binom{d_i}{k} 
+= \binom{d_i}{k-1}
+< \binom{\td_{max}}{k-1}
+= \Delta, 
+\end{align*}
+Since we add $\Lap(\frac{\Delta}{\epsilon})$ to $r_i$, we obtain:
+\begin{align}
+\Pr[\calR_i(\bma_i) = \hr_i] \leq e^\epsilon \Pr[\calR_i(\bma'_i) = \hr_i]. 
+\label{eq:R_i_a_i_hr_i}
+\end{align}
+If $d'_i = d_i - 1$, then $|r'_i- r_i| = \binom{d_i}{k} - \binom{d_i-1}{k} = \binom{d_i-1}{k-1} < \Delta$ and (\ref{eq:R_i_a_i_hr_i}) holds. 
+Therefore, \alg{LocalLap$_{k\star}$} provides $\epsilon$-edge LDP. 
+
+\smallskip
+\noindent{\textbf{Case 2: $d_i \geq \td_{max}$.}}~~Assume 
+% Second, we consider the case where $d_i \geq \td_{max}$. 
+that $d'_i = d_i + 1$. 
+In this case, $d'_i > \td_{max}$. 
+Therefore, $d'_i$ becomes $\td_{max}$ after graph projection. 
+In addition, 
+% If $d_i > \td_{max}$, then 
+$d_i$ also becomes $\td_{max}$ after graph projection. 
+Therefore, we obtain 
+$d_i = d'_i = \td_{max}$ after graph projection. 
+Thus 
+% and $r_i = r'_i = \binom{\td_{max}}{k}$. 
+% Therefore, 
+$\Pr[\calR_i(\bma_i) = \hr_i] = \Pr[\calR_i(\bma'_i) = \hr_i]$. 
+
+Assume that $d'_i = d_i - 1$. 
+If $d_i > \td_{max}$, then $d_i = d'_i = \td_{max}$ after graph projection. 
+Thus $\Pr[\calR_i(\bma_i) = \hr_i] = \Pr[\calR_i(\bma'_i) = \hr_i]$. 
+If $d_i = \td_{max}$, then (\ref{eq:R_i_a_i_hr_i}) holds. 
+Therefore, \alg{LocalLap$_{k\star}$} provides $\epsilon$-edge LDP. \qed
+
+\subsection{Proof of Theorem~\ref{thm:k-stars}}
+Since the Laplacian noise $\Lap(\frac{\Delta}{\epsilon})$ has mean $0$, the estimate $\hf_{k\star}(G, \epsilon, \td_{max})$ is unbiased. 
+Then by the bias-variance decomposition \cite{mlpp}, 
+the expected $l_2$ loss 
+$\mathbb{E}[l_2^2(\hf_{k\star}(G, \epsilon, \td_{max}),\allowbreak f_{k\star}(G))]$ is equal to the variance of $\hf_{k\star}(G, \epsilon, \td_{max})$. 
+% We denote the variance of the random variable $X$ by $\mathbb{V}[X]$. 
+The variance of $\hf_{k\star}(G, \epsilon, \td_{max})$ can be written as follows:
+\begin{align*}
+    \mathbb{V}[\hf_{k\star}(G, \epsilon, \td_{max})] 
+    &= \mathbb{V}\left[ \sum_{i=1}^n \Lap\left( \frac{\Delta}{\epsilon} \right) \right] \\
+    &= \frac{n \Delta^2}{\epsilon^2}.
+\end{align*}
+% Note that $\tilde{m}_3$ and $\tilde{m}_0$ are not dependent. 
+Since $\Delta = \binom{\td_{max}}{k-1} = O(\td_{max}^{k-1})$, we obtain:
+\begin{align*}
+    \mathbb{E}[l_2^2(\hf_{k\star}(G, \epsilon, \td_{max}), f_{k\star}(G))] 
+    &= \mathbb{V}[\hf_{k\star}(G, \epsilon, \td_{max})] \\
+    &= O\left(\frac{n \td_{max}^{2k-2}}{\epsilon^2}\right).
+\end{align*}
+\qed
+
+\subsection{Proof of Proposition~\ref{prop:triangle_emp}}
+Let $\mu = e^\epsilon$ and $\bmQ \in [0,1]^{4 \times 4}$ be a $4 \times 4$ matrix such that:
+\begin{align}
+  \bmQ = \frac{1}{(\mu+1)^3} \left(
+    \begin{array}{cccc}
+      \mu^3 & 3\mu^2 & 3\mu & 1 \\
+      \mu^2 & \mu^3+2\mu & 2\mu^2+1 & \mu \\
+      \mu & 2\mu^2+1 & \mu^3+2\mu & \mu^2 \\
+      1 & 3\mu & 3\mu^2 & \mu^3
+    \end{array}
+  \right).
+  \label{eq:Q_1}
+\end{align}
+Let $c_3, c_2, c_1, c_0 \in \nnints$ be respectively the number of triangles, 2-edges, 1-edge, and no-edges in $G$. 
+Then we obtain:
+\begin{align}
+(\mathbb{E}[m_3], \mathbb{E}[m_2], \mathbb{E}[m_1],
+\mathbb{E}[m_0]) = (c_3, c_2, c_1, c_0) \bmQ.
+\label{eq:bmQ}
+\end{align}
+In other words, $\bmQ$ is a transition matrix from a type of subgraph (i.e., triangle, 2-edges, 1-edge, or no-edge) in $G$ to a type of subgraph in $G'$. 
+
+Let $\hat{c}_3, \hat{c}_2, \hat{c}_1, \hat{c}_0 \in \reals$ be the empirical estimate of $(c_3, c_2, c_1, c_0)$. 
+By (\ref{eq:bmQ}), they can be written as follows:
+\begin{align}
+(\hat{c}_3, \hat{c}_2, \hat{c}_1, \hat{c}_0) = (m_3, m_2, m_1, m_0) \bmQ^{-1}.
+\label{eq:hc3_hc2_hc1_hc0}
+\end{align}
+Let $\bmQ_{i,j}^{-1}$ be the ($i,j$)-th element of $\bmQ^{-1}$. 
+By using Cramer's rule, we obtain: 
+\begin{align}
+\bmQ_{1,1}^{-1} &= \textstyle{\frac{\mu^3}{(\mu-1)^3}},~ \bmQ_{2,1}^{-1} =  \textstyle{-\frac{\mu^2}{(\mu-1)^3}}, \label{eq:bmQ11_bmQ21}\\
+\bmQ_{3,1}^{-1} &= \textstyle{\frac{\mu}{(\mu-1)^3}},~ \bmQ_{4,1}^{-1} = \textstyle{-\frac{1}{(\mu-1)^3}}.
+\label{eq:bmQ31_bmQ41}
+\end{align}
+By (\ref{eq:hc3_hc2_hc1_hc0}), (\ref{eq:bmQ11_bmQ21}), and (\ref{eq:bmQ31_bmQ41}), we obtain:
+\begin{align*}
+\textstyle{\hat{c}_3 = \frac{\mu^3}{(\mu-1)^3} m_3 - \frac{\mu^2}{(\mu-1)^3} m_2 + \frac{\mu}{(\mu-1)^3} m_1 - \frac{1}{(\mu-1)^3} m_0.}
+\end{align*}
+Since the empirical estimate is unbiased \cite{Kairouz_ICML16,Wang_USENIX17}, we obtain (\ref{eq:triangle_emp}) in Proposition~\ref{prop:triangle_emp}. \qed
+
+\subsection{Proof of Theorem~\ref{thm:subgraph-rr_LDP}}
+Since \alg{LocalRR$_\triangle$} applies the RR to the lower triangular part of the adjacency matrix $\bmA$, it provides $\epsilon$-edge LDP for $(R_1, \ldots, R_n)$. 
+Lines 5 to 8 in Algorithm~\ref{alg:subgraph-rr} are post-processing of $(R_1, \ldots, R_n)$. 
+Thus, by the immunity to post-processing \cite{DP}, \alg{LocalRR$_\triangle$} provides $\epsilon$-edge LDP for the output $\frac{1}{(\mu-1)^3}(\mu^3 m_3 -\mu^2 m_2 + \mu m_1 - m_0)$. 
+
+In addition, the existence of edge $(v_i,v_j) \in E$ $(i>j)$ affects only one element $a_{i,j}$ in the lower triangular part of $\bmA$. 
+Therefore, \alg{LocalRR$_\triangle$} provides $\epsilon$-entire edge LDP.
+
+\subsection{Proof of Theorem~\ref{thm:subgraph-rr}}
+\label{sub:proof_thm:subgraph-rr}
+By Proposition~\ref{prop:triangle_emp}, the estimate $\hf_{\triangle}(G, \epsilon)$ by \alg{LocalRR$_\triangle$} is unbiased. 
+Then by the bias-variance decomposition \cite{mlpp}, 
+the expected $l_2$ loss $\mathbb{E}[l_2^2(\hf_{\triangle}(G, \epsilon), f_\triangle(G))]$ is equal to the variance of $\hf_{\triangle}(G, \epsilon)$. 
+% We denote the variance of the random variable $X$ by $\mathbb{V}[X]$. 
+Let 
+$a_3 = \frac{\mu^3}{(\mu-1)^3}$, 
+$a_2 = - \frac{\mu^2}{(\mu-1)^3}$, 
+$a_1 = \frac{\mu}{(\mu-1)^3}$, and 
+$a_0 = - \frac{1}{(\mu-1)^3}$. 
+Then the variance of $\hf_{\triangle}(G, \epsilon)$ can be written as follows:
+\begin{align}
+    \V[\hf_{\triangle}(G, \epsilon)] 
+    &= \V[a_3 m_3 + a_2 m_2 + a_1 m_1 + a_0 m_0] \nonumber\\
+    &= a_3^2 \V[m_3] + a_2^2 \V_{RR}[m_2] + a_1^2 \V[m_1] + a_0^2 \V[m_0] \nonumber\\
+    &\hspace{3.5mm} + \sum_{i=0}^3 \sum_{j=0, j \ne i}^3 2a_i a_j \text{cov}(m_i, m_j),
+    \label{eq:V_a3m3_a2m2_a1m1_a0m0}
+\end{align}
+where $\text{cov}(m_i, m_j)$ represents the covariance of $m_i$ and $m_j$. 
+The covariance $\text{cov}(m_i, m_j)$ can be written as follows:
+\begin{align}
+    \text{cov}(m_i, m_j)
+    &\leq \sqrt{\V[m_i] \V[m_j]} \nonumber\\
+    &\hspace{4.2mm} (\text{by Cauchy-Schwarz inequality}) \nonumber\\
+    &\leq  \max\{ \V[m_i], \V[m_j]\} \nonumber\\
+    &\leq \V[m_i] + \V[m_j].
+    \label{eq:cov_mi_mj}
+\end{align}
+By (\ref{eq:V_a3m3_a2m2_a1m1_a0m0}) and (\ref{eq:cov_mi_mj}), we obtain:
+\begin{align}
+    &\V[\hf_{\triangle}(G, \epsilon)] \nonumber\\
+    &\leq (a_3^2 + 4a_3(a_2 + a_1 + a_0)) \V[m_3] \nonumber\\
+    & \hspace{4.5mm} + (a_2^2 + 4a_2(a_3 + a_1 + a_0)) \V[m_2] \nonumber\\
+    & \hspace{4.5mm} + (a_1^2 + 4a_1(a_3 + a_2 + a_0)) \V[m_1] \nonumber\\
+    & \hspace{4.5mm} + (a_0^2 + 4a_0(a_3 + a_2 + a_1)) \V[m_0] \nonumber\\
+    &= O\left( \frac{e^{6\epsilon}}{(e^\epsilon-1)^6} (\V[m_3] + \V[m_2] + \V[m_1] + \V[m_0]) \right).
+    % &\leq O\left(\frac{e^{6\epsilon}}{(e^\epsilon-1)^6} \V[m_3] + \frac{e^{5\epsilon}}{(e^\epsilon-1)^6}\V[m_2]
+    % \right. \nonumber\\
+    % & \hspace{10mm} \left. + \frac{e^{4\epsilon}}{(e^\epsilon-1)^6}\V[m_1] + \frac{e^{3\epsilon}}{(e^\epsilon-1)^6}\V[m_0]\right).
+    \label{V_RR_m_3}
+\end{align}
+
+Below we calculate $\V[m_3]$, $\V[m_2]$, $\V[m_1]$, and $\V[m_0]$ by assuming the Erd\"{o}s-R\'{e}nyi model $\bmG(n, \alpha)$ for $G$:
+
+\begin{lemma}\label{lem:erdos-renyi-variance}
+  Let $G \sim \textbf{G}(n,\alpha)$. 
+  %with $\alpha < \frac{1}{2}$. 
+  Let $p = \frac{1}{e^\epsilon+1}$ and 
+  $\beta = \alpha(1-p) + (1-\alpha)p$. 
+  Then $\V[m_3] = O(\beta^5 n^4 + \beta^3
+  n^3)$, $\V[m_2] = O(\beta^3 n^4 + \beta^2 n^3)$, and 
+  $\V[m_1] = \V[m_0] = O(\beta n^4)$.
+\end{lemma}
+% We prove Lemma~\ref{lem:erdos-renyi-variance} at the end of Appendix~\ref{sub:proof_thm:subgraph-rr}. 
+Before going into the proof of Lemma~\ref{lem:erdos-renyi-variance}, we prove Theorem~\ref{thm:subgraph-rr} using Lemma~\ref{lem:erdos-renyi-variance}. 
+By (\ref{V_RR_m_3}) and Lemma~\ref{lem:erdos-renyi-variance}, we obtain: 
+\begin{align*}
+\V[\hf_{\triangle}(G, \epsilon)] = O\left( \frac{e^{6\epsilon}}{(e^\epsilon-1)^6} \beta n^4 \right),
+\end{align*}
+which proves Theorem~\ref{thm:subgraph-rr}. \qed
+
+We now prove Lemma~\ref{lem:erdos-renyi-variance}:
+
+\begin{proof}[Proof of Lemma~\ref{lem:erdos-renyi-variance}]
+Fist we show the variance of $m_3$ and $m_0$. 
+Then we show the variance of $m_2$ and $m_1$.
+
+\smallskip
+\noindent{\textbf{Variance of $m_3$ and $m_0$.}}~~Since each edge in the original graph $G$ is independently generated with probability $\alpha \in [0,1]$, each edge in the noisy graph $G'$ is independently generated with probability $\beta = \alpha (1-p) + (1 - \alpha) p \in [0,1]$, where $p=\frac{1}{e^\epsilon+1}$. 
+Thus $m_3$ is the number of triangles in graph $G' \sim \textbf{G}(n,\beta)$.
+
+For $i,j,k \in [n]$, let $y_{i,j,k} \in \{0,1\}$ be a variable that takes $1$ if and only if 
+$(v_i, v_j, v_k)$ forms a triangle. 
+Then $\mathbb{E}[m_3^2]$ can be written as follows:
+\begin{align}
+  \mathbb{E}[m_3^2] = \sum_{i<j<k} ~ \sum_{i'<j'<k'}
+  \mathbb{E}[y_{i,j,k} y_{i',j',k'}] 
+  \label{eq:E_RR_tm3}
+\end{align}
+$\mathbb{E}[y_{i,j,k} y_{i',j',k'}]$ in (\ref{eq:E_RR_tm3}) is the probability that both $(v_i,v_j,v_k)$ and $(v_{i'},v_{j'},v_{k'})$ form a triangle. 
+This event can be divided into the following four types:
+\begin{enumerate}
+\item $(i,j,k)=(i',j',k')$. There are $\binom{n}{3}$ such terms in (\ref{eq:E_RR_tm3}). 
+For each term, $\mathbb{E}[y_{i,j,k} y_{i',j',k'}] = \beta^3$.
+\item $(i,j,k)$ and $(i',j',k')$ have two elements in common. 
+There are $\binom{n}{2} (n-2) (n-3) = 12\binom{n}{4}$ such terms in (\ref{eq:E_RR_tm3}). 
+For each term, $\mathbb{E}[y_{i,j,k} y_{i',j',k'}] = \beta^5$. 
+\item $(i,j,k)$ and $(i',j',k')$ have one element in common. 
+There are $n \binom{n-1}{2} \binom{n-3}{2} = 30\binom{n}{5}$ such terms in (\ref{eq:E_RR_tm3}). 
+For each term, $\mathbb{E}[y_{i,j,k} y_{i',j',k'}] = \beta^6$. 
+\item $(i,j,k)$ and $(i',j',k')$ have no common elements. 
+There are $\binom{n}{3} \binom{n-3}{3} = 20\binom{n}{6}$ such terms in in (\ref{eq:E_RR_tm3}). 
+For each term, $\mathbb{E}[y_{i,j,k} y_{i',j',k'}] = \beta^6$. 
+\end{enumerate}
+Moreover, $\mathbb{E}[m_3]^2 = \binom{n}{3}^2 \beta^6$. 
+Therefore, the variance of $m_3$ can be written as follows:
+\begin{align*}
+    \V[m_3] 
+    &= \textstyle{\binom{n}{3} \beta^3 + 12\binom{n}{4} \beta^5 + 30\binom{n}{5} \beta^6 + 20\binom{n}{6} \beta^6 - \binom{n}{3}^2 \beta^6} \\
+    &= \textstyle{\binom{n}{3} \beta^3 (1-\beta^3) + 12\binom{n}{4}\beta^5(1-\beta)} \\
+    &= O(\beta^5 n^4 + \beta^3 n^3).
+\end{align*}
+
+By changing $\beta$ to $1-\beta$ and counting triangles, we get a random variable with the same distribution as $m_0$. Thus,
+\begin{align*}
+  \V[m_0] 
+  &= \textstyle{\binom{n}{3} (1-\beta)^3(1-(1-\beta)^3) + 12\binom{n}{4} (1-\beta)^5\beta}
+  \\
+  &= O(\beta n^4).
+\end{align*}
+\smallskip
+\noindent{\textbf{Variance of $m_2$ and $m_1$.}}~~For $i,j,k \in [n]$, let $z_{i,j,k} \in \{0,1\}$ be a variable that takes $1$ if and only if 
+$(v_i, v_j, v_k)$ forms $2$-edges (i.e., exactly one edge is missing in the three nodes). 
+Then $\mathbb{E}[m_2^2]$ can be written as follows:
+\begin{align}
+  \mathbb{E}[m_2^2] = \sum_{i<j<k} \sum_{i'<j'<k'}
+  \mathbb{E}[z_{i,j,k} z_{i',j',k'}] 
+  \label{eq:E_RR_tm2}
+\end{align}
+$\mathbb{E}[z_{i,j,k} z_{i',j',k'}]$ in (\ref{eq:E_RR_tm2}) is the probability that both $(v_i,v_j,v_k)$ and $(v_{i'},v_{j'},v_{k'})$ form $2$-edges. 
+This event can be divided into the following four types:
+\begin{enumerate}
+	\item $(i,j,k)=(i',j',k')$. There are $\binom{n}{3}$ such terms in (\ref{eq:E_RR_tm2}). 
+    For each term, $\mathbb{E}[z_{i,j,k} z_{i',j',k'}]=3\beta^2(1-\beta)$. 
+	\item $(i,j,k)$ and $(i',j',k')$ have two elements in common. 
+	There are $\binom{n}{2}(n-2)(n-3) = 12 \binom{n}{4}$ such terms in (\ref{eq:E_RR_tm2}). 
+	For example, consider a term in which $i=i'=1$, $j=j'=2$, $k=3$, and $k'=4$. 
+	Both $(v_1,v_2,v_3)$ and $(v_1,v_2,v_4)$ form 2-edges if:\\
+	(a) $(v_1,v_2), (v_1,v_3), (v_1,v_4) \in E'$, $(v_2,v_3), (v_2,v_4) \notin E'$, \\
+	(b) $(v_1,v_2), (v_1,v_3), (v_2,v_4) \in E'$, $(v_2,v_3), (v_1,v_4) \notin E'$, \\
+	(c) $(v_1,v_2), (v_2,v_3), (v_1,v_4) \in E'$, $(v_1,v_3), (v_2,v_4) \notin E'$, \\
+	(d) $(v_1,v_2), (v_2,v_3), (v_2,v_4) \in E'$, $(v_1,v_3), (v_1,v_4) \notin E'$, or \\
+	(e) $(v_1,v_3), (v_1,v_4), (v_2,v_3), (v_2,v_4) \in E'$, $(v_1,v_2) \notin E'$. \\
+    Thus, $\mathbb{E}[z_{i,j,k} z_{i',j',k'}]=4\beta^3(1-\beta)^2 + \beta^4(1-\beta)$ for this term. 
+    Similarly, $\mathbb{E}[z_{i,j,k} z_{i',j',k'}]=4\beta^3(1-\beta)^2 + \beta^4(1-\beta)$ for the other terms.
+	\item $(i,j,k)$ and $(i',j',k')$ have one element in common. 
+	There are $n \binom{n-1}{2} \binom{n-3}{2} = 30\binom{n}{5}$ such terms in (\ref{eq:E_RR_tm2}).  For each term, $\mathbb{E}[z_{i,j,k}z_{i',j',k'}]=(3\beta^2(1-\beta))^2 = 9\beta^4(1-\beta)^2$. 
+	\item $(i,j,k)$ and $(i',j',k')$ have no common elements. 
+	There are $\binom{n}{3}\binom{n-3}{3} = 20\binom{n}{6}$ such terms in (\ref{eq:E_RR_tm2}). 
+	For each term, $\mathbb{E}[z_{i,j,k}z_{i',j',k'}]=(3\beta^2(1-\beta))^2 = 9\beta^4(1-\beta)^2$. 
+\end{enumerate}
+Moreover, $\mathbb{E}[m_2]^2 = (3\binom{n}{3}\beta^2(1-\beta))^2 = 9\binom{n}{3}^2\beta^4(1-\beta)^2$. 
+Therefore, the variance of $m_2$ can be written as follows:
+\begin{align*}
+  \mathbb{V}[m_2] 
+  &= \mathbb{E}[m_2^2] - \mathbb{E}[m_2]^2 \nonumber\\
+  &= \textstyle{3\binom{n}{3}\beta^2(1-\beta) + 12\binom{n}{4}\left(4\beta^3(1-\beta)^2 + \beta^4(1-\beta)\right)} \nonumber\\
+  &\hspace{3.5mm} \textstyle{+ 270\binom{n}{5}\beta^4(1-\beta)^2 + 180\binom{n}{6}\beta^4(1-\beta)^2} \nonumber\\
+  &\hspace{3.5mm} \textstyle{- 9\binom{n}{3}^2\beta^4(1-\beta)^2.}
+\end{align*}
+By simple calculations,
+\begin{align*}
+\textstyle{270\binom{n}{5} + 180\binom{n}{6} - 9\binom{n}{3}^2 = -108\binom{n}{4}-9\binom{n}{3}.}
+\end{align*}
+Thus we obtain:
+\begin{align*}
+\mathbb{V}[m_2] 
+&= \textstyle{3\binom{n}{3}\beta^2(1-\beta)\left(1 - 3\beta^2(1-\beta)\right)} \nonumber\\
+%&\hspace{3.5mm} \textstyle{+ 12\binom{n}{4}\left(4\beta^3(1-\beta)^2 + \beta^4(1-\beta) - 9\beta(1-\beta) \right)} \\
+&\hspace{3.5mm} \textstyle{+ 12\binom{n}{4} \beta^3(1-\beta) \left(4(1-\beta) + \beta - 9\beta(1-\beta) \right)} \\
+&= O(\beta^3 n^4 + \beta^2n^3).
+\end{align*}
+Similarly, the variance of $m_1$ can be written as follows:
+\begin{align*}
+\mathbb{V}[m_1] 
+&= \textstyle{3\binom{n}{3}\beta(1-\beta)^2\left(1 - 3\beta(1-\beta)^2\right)} \nonumber\\
+&\hspace{3.5mm} \textstyle{+ 12\binom{n}{4} \beta(1-\beta)^3 \left(4\beta +
+(1-\beta) - 9\beta(1-\beta) \right)} \\
+&= O(\beta n^4).
+\end{align*}
+\end{proof}
+
+\subsection{Proof of Proposition~\ref{prop:triangle_emp_2rounds}}
+Let $t_* = \sum_{i=1}^n t_i$ and $s_* = \sum_{i=1}^n s_i$. 
+Let $s_*^{\wedge}$ be the number of triplets $(v_i,v_j,v_k)$ such that $j<k<i$, $a_{i,j} = a_{i,k} = 1$, and $a_{j,k} = 0$. 
+Let $s_*^{\triangle}$ be the number of triplets $(v_i,v_j,v_k)$ such that $j<k<i$, $a_{i,j} = a_{i,k} = a_{j,k} =1$. 
+Note that 
+$s_* = s_*^{\wedge} + s_*^{\triangle}$ and 
+$s_*^{\triangle} = f_\triangle(G)$. 
+
+Consider a triangle $(v_i,v_j,v_k) \in G$. 
+This triangle is counted $1-p_1$ ($= \frac{e^{\epsilon_1}}{e^{\epsilon_1}+1}$) times in expectation in $t_*$. 
+Consider $2$-edges $(v_i,v_j,v_k) \in G$ (i.e., exactly one edge is missing in the three nodes). 
+This is counted $p_1$ ($= \frac{1}{e^{\epsilon_1}+1}$) times in expectation in $t_*$.  
+No other events can change $t_*$. 
+% Thus, with respect to the randomness in the graph $G'$,
+Therefore, we obtain:
+\begin{align*}
+\mathbb{E}[t_*] = (1-p_1) s_*^{\triangle} + p_1 s_*^{\wedge}. 
+\end{align*}
+By $s_* = s_*^{\wedge} + s_*^{\triangle}$ and 
+$s_*^{\triangle} = f_\triangle(G)$, we obtain:
+\begin{align*}
+\mathbb{E}\left[\sum_{i=1}^n w_i \right] 
+&= \mathbb{E}\left[\sum_{i=1}^n (t_i - p_1 s_i) \right] \\
+&= \mathbb{E}[t_* - p_1 s_*] \\
+&= \mathbb{E}[t_*] - p_1 \mathbb{E}[s_*^{\wedge} + s_*^{\triangle}] \\
+&= (1-p_1) s_*^{\triangle} + p_1 s_*^{\wedge} - p_1 (s_*^{\wedge} + s_*^{\triangle}) \\
+&= (1 - 2 p_1) f_\triangle(G),
+\end{align*}
+hence 
+\begin{align*}
+\textstyle{\mathbb{E}\left[ \frac{1}{1-2p_1} \sum_{i=1}^n w_i \right] = f_\triangle(G).}
+\end{align*}
+\qed
+
+\subsection{Proof of Theorem~\ref{thm:local2rounds_LDP}}
+Let $\calR_i$ be \alg{Local2Rounds$_{\triangle}$}. 
+Consider two neighbor lists $\bma_i,\bma'_i \in \{0,1\}^n$ that differ in one bit. 
+Let $d_i$ (resp.~$d'_i$) $\in \nnints$ be the number of ``1''s in $\bma_i$ (resp.~$\bma'_i$). 
+Let $\bbma_i$ (resp.~$\bbma'_i$) $\in \{0,1\}^n$ be neighbor lists obtained by setting all of the $i$-th to the $n$-th elements in $\bma_i$ (resp.~$\bma'_i$) to $0$. 
+Let $\bd_i$ (resp.~$\bd'_i$) $\in \nnints$ be the number of ``1''s in $\bbma_i$ (resp.~$\bbma'_i$). 
+% from the first to the $(i-1)$-th elements in $\bma_i$ (resp.~$\bma'_i$). 
+For example, if $n=6$, $\bma_4=(1,0,1,0,1,1)$, and $\bma'_4=(1,1,1,0,1,1)$, then 
+$d_4=4$, $d'_4=5$, $\bbma_4=(1,0,1,0,0,0)$, $\bbma'_4=(1,1,1,0,0,0)$, $\bd_4=2$, and $\bd'_4=3$. 
+
+Furthermore, 
+let $t_i$ (resp.~$t'_i$) $\in \nnints$ be the number of triplets $(v_i, v_j, v_k)$ such that $j < k < i$, $(v_i,v_j) \in E$, $(v_i,v_k) \in E$, and $(v_j,v_k) \in E'$ in $\bma_i$ (resp.~$\bma'_i$). 
+Let $s_i$ (resp.~$s'_i$) $\in \nnints$ be the number of triplets $(v_i, v_j, v_k)$ such that $j < k < i$, $(v_i,v_j) \in E$, and $(v_i,v_k) \in E$ in $\bma_i$ (resp.~$\bma'_i$). 
+Let $w_i = t_i - p_1 s_i$ and $w'_i = t'_i - p_1 s'_i$. 
+Below we consider two cases about $d_i$: when $d_i < \td_{max}$ and when $d_i \geq \td_{max}$. 
+
+\smallskip
+\noindent{\textbf{Case 1: $d_i < \td_{max}$.}}~~Assume that $d'_i = d_i + 1$. 
+In this case, we have either $\bbma'_i = \bbma_i$ or $\bd'_i = \bd_i+1$. 
+If $\bbma'_i = \bbma_i$, then $s_i = s'_i$, $t_i = t'_i$, and $w_i = w'_i$, hence $\Pr[\calR_i(\bma_i) = \hw_i] = \Pr[\calR_i(\bma'_i) = \hw_i]$. 
+If $\bd'_i = \bd_i+1$, then $s_i$ and $s'_i$ can be expressed as $s_i = \binom{\bd_i}{2}$ and $s'_i = \binom{\bd'_i}{2} = \binom{\bd_i+1}{2}$, respectively. 
+Then we obtain:
+\begin{align*}
+s'_i - s_i = \binom{\bd_i+1}{2} - \binom{\bd_i}{2} = \bd_i.
+\end{align*}
+In addition, since we consider an additional constraint ``$(v_j,v_k) \in E'$'' in counting $t_i$ and $t'_i$, 
+we have $t'_i - t_i \leq s'_i - s_i$. 
+Therefore, 
+\begin{align*}
+|w'_i - w_i| 
+&= |t'_i - t_i - p_1 (s'_i - s_i)| \\
+&\leq (1 - p_1) \bd_i \\
+&\leq (1 - p_1) d_i \\
+&< \td_{max} \hspace{5mm} \text{(by $p_1 > 0$ and $d_i < \td_{max}$)}.
+\end{align*}
+Since we add $\Lap(\frac{\td_{max}}{\epsilon_2})$ to $w_i$, we obtain:
+\begin{align}
+\Pr[\calR_i(\bma_i) = \hw_i] \leq e^{\epsilon_2} \Pr[\calR_i(\bma'_i) = \hw_i]. 
+\label{eq:R_i_a_i_hr_i_2}
+\end{align}
+
+Assume that $d'_i = d_i - 1$. 
+In this case, we have either $\bbma'_i = \bbma_i$ or $\bd'_i = \bd_i-1$. 
+If $\bbma'_i = \bbma_i$, then $\Pr[\calR_i(\bma_i) = \hw_i] = \Pr[\calR_i(\bma'_i) = \hw_i]$. 
+If $\bd'_i = \bd_i-1$, then we obtain $s_i - s'_i = \bd_i - 1$ and $t_i - t'_i \leq s_i - s'_i$. 
+Thus $|w'_i - w_i| \leq (1-p_1) (\td_i - 1) < \td_{max}$ and (\ref{eq:R_i_a_i_hr_i_2}) holds. 
+Therefore, \alg{Local2Rounds$_{\triangle}$} provides $\epsilon_2$-edge LDP at the second round. 
+Since \alg{Local2Rounds$_{\triangle}$} provides $\epsilon_1$-edge LDP at the first round (by Theorem~\ref{thm:subgraph-rr_LDP}), it provides $(\epsilon_1 + \epsilon_2)$-edge LDP in total by the composition theorem \cite{DP}. 
+
+\smallskip
+\noindent{\textbf{Case 2: $d_i \geq \td_{max}$.}}~~Assume that $d'_i = d_i + 1$. 
+In this case, we obtain $d_i = d'_i = \td_{max}$ after graph projection. 
+
+Note that $\bma_i$ and $\bma'_i$ can differ in \textit{zero or two bits} after graph projection. 
+For example, consider the case where $n=8$, $\bma_5=(1,1,0,1,0,1,1,1)$, $\bma'_5=(1,1,1,1,0,1,1,1)$, and $\td_{max}=4$. 
+If the permutation is 1,4,6,8,2,7,5,3, then $\bma_5=\bma'_5=(1,0,0,1,0,1,0,1)$ after graph projection. 
+However, if the permutation is 3,1,4,6,8,2,7,5, then $\bma_5$ and $\bma'_5$ become $\bma_5=(1,0,0,1,0,1,0,1)$ and $\bma'_5=(1,0,1,1,0,1,0,0)$, respectively; i.e., they differ in the third and eighth elements. 
+
+If $\bma_i=\bma'_i$, then $\Pr[\calR_i(\bma_i) = \hw_i] = \Pr[\calR_i(\bma'_i) = \hw_i]$. 
+If $\bma_i$ and $\bma'_i$ differ in two bits, $\bbma_i$ and $\bbma'_i$ differ in \textit{at most two bits} (because we set all of the $i$-th to the $n$-th elements in $\bma_i$ and $\bma'_i$ to $0$). 
+For example, we can consider the following three cases:
+\begin{itemize}
+    \item If $\bma_5=(1,0,0,1,0,1,0,1)$ and $\bma'_5=(1,0,0,1,0,1,1,0)$, then $\bbma_5=\bbma'_5=(1,0,0,1,0,0,0,0)$. 
+    \item If $\bma_5=(1,0,0,1,0,1,0,1)$ and $\bma'_5=(1,0,1,1,0,1,0,0)$, then $\bbma_5=(1,0,0,1,0,0,0,0)$ and $\bbma'_5=(1,0,1,1, 0,0,\allowbreak0,0)$; i.e., they differ in one bit. 
+    \item If $\bma_5=(1,1,0,1,0,1,0,0)$ and $\bma'_5=(1,0,1,1,0,1,0,0)$, then $\bbma_5=(1,1,0,1,0,0,0,0)$ and $\bbma'_5=(1,0,1,1,0,0,\allowbreak0,0)$; i.e., they differ in two bits.
+\end{itemize}
+If $\bbma_i=\bbma'_i$, then $\Pr[\calR_i(\bma_i) = \hw_i] = \Pr[\calR_i(\bma'_i) = \hw_i]$. 
+If $\bbma_i$ and $\bbma'_i$ differ in one bit, then $\bd'_i = \bd_i + 1$. 
+In this case, we obtain (\ref{eq:R_i_a_i_hr_i_2}) in the same way as \textbf{Case 1}. 
+
+We need to be careful when $\bbma_i$ and $\bbma'_i$ differ in two bits. 
+In this case, $\bd'_i = \bd_i$ (because $d_i = d'_i = \td_{max}$ after graph projection). 
+Then we obtain $s_i = s'_i = \binom{\td_{max}}{2}$. 
+Since the number of $2$-stars that involve a particular user in $\bbma_i$ is $\bd_i - 1$, we obtain $t'_i - t_i \leq \bd_i - 1$. Therefore,
+\begin{align*}
+|w'_i - w_i| = |t'_i - t_i| \leq \bd_i - 1 < \td_{max},
+\end{align*}
+and (\ref{eq:R_i_a_i_hr_i_2}) holds. 
+Therefore, if $d'_i = d_i + 1$, then 
+\alg{Local2Rounds$_{\triangle}$} provides $(\epsilon_1 + \epsilon_2)$-edge LDP in total. 
+
+Assume that $d'_i = d_i - 1$. 
+If $d_i > \td_{max}$, then $d_i = d'_i = \td_{max}$ after graph projection. 
+Thus \alg{Local2Rounds$_{\triangle}$} provides $(\epsilon_1 + \epsilon_2)$-edge LDP in total in the same as above. 
+If $d_i = \td_{max}$, then we obtain (\ref{eq:R_i_a_i_hr_i_2}) in the same way as \textbf{Case 1}, and therefore \alg{Local2Rounds$_{\triangle}$} provides $(\epsilon_1 + \epsilon_2)$-edge LDP in total.
+
+\smallskip
+In summary, \alg{Local2Rounds$_{\triangle}$} provides $(\epsilon_1 + \epsilon_2)$-edge LDP in both \textbf{Case 1} and \textbf{Case 2}. 
+\alg{Local2Rounds$_{\triangle}$} also provides $(\epsilon_1 + \epsilon_2)$-entire edge LDP, because it uses only the lower triangular part of the adjacency matrix $\bmA$. \qed
+
+\subsection{Proof of Theorem~\ref{thm:local2rounds}}
+TBD.
+
+
+\subsection{Omitted proofs}
+% Recall the terminology 3-edges, 2-edges, 1-edge, and no-edges corresponding to
+% the possible subgraphs on 3 vertices. In the following proofs, we 
+% refer to these subgraphs as $T_3,T_2,T_1$, and $T_0$. Our proofs will repeatedly
+% use the well-known bias-variance decomposition. If we are producing a private,
+% randomized estimate $\hat{f}(G)$ of the graph function $f(G)$, then
+% \begin{equation}\label{eq:bias-var}
+%   \E_{\hat{f}}[l_2^2(f(G), \hat{f}(G))] = \left(\E_{\hat{f}}[\hat{f}(G)] - f(G)\right)^2
+%   + \V_{\hat{f}}[\hat{f}(G)]
+% \end{equation}
+
+% We prove Theorem~\ref{thm:subgraph-rr} with the following Lemmas:
+
+% \begin{lemma}\label{lem:subgraph-rr-priv}
+%   Algorithm~\ref{alg:subgraph-rr} guarantees $\varepsilon$-edge LDP.
+% \end{lemma}
+% \begin{proof}
+%   The definition of $\varepsilon$-edge LDP states that for any $a_{i}^j$
+% \end{proof}
+
+% \begin{lemma}\label{lem:subgraph-rr-perf}
+%   Let $A(G)$ be the output of Algorithm~\ref{alg:subgraph-rr}.
+%   Then, for all $G$, $\E[A(G)] = f_\triangle(G)$.
+%   Suppose $G \sim \textbf{G}(n,p)$, the Erd\"os-R\'enyi graph distribution, for any
+%   $p \in [0,1]$. Then, $\V[A(G)] = O()$.
+% \end{lemma}
+% \begin{proof}
+%   \textbf{$\E[A(G)] = f_\triangle(G)$}: Notice the only randomness in
+%   Algorithm~\ref{alg:subgraph-rr} comes from the random choice of $G'$.
+%   Thus, $\E[A(G)] = b\cdot \E_P[\hat{\textbf{m}}]$.
+%   $G'$ is formed from the edges of $G$ and flipping each with probability $\rho =
+%   \frac{1}{1+e^\varepsilon}$. 
+
+%   Define $m_i$ to be the number of
+%   occurrences of $T_i$ in $G$ for $0 \leq i \leq 3$. Looking at
+%   Algorithm~\ref{alg:subgraph-rr}, it is easy to see that $\hat{\textbf{m}} =
+%   [\hat{m}_0, \hat{m}_1, \hat{m}_2, \hat{m}_3]$ is the number of occurrences of
+%   $T_i$ in $G'$. 
+
+%   Each $T_i$ in $G$ turns into a new subgraph in $G'$ according to a Markov
+%   process $\calH$ that flips each edge with probability $\rho$. Let $h_{ij}$ be the
+%   probability that $T_i$ transforms into $T_j$. The collection of $h_{ij}$'s,
+%   or the kernel of $\calH$, is given by:
+%   \[
+%     H = 
+%     \frac{1}{(1+\mu)^3}
+%     \begin{bmatrix}
+%     \mu^3 & 3\mu^2 & 3\mu& 1\\
+%     \mu^2 & \mu^3 + 2\mu & 2 \mu^2 + 1 & \mu\\
+%     \mu & 2\mu^2 + 1& \mu^3 + 2\mu & \mu^2\\
+%     1 & 3\mu & 3\mu^2& \mu^3
+%   \end{bmatrix}
+%   \]
+%   Let $G[I]$ be the subgraph of $G$ on vertices in $I$. We have
+%   \begin{align*}
+%     \hat{\textbf{m}} &= \sum_{I \in {n \choose 3}} \sum_{j=0}^3\textbf{1}(G'[I] =
+%     T_j)e_{j} \\
+%     \E_P[\hat{\textbf{m}}] &= \sum_{I \in {n \choose 3}} \sum_{j=0}^3
+%     \E_P[\textbf{1}(G'[I] = T_j)]e_j \\
+%     &= \sum_{I \in {n \choose 3}} \sum_{j=0}^3
+%     \E_{\calH}[\textbf{1}(\calH(G[I]) = T_j)]e_j \\
+%   \end{align*}
+%   Now, $\E_{\calH}[\textbf{1}(\calH(G[I]) = T_j] = \Pr_{\calH}[ \calH(G[I]) =
+%     T_j] = \sum_{k=0}^3\textbf{1}(G[I] = T_k) h_{kj}$. Finally,
+%   \begin{align*}
+%     \E_P[\hat{\textbf{m}}] &= \sum_{I \in {n \choose 3}} \sum_{j=0}^3
+%     e_j\sum_{k=0}^3 h_{kj} \textbf{1}(G[I] = T_k) \\
+%     &= \sum_{I \in {n \choose 3}} H \left(\sum_{k=0}^3 \textbf{1}(G[I] =
+%     T_k) e_k \right) \\
+%     &= H \sum_{I \in {n \choose 3}} \sum_{k=0}^3 \textbf{1}(G[I] = T_k) e_k \\
+%     &= H \textbf{m}
+%   \end{align*}
+%   It is a simple calculation to show $H$ is invertible, and to solve 
+%   the linear system $\E_P[\hat{\textbf{m}}] = H\textbf{m}$ to obtain
+%   $m_3 = b \cdot \E_P[\hat{\textbf{m}}]$ for coefficients $a$ defined in
+%   Algorithm~\ref{alg:subgraph-rr}.
+  
+%   \textbf{$\V[A(G)] = O(n)$}: First, notice $\V[A(G)] =
+%   \V_{G',G}[b \cdot \hat{\textbf{m}}]$. Thus,
+%   \begin{align*}
+%     \V_{G',G}[b \cdot \hat{\textbf{m}}] &= \sum_{i=0}^3 \sum_{j=0}^3 b_i
+%     b_j\cov_P(\hat{m}_i, \hat{m}_j) \\
+%     &\leq \sum_{i=0}^3 \sum_{j=0}^3 b_i b_j \sqrt{\V(\hat{m}_i) \V(\hat{m}_j)} \\
+%     &= \left( \sum_{i=0}^3 b_i \sqrt{\V_{G',G}(\hat{m}_i)} \right)^2
+%   \end{align*}
+%   Because $G \sim \textbf{G}(n,p)$ and $G'$ is formed by flipping the edges of
+%   $G$ with probability $\rho$, we have $G' \sim G(n,p\rho +
+%   (1-p)(1-\rho)) = G(n,\rho')$. This means $\V_{G',G}(\hat{m}_i)$ is the
+%   variance of the number of $T_i$'s appearing in $G(n,\rho')$,
+%   a well-studied problem. By Lemma~\ref{lem:erdos-renyi-variance},
+%   $\V_{G',G}[\hat{m}_i] = O(n^4)$. Therefore, 
+%   \[
+%     \V_{G',G}[b \cdot \hat{\textbf{m}}] \leq \left( O(n^2) \sum_{i=0}^3 b_i\right)^2 \leq
+%     O\left(\frac{e^{6\varepsilon}}{(e^\varepsilon-1)^6}n^4 \right).
+%   \]
+% \end{proof}
+% 
+% \begin{lemma}\label{lem:erdos-renyi-variance}
+%   Let $G \sim \textbf{G}(n,\alpha)$ with $\alpha < \frac{1}{2}$ and $\hat{m}_i$
+%   be the number of copies of subgraph $T_i$ on
+%   three vertices in $G$. Then, then $\V[\hat{m}_3] = O(\alpha^5 n^4 + \alpha^3
+%   n^3)$, $\V[\hat{m}_2] = O(\alpha^3 n^4 + \alpha^2 n^3)$, and 
+%   $\V[\hat{m}_1] = \V[\hat{m}_0] = O(\alpha n^4)$.
+% \end{lemma}
+% \begin{proof}
+% 	\noindent{\textbf{Variance of $\hat{m}_3$ and $\hat{m}_0$.}}
+%   Then 	$\V[\hat{m}_3]$ can be expressed as follows \cite{triangle_counts}:
+% 	\begin{align*}
+% 			% \mathbb{V}[m_{3A}] 
+%       \mathbb{V}[\hat{m}_3] 
+% 			&= \binom{n}{3} \alpha^3 + 12\binom{n}{4} \alpha^5 + 30\binom{n}{5} \alpha^6 + 20\binom{n}{6} \alpha^6 - \binom{n}{3}^2 \alpha^6 \nonumber\\
+% 			&= \binom{n}{3} \alpha^3(1-\alpha^3) + 12\binom{n}{4} \alpha^5(1-\alpha)
+%       \\
+%       &= O(\alpha^5 n^4 + \alpha^3 n^3)
+% 	\end{align*}
+%   By changing $\alpha$ to $1-\alpha$ and counting $T_3$, we get a random
+%   variable with the same distribution as $\hat{m}_0$. Thus,
+%   \begin{align*}
+%       \mathbb{V}[\hat{m}_0] 
+%       &= \binom{n}{3} (1-\alpha)^3(1-(1-\alpha)^3) + 12\binom{n}{4} (1-\alpha)^5\alpha
+%       \\
+%       &= O(\alpha n^4)
+%   \end{align*}
+% 	\smallskip
+% 	\noindent{\textbf{Variance of $\hat{m}_2$ and $\hat{m}_1$.}}~~For $i,j,k \in [n]$, let $z_{i,j,k} \in \{0,1\}$ be a variable that takes $1$ if and only if 
+% 	$(v_i, v_j, v_k)$ forms a $T_2$ (i.e., exactly one edge is missing in the three nodes). 
+%   Then $\mathbb{E}_{\textbf{G}}[\hat{m}_2^2]$ can be written as follows:
+% 	\begin{align}
+%       \mathbb{E}_{\textbf{G}}[\hat{m}_2^2] = \sum_{i<j<k} \sum_{i'<j'<k'}
+%       \mathbb{E}_{\textbf{G}}[z_{i,j,k} z_{i',j',k'}] 
+% 			\label{eq:E_RR_tm2}
+% 	\end{align}
+%   $\mathbb{E}_{\textbf{G}}[z_{i,j,k} z_{i',j',k'}]$ in (\ref{eq:E_RR_tm2}) is
+%   the probability that both $(v_i,v_j,v_k)$ and $(v_{i'},v_{j'},v_{k'})$ form a
+%   $T_2$.
+% 	This event can be divided into the following four types:
+% 	\begin{enumerate}
+% 			\item $(i,j,k)=(i',j',k')$. There are $\binom{n}{3}$ such terms in (\ref{eq:E_RR_tm2}). 
+%         For each term, $\mathbb{E}_{\textbf{G}}[z_{i,j,k} z_{i',j',k'}]=3\alpha^2(1-\alpha)$. 
+% 			\item $(i,j,k)$ and $(i',j',k')$ have two elements in common. 
+% 			There are $\binom{n}{2}(n-2)(n-3) = 12 \binom{n}{4}$ such terms in (\ref{eq:E_RR_tm2}). 
+% 			For example, consider a term in which $i=i'=1$, $j=j'=2$, $k=3$, and $k'=4$. 
+% 			Both $(v_1,v_2,v_3)$ and $(v_1,v_2,v_4)$ form 2-edges if:\\
+% 			(a) $(v_1,v_2), (v_1,v_3), (v_1,v_4) \in E$, $(v_2,v_3), (v_2,v_4) \notin E$, \\
+% 			(b) $(v_1,v_2), (v_1,v_3), (v_2,v_4) \in E$, $(v_2,v_3), (v_1,v_4) \notin E$, \\
+% 			(c) $(v_1,v_2), (v_2,v_3), (v_1,v_4) \in E$, $(v_1,v_3), (v_2,v_4) \notin E$, \\
+% 			(d) $(v_1,v_2), (v_2,v_3), (v_2,v_4) \in E$, $(v_1,v_3), (v_1,v_4) \notin E$, or \\
+% 			(e) $(v_1,v_3), (v_1,v_4), (v_2,v_3), (v_2,v_4) \in E$, $(v_1,v_2) \notin E$. \\
+%       Thus, $\mathbb{E}_{\textbf{G}}[z_{i,j,k} z_{i',j',k'}]=4\alpha^3(1-\alpha)^2 + \alpha^4(1-\alpha)$ for this term. 
+%       Similarly, $\mathbb{E}_{\textbf{G}}[z_{i,j,k} z_{i',j',k'}]=4\alpha^3(1-\alpha)^2 + \alpha^4(1-\alpha)$ for the other terms.
+% 			\item $(i,j,k)$ and $(i',j',k')$ have one element in common. 
+% 			There are $n \binom{n-1}{2} \binom{n-3}{2} = 30\binom{n}{5}$ such terms in (\ref{eq:E_RR_tm2}).  For each term, $\mathbb{E}_{RR}[z_{i,j,k}z_{i',j',k'}]=(3\alpha^2(1-\alpha))^2 = 9\alpha^4(1-\alpha)^2$. 
+% 			\item $(i,j,k)$ and $(i',j',k')$ have no common elements. 
+% 			There are $\binom{n}{3}\binom{n-3}{3} = 20\binom{n}{6}$ such terms in (\ref{eq:E_RR_tm2}). 
+%       For each term, $\mathbb{E}_{\textbf{G}}[z_{i,j,k}z_{i',j',k'}]=(3\alpha^2(1-\alpha))^2 = 9\alpha^4(1-\alpha)^2$. 
+% 	\end{enumerate}
+%   Moreover, $\mathbb{E}_{\textbf{G}}[\hat{m}_2]^2 = (3\binom{n}{3}\alpha^2(1-\alpha))^2 = 9\binom{n}{3}^2\alpha^4(1-\alpha)^2$. 
+% 	Therefore, the variance of $\hat{m}_2$ can be written as follows:
+% 	\begin{align*}
+%       \mathbb{V}_{\textbf{G}}[\hat{m}_2] 
+%       &= \mathbb{E}_{\textbf{G}}[\hat{m}_2^2] - 
+%       \mathbb{E}_{\textbf{G}}[\hat{m}_2]^2 \nonumber\\
+% 			&= 3\binom{n}{3}\alpha^2(1-\alpha) + 12\binom{n}{4}\left(4\alpha^3(1-\alpha)^2 + \alpha^4(1-\alpha)\right) \nonumber\\
+% 			&\hspace{3.5mm}+ 270\binom{n}{5}\alpha^4(1-\alpha)^2 + 180\binom{n}{6}\alpha^4(1-\alpha)^2 - 9\binom{n}{3}^2\alpha^4(1-\alpha)^2.
+% 	\end{align*}
+% 	By simple calculations,
+% 	\begin{align*}
+% 	270\binom{n}{5} + 180\binom{n}{6} - 9\binom{n}{3}^2 = -108\binom{n}{4}-9\binom{n}{3}.
+% 	\end{align*}
+% 	Thus we obtain:
+% 	\begin{align*}
+%     \mathbb{V}_{\textbf{G}}[\hat{m}_2] 
+%     &= 3\binom{n}{3}\alpha^2(1-\alpha)\left(1 - 3\alpha^2(1-\alpha)\right) \nonumber\\
+%     &\hspace{3.5mm}+ 12\binom{n}{4}\left(4\alpha^3(1-\alpha)^2 +
+%     \alpha^4(1-\alpha) - 9\alpha(1-\alpha) \right) \\
+%     &= O(\alpha^3 n^4 + \alpha^2n^3)
+% 	\end{align*}
+% 	Similarly, the variance of $\hat{m}_1$ can be written as follows:
+% 	\begin{align*}
+%     \mathbb{V}_{\textbf{G}}[\hat{m}_1] 
+% 	&= 3\binom{n}{3}\alpha(1-\alpha)^2\left(1 - 3\alpha(1-\alpha)^2\right) \nonumber\\
+% 	&\hspace{3.5mm}+ 12\binom{n}{4}\left(4\alpha^2(1-\alpha)^3 +
+%   \alpha(1-\alpha)^4 - 9\alpha(1-\alpha) \right) \\
+%   &= O(\alpha n^4)
+% 	\end{align*}
+% \end{proof}
+
+% Theorem~\ref{thm:subgraph-interactive-priv} is proved using the following
+% lemmas:
+
+% \begin{lemma}\label{lem:subgraph-interactive-priv}
+%   Algorithm~\ref{alg:subgraph-interactive} guarantees $\varepsilon_0 +
+%   \varepsilon_1$-edge LDP.
+% \end{lemma}
+
+% \begin{proof} 
+%   Each vertex, or vertex, releases $(R_i,w_i)$. $R_i$ is a randomized response to each
+%   element of $\textbf{a}_i$ with parameter $\varepsilon_0$. Similar to the proof of
+%   Theorem~\ref{thm:subgraph-rr-priv}, $R_i$, which is just randomized response
+%   with parameter $\varepsilon_0$, guarantees $\varepsilon_0$-edge LDP.
+  
+%   Next, we consider the sensitivity of $t_i - \rho s_i$. $t_i$ (line 6) is
+%   the number of pairs of vertex $i$'s neighbors which are also connected in $G'$, the
+%   graph released by randomized response. $s_i$ (line 7) is the number of pairs
+%   of vertex $i$'s neighbors who could potentially form a triangle---namely all pairs of
+%   neighbors. Consider adding an edge to vertex $i$, and let $s_i^+,t_i^+$ be the
+%   resulting values of $s_i, t_i$. Letting $d_i = \sum_{j=1}^n a_i^j$, or the
+%   degree of vertex $i$, we can see from their definitions that 
+%   \begin{align*}
+%     s_i^+ = s_i + d_i & & t_i \leq t_i^+ \leq t_i+\colorB{d_i}
+%   \end{align*}
+%   Therefore, 
+%   \[
+%     |(t_i - \rho s_i) - (t_i^+ - \rho s_i^+)| = |t_i - t_i^+ + \rho d_i| \leq
+%     % (1-\rho)d_i \leq D
+%     (1-\rho)d_i \leq \colorB{(1-\rho)d_{max}}
+%   \]
+%   Now, consider removing an edge from vertex $i$, and let $s_i^-, t_i^-$ be the
+%   resulting values of $s_i, t_i$. Then,
+%   \begin{align*}
+%     s_i^- = s_i - d_i + 1 & & t_i^- \leq t_i \leq t_i^-+(\colorB{d_i}-1)
+%   \end{align*}
+%   Similar to the first case,
+%   \[
+%     |(t_i - \rho s_i) - (t_i^- - \rho s_i^-)| = |t_i - t_i^- - \rho (d_i-1)|
+%     % \leq (1-\rho)(d_i-1) \leq D
+%     \leq (1-\rho)(d_i-1) \leq \colorB{(1-\rho)d_{max}}
+%   \]
+%   In both cases, the maximum change is at most $(1-\rho)\colorB{d_{max}}$. Therefore, the sensitivity
+%   of $t_i - \rho s_i$ is $\colorB{(1-\rho)d_{max}}$. By the Laplace Mechanism, adding
+%   $Lap(\frac{\colorB{d_{max}}}{\varepsilon_1})$ to $t_i - \rho s_i$ satisfies
+%   $\varepsilon_1$-edge LDP.
+
+%   By composition, releasing $(R_i, w_i)$ satisfies $\varepsilon_0 +
+%   \varepsilon_1$-edge LDP. By post-processing, the entire algorithm guarantees
+%   this level of edge LDP.
+% \end{proof}
+
+\begin{lemma}\label{lem:subgraph-interactive-perf}
+  Let $A(G)$ be the output of Algorithm~\ref{alg:subgraph-interactive}. 
+  Then, for all $G$, $\E[A(G)] =
+%   T(G)$ and $\V[A(G)] = O(nD^3)$.
+  f_\triangle(G)$ and $\V[A(G)] = O(n\colorB{d_{max}}^3)$.
+\end{lemma}
+\begin{proof}
+  \noindent 
+  \textbf{$\E[A(G)] = f_\triangle(G)$}:
+  Directly from Algorithm~\ref{alg:subgraph-interactive}, we may write
+  \begin{align*}
+    \E[A(G)] &= \frac{1}{1-2\rho}\E\left[\sum_{i=1}^n w_i\right] \\
+    &= \frac{1}{1-2\rho}\sum_{i=1}^n
+    \E_{Lap, P_{i-1}}\left[t_i - \rho s_i +
+    Lap(\frac{d_{max}(1-\rho)}{\varepsilon_1})\right] \\
+    &= \frac{1}{1-2\rho}\sum_{i=1}^n
+    \E_{P_{i-1}} [t_i - \rho s_i]
+  \end{align*}
+  The idea of the algorithm is that each vertex counts the triangles for which
+  he is the highest numbered vertex. For vertex $i$, let $w_i$ be the count of
+  such triangles. Clearly, $f_\triangle(G) = \sum_{i=1}^n w_i$. We will complete the proof
+  by showing $\frac{1}{1-2\rho}\E_{P_{i-1}} [t_i - \rho s_i] = w_i$. 
+  Let $N_i = \{j : a_i^j = 1\}$ 
+  be the neighborhood of vertex $i$. Then, using the definitions of $s_i, t_i$,
+  \begin{align}
+    t_i - \rho s_i &= \sum_{j,k \in N_i, j<k<i}\left(\textbf{1}((j,k) \in
+    P_{i-1}) - \rho\right) \label{eq:subgraph-interactive-tri} \\
+    \E_{P_{i-1}}[t_i - \rho s_i] &= \sum_{j,k \in N_i, j<k<i} \E_{P_{i-1}}\left[\textbf{1}( (j,k)
+    \in P_{i-1}) - \rho\right] \nonumber \\
+    &= \sum_{j,k \in N_i, j<k<i} \left( \Pr[(j,k) \in P_{i-1}] - \rho
+    \right)\label{eq:subgraph-interactive-exp}
+  \end{align}
+  Randomized response flips each edge with probability $\rho$. Thus,
+  \begin{align*}
+    \Pr[(j,k) \in P_{i-1}]
+    &= (1-\rho) \textbf{1}( (j,k) \in G ) + \rho
+    \textbf{1}( (j,k) \notin G) \\
+    &= (1-2\rho) \textbf{1}( (j,k) \in G) + \rho
+  \end{align*}
+  Plugging into~\eqref{eq:subgraph-interactive-exp}, 
+  \begin{align*}
+    \E_{P_{i-1}}[t_i - \rho s_i] &= \sum_{j,k \in N_i, j<k<i} (1-2\rho)
+    \textbf{1}( (j,k) \in G) \\ &= (1-2\rho) w_i.
+  \end{align*}
+
+  \noindent
+  \textbf{$\V[A(G)] = O(\frac{nd_{max}^3}{1})$}:
+  Let $G'$ be the entire graph released by randomized response; in other words,
+  $G' = \texttt{SymmetricGraph}(R_1,\ldots, R_n)$. Note $G'$ agrees with $P_i$ on
+  vertices $1,\ldots, i$. 
+  Starting the same way as last time,
+  \begin{align*}
+    \V[A(G)] &= \frac{1}{(1-2\rho)^2}\V\left[\sum_{i=1}^n w_i\right] \\
+    &= \frac{1}{(1-2\rho)^2}\V_{Lap, G'}\left[\sum_{i=1}^n
+    t_i - \rho s_i +
+    Lap(\frac{d_{max}(1-\rho)}{\varepsilon_1})\right] \\
+    &= \frac{1}{(1-2\rho)^2}\left(\V_{G'}\left[\sum_{i=1}^n
+    t_i - \rho s_i \right] +
+    \V_{Lap}\left[\sum_{i=1}^n
+    Lap(\frac{d_{max}(1-\rho)}{\varepsilon_1})\right]\right) \\
+    &= \frac{1}{(1-2\rho)^2}\V_{G'}\left[\sum_{i=1}^n
+    t_i \right] + \frac{n}{(1-2\rho)^2}\times
+    2\frac{d_{max}^2(1-\rho)^2}{\varepsilon_1^2}
+  \end{align*}
+  In the last line, we are able to get rid of the $s_i$'s because they do not
+  depend on $G'$. Similar to~\eqref{eq:subgraph-interactive-tri}, we write
+  \begin{align*}
+    t_i &= \sum_{j,k \in N_i, j<k<i} \textbf{1}((j,k) \in G') \\
+  \end{align*}
+Now,
+  \begin{align*}
+    \sum_{i=1}^n t_i &= \sum_{i=1}^n\sum_{\substack{j,k \in N_i \\ j<k<i }} \textbf{1}((j,k) \in
+    G') \\
+    &= \sum_{1 \leq j < k \leq n} \sum_{\substack{i > k \\ j,k \in N_i
+    }} \textbf{1}((j,k) \in G') \\
+    &= \sum_{1 \leq j < k \leq n} |\{i : i>k; j,k \in N_i\}| \textbf{1}((j,k)
+    \in G')
+  \end{align*}
+  Let $c_{jk} = |\{i : i>k, j,k \in N_i\}|$. Notice that $\textbf{1}( (j,k) \in G')$
+  are independent events. Thus, the variance of the above expression is
+  \begin{align}
+    \V_P\left[\sum_{i=1}^n t_i\right] &= \V_P \left[\sum_{1 \leq j < k \leq n}
+    c_{jk} \textbf{1}( (j,k) \in G') \right] \nonumber \\
+    &= \sum_{1 \leq j < k \leq n} c_{jk}^2 \V[\textbf{1}( (j,k \in G')) ]
+    \nonumber \\
+    &= \rho (1-\rho) \sum_{1 \leq j < k \leq n} c_{jk}^2
+    \label{eq:subgraph-interactive-var}
+  \end{align}
+  $c_{jk}$ is the number of ordered 2-paths from $j$ to $k$. Because $d_{max}$ is the maximum
+  degree of vertex $j$, $0 \leq c_{jk} \leq d_{max}$. There are at most
+  $nd_{max}^2$ ordered
+  2-paths in $G$, since there are only $d_{max}$ vertices to go to once a first is
+  picked. Thus, $\sum_{1 \leq j < k \leq n} c_{jk} \leq nd_{max}^2$. Using a Jensen's inequality
+  style argument, the best way to maximimize~\eqref{eq:subgraph-interactive-var} is to have
+  all $c_{jk}$ be $0$ or $d_{max}$. Therefore, at most $nd_{max}$ of the $c_{ij}$
+  can be $d_{max}$, and the rest are zero. Thus,
+  \begin{align*}
+    \V_P\left[\sum_{i=1}^n t_i \right] &=
+    \rho(1-\rho) \sum_{1 \leq j < k \leq n} c_{ij}^2 \\ &\leq \rho(1-\rho)
+    nd_{max} \times
+    d_{max}^2
+  \end{align*}
+  Plugging in,
+  \begin{align*}
+    V[A(G)] &\leq \frac{\rho(1-\rho)nd_{max}^3}{(1-2\rho)^2} +
+    \frac{2nd_{max}^2(1-\rho)^2}{(1-2\rho)^2\varepsilon_1^2} \\
+    &\leq O\left(\frac{\rho nd_{max}^3 + nd_{max}^2/\varepsilon_1^2}{(1-2\rho)^2} \right) \\
+    &\leq O\left(\frac{e^\varepsilon_0}{(1-e^\varepsilon_0)^2} nd_{max}^3 +
+    \frac{e^{2\varepsilon_0}}{\varepsilon_1^2(1-e^\varepsilon_0)^2} nd_{max}^2\right)
+  \end{align*}
+\end{proof}
+
+\begin{proof}
+  (Of Theorem~\ref{thm:lb-local}):
+  By bias-variance decomposition,
+  \begin{equation}
+    \label{eq:bias-var-lb}
+    \E_{\hat{f}}[l_2^2(f(D), \hat{f}(D))] = \left(\E_{\hat{f}}[\hat{f}(D)] -
+    f(D)\right)^2 + \V_{\hat{f}}[\hat{f}(D)]
+  \end{equation}
+  Recall $\hat{f} = \tilde{f}(\calR_1(D_1),\ldots, \calR_n(D_n))$.
+  By the Law of Total Variance,
+  \begin{align*}
+    \V_{\hat{f}}[\hat{f}(D)] &= \V_{\tilde{f},
+      \calR_1,\ldots,\calR_n}[\tilde{f}(\calR_1(D_1),\ldots,\calR_n(D_n))] \\
+      &=
+      \E_{\calR_1,\ldots,\calR_n}[\V_{\tilde{f}\mid \calR_1,\ldots,\calR_n}
+      [\tilde{f}(\calR_1(D_1),\ldots,\calR_n(D_n))]]
+      \\
+      &\qquad + \V_{\calR_1,\ldots,\calR_n}[\E_{\tilde{f}\mid \calR_1,\ldots,\calR_n}
+      [\tilde{f}(\calR_1(D_1),\ldots,\calR_n(D_n))]] \\
+      &\geq \V_{\calR_1,\ldots,\calR_n}[\tilde{f}(\calR_1(D_1),\ldots,
+      \calR_n(D_n))]
+  \end{align*}
+  The inequality in the last line is achieved by deterministic $\tilde{f}$.
+  Applying Lemma~\ref{lem:var-lb}, this becomes
+  \begin{align*}
+    \V_{\calR_1,\ldots,\calR_n}[\tilde{f}(\calR_1(D_1),\ldots,\calR_n(D_n))] 
+    &\geq \sum_{i=1}^n
+    \V_{\calR_i}[\E_{\calR_{-i}}[\tilde{f}(\calR_1(D_1),\ldots,\calR_n(D_n)]] \\
+      &= \sum_{i=1}^n \V_{\calR_i}[\tilde{g}_i(\calR_i(D_i))]
+  \end{align*}
+  where the functions $\tilde{g}_i : \calX \rightarrow \reals$ are defined
+  \[
+    \tilde{g}_i(x) = \E_{\calR_{-i}}[\tilde{f}(\calR_1(D_1),\ldots,
+    \calR_{i-1}(D_{i-1}),x,\calR_{i+1}(D_{i+1}),\ldots, \calR_n(D_n))]
+  \]
+  However, $\tilde{g}_i(\calR_{i}(\cdot))$ satisfies $\varepsilon$-differential
+  privacy by post-processing.
+  By Lemma~\ref{},
+  \[
+    ( \E_{\calR_i}[\tilde{g}_i(\calR_{i}(D_i))] -
+    \E_{\calR_i}[\tilde{g}_i(\calR_{i}(D_i'))] )^2
+    \leq \V_{\calR_i}[\tilde{g}_i(\calR_{i}(D_i)](e^\varepsilon-1)^2
+  \]
+  Summing from $i=1$ to $n$,
+  \begin{align*}
+    &\:\sum_{i=1}^n (\E_{\calR_i}[\tilde{g}_i(\calR_i(D_i))] - 
+                  \E_{\calR_i}[\tilde{g}_i(\calR_i(D_i'))])^2 \\
+    &\:\leq (e^\varepsilon-1)^2\sum_{i=1}^n
+    \V_{\calR_i}[\tilde{g}_i(\calR_{i}(D_i)] \\
+      &\:\leq \V_{\calR_1,\ldots,\calR_n}[\tilde{f}(\calR_1(D_1),\ldots,
+      \calR_n(D_n))]
+  \end{align*}
+
+  Finally,
+  \begin{align*}
+    &\:\sum_{i=0}^n \E[l_2^2(\hat{f}(D_{-i}), f(D_{-i}))] \\ 
+    &\hspace{1em} = \sum_{i=0}^n
+    \left(\E_{\hat{f}}[\hat{f}(D_{-i})] - f(D_{-i}) \right)^2 
+        + \sum_{i=0}^n \V_{\hat{f}}[\hat{f}(D_{-i})] \\
+    &\hspace{1em} \geq \V_{\hat{f}}[\hat{f}(D_{0})] + \sum_{i=0}^n 
+    \left(\E_{\hat{f}}[\hat{f}(D_{-i})] - f(D_{-i}) \right)^2 \\
+    &\hspace{1em} \geq 
+  \end{align*}
+\end{proof} 
+
+\begin{lemma}\label{lem:var-lb}
+  Suppose $A : \calX \rightarrow \reals$ satisfies $\varepsilon$ differential privacy.
+  Let $D,D'$ be any neighboring databases. Then,
+  \[
+    (\E[A(D)] - \E[A(D')])^2 \leq
+    \frac{(e^\varepsilon-1)^2}{e^\varepsilon}\V[A(D)]
+  \]
+\end{lemma}
+
+\begin{lemma}\label{lem:var-lb}
+  Let $P_1,\ldots, P_n$ be independent distributions over $\calX$. Let
+  $\tilde{f} : \calX^n \rightarrow \reals$ be a deterministic function. 
+  Let $P_{-i} = P_1,\ldots, P_{i-1}, P_{i+1},\ldots P_n$. 
+  Then,
+  \[
+    \sum_{i=1}^n \V_{P_i}[\E_{P_{-i}}[\tilde{f}(P_1,\ldots, P_n)]] \leq
+    \V_{P_1,\ldots, P_n}[\tilde{f}(P_1,\ldots, P_n)]
+  \]
+\end{lemma}
+
+\begin{lemma}\label{lem:vec-lb}
+  Let $(x_0,x_1,\ldots, x_n)$ and $(y_0,y_1,\ldots, y_n)$ be vectors in
+  $\reals^{n+1}$. Let $\sum_{i=1}^n (x_i-x_0)^2 = A^2$ and $\sum_{i=1}^n
+  (y_i-y_0)^2 = B^2 \leq A^2$. Then, $\sum_{i=0}^n (x_i-y_i)^2 \geq
+  \frac{(A-B)^2}{n+1}$.
+\end{lemma}

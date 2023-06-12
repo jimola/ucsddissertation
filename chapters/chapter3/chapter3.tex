@@ -1,0 +1,32 @@
+\graphicspath{{./chapters/chapter3/}}
+
+\chapter{Differentially Private Triangle and 4-Cycle Counting in the Shuffle Model}
+
+\input{chapters/chapter3/macros.tex}
+\input{chapters/chapter3/intro}
+\input{chapters/chapter3/related}
+\input{chapters/chapter3/preliminary}
+\input{chapters/chapter3/shuffle}
+\input{chapters/chapter3/triangle}
+\input{chapters/chapter3/cycle}
+\input{chapters/chapter3/experiment}
+
+\section{Conclusion}
+\label{sec:conclusion}
+In this paper, we made the first attempt (to our knowledge) to 
+shuffle graph data for privacy amplification. 
+% apply the shuffle model to graph data. 
+We proposed wedge shuffling as a basic technique and then applied it to 
+% to enable the privacy amplification of graph data. 
+% Then we proposed 
+one-round triangle and 4-cycle counting with several additional techniques. 
+% algorithms based on wedge shuffling. 
+We showed upper bounds on 
+% the expected $l_2$ loss 
+the MSE 
+for each algorithm. 
+We also showed through comprehensive experiments that our one-round shuffle algorithms significantly outperform the one-round local algorithms and achieve a small relative error with a reasonable privacy budget, e.g., smaller than $1$ in edge DP. 
+
+For future work, we would like to apply wedge shuffling to other subgraphs such as 3-hop paths \cite{Sun_CCS19} and $k$-triangles \cite{Karwa_PVLDB11}. 
+
+

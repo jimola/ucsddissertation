@@ -1,0 +1,45 @@
+\appendix
+
+%-------------------------------------------------------------------------------
+\section{Extension of the Two-Rounds Algorithm}
+\label{sec:modified_two_rounds}
+%-------------------------------------------------------------------------------
+aaa
+
+\section{Omitted proofs}
+\begin{proof}(Of Theorem~\ref{thm:rr-algo})
+  Let $|G| = n$ and $|T|=k$.
+  The number of subgraphs in graph $G$ isomorphic to $T$ is
+  \[
+    \texttt{Count}(G,T) = 
+    \sum_{I \in {n \choose k}} \delta(\texttt{Canonical}(G[I]) = T)
+  \]
+  Thus, $\textbf{t} = \{\texttt{Count}(G,T) : T \in \mathcal{T}\}$.
+  In Algorithm~\ref{alg:subgraph-non}, it is easy to see that for $\textbf{G}$ 
+  drawn from the distribution induced by randomized response,
+  \[
+    \hat{\textbf{t}} = \{\texttt{Count}(\textbf{G},T) : T \in \mathcal{T}\}
+  \]
+  Now, $\textbf{G} = \mathcal{M}_\rho(G)$, where $M_\rho$ is the Markov process that flips
+  every edge of $G$ with probability $\rho = \frac{1}{1+e^{\varepsilon}}$. Let
+  $M$ be the kernel matrix of $\mathcal{M}_\rho$, so $m_{ij}$ is the probability graph $i$
+  transitioning to graph $j$. Thus,
+  \[
+    \E[\texttt{Count}(\textbf{G},T)] = \sum_{H \in \mathcal{T}} m_{GH}
+    \texttt{Count}(H,T)
+  \]
+  Combining these equations for all $T \in \mathcal{T}$, we have
+  \[
+    \E[\hat{\textbf{t}}] = M \textbf{t}
+  \]
+  By Lemma~\ref{}, $M$ is computed by Algorithm~\ref{alg:subgraph-kernel} and is an 
+  invertible matrix, so
+  \[
+    \E[\textbf{a}] = M^{-1}\E[\hat{\textbf{t}}] = \textbf{t}
+  \]
+  
+  Now, we focus our attention on $\V[\textbf{a}(\textbf{G}, k)]$. Assuming
+  $\textbf{G} \sim G(n,p)$, we have by randomized response that $P$ in
+  Line~\ref{} of Algorithm~\ref{alg:subgraph-kernel} is drawn from $G(n, p')$
+  where $p' = p\rho + (1-p)(1-\rho)$.
+\end{proof}

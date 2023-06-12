@@ -1,0 +1,85 @@
+%-------------------------------------------------------------------------------
+\section{Algorithms}
+\label{sec:algorithms}
+%-------------------------------------------------------------------------------
+aaa
+\subsection{One-Round Algorithms}
+\label{sub:one_round}
+
+\begin{algorithm}
+  \SetAlgoLined
+  \KwData{Subgraph size $k$, $\rho \in [0,1]$.}
+  \KwResult{Square matrix, indexed by unlabeled subgraphs of size $k$,
+    corresponding to Markov kernel representing flipping each edge with
+    probability $\rho$.}
+    $\mathcal{S} \leftarrow \texttt{LabeledGraphs}(k)$\;
+    $\mathcal{T} \leftarrow \texttt{UnlabeledGraphs}(k)$\;
+    \tcc{A square matrix consisting of all zeros with $\mathcal{T}|$ rows.}
+    $B \leftarrow \texttt{ZeroMatrix}(|\mathcal{T}|, |\mathcal{T}|)$\;
+    \ForEach{$G \in \mathcal{S}$, $H \in \mathcal{S}$}{
+      \tcc{\texttt{Canonical} returns the canonical unlabeled graph for a labeled graph}
+      $G' \leftarrow \texttt{Canonical}(G)$\;
+      $H' \leftarrow \texttt{Canonical}(H)$\;
+      $D \leftarrow |\Delta(G,H)|$\;
+      $B_{(G', H')} \leftarrow B_{(G', H')} + \rho^d (1-\rho)^{
+        {{k}\choose{2}}-d}$\;
+    }
+    \caption{SubgraphConfusionMatrix\label{alg:subgraph-kernel}}
+\end{algorithm}
+
+\begin{algorithm}
+  \SetAlgoLined
+  \KwData{Graph $G$ described by distributed neighbor lists $b_1, \ldots, b_n \subseteq \{0,1\}^n$, 
+  subgraph size $k$.}
+  \KwResult{$\textbf{a}$, the private count of number of occurrences of each subgraph of size $k$ in $G$.}
+  \For{$i=1$ \KwTo $n$}{
+    $r_i \leftarrow (RR_{\varepsilon}(b_i^1), \ldots, RR_{\varepsilon}(b_i^{i-1}))$\;
+    $release(r_i)$\;
+  }
+  %\tcc{$P$ is an undirected graph formed from directed edges in the $r_i$'s.}
+  $P \leftarrow \texttt{SymmetricGraph}(r_1, \ldots, r_n)$\;
+  $\hat{\textbf{t}} \leftarrow \texttt{CountSubgraphs}(P,k)$\;
+  $M \leftarrow \texttt{SubgraphConfusionMatrix}(k, \frac{1}{1+\exp(\varepsilon)})$\;
+  $\textbf{a} \leftarrow M^{-1}\hat{\textbf{t}}$\; 
+  \caption{CountSubgraphsRR\label{alg:subgraph-non}}
+\end{algorithm}
+
+\begin{theorem}\label{thm:rr-algo}
+  Let $\textbf{t}(G, k)$ be the vector of counts in $G$ for each unlabeled subgraph of
+  size $k$. Let $\textbf{a}(G,k)$ be the output of Algorithm~\ref{alg:subgraph-non} 
+  run on $G$, $k$. 
+  Then, for all $G,k$, $\E[\textbf{a}(G,k)] = \textbf{t}(G,k)$.
+  Suppose $\textbf{G} \sim G(n,p)$, the Erdos-Renyi graph distribution, for any
+  $p \in [0,1]$. Then, for all $k$, $\V[\textbf{a}(\textbf{G}, k)] = O()$.
+\end{theorem}
+
+\begin{theorem}
+  Algorithm~\ref{alg:subgraph-non} guarantees $\varepsilon$-edge LDP.
+\end{theorem}
+\subsection{Two-Rounds Algorithm for Triangles}
+\label{sub:two_rounds}
+\begin{algorithm}
+  \SetAlgoLined
+  \KwData{Graph $G$ described by distributed neighbor lists $b_1, \ldots, b_n \subseteq \{0,1\}^n$,
+  subgraph $H$ on $k$ vertices.}
+  \KwResult{Private count of number of occurrences of $H$ in $G$.}
+  $H \leftarrow \texttt{Canonical}(H)$\;
+  \For{$i=1$ \KwTo $n$}{
+    $ans_i \leftarrow 0$\;
+    $r_i \leftarrow (RR_{\varepsilon/2}(b_i^1), \ldots, RR_{\varepsilon/2}(b_i^{i-1}))$\;
+    $P_{i-1} \leftarrow \texttt{SymmetricGraph}(r_1, \ldots, r_{i-1})$\;
+    \For{$V' \subseteq [i]$, $|V'|=k-1$, $\texttt{Canonical}(G[V' \cup \{i\}]) =_i H$}{
+      $\mathcal{S} \leftarrow \texttt{LabeledGraphs}(V')$\;
+      $\{C_s : s \in \mathcal{S}\} \leftarrow \texttt{CountLabeledSubgraphsRR}(P_{i-1}[V'])$\;
+      \For{$s \in \mathcal{S}$}{
+        \If{$\texttt{Canonical}(s \cup ) = H$}{
+          $ans_i \leftarrow ans_i + 1$\;
+        }
+      }
+    }
+    $ans_i \leftarrow ans_i + Lap(0, )$\;
+    $release(r_i, ans_i)$\;
+  }
+  $ans \leftarrow \sum_{i=1}^n ans_i$\;
+  \caption{CountSubgraphsTwoRound}
+\end{algorithm}

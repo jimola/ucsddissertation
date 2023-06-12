@@ -1,0 +1,454 @@
+\section{Preliminaries}
+\label{sec:preliminaries}
+
+\subsection{Notations}
+\label{sub:notations}
+We begin with basic notations. 
+% Below we describe notations. 
+Let $\nats$, $\reals$, $\nnints$, and $\nnreals$ be the sets of natural numbers, real numbers, non-negative integers, and non-negative real numbers, respectively. 
+For $z\in\nats$, let $[z]$ a set of natural numbers from $1$ to $z$; i.e., $[z] = \{1, 2, \ldots, z\}$. 
+
+Let $G=(V,E)$ be an undirected graph, where $V$ is a set of nodes and $E \subseteq V \times V$ is a set of edges. 
+Let $n\in\nats$ be the number of nodes in $V$. 
+Let $v_i \in V$ be the $i$-th node; i.e., $V=\{v_1,\ldots,v_n\}$. 
+We consider a social graph where each node in $V$ represents a user and an edge $(v_i,v_j) \in E$ represents that $v_i$ is a friend with $v_j$. 
+Let $d_{max} \in \nats$ be the maximum degree of $G$. 
+Let $\calG$ be a set of graphs with $n$ nodes. 
+Let $f_\triangle: \calG \rightarrow \nnints$ be a triangle 
+% function 
+count query 
+that takes $G \in \calG$ as input and outputs 
+% the number $f_\triangle(G)$ of triangles in $G$. 
+a triangle count $f_\triangle(G)$ (i.e., number of triangles) in $G$. 
+
+
+
+Let $\bmA=(a_{i,j}) \in \{0,1\}^{n \times n}$ be a symmetric adjacency matrix corresponding to $G$; i.e., $a_{i,j} = 1$ if and only if $(v_i,v_j) \in E$. 
+% In this paper, 
+We consider a local privacy model~\cite{Qin_CCS17,Imola_USENIX21}, where each user obfuscates her \textit{neighbor list} $\bma_i = (a_{i,1}, \ldots, a_{i,n})\in\{0,1\}^n$ (i.e., the $i$-th row of $\bmA$) using 
+a \textit{local randomizer} 
+% a randomized mechanism 
+$\calR_i$ with domain $\{0,1\}^n$ and sends obfuscated data $\calR_i(\bma_i)$ to a server. 
+We also assume a two-rounds algorithm in which user $v_i$ downloads a message $M_i$ from the server at the second round. 
+% Table~\ref{tab:notations} shows the basic notations in this paper.
+
+We also show the basic notations in Table~\ref{tab:notations} of Appendix~\ref{sec:notations_subgraphs}.
+
+\subsection{Local Differential Privacy on Graphs}
+\label{sub:LDP}
+
+% \noindent{\textbf{Local graph model.}}~~TBD
+
+%\colorB{Describe the following:
+%\begin{itemize}
+%    \item Type of DP: node DP and edge DP.
+%    \item We focus on edge DP in the local model: edge LDP.
+%\end{itemize}}
+
+% \smallskip
+\noindent{\textbf{LDP on Graphs.}}~~When 
+% LDP (Local DP) protects the data of
+% individual users when their data are sent to a central server. 
+% It guarantees privacy even when the central server acts maliciously, and thus users
+% do not need to trust the central server. 
+% 
+% When we apply LDP (Local DP) to graphs, 
+we apply LDP (Local DP) to graphs, 
+we follow the direction of \textit{edge DP}~\cite{Nissim_STOC07,Raskhodnikova_Encyclopedia16} that has been developed for the central DP model. 
+In 
+% this model, 
+edge DP, 
+the existence of an edge
+between any two users is protected; i.e., two computations, one using a graph with the
+edge and one using the graph without the edge, 
+are indistinguishable. 
+% must be indistinguishable up to 
+% the factor $\epsilon$. 
+There is also another privacy notion called \textit{node DP}~\cite{Hay_ICDM09,Zhang_USENIX20}, which hides the existence of one user along with 
+% her all edges. 
+all her edges. 
+However, in the local model, many applications send a user ID to a server; e.g., each user sends the number of her friends along with her user ID. 
+For such applications, we cannot use node DP but can use edge DP to hide her edges, i.e., friends. 
+Thus, we focus on edge DP in the local model in the same way as~\cite{Imola_USENIX21,Qin_CCS17,Sun_CCS19,Ye_ICDE20,Ye_TKDE21}. 
+
+% In the local model, each user is aware of his neighbors
+% in the graph, and under edge DP, the existence of an edge in the graph should be
+% protected. 
+% For directed graphs in which each user does not know which users
+% include him in their neighbor lists, extending edge DP to the local setting
+% is straightforward---each user applies a mechanism, which we will call a 
+% \emph{local randomizer}, to his neighbor
+% list and releases the result. 
+Specifically, 
+assume that user $v_i$ uses her local randomizer $\calR_i$. 
+We assume that the server and other users can be 
+honest-but-curious adversaries and that they can obtain all edges except for user $v_i$'s edges 
+% all neighbor lists except for the $i$-th neighbor list $\bma_i$ 
+as prior knowledge. 
+Then we 
+use the following definition for $\calR_i$:
+
+\begin{definition} [$\epsilon$-edge LDP~\cite{Qin_CCS17}] \label{def:edge_LDP} 
+Let $\epsilon \in \nnreals$. 
+  For 
+  % some $1 \leq i \leq n$, 
+  $i \in [n]$, 
+  let $\calR_i$ be a 
+  % fixed 
+  local randomizer 
+  of user $v_i$ that 
+  % only 
+  takes $\bma_i$ as input. We say $\calR_i$ provides
+  \emph{$\epsilon$-edge LDP} 
+  if for any two neighbor lists 
+  $\bma_i, \bma'_i \in \{0,1\}^n$ 
+  that differ in one bit and any 
+  % $S \subseteq \mathrm{Range}(\calR_i)$, 
+  $s \in \mathrm{Range}(\calR_i)$, 
+\begin{align}
+% \Pr[\calR_i(\bma_i) \in S] \leq e^\epsilon \Pr[\calR_i(\bma'_i) \in S].
+\Pr[\calR_i(\bma_i) = s] \leq e^\epsilon \Pr[\calR_i(\bma'_i) = s].
+\label{eq:edge_LDP}
+\end{align}
+\end{definition}
+% The parameter $\epsilon$ is called the privacy budget. 
+For example, a local randomizer $\calR_i$ that applies Warner's RR (Randomized Response) \cite{Warner_JASA65}, which flips 0/1 with probability $\frac{1}{e^\epsilon + 1}$, to each bit of $\bma_i$ 
+% (which is called the randomized neighbor list \cite{Qin_CCS17}) 
+provides $\epsilon$-edge LDP. 
+
+The parameter $\epsilon$ is called the privacy budget. 
+When 
+% When the parameter (a.k.a. privacy budget) 
+$\epsilon$ is small (e.g., $\epsilon \leq 1$~\cite{DP_Li}), each bit is strongly protected by edge LDP. 
+Edge LDP can also be used to hide \textit{multiple bits} -- 
+by group privacy~\cite{DP}, two neighbor lists $\bma_i, \bma'_i \in \{0,1\}^n$ that differ in $k \in \nats$ bits are indistinguishable up to the factor $k\epsilon$. 
+% Note that although we assume an undirected graph, 
+% edge LDP can also be applied to a directed graph in which each user does not know which users include her in their neighbor lists. 
+% In this case, the adjacency matrix $\bmA$ is asymmetric and each user $v_i$ wants to hide her neighbor list $\bma_i$ (e.g., who she follows). 
+
+Edge LDP is useful for protecting a neighbor list $\bma_i$ of each user $v_i$. 
+For example, 
+% Facebook allows each user to hide her friend list $\bma_i$ even from her 
+a user in Facebook can change her setting so that anyone (except for the central server) cannot see her friend list $\bma_i$. 
+Edge LDP hides $\bma_i$ even from the server. 
+
+As with regular LDP, the guarantee of edge LDP does not break 
+even if 
+% when 
+the server or other users act maliciously. 
+However, 
+% for our setting of undirected graphs, 
+% Note that 
+% in an undirected graph, 
+adding or removing an edge
+affects the neighbor list of two users. 
+% Thus, privacy for undirected graphs is
+% not completely local, since for any edge, two users are privy to its
+% existence. 
+This means that each user needs to trust 
+% other users 
+her friend 
+to not reveal 
+% act maliciously and state whether there exists 
+an edge between them. 
+This also applies to Facebook -- even if $v_i$ keeps $\bma_i$ secret, her edge with $v_j$ can be disclosed if $v_j$ reveals $\bma_j$. 
+To protect each edge during the whole process, 
+% Since the level
+% of trust is higher than that of Definition~\ref{def:edge_LDP}, 
+we use 
+another 
+% definition of privacy 
+privacy notion 
+called relationship DP~\cite{Imola_USENIX21}:
+% a
+% distinguished definition of privacy that applies to undirected graphs.
+
+\begin{definition} [$\epsilon$-relationship DP~\cite{Imola_USENIX21}] 
+\label{def:entire_edge_LDP} 
+  Let $\epsilon \in \nnreals$. For 
+  %$1 \leq i \leq n$, 
+  $i \in [n]$, 
+  let $\calR_i$ be a 
+  %fixed
+  local randomizer of user $v_i$ that 
+  %only 
+  takes $\bma_i$ as input. We say 
+  $(\calR_1, \ldots, \calR_n)$ provides 
+\emph{$\epsilon$-relationship DP} 
+if for any two neighboring graphs $G, G' \in \calG$ that differ in one edge and 
+  any $(s_1, \ldots, s_n) \in \mathrm{Range}(\calR_1) \times \ldots \times \mathrm{Range}(\calR_n)$, 
+\begin{align}
+  &\Pr[(\calR_1(\bma_1), \ldots, \calR_n(\bma_n)) = (s_1, \ldots, s_n)] \nonumber\\
+  &\leq e^\epsilon \Pr[(\calR_1(\bma'_1), \ldots, \calR_n(\bma'_n)) = (s_1,
+  \ldots, s_n)],
+\label{eq:entire_edge_LDP}
+\end{align}
+  where $\bma_i$ (resp. $\bma_i'$) $\in \{0,1\}^n$ is the $i$-th row of the
+  adjacency matrix of graph $G$ (resp. $G'$).
+\end{definition}
+% For an edge $(v_i, v_j)$ where both 
+If 
+users $v_i$ and $v_j$ follow the protocol, 
+% (i.e., output $R_i(\bma_i)$ and $R_j(\bma_j)$), 
+\eqref{eq:entire_edge_LDP} holds for graphs $G,G'$ that differ 
+% on exactly $e$. 
+in $(v_i, v_j)$. 
+% In conclusion, 
+Thus, 
+relationship DP applies to
+all edges of a user 
+% where the neighbor is 
+whose 
+% her 
+neighbors are 
+trustworthy.
+
+While users need to trust other 
+% users 
+friends 
+to maintain a relationship
+DP guarantee, only one edge per user is at risk for each malicious 
+%user 
+friend 
+that
+does not follow the protocol. This is
+because only one edge can exist between two users.  
+% so a malicious user only knows
+% about one edge between him and all other users. 
+Thus, although the trust assumption in relationship DP is stronger than that of LDP, it is much weaker than that of central DP in which all edges can be revealed by the server. 
+
+
+% While relationship DP is distinguished from edge LDP, 
+It is possible to use
+a tuple of local randomizers with edge LDP to obtain a relationship DP guarantee:
+\begin{proposition} [Edge LDP and relationship DP~\cite{Imola_USENIX21}] 
+\label{prop:edge_LDP_entire_edge_LDP} 
+  If 
+  % a fixed set 
+  each 
+  of local randomizers $\calR_1, \ldots, \calR_n$ 
+  % each 
+  provides 
+  $\epsilon$-edge LDP, then $(\calR_1, \ldots, \calR_n)$ provides 
+  $2\epsilon$-relationship DP. 
+  Additionally, if each $\calR_i$ uses only bits $a_{i,1}, \ldots, a_{i,i-1}$ for users with smaller IDs (i.e., only the lower triangular part of $\bmA$), then $(\calR_1, \ldots, \calR_n)$ provides 
+  $\epsilon$-relationship DP. 
+\end{proposition}
+The doubling factor in $\epsilon$ comes from the fact that 
+\eqref{eq:entire_edge_LDP} applies to an entire edge, whereas
+\eqref{eq:edge_LDP} applies to just one neighbor list, 
+% \eqref{eq:edge_LDP} and \eqref{eq:entire_edge_LDP} apply to one neighbor list and an entire edge, respectively, 
+and 
+adding an entire
+edge may cause changes to two neighbor lists. 
+However, 
+% when 
+if 
+each $\calR_i$ ignores
+% $\bma_i[j \geq i]$ (i.e. the part of his neighbor list involving users of higher index than $i$), 
+bits $a_{i,i}, \ldots, a_{i,n}$ for users with larger IDs, 
+% (i.e., when we use only the lower triangular part of $\bmA$), 
+then this doubling
+factor can be avoided. 
+% ; i.e., $\epsilon$-edge LDP implies $\epsilon$-relationship DP in this case. 
+Our algorithms also use only the lower triangular part of $\bmA$ to avoid this doubling issue.
+
+\smallskip
+\noindent{\textbf{Interaction among Users and Multiple Rounds.}}~~While interaction in LDP has been studied before~\cite{Joseph_SODA20}, neither of Definitions~\ref{def:edge_LDP} and \ref{def:entire_edge_LDP} 
+% the privacy definitions we use 
+allows the interaction among users in a one-round protocol where 
+% the server sends a query $\calR_i$ to each user $v_i$ and then 
+user $v_i$ sends $\calR_i(\bma_i)$ to the server. 
+% local randomizers to depend on the output of previous
+% local randomizers. This prevents interaction among users. Although there may be benefits
+% to allowing such interaction, none of the protocols we consider make use of it,
+% and thus we do not adapt the definitions. 
+% we will make use of multi-round protocols. 
+
+However, the interaction 
+% between 
+among users 
+is possible in a multi-round protocol. 
+Specifically, 
+% let $\calR_i^j$ be a randomizer with domain $\{0,1\}^n$ used by $v_i$ at the $j$-th round. 
+at the first round, 
+% where first 
+% each 
+user $v_i$ applies a randomizer $\calR_i^1$ and 
+% releases $\calR_i^1(\bma_i)$ to his
+% data and releases it to the central server 
+sends $\calR_i^1(\bma_i)$ to the server. 
+At the second round, the server 
+calculates a message $M_i$ for $v_i$ by 
+% which then 
+% performs 
+performing 
+some post-processing on $\calR_i^1(\bma_i)$, possibly with the private outputs by other users. 
+Let $\lambda_i$ be the post-processing algorithm on $\calR_i^1(\bma_i)$; 
+% and $M_i$ be its output; 
+i.e., $M_i = \lambda_i(\calR_i^1(\bma_i))$. 
+% At the second round, 
+The server sends $M_i$ to $v_i$. 
+Then, $v_i$ uses a randomizer $\calR_i^2(M_i)$ that depends on $M_i$ and sends $\calR_i^2(M_i)(\bma_i)$ back to the server.
+This entire computation 
+% is protected by 
+provides 
+% edge LDP 
+DP by 
+% composition (which is known as a general sequential composition~\cite{DP_Li}):
+a (general) sequential composition \cite{DP_Li}: 
+% (the proof appears in Appendix~\ref{sec:proof_seq_comp_edge_LDP}):
+
+\begin{proposition} [Sequential composition of edge LDP] 
+\label{prop:seq_comp_edge_LDP} 
+  For 
+  % any 
+  $i \in [n]$, let 
+  $\calR_i^1$ be a local randomizer of user $v_i$ that takes $\bma_i$ as input. 
+  Let $\lambda_i$ be a post-processing algorithm on $\calR_i^1(\bma_i)$, and $M_i = \lambda_i(\calR_i^1(\bma_i))$ be its output. 
+  Let $\calR_i^2(M_i)$ be a local randomizer of $v_i$ that depends on $M_i$. 
+  % $\calR_i^1$ and $\calR_i^2(M_i)$ be two 
+  % fixed 
+  % local
+  % randomizers of user $v_i$
+  % which 
+  % only 
+  % take $\bma_i$ as input and where $M_i = \lambda_i(\calR_i^1(\bma_i))$ is
+  % a post-processing of $\calR_i^1$.
+  If $\calR_i^1$ provides $\epsilon_1$-edge LDP and for any 
+%$s \in \mathrm{Range}(\calR_1^1) \times \ldots \times \mathrm{Range}(\calR_n^1)$, 
+  $M_i \in \mathrm{Range}(\lambda_i)$,
+  $\calR_i^2(M_i)$ provides $\epsilon_2$-edge LDP, 
+then the sequential composition 
+$(\calR_i^1(\bma_i), \calR_i^2(M_i)(\bma_i))$
+% $\calR_i^2(M_i)(\bma_i, \calR_i^1(\bma_i))$
+provides $(\epsilon_1 + \epsilon_2)$-edge LDP.
+\end{proposition}
+We provide a proof of Proposition~\ref{prop:seq_comp_edge_LDP} in \conference{the full version \cite{Imola_arXiv22}}\arxiv{Appendix~\ref{sec:proof_seq_comp_edge_LDP}}.
+
+% This property is known as a general sequential composition~\cite{DP_Li}. 
+% It allows us to show that over $k \in \nats$ rounds, when each
+% local randomizer used in each round satisfies $\epsilon$-edge LDP, then the output of
+% the final round satisfies $k\epsilon$-edge LDP. 
+% and also $2k\epsilon$-relationship DP.
+
+% \begin{proposition} [Sequential composition of edge LDP] 
+% \label{prop:seq_comp_edge_LDP} 
+% For any $i \in [n]$, let $\calR_i^1$ and $\calR_i^2$ be two randomized mechanisms of user $v_i$. 
+% If $\calR_i^1$ provides $\epsilon_1$-edge LDP and for any $s \in \mathrm{Range}(\calR_1^1) \times \ldots \times \mathrm{Range}(\calR_n^1)$ and for any post-processing algorithm $\lambda$ on $s$, $\calR_i^2(\lambda(s))$ provides $\epsilon_2$-edge LDP, 
+% then the sequential composition $\calR_i^2 \circ \calR_i^1$ provides $(\epsilon_1 + \epsilon_2)$-edge LDP.
+% \end{proposition}
+
+% \begin{proposition} [Sequential composition of edge LDP] 
+% \label{prop:seq_comp_edge_LDP} 
+% Let $\calU$ be a set of auxiliary input. 
+% For any $i \in [n]$, let $\calR_i^1$ be a randomized mechanism of user $v_i$, and $\calR_i^2$ be a randomized mechanism of $v_i$ that takes auxiliary input $u \in \calU$. 
+% If $\calR_i^1$ provides $\epsilon_1$-edge LDP and for any $u \in \calU$, $\calR_i^2(u)$ provides $\epsilon_2$-edge LDP, 
+% then the sequential composition $\calR_i^2 \circ \calR_i^1$ provides $(\epsilon_1 + \epsilon_2)$-edge LDP.
+% \end{proposition}
+
+\smallskip
+\noindent{\textbf{Global Sensitivity.}}~~We use the notion of global sensitivity~\cite{DP} to provide edge LDP: 
+% Let $\calD$ be a set of possible input values of a randomized algorithm; e.g., $\calD = \{0,1\}^n$ in edge LDP and $\calD = \{0,1\}^{n \times n}$ in relationship DP. 
+% Then 
+% In edge LDP, 
+% the global sensitivity is defined as follows:
+\begin{definition}
+% The global sensitivity of a function $f: \calD \rightarrow \reals$ is given by:
+In edge LDP (Definition~\ref{def:edge_LDP}), the global sensitivity of a function $f: \{0,1\}^n \rightarrow \reals$ is given by:
+\begin{align*}
+    GS_f = \underset{\bma_i, \bma'_i \in \{0,1\}^n, \bma_i \sim \bma'_i}{\max} |f(\bma_i) - f(\bma'_i)|,
+    % GS_f = \underset{\bma, \bma' \in \{0,1\}^n, \bma \sim \bma'}{\max} |f(\bma) - f(\bma')|,
+\end{align*}
+where $\bma_i \sim \bma'_i$ represents that $\bma_i$ and $\bma'_i$ differ in one bit.
+% where $\bma \sim \bma'$ represents that $\bma$ and $\bma'$ differ in one bit.
+\end{definition}
+% In triangle counting, $f$ is instantiated by $f_\triangle$. 
+For example, adding the Laplacian noise with mean $0$ scale $\frac{GS_f}{\epsilon}$ (denoted by $\Lap(\frac{GS_f}{\epsilon})$) to 
+% $f(\bma)$ 
+$f(\bma_i)$ 
+provides $\epsilon$-edge LDP. 
+% In graphs, adding one edge results in the increase of the triangle count by at most $d_{max}$. 
+% Thus, the global sensitivity of the triangle count query $f_\triangle$ is at most $d_{max}$. 
+
+\subsection{Utility and Communication-Efficiency}
+\label{sub:utility_communication_efficiency}
+\noindent{\textbf{Utility.}}
+%\colorB{\begin{itemize}
+%    \item Expected $l_2$ loss (for theoretical analysis).
+%    \item Relative error (for experiments).
+%\end{itemize}}
+We consider a private estimate of $f_\triangle(G)$. 
+% for some graph $G \in \calG$.
+Our private estimator $\hf_\triangle : \calG \rightarrow \reals$ is a post-processing of 
+local randomizers $(\calR_1, \ldots, \calR_n)$ 
+that 
+% which 
+satisfy $\epsilon$-edge LDP.
+Following previous work, we use the $l_2$ loss (i.e., squared error)
+\cite{Kairouz_ICML16,Wang_USENIX17,Murakami_USENIX19} and the relative error 
+% \cite{Bindschaedler_SP16,Chen_CCS12} 
+\cite{Bindschaedler_SP16,Chen_CCS12,Xiao_SIGMOD11} 
+as utility metrics.
+
+Specifically,
+let $l_2^2$ be the expected $l_2$ loss function on a graph $G$, which maps the 
+estimate $\hf_\triangle(G)$ and the true value $f_\triangle(G)$ to the expected $l_2$ loss; i.e., 
+% \[
+%   l_2^2(f_\triangle, \hf_\triangle, G) = \E[(\hf_\triangle(G) - f_\triangle(G))^2].
+% \]
+$l_2^2(f_\triangle(G), \hf_\triangle(G)) = \E[(\hf_\triangle(G) - f_\triangle(G))^2]$.
+The 
+% above 
+expectation is taken over the randomness in the estimator $\hf$, which is
+necessarily a randomized algorithm since it satisfies edge LDP.
+In our theoretical analysis, we analyze the expected $l_2$ loss, as with~\cite{Kairouz_ICML16,Wang_USENIX17,Murakami_USENIX19}.
+
+Note that the $l_2$ loss is large when $f_\triangle(G)$ is large. 
+% $f_\triangle(G)$ increases, hence the $l_2$ loss increases, with increase in the number $n$ of users. 
+% When $f_\triangle(G)$ is large, the $l_2$ loss can also be large.
+Therefore, in our experiments, we use the relative error given by $\frac{|\hf_\triangle(G) - f_\triangle(G)|}{\max\{f_\triangle(G), \eta\}}$, 
+where $\eta \in \nnreals$ is a small value. 
+Following convention 
+% \cite{Bindschaedler_SP16,Chen_CCS12}, 
+\cite{Bindschaedler_SP16,Chen_CCS12,Xiao_SIGMOD11}, 
+we set $\eta$ to $0.001n$. 
+The estimate is very accurate when the relative error is much smaller than $1$.
+
+\smallskip
+\noindent{\textbf{Communication-Efficiency.}}
+A prominent concern when performing local computations is that the computing power of
+individual users is often limited. Of particular concern to our private
+estimators, and a bottleneck of previous work in locally private triangle
+counting~\cite{Imola_USENIX21}, is the communication overhead between users and
+the server. This communication takes the form of users 
+\emph{downloading} any necessary data required to compute their local randomizers and 
+\emph{uploading} the output of their local randomizers. We distinguish the two
+quantities because often downloading is cheaper than uploading.
+
+Consider a $\tau$-round protocol, where $\tau \in \nats$. 
+At round $j \in [\tau]$, user $v_i$ applies a local randomizer $\calR_i^j(M_i^j)$ to her neighbor list $\bma_i$, where
+$M_i^j$ is a message sent from the server to user $v_i$ during round $j$.
+We define the \emph{download cost} 
+% to be 
+as 
+the number of bits required to describe
+$M_i^j$ and the \emph{upload cost} 
+% to be 
+as 
+the number of bits required to
+describe $\calR_i^j(M_i^j)(\bma_i)$. 
+% which is what is released by user $v_i$ during the
+% round. 
+Over all rounds and all users, we evaluate the \textit{maximum per-user download/upload cost}, which is given by:
+\begin{align}
+  \CostDL &= \textstyle{\max_{i=1}^n \sum_{j=1}^\tau \E[|M_i^j|] ~~~~ \text{(bits)}} \label{eq:cost_DL}\\
+  \CostUL &= \textstyle{\max_{i=1}^n \sum_{j=1}^\tau \E[|\calR_i^j(M_i^j)(\bma_i)|]} ~~~~ \text{(bits)}. \label{eq:cost_UL}
+\end{align}
+
+The above expectations go over the probability distributions of computing the local
+randomizers 
+% in previous rounds 
+and any post-processing done by the server. 
+% in previous rounds.
+We evaluate the maximum of the expected download/upload cost over users.

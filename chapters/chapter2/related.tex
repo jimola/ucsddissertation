@@ -1,0 +1,128 @@
+\section{Related Work}
+\label{sec:related}
+% !TEX root=main.tex
+\noindent{\textbf{Triangle Counting.}}~~Triangle
+% We finally note that triangle
+counting has been extensively studied in a non-private setting \cite{Bera_KDD20,Bera_PODS20,Chu_KDD11,Eden_FOCS15,Seshadhri_SDM13,Suri_WWW11,Tsourakakis_KDD09,Wu_TKDE16} 
+% \cite{Arifuzzaman_CIKM13,Bera_KDD20,Bera_PODS20,Chu_KDD11,Eden_FOCS15,Kolountzakis_IM12,Seshadhri_SDM13,Suri_WWW11,Tangwongsan_CIKM13,Tsourakakis_KDD09,Wu_TKDE16}
+(it is almost a sub-field in itself)
+because it requires high time complexity for large graphs.
+
+Edge sampling \cite{Bera_PODS20,Eden_FOCS15,Tsourakakis_KDD09,Wu_TKDE16} is one of the most basic techniques to improve 
+% the 
+scalability.
+Although edge sampling is simple, it is quite effective -- it is reported in \cite{Wu_TKDE16} that edge sampling outperforms other sampling techniques such as node sampling and triangle sampling.
+Based on this, we adopt edge sampling after RR\footnote{We also note that a study in \cite{Nguyen_TDP16} proposes a graph publishing algorithm in the central model that independently changes 1-cells (edges) to 0-cells (no edges) with some probability and then 
+changes a fixed number of 0-cells to 1-cells \textit{without replacement}. 
+However, each 0-cell is \textit{not} independently sampled in this case, and consequently, 
+their proof that relies on the independence of the noise to each 0-cell is incorrect. 
+In contrast, our algorithms provide DP because we apply sampling after RR, i.e., post-processing.} 
+with new techniques such as the 4-cycle trick and double clipping.
+% to significantly improve
+Our entire algorithms significantly improve the communication cost, as well as the space and time complexity, under LDP (see Sections~\ref{sub:clip_theoretical_analysis}
+and \ref{sec:experiments}).
+% for details).
+% to significantly improve the communication cost, as well as the space and time complexity, under LDP (see Section~\ref{sub:clip_theoretical_analysis} for the performance of our entire algorithms).
+
+\smallskip
+\noindent{\textbf{DP on Graphs.}}~~For private graph analysis, DP has been widely adopted as a privacy metric.
+Most of them adopt central (or global) DP
+\cite{Day_SIGMOD16,Ding_TKDE21,Hay_ICDM09,Karwa_PVLDB11,Kasiviswanathan_TCC13,Raskhodnikova_arXiv15,Zhang_SIGMOD15}, 
+% \cite{Chen_PoPETs20,Day_SIGMOD16,Ding_TKDE21,Hay_ICDM09,Kasiviswanathan_TCC13,Raskhodnikova_arXiv15,Song_arXiv18,Wang_TDP13,Wang_PAKDD13,Zhang_SIGMOD15}, 
+which suffers from the data breach issue.
+% explained above.
+% in which the original graph might be leaked from the server by illegal access.
+
+LDP on graphs has recently studied in some studies, e.g., synthetic data generation \cite{Qin_CCS17}, subgraph counting \cite{Imola_USENIX21,Sun_CCS19,Ye_ICDE20,Ye_TKDE21}.
+% Sun \textit{et al.}
+A study in
+\cite{Sun_CCS19} proposes subgraph counting algorithms in a setting where each user
+% can see all of her friends' friends.
+allows her friends to see all her connections.
+% However, it cannot be applied to many applications that do not allow friends to see
+% Although each user can count her triangles at the first round in this setting,
+However, this setting is unsuitable for
+% it cannot be applied to
+many applications; e.g., in Facebook, a user can easily change her setting so that
+% her friend cannot see the other friends.
+her friends cannot see her connections.
+
+
+
+Thus, we consider a model where each user can see only her friends.
+% , as in \cite{Sun_CCS19,Ye_ICDE20,Ye_TKDE21}.
+In this model, some one-round algorithms \cite{Ye_ICDE20,Ye_TKDE21}
+and two-rounds algorithms\cite{Imola_USENIX21} have been proposed.
+However, they suffer from a prohibitively large estimation error or high communication cost, as explained in Section~\ref{sec:intro}.
+
+% Recently proposed network LDP protocols \cite{Cyffers_arXiv21} consider, instead of a central server, collecting private data with user-to-user communication protocols along a graph. 
+% Their results apply to sums, histograms, and SGD. 
+% In our setting, we instead compute graph statistics with a central server.
+% Thus, their use of graphs is orthogonal to ours. 
+% The same applies to 
+% another work \cite{Sabater_arXiv21} 
+% that improves 
+% the utility of an averaging query
+% by correlating the noise of users according to a graph.
+Recently proposed network LDP protocols \cite{Cyffers_arXiv21} consider, instead of a central server, collecting private data with user-to-user communication protocols along a graph. 
+They focus on sums, histograms, and SGD (Stochastic Gradient Descent) and do not provide subgraph counting algorithms. 
+Moreover, they focus on hiding each user's private dataset rather than hiding an edge in a graph. 
+Thus, their approach cannot be applied to our task of subgraph counting under LDP for edges. 
+% In our setting, we instead compute graph statistics with a central server.
+% Thus, their use of graphs is orthogonal to ours. 
+The same applies to 
+another work \cite{Sabater_arXiv21} 
+that improves 
+the utility of an averaging query
+by correlating the noise of users according to a graph.
+
+\smallskip
+\noindent{\textbf{LDP.}}~~RR~\cite{Kairouz_ICML16,Warner_JASA65} 
+% Randomized response
+and 
+RAPPOR~\cite{Erlingsson_CCS14} 
+% RAPPOR~\cite{Erlingsson_CCS14, Fanti_PoPETs16} 
+have been widely used 
+% to perform a wide range of tasks 
+for tabular data 
+in 
+% local DP. 
+LDP. 
+Our work uses RR in part of our algorithm but
+builds off of it significantly. One noteworthy result in this area is HR (Hadamard Response) \cite{Acharya_AISTATS19}, which is state-of-the-art for tabular data
+and requires low communication. However, this result is not applied to graph
+data and does not address the communication issues considered in this paper.
+Specifically, applying HR to each bit in a neighbor list will result in 
+% $O(n)$ communication cost 
+$O(n^2)$ ($n$: \#users) download cost 
+in the same way as 
+the previous work \cite{Imola_USENIX21} that uses RR. 
+% previous work in private, local graph
+% statistics~\cite{Imola_USENIX21} does. 
+Applying HR to an entire neighbor list
+(which has $2^n$ possible values) will similarly result in 
+% $O(\log 2^n) = O(n)$
+% communication.
+$O(n \log 2^n) = O(n^2)$ download cost. 
+
+Previous work on distribution estimation~\cite{Kairouz_ICML16,Murakami_USENIX19,Wang_USENIX17} or 
+% heavy hitters \cite{Bassily_NIPS17} 
+heavy hitters \cite{Bassily_NIPS17} 
+addresses a different problem than ours, as they assume that every user has
+i.i.d. 
+(independent and identically distributed) 
+samples. 
+In our setting, a user's neighbor list is non-i.i.d. (as one edge is shared by two users), 
+% user data is an arbitrary graph, 
+which does not
+fit into their statistical framework.
+
+% In work on heavy hitters in the local DP model \cite{Bassily_NIPS17,Qin_CCS16},
+% each user holds a domain element and frequencies of domain elements are computed
+% privately. While previous work considers user and server communication and computation
+% costs as we do, their problem is not very related to our setting of graph statistics.
+
+%\commentTM{About HR \cite{Acharya_AISTATS19}:
+%Although HR is a state-of-the-art in tabular data, it is not applied to graph data and does not address the communication issue considered in this paper. For example, the communication complexity of HR (=log k) is the same as that of k-RR  (=log k), where k is category size (Table 2 in [8]). Thus,
+%- if we apply HR to each bit of neighbor list, it suffers from high communication cost in the same way as our USENIX paper that uses RR.
+%- if we apply HR to the whole neighbor list (n-dim vector = $2^n$ categorical data), the communication cost is high (=log $2^n$ = n).}
