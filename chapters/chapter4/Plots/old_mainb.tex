@@ -1,0 +1,78 @@
+%\documentclass[sigconf]{acmart}
+
+\documentclass[conference]{IEEEtran}
+\usepackage[hyperfootnotes=false]{hyperref}
+% to be able to draw some self-contained figs
+%\usepackage{tikz}
+%\usepackage{amsmath}
+% inlined bib file
+\usepackage[listings,skins,breakable]{tcolorbox}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{jimola}
+\usepackage{xcolor}
+\usepackage{comment}
+\usepackage{subcaption}
+\usepackage{multirow}
+
+\newcommand{\ji}[1]{\textcolor{red}{ JI: #1}}
+\newcommand{\arc}[1]{\textcolor{blue}{ ARC: #1}}
+\newcommand{\kc}[1]{\textcolor{magenta}{KC: #1}}
+\def\threshresp{{m + \sqrt{2\rho n \ln \frac{4n}{\delta}}}}
+\def\threshresphybrid{{m + \sqrt{2\rho n \ln \frac{8n}{\delta}}}}
+
+\newcounter{savefootnote}
+\newcounter{symfootnote}
+\newcommand{\symfootnote}[1]{%
+   \setcounter{savefootnote}{\value{footnote}}%
+   \setcounter{footnote}{\value{symfootnote}}%
+   \ifnum\value{footnote}>8\setcounter{footnote}{0}\fi%
+   \let\oldthefootnote=\thefootnote%
+   \renewcommand{\thefootnote}{\fnsymbol{footnote}}%
+   \footnote{#1}%
+   \let\thefootnote=\oldthefootnote%
+   \setcounter{symfootnote}{\value{footnote}}%
+   \setcounter{footnote}{\value{savefootnote}}%
+}
+%-------------------------------------------------------------------------------
+\begin{document}
+%-------------------------------------------------------------------------------
+
+%don't want date printed
+%\date{}
+
+% make title bold and 14 pt font (Latex default is non-bold, 16 pt)
+\title{\Large \bf Robustness of Locally Differentially Private Graph Analysis Against Poisoning}
+
+%for single author (just remove % characters)
+%\author{{\rm Jacob Imola$^*$}\\UC San Diego \and {\rm Amrita Roy Chowdhury$^*$}\\UC San Diego\and  {\rm Kamalika Chaudhuri}\\ UC San Diego}
+
+\maketitle
+
+%-------------------------------------------------------------------------------
+\begin{abstract} \arc{Fix abstract}
+ Locally differentially private (\ldp) graph analysis allows private analysis on a graph that is distributed across multiple users.  However, such computations are vulnerable to data poisoning attacks where an adversary can skew the results by submitting malformed data. In this paper, we formally study the impact of poisoning attacks for graph degree estimation protocols under \ldp. We make two key technical contributions. First, we observe \ldp~makes a protocol more vulnerable to poisoning -- the impact of poisoning is worse when the adversary can directly poison their (noisy) responses, rather than their input data. Second, we observe that graph data is naturally redundant -- every edge is shared between two users. Leveraging this data redundancy, we design robust degree estimation protocols under \ldp~that can significantly reduce the impact of data poisoning and compute degree estimates with high accuracy.  We evaluate our proposed robust degree estimation protocols under poisoning attacks on real-world datasets to demonstrate their efficacy in practice. 
+\end{abstract}
+\input{1_Introduction}
+\input{2_Background}
+\input{3_FormalFramework}
+\input{4_RobustGeneral}
+\input{6_UtilityImprovement}
+\input{6.5-InputManipulation}
+\input{7_Discussion}
+\input{7_Evaluation}
+\input{8_RelatedWork}
+\input{9_Conclusion}
+
+
+%-------------------------------------------------------------------------------
+
+%\bibliographystyle{ACM-Reference-Format}
+\bibliographystyle{plain}
+\bibliography{references}
+\appendix
+\input{Appendix}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

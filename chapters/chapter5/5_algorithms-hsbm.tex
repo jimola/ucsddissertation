@@ -49,28 +49,51 @@ $\cost_G(T) \leq (1 + o(1)) \cost_G(T')$.
 In fact, we show a stronger result that the tuple $(B,T,f')$ returned by \dphcblocks{} is a $1+o(1)$-approximate ground-truth tree for $\hsbm(B,P,f)$. By a result from~\citet{cohen2019hierarchical}, this implies it achieves the approximation guarantee. We defer the proof to Appendix~\ref{sec:hc-hsbm-util}.
 
 \begin{algorithm}
+\KwData{$G = (V,E)$ drawn from the HSBM; blocks $B_1, \ldots B_k$ partitioning $V$, privacy parameter $\epsilon$}
+\KwResult{Tree $T$.}
+\For{$i = 1$ to $k$}{
+  $T_i$ is a random HC with leaves $B_i$\;
+}
+$sim(B_i, B_j) \gets \frac{w_G(B_i, B_j) + \calL_{ij}}{|B_i||B_j|}$, where $\calL_{ij} \sim Lap(\frac{1}{\epsilon})$\;
+$\calC = \{B_1, \ldots, B_k\}$\;
+$T = forest(T_1, \ldots, T_k)$\;
+\While{$|\calC| \geq 1$}{
+	$A_1, A_2 = \arg \max_{A_1, A_2 \in \calC} sim(A_1, A_2)$\;
+	Merge $A_1,A_2$ in $T$; $C = A_1 \cup A_2$\;
+	$f'(C) = sim(A_1, A_2)$\;
+	$\calC = (\calC \setminus \{A_1, A_2\}) \cup \{C\}$\;
+	\For{$S \in \calC \setminus \{C\}$}{
+		$sim(S,C) \gets \max_{B_i \in S, B_j \in C} sim(B_i, B_j)$\;
+	}
+}
+\KwRet{$(B,T,f')$}
 \caption{\dphcblocks{}, a hierarchical clustering algorithm in the HSBM given the blocks.}\label{alg:priv-hc-hsbm}
-\begin{algorithmic}
-\STATE{\textbf{Input:} $G = (V,E)$ drawn from the HSBM; blocks $B_1, \ldots B_k$ partitioning $V$, privacy parameter $\epsilon$}
-\STATE{\textbf{Output:} Tree $T$.}
-\FOR{$i = 1$ to $k$}
-    \STATE{$T_i$ is a random HC with leaves $B_i$}
-\ENDFOR
-\STATE{$sim(B_i, B_j) \gets \frac{w_G(B_i, B_j) + \calL_{ij}}{|B_i||B_j|}$, where $\calL_{ij} \sim Lap(\frac{1}{\epsilon})$.}
-\STATE{$\calC = \{B_1, \ldots, B_k\}$}
-\STATE{$T = forest(T_1, \ldots, T_k)$}
-\WHILE{$|\calC| \geq 1$}
-\STATE{$A_1, A_2 = \arg \max_{A_1, A_2 \in \calC} sim(A_1, A_2)$}
-\STATE{Merge $A_1,A_2$ in $T$; $C = A_1 \cup A_2$}
-\STATE{$f'(C) = sim(A_1, A_2)$}
-\STATE{$\calC = (\calC \setminus \{A_1, A_2\}) \cup \{C\}$}
-\FOR{$S \in \calC \setminus \{C\}$:}
-\STATE{$sim(S,C) \gets \max_{B_i \in S, B_j \in C} sim(B_i, B_j)$}
-\ENDFOR
-\ENDWHILE
-\STATE{\textbf{Return:} $(B,T,f')$.}
-\end{algorithmic}
 \end{algorithm}
+
+
+%\begin{algorithm}
+%\caption{\dphcblocks{}, a hierarchical clustering algorithm in the HSBM given the blocks.}\label{alg:priv-hc-hsbm}
+%\begin{algorithmic}
+%\STATE{\textbf{Input:} $G = (V,E)$ drawn from the HSBM; blocks $B_1, \ldots B_k$ partitioning $V$, privacy parameter $\epsilon$}
+%\STATE{\textbf{Output:} Tree $T$.}
+%\FOR{$i = 1$ to $k$}
+%    \STATE{$T_i$ is a random HC with leaves $B_i$}
+%\ENDFOR
+%\STATE{$sim(B_i, B_j) \gets \frac{w_G(B_i, B_j) + \calL_{ij}}{|B_i||B_j|}$, where $\calL_{ij} \sim Lap(\frac{1}{\epsilon})$.}
+%\STATE{$\calC = \{B_1, \ldots, B_k\}$}
+%\STATE{$T = forest(T_1, \ldots, T_k)$}
+%\WHILE{$|\calC| \geq 1$}
+%\STATE{$A_1, A_2 = \arg \max_{A_1, A_2 \in \calC} sim(A_1, A_2)$}
+%\STATE{Merge $A_1,A_2$ in $T$; $C = A_1 \cup A_2$}
+%\STATE{$f'(C) = sim(A_1, A_2)$}
+%\STATE{$\calC = (\calC \setminus \{A_1, A_2\}) \cup \{C\}$}
+%\FOR{$S \in \calC \setminus \{C\}$:}
+%\STATE{$sim(S,C) \gets \max_{B_i \in S, B_j \in C} sim(B_i, B_j)$}
+%\ENDFOR
+%\ENDWHILE
+%\STATE{\textbf{Return:} $(B,T,f')$.}
+%\end{algorithmic}
+%\end{algorithm}
 
 
 \subsection{DP Community Detection in the HSBM}\label{sec:dp-comm-detection}
@@ -88,24 +111,42 @@ where $A_u$ is the $u$th column of $A$. Next, we let $\sigma_1(A), \ldots, \sigm
 There are two important remarks about \dpcom{}. First, to ensure an accurate, private upper bound on $\Gamma$, we need the mild assumption that the spectral gap $\sigma_k(\hat{A}) - \sigma_{k+1}(\hat{A})$ is not too small, and if it is, the algorithm returns $\perp$. For most choices of parameters in the SBM, the spectral gap is always much larger than needed---the check is only to ensure privacy even for input graphs not from the SBM. Second, due to ease of theoretical analysis, $\hat{A}$ is split into two parts, and one part is projected onto the top $k$ singular vectors of the other. This removes probabilistic dependence between variables, but the high level ideas are the same.
 
 \begin{algorithm}
+\KwData{$\hat{A}$, adjacency matrix generated from $\hsbm(B,P,f)$, privacy parameter $\epsilon$.}
+\KwResult{$f_z$, an estimate of blocks on a set $Z_2 \subseteq V$.}
+Compute a random partition $Y \sqcup Z_1 \sqcup Z_2$ of $V$ such that $|Y| = \frac{n}{2}$, $|Z_1| = |Z_2| = \frac{n}{4}$\;
+$\tilde{A}_1 \gets \tilde{A}_{YZ_1}$ (submatrix of $\hat{A}$ with rows $Y$, cols. $Z_1$)\;
+$\tilde{A}_2 \gets \tilde{A}_{YZ_2}$\;
+$\tilde{d}_k \gets \sigma_{k}(\hat{A}_1) - \sigma_{k+1}(\hat{A}_1) - \frac{8}{\epsilon}\ln \frac{4}{\delta} + Lap(\frac 8 \epsilon)$\;
+$\tilde{\sigma}_1 \gets \sigma_1(\hat{A}_2) + \frac{4}\epsilon \ln \frac{4}{\delta} + Lap(\frac{4}{\epsilon})$\;
+\uIf{$\hat{d}_k \leq 10(\tfrac{8}{\epsilon} \ln \tfrac{4}{\delta})$}{
+	\KwRet{$\perp$}
+}
+\uElse{$\tilde{\Gamma} \gets \frac{\tilde{\sigma}_1}{\hat{d}_k}, m \gets 64 \ln \frac{2n}{\delta}$.}
+$F \gets P \Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$, where $P \sim \calN(0, \frac 1 {\sqrt{m}})^{m \times n/2}$\;
+$\tilde{F} \gets F + N$, where $N \sim \frac{3k\tilde{\Gamma}}{\epsilon} \sqrt{2\ln \tfrac{5}{\delta}} \calN(0,1)^{m \times n/4}$\;
+\KwRet{$\hat{F}$}
 \caption{\dpcom{}, a community recovery Algorithm}\label{alg:priv-hsbm}
-\begin{algorithmic}
-\STATE{\textbf{Input:} $\hat{A}$, adjacency matrix generated from $\hsbm(B,P,f)$, privacy parameter $\epsilon$.}
-\STATE{\textbf{Output:} $f_z$, an estimate of blocks on a set $Z_2 \subseteq V$.}
-\STATE{Compute a random partition $Y \sqcup Z_1 \sqcup Z_2$ of $V$ such that $|Y| = \frac{n}{2}$, $|Z_1| = |Z_2| = \frac{n}{4}$.}
-\STATE{$\tilde{A}_1 \gets \tilde{A}_{YZ_1}$ (submatrix of $\hat{A}$ with rows $Y$, cols. $Z_1$).}
-\STATE{$\tilde{A}_2 \gets \tilde{A}_{YZ_2}$}
-\STATE{$\tilde{d}_k \gets \sigma_{k}(\hat{A}_1) - \sigma_{k+1}(\hat{A}_1) - \frac{8}{\epsilon}\ln \frac{4}{\delta} + Lap(\frac 8 \epsilon)$}
-\STATE{$\tilde{\sigma}_1 \gets \sigma_1(\hat{A}_2) + \frac{4}\epsilon \ln \frac{4}{\delta} + Lap(\frac{4}{\epsilon})$}
-\IF{$\hat{d}_k \leq 10(\tfrac{8}{\epsilon} \ln \tfrac{4}{\delta})$}
-\RETURN{$\perp$}
-\ENDIF
-\STATE{$\tilde{\Gamma} \gets \frac{\tilde{\sigma}_1}{\hat{d}_k}, m \gets 64 \ln \frac{2n}{\delta}$.}
-\STATE{$F \gets P \Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$, where $P \sim \calN(0, \frac 1 {\sqrt{m}})^{m \times n/2}$.}
-\STATE{$\tilde{F} \gets F + N$, where $N \sim \frac{3k\tilde{\Gamma}}{\epsilon} \sqrt{2\ln \tfrac{5}{\delta}} \calN(0,1)^{m \times n/4}$.}
-\RETURN{$\hat{F}$}
-\end{algorithmic}
 \end{algorithm}
+
+%\begin{algorithm}
+%\caption{\dpcom{}, a community recovery Algorithm}\label{alg:priv-hsbm}
+%\begin{algorithmic}
+%\STATE{\textbf{Input:} $\hat{A}$, adjacency matrix generated from $\hsbm(B,P,f)$, privacy parameter $\epsilon$.}
+%\STATE{\textbf{Output:} $f_z$, an estimate of blocks on a set $Z_2 \subseteq V$.}
+%\STATE{Compute a random partition $Y \sqcup Z_1 \sqcup Z_2$ of $V$ such that $|Y| = \frac{n}{2}$, $|Z_1| = |Z_2| = \frac{n}{4}$.}
+%\STATE{$\tilde{A}_1 \gets \tilde{A}_{YZ_1}$ (submatrix of $\hat{A}$ with rows $Y$, cols. $Z_1$).}
+%\STATE{$\tilde{A}_2 \gets \tilde{A}_{YZ_2}$}
+%\STATE{$\tilde{d}_k \gets \sigma_{k}(\hat{A}_1) - \sigma_{k+1}(\hat{A}_1) - \frac{8}{\epsilon}\ln \frac{4}{\delta} + Lap(\frac 8 \epsilon)$}
+%\STATE{$\tilde{\sigma}_1 \gets \sigma_1(\hat{A}_2) + \frac{4}\epsilon \ln \frac{4}{\delta} + Lap(\frac{4}{\epsilon})$}
+%\IF{$\hat{d}_k \leq 10(\tfrac{8}{\epsilon} \ln \tfrac{4}{\delta})$}
+%\RETURN{$\perp$}
+%\ENDIF
+%\STATE{$\tilde{\Gamma} \gets \frac{\tilde{\sigma}_1}{\hat{d}_k}, m \gets 64 \ln \frac{2n}{\delta}$.}
+%\STATE{$F \gets P \Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$, where $P \sim \calN(0, \frac 1 {\sqrt{m}})^{m \times n/2}$.}
+%\STATE{$\tilde{F} \gets F + N$, where $N \sim \frac{3k\tilde{\Gamma}}{\epsilon} \sqrt{2\ln \tfrac{5}{\delta}} \calN(0,1)^{m \times n/4}$.}
+%\RETURN{$\hat{F}$}
+%\end{algorithmic}
+%\end{algorithm}
 We now analyze privacy and utility. Full proofs of the results in this section appear in Appendix~\ref{sec:algorithms-hsbm}.
 Our privacy analysis involves analyzing the release of the singular values $\sigma_1, \sigma_k, \sigma_{k+1}$, and $\tilde{F}$. The bulk of this analysis comes from analyzing the sensitivity of $\tilde{F}$, which uses the accuracy of the Johnson-Lindenstrauss transform and spectral perturbation bounds.
 \begin{thm}\label{thm:com-hsbm-priv}
@@ -131,19 +172,32 @@ To illustrate our theorem in a simple example, consider the HSBM with $k$ equal-
 Compared to previous work in the SBM with privacy, our algorithm requires a larger assumption on $\sqrt{p} - \sqrt{q}$ (\citet{seif2022differentially,chen2023private} require $\sqrt{p} - \sqrt{q} \geq \sqrt{\frac{k}{\epsilon n}})$. However, previous work either uses semi-definite programming or does not run in polynomial time, whereas \dpcom{} is a practical use of the significantly more efficient Singular Vector Decomposition. Furthermore, our algorithm works in the fully-general HSBM, whereas previous work has no analogue of Theorem~\ref{thm:com-hsbm-util-inf}.
 
 \begin{algorithm}
+\KwData{$\hat{A}$, adjacency matrix generated from $\hsbm(B,P,f)$, number of blocks $k$, privacy parameter $\epsilon$.}
+\KwResult{An hierarchical clustering $T$ of $\hat{A}$.}
+\For{$i \in \{1, \ldots, \log n\}$}{
+	$\hat{F} \gets \dpcom{}(\hat{A}, \frac{\epsilon}{2 \log n})$\;
+  $B_1^{i}, \ldots, B_k^i \gets \textsf{k-centers}(\hat{F}, k)$\;
+}
+$B_1, \ldots, B_k \gets \textsf{Union-Find}(B_1^1, \ldots, B_k^1, \ldots, B_k^{\log n})$\;
+$T \gets \dphcblocks{}(\hat{A}, \{B_1, \ldots, B_k\}, \frac{\epsilon}{2})$\;
+\KwRet{$T$}
 \caption{\dphchsbm{} a hierarchical clustering algorithm in the HSBM given the blocks.}\label{alg:priv-hsbm-final}
-\begin{algorithmic}
-\STATE{\textbf{Input:} $\hat{A}$, adjacency matrix generated from $\hsbm(B,P,f)$, number of blocks $k$, privacy parameter $\epsilon$.}
-\STATE{\textbf{Output:} An hierarchical clustering $T$ of $\hat{A}$.}
-\FOR{$i \in \{1, \ldots, \log n\}$}
-\STATE{$\hat{F} \gets \dpcom{}(\hat{A}, \frac{\epsilon}{2 \log n})$}
-\STATE{$B_1^{i}, \ldots, B_k^i \gets \textsf{k-centers}(\hat{F}, k)$}
-\ENDFOR
-\STATE{$B_1, \ldots, B_k \gets \textsf{Union-Find}(B_1^1, \ldots, B_k^1, \ldots, B_k^{\log n})$}
-\STATE{$T \gets \dphcblocks{}(\hat{A}, \{B_1, \ldots, B_k\}, \frac{\epsilon}{2})$}
-\RETURN{$T$}
-\end{algorithmic}
 \end{algorithm}
+
+%\begin{algorithm}
+%\caption{\dphchsbm{} a hierarchical clustering algorithm in the HSBM given the blocks.}\label{alg:priv-hsbm-final}
+%\begin{algorithmic}
+%\STATE{\textbf{Input:} $\hat{A}$, adjacency matrix generated from $\hsbm(B,P,f)$, number of blocks $k$, privacy parameter $\epsilon$.}
+%\STATE{\textbf{Output:} An hierarchical clustering $T$ of $\hat{A}$.}
+%\FOR{$i \in \{1, \ldots, \log n\}$}
+%\STATE{$\hat{F} \gets \dpcom{}(\hat{A}, \frac{\epsilon}{2 \log n})$}
+%\STATE{$B_1^{i}, \ldots, B_k^i \gets \textsf{k-centers}(\hat{F}, k)$}
+%\ENDFOR
+%\STATE{$B_1, \ldots, B_k \gets \textsf{Union-Find}(B_1^1, \ldots, B_k^1, \ldots, B_k^{\log n})$}
+%\STATE{$T \gets \dphcblocks{}(\hat{A}, \{B_1, \ldots, B_k\}, \frac{\epsilon}{2})$}
+%\RETURN{$T$}
+%\end{algorithmic}
+%\end{algorithm}
 Combining Theorems~\ref{thm:hc-hsbm-util} and~\ref{thm:com-hsbm-util-inf}, we are able to obtain \dphchsbm{}, an end-to-end hierarchical clustering algorithm in the HSBM (Algorithm~\ref{alg:priv-hsbm-final}). This algorithm runs $\dpcom{}$ $\log n$ times, using $k$-centers each run to find the well-separated communities in the subset $Z_2 \subseteq V$ returned by $\dpcom{}$. Running $\log n$ times ensures that with high probability, each point in $V$ will participate in at least one $Z_2$; these clusters may then be merged using a union-find data structure.
 \begin{coro}\label{coro:hc-hsbm}
     Let $\hat{A}$ be drawn from $\hsbm(B,P,f)$, and let $\tau = \max f(x)$ and $s = \min_{i=1}^k|B_i|$. Then, if $\epsilon > \frac{1}{\sqrt{n}}$, $\delta < \frac{1}{n}$, $s \geq n^{3/4}$, $f \geq \frac{\log n}{\sqrt{n}}$, and the parameters $s,\tau,A,\Delta$ satisfy the conditions of Theorem~\ref{thm:com-hsbm-util-inf}, then \dphchsbm{} satisfies $(\epsilon, \delta)$-edge DP and is a $1+o(1)$ approximation to the Dasgupta cost. 

@@ -1,0 +1,195 @@
+
+\section{Improving Soundness with Verification}\label{sec:robust-rr-checks}
+%\ji{TODO: clean up theorems and symmetrize them.}
+
+In this section, we present our proposed protocol for robust degree estimation. 
+As discussed in the previous section, the naive \DegRRNaive{} protocol offers poor soundness. To tackle
+this, we propose a new protocol, \DegRRCheck, that enhances
+\DegRRNaive{} with a consistency check based on the
+redundancy in graph data and flags users if they fail the check. Consequently, \DegRRNaive{} improves the soundness guarantee significantly. We observe that with higher privacy (lower $\epsilon$), the protocol is less robust. We conclude this section by analyzing \DegRRCheck{} under no privacy constraint---the difference between the correctness and soundness guarantees are the \emph{price of privacy}.
+
+  \vspace{-0.1cm}  \subsection{\DegRRCheck{} Protocol} \label{sec:protocol:check} 
+The \DegRRCheck{} protocol is described in Alg.~\ref{alg:degrrcheck} and works as follows. \DegRRCheck{} enhances the data collected by \DegRRNaive{} with verification -- for edge $e_{ij} \in E$, instead of collecting a noisy response from just one of the users
+$\DO_i$ or $\DO_j$, $\DegRRCheck{}$ collects a noisy response from \emph{both} users. This creates
+data redundancy which can then be checked for consistency. Specifically, the estimator counts only those edges $e_{ij}$ for which \textit{both} $\DO_i$ and $\DO_j$ are consistent and report a $1$. 
+ The count of noisy edges involving user $\DO_i$ is then given by:
+\[count_i^{11} = \sum_{j\in [n]\setminus i} q_{i}[j] q_{j}[i].\]
+The unbiased degree estimate of $\DO_i$ is computed as follows:
+\begin{equation}\label{eq:deg-est}\vspace{-0.1cm}
+    \hd_i = \frac{count_i^{11} - \rho^2(n-1)}{1-2\rho}.
+\end{equation}
+%Thus, the degree estimators only count edges for which both users are consistent and report a $1$.
+
+
+For robustness, \DegRRCheck{} imposes a check on the number of instances of
+inconsistent reporting ($\DO_i$ and $\DO_j$ differ in their respective bits reported for their mutual
+edge $e_{ij}$). For every user $\DO_i$,  the protocol has an
+additional capability of returning $\bot$ whenever the  consistency check fails, indicating
+that the aggregator believes that user $\DO_i$ is malicious. The intuition is that if the user $\DO_i$ is malicious and attempts to poison a lot of the edges, then there would be a large number of inconsistent reports corresponding to the edges to honest users. \DegRRCheck{}  counts the number of inconsistent reports for user $\DO_i$ as: 
+\[
+  count_i^{01} = \sum_{j=1}^n (1-q_{i}[j]) q_{j}[i],
+\]
+i.e., the number of edges connected to user $\DO_i$\footnote{It is symmetric (and doesn't give additional information) to count edges for which user $\DO_i$ reports $1$ and $\DO_j$ reports $0$.} for
+which they reported $0$ and user $\DO_j$ reported $1$. Intuitively, the check computes the expected number of inconsistent reports assuming user $\DO_i$ to be honest and flags $\DO_i$ in case the reported number is outside a confidence interval. Formally, if
+\begin{equation}\label{eq:deg-check}
+    |count_{i}^{01} - \rho(1-\rho)(n-1)| \leq \tau,
+\end{equation}
+then set $\hd_i = \bottom$, where $\tau=m + \sqrt{3 n \rho \ln \tfrac{2}{\delta}}$ is a threshold.  This check forces a malicious user to send a response with only a small number of poisoned edges (as allowed by the threshold $\tau$), thereby significantly restricting the impact of adversarial manipulations. For example, they are not able to indicate they are connected to all users in the graph, as this would produce a large number of inconsistent edges. 
+
+Note that due to the randomization required for \ldp, some honest users might also fail the check. However,  we observe that for two honest users $\DO_i$ and $\DO_j$,  the product term
+$(1-q_{i}[j]) q_{j}[i]$ follows the $ \bern(\rho(1-\rho))$ distribution, irrespective of whether the edge $e_{ij}$ exists. Consequently $count_{i}^{01}$  is tightly concentrated around its mean.  This ensures that the probability of mislabeling an honest user (by returning $\bottom$) is low. 
+\setlength{\textfloatsep}{4pt}
+
+\begin{algorithm}[t]
+
+  \KwData{Adjacency lists $\{l_1,\cdots,l_n\}$; $\tau$, threshold for consistency check}
+  \KwResult{$(\hat{d}_1,\cdots, \hat{d}_n)$ where $\hat{d}_i$ is the degree estimate for user $\DO_i$}
+  $\rho=\frac{1}{1+e^{\epsilon}}$\;
+	\textbf{Users}\;
+  \ForEach{$i \in [n]$}{
+    $q_i = \rr_\rho(l_i)$
+	}
+	\textbf{Data Aggregator}\;
+  \ForEach{$i \in [n]$}{
+    $count_i^{11} = \sum_{j \in [n] \setminus i} q_{i}[j] q_{j}[i]$\;
+    $count_i^{01} = \sum_{j \in [n] \setminus i} (1-q_{i}[j])q_{j}[i]$\;
+		\uIf{$|count_{i}^{01} - \rho(1-\rho)(n-1)| \leq \tau$}{
+    	$\hd_i = \frac{1}{1-2\rho}(count_i^{11} - \rho^2 (n-1))$\;
+		}
+		\uElse{
+			$\hd_i = \bottom$
+		}
+	}
+   \KwRet {$(\hd_1, \hd_2, \ldots, \hd_n)$ }
+	\caption{\DegRRCheck: $\{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{alg:degrrcheck}
+\end{algorithm}
+
+%\begin{algorithm}
+%  \caption{\DegRRCheck: $\{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{alg:degrrcheck}
+%  \begin{algorithmic}
+%  \State \textbf{Parameters:} $\epsilon$ - Privacy parameter;\State \hspace{1.7 cm} $\tau$ - Threshold for consistency check;
+%
+%  \State\textbf{Input:} $\{l_1,\cdots,l_n\}$ where $l_i \in \{0,1\}^n$ is the adjacency list  \Statex \hspace{1.1cm} of user $\DO_i$;
+%  \State \textbf{Output:} $(\hat{d}_1,\cdots, \hat{d}_n)$ where $\hat{d}_i$ is the degree estimate for \Statex \hspace{1.2cm} user $\DO_i$;
+  %\vspace{0.2cm}
+%  \State $\rho=\frac{1}{1+e^{\epsilon}}$
+%    \For{$i \in [n]$}
+%      \State $q_i = \rr_\rho(l_i)$
+%    \EndFor
+%    \For{$i \in [n]$}
+%      \State $count_i^{11} = \sum_{j \in [n] \setminus i} q_{i}[j] q_{j}[i]$
+%      \State $count_i^{01} = \sum_{j \in [n] \setminus i} (1-q_{i}[j])q_{j}[i]$
+%      \If{$|count_{i}^{01} - \rho(1-\rho)(n-1)| \leq \tau$}
+%        \State $\hd_i = \frac{1}{1-2\rho}(count_i^{11} - \rho^2 (n-1))$
+%      \Else
+%        \State $\hd_i = \bottom$
+%      \EndIf
+%    \EndFor
+%    \Return $(\hd_1, \hd_2, \ldots, \hd_n)$ 
+%  \end{algorithmic}
+%\end{algorithm}
+Formally, we are able to show the following correctness and soundness guarantees for \DegRRCheck{}.
+
+\begin{thm}\label{thm:response:check}
+Let $\calM$ be a set of malicious users with $|\calM| = m$. Then,
+the  $\DegRRCheck$ protocol run with threshold $\tau = m + \sqrt{2\rho n \ln \tfrac{4n}{\delta}}$ is
+  $\left( 2m (\frac{e^\epsilon+1}{e^{\epsilon}-1}) + 4\sqrt{n}\frac{ \sqrt{(e^\epsilon+1)\ln \frac{4n}{\delta}}}{e^\epsilon-1}, \delta\right)$-correct and sound with respect to any
+response poisoning attack from $\calM$.
+\end{thm}
+This theorem is proved in App.~\ref{app:b3a3}. The additional verification of \DegRRCheck{} results in a clear improvement --- the malicious users can now skew their degree estimates only by a limited amount (as determined by the threshold $\tau$)  or risk getting detected,  which results in a better soundness guarantee. Specifically, a malicious user can now only skew their degree estimate by at most $ \tilde{O}\big(m(1+\frac{1}{\epsilon}) + \frac{\sqrt{n}}{{\epsilon}}\big)$ for response poisoning attacks, respectively (as compared to $n-1$ in Thm.~\ref{thm:response:naive}). 
+It is important to note that the above results are completely \textit{attack-agnostic} -- they hold for \textit{any} attack, for any number of malicious users, and all graphs.
+
+Note that the correctness and soundness guarantees in the above theorem worsen with smaller $\epsilon$. This is because at lower privacy, the collected responses are more noisy thereby making it harder to distinguish honest users from malicious ones. In particular, a protocol should not return $\bottom$ for honest users (i.e., mislabel them) to ensure good correctness. Consequently, more malicious error is tolerated before a $\bottom$ is returned for a malicious user. This is evident in Eq.~\ref{eq:deg-check}--observe the threshold $\tau$ grows with smaller $\epsilon$. We expand on this price of privacy in the next section. 
+
+It is interesting to note that for response poisoning, the degree deflation attack (Sec. \ref{sec:attacks}) represents a worst-case attack for correctness -- the attack can skew an honest user's degree estimate by $\Omega\big(m(1+\frac{1}{\epsilon})+\frac{\sqrt{n}}{\epsilon}\big)$.  Similarly, the degree inflation attack (Sec. \ref{sec:attacks}) can skew a malicious user's degree estimate by $\Omega\big(m(1+\frac{1}{\epsilon})+\frac{\sqrt{n}}{\epsilon}\big)$) resulting in the worst-case soundness. %In the Appendix \ji{Insert}, we show that the degree deflation and inflation attacks (Section \ref{sec:attacks}),  represent worst-case attacks against \DegRRCheck{} for correctness and soundness, respectively. In other words, these attacks meet the error bound in Theorem \ref{thm:response:check}.
+
+%It is interesting to note that for response poisoning, the degree deflation attack, $\calA_{df}$ (Section \ref{sec:setup}),  represents a worst-case attack for correctness -- $\calA_{df}$ can skew an honest user's degree estimate by $\Omega\big(m(1+\frac{1}{\epsilon})+\frac{\sqrt{n}}{\epsilon}\big)$.  Similarly, the degree inflation attack , $\calA_{df}$ , can skew a malicious user's degree estimate by $\Omega\big(m(1+\frac{1}{\epsilon})+\frac{\sqrt{n}}{\epsilon}\big)$) resulting in the worst-case soundness. Similar observations hold for input poisoning when considering the corresponding input poisoning versions of the attacks. Specifically, all malicious users $\DO_i, i \in \calM$ report via Algorithm \ref{alg:attackinput} by setting $l'[t]=0$ for  degree deflation via input poisoning, $\calA^{input}_{df}$. For degree inflation via input poisoning, $\calA^{input}_{if}$,   target user $\DO_t$ sets $l'=[1,1\cdots,1]$ while all others $\DO_i, i \in \calM\setminus t$ set $l'[t]=1$. 
+ 
+
+
+ %The above is essentially privacy-robustness trade-off. For degree estimation for a given privacy ($\epsilon$), we can have a robustness/ utility for honest users trade-off - we can show the effect of verification vs utility (std) by exploring the mechanisms Laplace and RR.
+
+
+%TODO: Fix this table
+%\begin{table}[!t]
+%    \small \centering
+%    \caption{Degree estimation for $u_i$}
+%   \scalebox{0.75}{ \begin{tabular}{c|ccc}
+%    \toprule
+%     Input &Check Protocol & Malicious $u_i$ & Honest  $u_i$ \\ \hline
+%No input from $u_i$, bits from $u_{\setminus i}$ &  & \\\\
+%$u_i$ input is degree, bits from $u_{\setminus i}$\\\\
+% $u_i$ input is list, bits from $u_{\setminus i}$ \bottomrule
+%    \end{tabular}}
+%\end{table}
+
+%\begin{thm}For no verification, we can have $(\frac{\sqrt{n}}{})$-correct and $()$-sound algorithm.\end{thm}
+%\subsection{Randomized Response Mechanism}
+
+\subsection{Price of Privacy}\label{sec:price-privacy}
+
+\setlength{\textfloatsep}{6pt}
+
+%\begin{algorithm}[t]
+%  \KwData{$\{l_1,\cdots,l_n\}$ where $l_i \in \{0,1\}^n$ is the adjacency list of user $\DO_i$}
+%  \KwResult{$(\hat{d}_1,\cdots, \hat{d}_n)$ where $\hat{d}_i$ is the degree estimate for user $\DO_i$}
+%  \caption{\DegCheck$: \{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{alg:degcheck}
+%    \textbf{Users}\;
+%	  \ForEach{$i \in [n]$}{
+%      $q_i = l_i$\;
+%		}
+%    \textbf{Data Aggregator}\;
+%    \ForEach{$i \in [n]$}{
+%      $count_i^{11} = \sum_{j \in [n]\setminus i} q_{i}[j]q_{j}[i]$\;
+%      $count_i^{01} =\sum_{j \in [n]\setminus i} (1-q_{i}[j])q_{j}[i]$\;
+%      $count_i^{10} =\sum_{j \in [n]\setminus i} q_{i}[j](1-q_{j}[i])$\;
+%     	\uIf{$(count_i^{01}+count_i^{10}) \leq m$}{
+%      	$\hat{d}_i = count_i^{11}$\;
+%			}
+%			\uElse{
+%        $\hat{d}_i=\bot$\;
+%			}
+%		}
+%    \KwRet{$(\hd_1, \hd_2, \ldots, \hd_n)$}
+%\end{algorithm}
+
+%\begin{algorithm}
+%  \caption{\DegCheck$: \{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{alg:degcheck}
+%  \begin{algorithmic}[1]
+%  \Statex \textbf{Parameter:}  $m$ - Number of malicious users;
+%  \Statex \textbf{Input:} $\{l_1,\cdots,l_n\}$ where $l_i \in \{0,1\}^n$ is the adjacency  \Statex  \hspace{1.1cm} list of user $\DO_i$;
+%  \Statex \textbf{Output:} $(\hat{d}_1,\cdots, \hat{d}_n)$ where $\hat{d}_i$ is the degree estimate for  \Statex  \hspace{1.2cm} user $\DO_i$;
+%  \Statex \textbf{Users}
+%    \For{$i \in [n]$}
+%      \State $q_i = l_i$
+%    \EndFor
+%    \Statex \textbf{Data Aggregator}
+%    \For{$i \in [n]$}
+%      \State $count_i^{11} = \sum_{j \in [n]\setminus i} q_{i}[j]q_{j}[i]$
+%      \State $count_i^{01} =\sum_{j \in [n]\setminus i} (1-q_{i}[j])q_{j}[i]$
+%       \State $count_i^{10} =\sum_{j \in [n]\setminus i} q_{i}[j](1-q_{j}[i])$
+%      
+%     \If{$(count_i^{01}+count_i^{10}) \leq m$}
+%      \State $\hat{d}_i = count_i^{11}$
+%     \Else
+%     \State $\hat{d}_i=\bot$
+%     \EndIf
+%    \EndFor
+%    \Return $(\hd_1, \hd_2, \ldots, \hd_n)$ 
+%  \end{algorithmic}
+%\end{algorithm}
+
+The randomization required to achieve privacy adversely impacts a protocol's robustness to poisoning. Here, we perform an ablation study and formalize the price of privacy by comparing to the correctness and soundness of \textit{non-private} protocols. For this, we adapt our consistency check to the non-private setting via the \DegCheck{} protocol (Alg. \ref{alg:degcheck}) as described below. First, every user reports their true adjacency list to the data aggregator. The data aggregator then employs a consistency check to identify the malicious users. Due to the absence of randomization, the check is much simpler here and involves just ensuring that the number of inconsistent reports for user $\DO_i$ is bounded by $m$, i.e., $count_i^{01}+count_i^{10} \leq m $. In case the check goes through, the aggregator can directly use $count_i^{11}$, the count of the edges where both users have reported $1$s consistently, as the degree estimate $\hat{d}_i$.
+
+We quantify the impact of the poisoning attacks on  \DegCheck{} as follows.
+
+\begin{thm}
+Let $\calM$ be a set of malicious users with $|\calM| = m$. Then, there are poisoning attacks $\calA_1$ and $\calA_2$ such that
+the \DegCheck{} protocol is $m$-tight correct with respect to $\calA_1$ and $(\min\{2m-1,n-1\})$-tight sound with respect to $\calA_2$. \label{thm:no privacy}
+\end{thm}
+The proof of the above theorem is in App. \ref{app:thm:no privacy}.
+Note that the robustness guarantees are tight in that there are attacks which always successfully attain $m$ error for an honest user and $\min\{2m-1,n-1\}$ for a malicious user. Thus, the low-order manipulation term of $O(m)$ is inevitable  even for non-private protocols based on consistency checks. %\ji{Is this a weakness of the protocol or a true lower bound?}
+
+Comparing Thm.~\ref{thm:no privacy} to Thm.~\ref{thm:response:check}, we see an improvement in both correctness and soundness guarantees over the private protocols -- the malicious users can skew the degree estimates by only $O(m)$, and the $\tilde{O}(\frac{m}{\epsilon} + \frac{\sqrt{n}}{\epsilon})$ terms have disappeared. This highlights the price of privacy -- the private protocols incur additional error due to the inherent randomization of \ldp.
+
+Thus, our proposed \DegRRCheck{} protocol shows that the soundness of a degree estimation protocol can be significantly improved by leveraging the redundancy in graph data. Additionally, we observe the robustness of the protocol worsens with higher privacy and we explicitly formalize price of privacy. 

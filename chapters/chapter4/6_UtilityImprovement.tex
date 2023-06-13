@@ -1,0 +1,95 @@
+\section{Improving Correctness with A Hybrid Protocol}\label{sec:hybrid}
+The robustness guarantees for $\DegRRCheck{}$ contain a $\tilde{O}(\frac{\sqrt{n}}{\epsilon})$ term coming from the error in randomized response.
+This is inherent in \textit{any} randomized response based mechanism  ~\cite{error1,error2,error3} since each of the $n$ bits of the adjacency list need to be independently randomized. Unfortunately, this dependence on $n$ has an adverse effect on the utility of the degree estimates. Typically, real-world graphs are sparse in nature with maximum degree $d_{max}\ll n$. Hence, the $\tilde{O}(\frac{\sqrt{n}}{\epsilon})$ noise term completely dominates the degree estimates resulting in poor accuracy for the honest users %\footnote{The ``utility'' of the malicious users is inconsequential -- our goal is to minimize the impact of poisoning from the worst-case error of $n-1$.} 
+(i.e. poor correctness). On the other hand, \RLap{} provides a more accurate degree estimate for the honest users but has the worst-case $(n-1)$-tight soundness (see Thm.~\ref{thm:response:laplace}). In this section, we present a mitigation strategy. The key idea is to combine the two approaches and use a hybrid protocol, \DegHybrid, that achieves the best of both worlds: 
+\begin{itemize} \item correctness guarantee of \RLap, and \item soundness guarantee of \DegRRCheck. \end{itemize}
+
+The $\DegHybrid$ protocol is outlined in Alg. \ref{alg:deghybrid} and described as follows. Each user $\DO_i$ prepares two responses -- the noisy adjacency list, $q_i$, randomized via $\textsf{RR}_{\rho}$, and a noisy degree estimate, $\tilde{d}^{lap}_i$, perturbed via \RLap, and sends them to the data aggregator. $\DO_i$ divides the privacy budget between the two responses according to some constant $c \in (0,1)$. The data aggregator first processes each list $q_i$ to employ the same consistency check on $count^{01}_i$ as that of the \DegRRCheck{} protocol (Step 9).
+In case the check passes, the aggregator computes the unbiased degree estimate $\tilde{d}^{rr}_i$ from $count_i^{11}$, in the exact same way as \DegRRCheck. Note that $\tilde{d}^{rr}_i$ and $\tilde{d}^{lap}_i$ are the noisy estimates of the \textit{same} ground truth degree, $d_i$, computed via two different randomization mechanisms. To this end, the aggregator employs a second check (Step 10) to verify the consistency of the two estimates as follows:
+\begin{gather*} |\tilde{d}_i^{rr} - \tilde{d}_i^{lap}| \leq \frac{2\tau}{1-2\rho} + \frac{1}{(1-c)\epsilon}\ln \tfrac{2n}{\delta} ,\end{gather*} 
+where $\rho$ in this case is equal to $\frac{1}{1+e^{c\epsilon}}$.
+This check accounts for the error from $\tilde{d}^{rr}_i$ (the $\frac{2\tau}{1-2\rho}$) term, and the error from $\tilde{d}^{lap}_i$ (the $\frac{1}{(1-c)\epsilon}\ln \tfrac{2n}{\delta}$ term).
+Finally, the protocol returns $\bot$ if either of the checks fail.
+In the event that both the checks pass, the aggregator uses $\tilde{d}_i^{lap}$ (obtained via \RLap) as the final degree estimate $\hat{d}_i$ for $\DO_i$.
+
+\begin{algorithm}[t]
+%  
+  \KwData{Adjacency lists $\{l_1,\cdots,l_n\}$; $\tau$, threshold for consistency check}
+  \KwResult{$(\hat{d}_1,\cdots, \hat{d}_n)$ where $\hat{d}_i$ is the degree estimate for user $\DO_i$}
+  $\rho=\frac{1}{1+e^{c\epsilon}}$\;
+  \textbf{Users}\;
+  Select $c\in (0,1)$\;
+  \ForEach{$i \in [n]$}{
+		$q_i = \rr_\rho(l_i)$\;
+		$\tilde{d}_i^{lap} = \|l_i\|_1 + Lap(\frac{1}{(1-c)\epsilon})$\;
+	}
+  \textbf{Data Aggregator}\;
+  \ForEach{$i \in [n]$}{
+		$count_i^{11} = \sum_{j \in [n] \setminus i} q_{i}[j] q_{j}[i]$\;
+		$count_i^{01} = \sum_{j \in [n] \setminus i} (1-q_{i}[j])q_{j}[i]$\;
+		\uIf{$|count_{i}^{01} - \rho(1-\rho)(n-1)| \leq \tau$}{
+		%\hfill\textcolor{blue}{$\rhd$} First check for bounding the  
+			$\tilde{d}_i^{rr} = \frac{1}{1-2\rho}(count_i^{11} - \rho^2 (n-1))$\;
+			\uIf{$|\tilde{d}_i^{rr} - \tilde{d}_i^{lap}| \leq \frac{2\tau}{1-2\rho} + \frac{1}{(1-c)\epsilon}\ln \tfrac{2n}{\delta} $}{
+%        %\Statex \hfill\textcolor{blue}{$\rhd$} Second check to ensure that the two estimates are consistent 
+				$\hd_i = \tilde{d}_i^{lap}$\;
+			}
+			\uElse{
+        $\hd_i = \bottom$\;
+			}
+		}
+		\uElse{
+        $\hd_i = \bottom$\;
+		}
+	}
+  \KwRet{$(\hd_1, \hd_2, \ldots, \hd_n)$}
+  \caption{\DegHybrid: $\{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{alg:deghybrid}
+\end{algorithm}
+
+%\begin{algorithm}[bt]
+%  \caption{\DegHybrid: $\{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{alg:deghybrid}
+%  \begin{algorithmic}[1]
+%  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;\Statex \hspace{1.8cm} $\tau$ - Threshold for consistency check;
+%  
+%  %$RR_\rho(\cdot):\{0,1\} \mapsto \{0,1\}, \rho = \frac{1}{1+e^{2\epsilon}}$ -  Randomized response mechanism satisfying $\epsilon$-relation \DP
+%  \Statex\textbf{Input:} $\{l_1,\cdots,l_n\}$ where $l_i \in \{0,1\}^n$ is the adjacency  \Statex  \hspace{1cm} list of user $\DO_i$;
+%  \Statex \textbf{Output:} $(\hat{d}_1,\cdots, \hat{d}_n)$ where $\hat{d}_i$ is the degree estimate for  \Statex  \hspace{1.2cm} user $\DO_i$;
+%  \vspace{0.2cm}
+%  \Statex \textbf{Users}
+%  \State Select $c\in (0,1)$ 
+%  \State $\rho=\frac{1}{1+e^{c\epsilon}}$
+%    \For{$i \in [n]$}
+%      \State $q_i = \rr_\rho(l_i)$
+%      \State $\tilde{d}_i^{lap} = \|l_i\|_1 + Lap(\frac{1}{(1-c)\epsilon})$
+%    \EndFor
+%    \vspace{0.2cm}
+%    \Statex \textbf{Data Aggregator}
+%    \For{$i \in [n]$}
+%      \State $count_i^{11} = \sum_{j \in [n] \setminus i} q_{i}[j] q_{j}[i]$
+%      \State $count_i^{01} = \sum_{j \in [n] \setminus i} (1-q_{i}[j])q_{j}[i]$
+%      \If{$|count_{i}^{01} - \rho(1-\rho)(n-1)| \leq \tau$}
+%      %\Statex \hfill\textcolor{blue}{$\rhd$} First check for bounding the  
+%        \State $\tilde{d}_i^{rr} = \frac{1}{1-2\rho}(count_i^{11} - \rho^2 (n-1))$
+%        \If{$|\tilde{d}_i^{rr} - \tilde{d}_i^{lap}| \leq \frac{2\tau}{1-2\rho} + \frac{1}{(1-c)\epsilon}\ln \tfrac{2n}{\delta} $}
+%        %\Statex \hfill\textcolor{blue}{$\rhd$} Second check to ensure that the two estimates are consistent 
+%        \State{$\hd_i = \tilde{d}_i^{lap}$}
+%        \Else 
+%            \State $\hd_i = \bottom$
+%        \EndIf
+%      \Else
+%        \State $\hd_i = \bottom$
+%      \EndIf
+%    \EndFor
+%    \Return $(\hd_1, \hd_2, \ldots, \hd_n)$ 
+%  \end{algorithmic}
+%\end{algorithm}
+
+Each $\hd^{rr}_i$ estimate is computed identically to that of \DegRRCheck{}. \DegHybrid{} allows a user to send an even more accurate estimate of their degree -- to prevent malicious users from outright lying about this value, $\hd_i^{lap}$ is compared to $\hd_i^{rr}$. This allows \DegHybrid{} to enjoy the correctness guarantee of \RLap{} and the soundness guarantee of \DegRRCheck{}. Formally,
+
+\begin{thm}\label{thm:rrlapchecka3}
+	Let $\calM$ be a set of malicious users with $|\calM| = m$.
+    Then, for all $c \in (0,1)$, the \DegHybrid{} protocol run with $\tau = \threshresphybrid$ is $(\frac{\ln \frac{2n}{\delta}}{(1-c)\epsilon}, \delta)$-correct and $\left( 4m (\frac{e^{c\epsilon}+1}{e^{c\epsilon}-1}) + 8\sqrt{n}\frac{ \sqrt{(e^{c\epsilon}+1)\ln \frac{8n}{\delta}}}{e^{c\epsilon}-1} + \frac{\ln \frac{2n}{\delta}}{(1-c)\epsilon}, \delta\right)$-sound with respect to any response poisoning attack. \label{thm:response:hybrid}
+\end{thm}
+
+The proof is in App. \ref{app:thm:rrlapchecka3}. We remark that \DegHybrid{} achieves the optimal correctness of $\tilde{O}(\frac{1}{\epsilon})$ that is achievable under \ldp. This is due to the fact that the data aggregator uses $\tilde{d}^{lap}_i$ as its final degree estimate. The soundness guarantee can be written as $\tO(m(1+\frac{1}{\epsilon}) + \frac{\sqrt{n}}{\epsilon})$ which is the same as that of \DegRRCheck{}. This is enforced by the two consistency checks.   Hence, the hybrid mechanism achieves the best of both worlds.
+ %Using verification based on randomized response, this soundness cannot be improved, as the error inherent to randomized response has to be accepted for honest users, but malicious users are then able to manipulate their degrees by this much. \ji{Can I prove this formally?}

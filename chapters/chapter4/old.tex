@@ -1,0 +1,71 @@
+In this section, we discuss the necessary background: the definition of local differential privacy on graphs and a description of our fully general attack model. We conclude by instantiating the attack model on two common types of attacks.
+
+\textit{Graph Notation.}
+We consider a social network consisting of users $\DO_1, \ldots, \DO_n$. The users belong to an undirected graph $G = ([n], E)$, where user $\DO_i$ corresponds to vertex $i$. Each user is aware of his adjacency list $l_i \in \{0,1\}^n$ which indicates the users to which he shares an edge. We write $l_i[j]$ to indicate the $j$th bit of $l_i$, so that $l_i[j]=1$ if and only if there is an edge between $\DO_i$ and $\DO_j$. We let $\textbf{d}=\langle d_1, \ldots, d_n\rangle \in \R^n$ denote the vector of degrees in $G$, with $d_i$ being the degree of $\DO_i$.
+
+\subsection{Local Differential Privacy for Graphs}\label{sec:ldp}
+
+Our privacy setting is local differential privacy for graphs~\cite{imola2021locally}, in which each user $\DO_i$ is privately queried about his adjacency list $l_i$ by an untrusted analyst. We consider \emph{one-round, non-interactive} protocols, where the analyst independently queries each user once, and user $i$ is queried with a \emph{randomizer} $R_i$. The randomizers use noise to provide privacy such that the effect of adding or removing an entire edge (or relationship) from the graph will produce similar output distributions. Formally, we have:
+
+\begin{defn}[$\epsilon$-relationship \DP \cite{imola2021locally}]  For $i \in [n]$,
+let $R_i: \{0,1\}^n\mapsto \calX$ be the local randomizer of user $\DO_i$ that takes their adjacency list $l_i$ as input.
+We say $\langle R_1(\cdot),\cdots,R_n(\cdot)\rangle$ provides $\epsilon$-relationship \DP~if for any
+two neighboring graphs $G,G'$ that differ in one edge and
+for any $S\subseteq \calX^n$,
+\begin{gather*}
+\Pr[(R_1(l_1),\cdots,R_n(l_n)) = S]
+\leq \\e^{\epsilon} \Pr[(R_1(l'_1),\cdots,R_n(l'_n))=S], \end{gather*}
+where $l_i$ (respectively, $l_i'$)
+is the $i$-th row of the adjacency
+matrix of graph $G$ (respectively, $G'$).\end{defn}
+
+Relationship DP provides the following privacy guarantee to each user: If the user changes his friendship status with another user (such as by accepting a friend request from the user), an operation that modifies both his and the other user's adjacency lists, then the two output distributions of the randomizes will be indistinguishable. Unlike edge \ldp~\cite{Graph7,Graph11}, in which each randomizer is indistinguishable whether or not a bit is changed in the adjacency list, we use relationship DP because adding an entire edge to the graph modifies two adjacency lists. However, the two notions of privacy are closely connected~\cite{imola2021locally}, and we will use common edge \ldp{} randomizers to design our relationship \DP{} protocols. We now illustrate these edge \ldp{} randomizers that we will use throughout this paper.
+%Relationship \DP~is closely connected to the notion of edge \ldp~which is one of the most popular privacy guarantee for graphs \cite{Graph7,Graph11} in the \ldp~setting. $\epsilon$-edge \ldp~protects the information about an edge $e_{ij}$ from the adjacency list $l_i$ of a \textit{single} user $\DO_i$. On the other hand, relationship \DP~consider the outputs from \textit{both} users $\DO_i$ and $\DO_j$ and hides the \textit{edge as a  whole}. Formally, if each of the local randomizers $R_i(\cdot), i \in [n]$ satisfy $\epsilon$-edge \ldp, then $(R_1(\cdot),\cdots,R_n(\cdot))$ satisfies $2\epsilon$-relationship \DP. The factor of two comes from the fact that adding/removing an edge affects at most two neighboring lists. For the rest of the paper, we consider $\epsilon$-relationship \DP~degree estimation algorithms. 
+ 
+%\paragraph{Edge \ldp.}The most popular privacy guarantee for graphs is known as \textit{edge \DP}~\cite{Graph7,Graph11} which protects the existence of an edge between any two data owners. In other words, on observing the output, an adversary cannot distinguish between two graphs that differ in a single edge. % Node \DP~\cite{} is a stronger notion of privacy which protects the absence/presence of a node (data owner) along with all its edges. However in the local model, many applications~\cite{} collect the data owner's ID which make it impossible to provide node \DP. For instance, consider a mobileapplication modeling social connectivity that collects the information about how many friends a data owner met on a given day along with their user ID. In this case, the data owner might be okay with sending their ID but would like to protect their edge information (friends who they met).  Hence in this paper, we focus on edge \DP~in the local model in the same way as prior work~\cite{}.
+
+\subsubsection{Randomized Response} Denoted $RR_\rho(\cdot)$, randomized response~\cite{RR} releases a bit $b \in \{0,1\}$ by
+flipping it with probability $\rho = \frac{1}{1+e^\epsilon}$. We naturally extend the mechanism to edge lists in $\{0,1\}^n$ by flipping each bit independently with probability $\rho$.
+%(depicted by Algorithm~\ref{alg:rr} in Appendix~\ref{app:background}). 
+As we will see later, when each user applies $RR_\rho$ to his adjacency list, the entire protocol satisfies $2\epsilon$-relationship DP.
+
+\subsubsection{Laplace Mechanism} 
+The \textit{Laplace mechanism} is a standard algorithm to achieve \DP~\cite{Dwork}. For degree estimation, each user $\DO_i$ simply reports $\tilde{d}_i=d_i+\eta, \eta \sim Lap(\frac{1}{\epsilon})$ where $Lap(b)$ represents the Laplace distribution with scale parameter $b$. When each user applies the mechanism to his adjacency list, the entire protocol satisfies $2\epsilon$-relationship \DP. 
+
+
+
+\subsection{Threat Model}
+At the end of the protocol, the analyst receives $q_i = R_i(l_i) \in \calX$ from each user $\DO_i$. The goal of the analyst is to produce a degree estimate $\hat{d}_i$ for each user. However, we consider a set $\calM \subseteq [n]$ of \emph{malicious user indices}, consisting of compromised users who choose to not apply the randomizers and instead may return arbitrary output with the goal of poisoning the data. We make no assumptions about the malicious users---they may be spam accounts in the social network, compromised accounts of honest users, or any other type of malicious account. Our only assumptions are that the honest users indexed by $\calH = [n] \setminus \calM$ honestly apply their randomizers.
+
+
+%(see Section \ref{sec:attack:naive} for details).
+
+\textit{Summary of Attack Notation:}
+User $\DO_i$ sends $q_i = R_i(l_i) \in \calX$ to the analyst. Based on the responses, the analyst computes a degree estimate $\hat{d}_i$ for each user. A set of $m$ malicious users indexed by $\calM \in [n]$ may choose to poison the outputs. We denote the honest users by $\calH = [n] \setminus \calM$.
+
+
+
+\begin{comment}\noindent\textbf{Note.} Allour results are attack-agnostic, i.e.,
+We reiterate that our correctness and soundness definitions take strict approaches as to what constitutes an ``abnormal'' execution and thus when a protocol is allowed to return $\bottom$. Under correctness, all honest users receive an accurate estimate, regardless of any data poisoning attack. Under soundness, only malicious users who may poison their data are allowed to receive $\bottom$. 
+
+For both correctness and soundness, error terms of $m$ are generally possible against any protocol, as if $m$ users act maliciously, they can corrupt the information of $m$ edges to any user. As described in Section~\ref{sec:price-privacy}, even non-private protocols are susceptible to such attacks. Thus, our correctness and soundness guarantees will all contain terms of $m$---since $m$ is generally small, this term is the lowest-order term in our bounds.
+
+Finally, our definitions are attack-agnostic: an algorithm which is correct or sound up to $m$ malicious users must satisfy the claims regardless of the attack used.
+\end{comment}
+
+
+
+Next, we design graph protocols based on data redundancy which are provably accurate and much more robust when the number of adversaries $m$ is much smaller than $n$. Our key insight is to leverage the fact that in graphs, data are shared between two people; i.e. any two people share the knowledge that they are friends or not. Thus, by collecting edge information from both owners of an edge, we are able to \emph{verify} whether the information is consistent. With no privacy, we could easily flag malicious users as those with more than $m$ edge inconsistencies, as this is beyond a tolerable number of inconsistencies for an honest user. With the noise introduced by privacy, this is no longer possible, and there will be many more than $m$ edge inconsistencies for each user. We solve this issue by constructing edge inconsistency confidence bounds such that each honest user will likely fall within them and each malicious user will be outside. Using our edge consistency checks permits the design of algorithms which are much more robust to data poisoning.
+
+We emphasize that our robustness guarantees hold against any data poisoning attack---the creation of fake users, false reporting of friends, or compromising honest users are all possible actions the adversary may take.
+Using our edge consistency checks permits the design of algorithms which are much more robust to data poisoning.
+ We illustrate this using the following degree-estimation protocol. For the ease of exposition, we assume no privacy. Consider a protocol where the users send in their (true) adjacency lists. Here for every edge $e_{ij}$, the analyst receives two copies of the same bit from users $\DO_i$ and $\DO_j$ -- in case there is inconsistency in the two reported bits, the analyst can safely conclude that one party is malicious and act accordingly. Thus, we see that the natural data redundancy in graphs can be leveraged to perform robust data analysis. However, \ldp~requires randomization which makes the user's reports probabilistic. Consequently, the aforementioned simple consistency check cannot be applied to \ldp~protocols.
+\\\\
+\DegRRCheck{}\\\DegRRCheck{} also verifies when a user has too many inconsistent edges, and flags these users as malicious. An inconsistent edge is when the two users disagree on the existence of their mutual edge. whether their edge exists is not. The intuition is that if the user $\DO_i$ is malicious and attempts at poisoning a lot of the edges, then there would be a large number of inconsistent reports for edges to honest users. \DegRRCheck{}  counts the number of inconsistent edges to user $\DO_i$ as 
+\[
+  count_i^{01} = \sum_{j=1}^n (1-q_{i}[j]) q_{j}[i],
+\]
+i.e., the number of edges connected to user $\DO_i$\footnote{It is symmetric (and doesn't give additional information) to count edges for which user $\DO_i$ reports $1$ and $\DO_j$ reports $0$.} for
+which they reported $0$ and user $\DO_j$ reported $1$.  
+\\\\Input Manipukation\\
+This might be considerably more difficult than simply lying to the software about his input, e.g. by misreporting his friend list, which is always possible. Clearly, response and is the more powerful attack. Hence, Since response is at least moer pwerful . Thus, if re restrict ti theweaker but perhaps more realisic class of attacks Thus, when it is only feasible for users to manipulate their input data, it makes sense to restrict our attacks to input manipulation. Furthermore, because privacy adds randomization to the data, we expect input manipulation attacks to be strictly weaker than response manipulation, because the poisoned signals in the malicious data are noised. 
