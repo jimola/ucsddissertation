@@ -1,23 +1,34 @@
+\graphicspath{{./chapters/chapter4/}}
+\chapter{ }
 
 \section{Background Cntd.}\label{app:background}
 
 
 \setlength{\textfloatsep}{2pt}
+%\begin{algorithm}
+%  \caption{$\rr_\rho: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{alg:rr}
+%  \begin{algorithmic}[1]
+%  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
+%  
+%  \Statex\textbf{Input:} $l \in \{0,1\}^n$ - True adjacency list;
+%  \Statex \textbf{Output:} $q \in \{0,1\}^n$ - Reported (noisy) adjacency list;
+%  \vspace{0.2cm}
+%  \State $\rho=\frac{1}{1+e^{\epsilon}}$
+%  \For{$i \in [n]$}
+%  \State $q[i]=\rr_\rho(l[i])$
+%  \EndFor
+%  \Return $q$
+%  \end{algorithmic}
+%\end{algorithm}
 \begin{algorithm}
+  \KwData{$l \in \{0,1\}^n$ - True adjacency list}
+  \KwResult{$q \in \{0,1\}^n$ - Reported (noisy) adjacency list}
+  $\rho=\frac{1}{1+e^{\epsilon}}$\;
+  \For{$i \in [n]$}{
+  	$q[i]=\rr_\rho(l[i])$\;
+	}
+  \KwRet $q$
   \caption{$\rr_\rho: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{alg:rr}
-  \begin{algorithmic}[1]
-  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
-  
-  %$RR_\rho(\cdot):\{0,1\} \mapsto \{0,1\}, \rho = \frac{1}{1+e^{2\epsilon}}$ -  Randomized response mechanism satisfying $\epsilon$-relation \DP
-  \Statex\textbf{Input:} $l \in \{0,1\}^n$ - True adjacency list;
-  \Statex \textbf{Output:} $q \in \{0,1\}^n$ - Reported (noisy) adjacency list;
-  \vspace{0.2cm}
-  \State $\rho=\frac{1}{1+e^{\epsilon}}$
-  \For{$i \in [n]$}
-  \State $q[i]=\rr_\rho(l[i])$
-  \EndFor
-  \Return $q$
-  \end{algorithmic}
 \end{algorithm}
 
 \section{Proofs}\label{app:proofs}
@@ -307,62 +318,100 @@ Let $\DO_t, t \in \calM$ denote the target malicious user.
 
 For honest users to which $\DO_t$ does not share an edge, $\DO_t$ flips some of the bits to $1$ with the hopes of artificially increasing his degree. He does this for a $r_1$-fraction of these neighbors. See Algorithm~\ref{alg:att-input-inf} for the details; we term this attack $A_{\DegRRCheck}^{inp}$. Note that if $r_1 = 0$, then the malicious user is being completely honest for these users and will not inflate his degree, and if $r_1 = 1$, then he lies about each of these users and will likely be caught. Thus, his strategy is to pick a value in between $0$ and $1$, and in the experiments we found that $r_1 = 15\%$ was a good tradeoff point.
 
+%\begin{algorithm}[bt]
+%  \caption{$A_{\DegRRCheck}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{alg:att-input-inf}
+%  \begin{algorithmic}[1]
+%  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
+%  
+%  %$RR_\rho(\cdot):\{0,1\} \mapsto \{0,1\}, \rho = \frac{1}{1+e^{2\epsilon}}$ -  Randomized response mechanism satisfying $\epsilon$-relation \DP
+%  \Statex\textbf{Input:} $l \in \{0,1\}^n$ - True adjacency list;
+%  \Statex \hspace{0.9cm} $t$ - Target honest user;
+%  \Statex \textbf{Output:} $q \in \{0,1\}^n$ - Reported adjacency list;
+%  \vspace{0.2cm}
+%
+%\State Select $r_1\in [0,1]$
+%\State $\calH_1=\{i \in \calH| l[i]=1\}$ 
+%\Statex \hfill\textcolor{blue}{$\rhd$} $\calH_1$ is the set of honest users with a mutual edge
+%  \State $\calH_0=\calH\setminus\calH_1$
+%  \Statex \hfill\textcolor{blue}{$\rhd$} $\calH_0$ is the set of honest users without a mutual edge
+%    \State $F\in_R \calH_0, |F|=r_1|\calH_0|$
+%    \Statex \hfill\textcolor{blue}{$\rhd$} Randomly sample $r_1$ fraction of the users in $\calH_0$ 
+%    \State $l'=\{0,0,\cdots, 0\}$
+%  \For{ $i \in \calH_1\cup\calM \cup F$} 
+%  \State $l'[i]=1$ 
+%  \EndFor
+%  \For{$i \in [n]$}
+%  \State $q[i]=\rr_\rho(l'[i])$
+%  \EndFor
+%  \Return $q$
+%  \end{algorithmic}
+%\end{algorithm}
+
 \begin{algorithm}[bt]
+\KwData{ $l \in \{0,1\}^n$ - True adjacency list, $t$ - Target honest user}
+\KwResult{$q \in \{0,1\}^n$ - Reported adjacency list}
+Select $r_1\in [0,1]$\;
+$\calH_1=\{i \in \calH| l[i]=1\}$\;
+\hfill\textcolor{blue}{$\rhd$} $\calH_1$ is the set of honest users with a mutual edge\;
+$\calH_0=\calH\setminus\calH_1$\;
+\hfill\textcolor{blue}{$\rhd$} $\calH_0$ is the set of honest users without a mutual edge\;
+$F\in_R \calH_0, |F|=r_1|\calH_0|$\;
+\hfill\textcolor{blue}{$\rhd$} Randomly sample $r_1$ fraction of the users in $\calH_0$\;
+$l'=\{0,0,\cdots, 0\}$\;
+\For{ $i \in \calH_1\cup\calM \cup F$} {
+$l'[i]=1$ \;
+}
+\For{$i \in [n]$}{
+	$q[i]=\rr_\rho(l'[i])$\;
+}
+\KwRet{$q$}
   \caption{$A_{\DegRRCheck}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{alg:att-input-inf}
-  \begin{algorithmic}[1]
-  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
-  
-  %$RR_\rho(\cdot):\{0,1\} \mapsto \{0,1\}, \rho = \frac{1}{1+e^{2\epsilon}}$ -  Randomized response mechanism satisfying $\epsilon$-relation \DP
-  \Statex\textbf{Input:} $l \in \{0,1\}^n$ - True adjacency list;
-  \Statex \hspace{0.9cm} $t$ - Target honest user;
-  \Statex \textbf{Output:} $q \in \{0,1\}^n$ - Reported adjacency list;
-  \vspace{0.2cm}
-
-\State Select $r_1\in [0,1]$
-\State $\calH_1=\{i \in \calH| l[i]=1\}$ 
-\Statex \hfill\textcolor{blue}{$\rhd$} $\calH_1$ is the set of honest users with a mutual edge
-  \State $\calH_0=\calH\setminus\calH_1$
-  \Statex \hfill\textcolor{blue}{$\rhd$} $\calH_0$ is the set of honest users without a mutual edge
-    \State $F\in_R \calH_0, |F|=r_1|\calH_0|$
-    \Statex \hfill\textcolor{blue}{$\rhd$} Randomly sample $r_1$ fraction of the users in $\calH_0$ 
-    \State $l'=\{0,0,\cdots, 0\}$
-  \For{ $i \in \calH_1\cup\calM \cup F$} 
-  \State $l'[i]=1$ 
-  \EndFor
-  \For{$i \in [n]$}
-  \State $q[i]=\rr_\rho(l'[i])$
-  \EndFor
-  \Return $q$
-  \end{algorithmic}
 \end{algorithm}
-
 \noindent \textbf{Response Poisoning.}  For response poisoning, the non-target malicious first find a plausible response by applying $RR_\rho$ to their data. They then set the bit for $\DO_t$ to be $1$, indicating they are connected to this user.
 
 The target malicious user constructs his response by first applying $RR_\rho$ to his data to compute a plausible response. Then, he flips his bits to malicious users to $1$, and for honest users, he takes a $r_1$-fraction of the $0$s in his response and flips them to $1$. The quantity $r_1$ is a tradeoff parameter with the same intuition as for $A_{\DegRRCheck}^{inp}$. The details of this attack appear in Algorithm~\ref{alg:att-resp-inf}, and it is termed $A_{\DegRRCheck}^{resp}$.
 
-\begin{algorithm}[bt]
-  \caption{$A_{\DegRRCheck}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{alg:att-resp-inf}
-  \begin{algorithmic}[1]
-  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
-  
-  %$RR_\rho(\cdot):\{0,1\} \mapsto \{0,1\}, \rho = \frac{1}{1+e^{2\epsilon}}$ -  Randomized response mechanism satisfying $\epsilon$-relation \DP
-  \Statex\textbf{Input:} $l \in \{0,1\}^n$ - True adjacency list;
-  \Statex \textbf{Output:} $q \in \{0,1\}^n$ - Reported adjacency list;
-  \vspace{0.2cm}
-  
-  \State Select $r_1\in [0,1]$
-  \State $q = \textsf{RR}_\rho (l)$ 
-\State $\calI_1=\{i \in \calH| q[i]=1\}$ 
-\Statex \hfill\textcolor{blue}{$\rhd$} $\calH_1$ is the set of honest users with an edge in $q$
-\State $\calI_0 = \calH \setminus \calI_1$
+%\begin{algorithm}[bt]
+%  \caption{$A_{\DegRRCheck}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{alg:att-resp-inf}
+%  \begin{algorithmic}[1]
+%  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
+%  
+%  %$RR_\rho(\cdot):\{0,1\} \mapsto \{0,1\}, \rho = \frac{1}{1+e^{2\epsilon}}$ -  Randomized response mechanism satisfying $\epsilon$-relation \DP
+%  \Statex\textbf{Input:} $l \in \{0,1\}^n$ - True adjacency list;
+%  \Statex \textbf{Output:} $q \in \{0,1\}^n$ - Reported adjacency list;
+%  \vspace{0.2cm}
+%  
+%  \State Select $r_1\in [0,1]$
+%  \State $q = \textsf{RR}_\rho (l)$ 
+%\State $\calI_1=\{i \in \calH| q[i]=1\}$ 
+%\Statex \hfill\textcolor{blue}{$\rhd$} $\calH_1$ is the set of honest users with an edge in $q$
+%\State $\calI_0 = \calH \setminus \calI_1$
+%
+%    \State $F\in_R \calI_0, |F|=r_1|\calI_0|$
+%    \Statex \hfill\textcolor{blue}{$\rhd$} Randomly sample $r_1$ fraction of the users in $\calI_0$ 
+%  \For{ $i \in \calI_1 \cup\calM \cup F$} 
+%  \State $q[i]=1$ 
+%  \EndFor
+%  \Return $q$
+%  \end{algorithmic}
+%\end{algorithm}
 
-    \State $F\in_R \calI_0, |F|=r_1|\calI_0|$
-    \Statex \hfill\textcolor{blue}{$\rhd$} Randomly sample $r_1$ fraction of the users in $\calI_0$ 
-  \For{ $i \in \calI_1 \cup\calM \cup F$} 
-  \State $q[i]=1$ 
-  \EndFor
-  \Return $q$
-  \end{algorithmic}
+\begin{algorithm}[bt]
+\KwData{$l \in \{0,1\}^n$ - True adjacency list}
+\KwResult{$q \in \{0,1\}^n$ - Reported adjacency list}
+	Select $r_1\in [0,1]$\;
+	$q = \textsf{RR}_\rho (l)$\;
+	$\calI_1=\{i \in \calH| q[i]=1\}$\;
+  \hfill\textcolor{blue}{$\rhd$} $\calH_1$ is the set of honest users with an edge in $q$\;
+  $\calI_0 = \calH \setminus \calI_1$\;
+
+  $F\in_R \calI_0, |F|=r_1|\calI_0|$\;
+  \hfill\textcolor{blue}{$\rhd$} Randomly sample $r_1$ fraction of the users in $\calI_0$\;
+  \For{ $i \in \calI_1 \cup\calM \cup F$}{
+		$q[i]=1$\;
+	}
+  \KwRet{$q$}
+  \caption{$A_{\DegRRCheck}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{alg:att-resp-inf}
 \end{algorithm}
 
 \subsubsection{Degree Deflation Attacks}
@@ -383,27 +432,40 @@ computes the expected value of $\tilde{d}_t^{rr}$ given that he submitted $q$ wh
 \]
 He finally sets $\tilde{d}_t^{rr} = e_t^{rr,inp} + r_2 \frac{\tau}{1-2\rho}$ where $r_2 \in [0,1]$, which again trades off between how much cheating is possible and getting flagged. During the trials, we used $q_2 = 0.1$ as this did not significantly increase the target's chance of being rejected as $\bottom$. This attack, termed $A_{\DegHybrid}^{inp}$, appears in Algorithm~\ref{alg:att-resp-inf2}.
 
+%\begin{algorithm}[bt]
+%  \caption{$A_{\DegHybrid}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{alg:att-resp-inf2}
+%  \begin{algorithmic}[1]
+%  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
+%
+%  \Statex\textbf{Input:} $l \in \{0,1\}^n$ - True adjacency list;
+%  \Statex \textbf{Output:} $q \in \{0,1\}^n$ - Reported adjacency list;
+%  \Statex \hspace{1.1cm} $\tilde{d}^{lap}$ - Reported noisy degree estimate;
+%  \vspace{0.2cm}
+%\State{Select $r_2 \in [0,1]$}
+%\State{$\rho = \frac{1}{1+e^{c\epsilon}}$}
+%\Statex \hfill\textcolor{blue}{$\rhd$} $c$ is the constant used in Alg. \ref{alg:deghybrid} to divide the budget between the RR and Laplace steps.
+%\State $q \gets A_{\DegRRCheck}^{inp}(l, c\epsilon)$
+%
+%\State $\tilde{count}^{11} \gets m(1-\rho)^2 + \E[\sum_{i \in \calH} q_i RR_\rho(l_i)]$
+%\State $ e^{rr,inp} = \frac{\tilde{count}^{11} - \rho^2 n}{1-2\rho}$.
+%\State $ \hat{d}^{Lap} = e^{rr,inp} + r_2 \frac{\tau}{1-2\rho} + \eta$ where $\eta \sim Lap(\frac{1}{(1-c)\epsilon})$.
+%\Statex \textbf{return} $q,\tilde{d}^{Lap}$
+%  \end{algorithmic}
+%\end{algorithm}
+
 \begin{algorithm}[bt]
-  \caption{$A_{\DegHybrid}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{alg:att-resp-inf2}
-  \begin{algorithmic}[1]
-  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
-
-  \Statex\textbf{Input:} $l \in \{0,1\}^n$ - True adjacency list;
-  \Statex \textbf{Output:} $q \in \{0,1\}^n$ - Reported adjacency list;
-  \Statex \hspace{1.1cm} $\tilde{d}^{lap}$ - Reported noisy degree estimate;
-  \vspace{0.2cm}
-\State{Select $r_2 \in [0,1]$}
-\State{$\rho = \frac{1}{1+e^{c\epsilon}}$}
-\Statex \hfill\textcolor{blue}{$\rhd$} $c$ is the constant used in Alg. \ref{alg:deghybrid} to divide the budget between the RR and Laplace steps.
-\State $q \gets A_{\DegRRCheck}^{inp}(l, c\epsilon)$
-
-\State $\tilde{count}^{11} \gets m(1-\rho)^2 + \E[\sum_{i \in \calH} q_i RR_\rho(l_i)]$
-\State $ e^{rr,inp} = \frac{\tilde{count}^{11} - \rho^2 n}{1-2\rho}$.
-\State $ \hat{d}^{Lap} = e^{rr,inp} + r_2 \frac{\tau}{1-2\rho} + \eta$ where $\eta \sim Lap(\frac{1}{(1-c)\epsilon})$.
-\Statex \textbf{return} $q,\tilde{d}^{Lap}$
-  \end{algorithmic}
+	\KwData{$l \in \{0,1\}^n$ - True adjacency list}
+	\KwResult{$q \in \{0,1\}^n$ - Reported adjacency list,  $\tilde{d}^{lap}$ - Reported noisy degree estimate}
+	Select $r_2 \in [0,1]$\;
+	$\rho = \frac{1}{1+e^{c\epsilon}}$\;
+	\hfill\textcolor{blue}{$\rhd$} $c$ is the constant used in Alg. \ref{alg:deghybrid} to divide the budget between the RR and Laplace steps\;
+	$q \gets A_{\DegRRCheck}^{inp}(l, c\epsilon)$\;
+	$\tilde{count}^{11} \gets m(1-\rho)^2 + \E[\sum_{i \in \calH} q_i RR_\rho(l_i)]$\;
+	$ e^{rr,inp} = \frac{\tilde{count}^{11} - \rho^2 n}{1-2\rho}$\;
+	$ \hat{d}^{Lap} = e^{rr,inp} + r_2 \frac{\tau}{1-2\rho} + \eta$ where $\eta \sim Lap(\frac{1}{(1-c)\epsilon})$\;
+	\KwRet{$q,\tilde{d}^{Lap}$}
+\caption{$A_{\DegHybrid}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{alg:att-resp-inf2}
 \end{algorithm}
-
 
 \noindent\textbf{Response Poisoning.}
 The non-target malicious users flip their edge to $\DO_t$ to a $1$ as they do in $A_{\DegRRCheck{}}^{inp}$. They send an honest estimate of their degree $\tilde{d}^{Lap}$ as this does not affect the target.
@@ -415,26 +477,40 @@ e^{rr, resp} = \frac{m + \E[\sum_{i \in \calH} q_i RR_\rho(l_i) - \rho^2 n]}{1-2
 He finally sets $\tilde{d}_t^{rr} = e^{rr,resp} + r_2 \frac{\tau}{1-2\rho}$ where $r_2 \in [0,1]$ serves a similar tradeoff purpose as for $A_{\DegHybrid}^{inp}$. 
 
 \begin{algorithm}[bt]
+	\KwData{$l \in \{0,1\}^n$ - True adjacency list}
+	\KwResult{$q \in \{0,1\}^n$ - Reported adjacency list, $\tilde{d}^{lap}$ - Reported noisy degree estimate}
+  Select $r_2\in [0,1]$\;
+	$q=A_{\DegRRCheck}^{resp}(l, \epsilon)$\;
+	$\rho=\frac{1}{1+e^{c\epsilon}}$\;
+	\hfill\textcolor{blue}{$\rhd$} $c$ determines how the privacy budget is divided between the two types of response as in Alg. \ref{alg:deghybrid}\;
+	$\tilde{count}^{11} \gets m + \E[\sum_{i \in \calH} q_i RR_\rho(l_i)]$\;
+	$e^{rr,resp} = \frac{m + \tilde{count}^{11} - \rho^2 n}{1-2\rho}$\;
+	$\tilde{d}^{Lap} = e^{rr,resp} + r_2 \frac{\tau}{1-2\rho}$\;
+	\KwRet{$q,\tilde{d}^{Lap}$}
   \caption{$A_{\DegHybrid}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$ }
-  \begin{algorithmic}[1]
-  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter
-  
-  %$RR_\rho(\cdot):\{0,1\} \mapsto \{0,1\}, \rho = \frac{1}{1+e^{2\epsilon}}$ -  Randomized response mechanism satisfying $\epsilon$-relation \DP
-  \Statex\textbf{Input:} $l \in \{0,1\}^n$ - True adjacency list;
-  \Statex \textbf{Output:} $q \in \{0,1\}^n$ - Reported adjacency list;
-   \Statex \hspace{1.1cm} $\tilde{d}^{lap}$ - Reported noisy degree estimate;
-  \vspace{0.2cm}
-  
-  \State Select $r_2\in [0,1]$ 
-\State $q=A_{\DegRRCheck}^{resp}(l, \epsilon)$
-\State $\rho=\frac{1}{1+e^{c\epsilon}}$
-\Statex \hfill\textcolor{blue}{$\rhd$} $c$ determines how the privacy budget is divided between the two types of response as in Alg. \ref{alg:deghybrid}
-\State $\tilde{count}^{11} \gets m + \E[\sum_{i \in \calH} q_i RR_\rho(l_i)]$
-\State $e^{rr,resp} = \frac{m + \tilde{count}^{11} - \rho^2 n}{1-2\rho}$
-\State $\tilde{d}^{Lap} = e^{rr,resp} + r_2 \frac{\tau}{1-2\rho}$
-\Statex \textbf{return} $q,\tilde{d}^{Lap}$
-  \end{algorithmic}
 \end{algorithm}
+
+%\begin{algorithm}[bt]
+%  \caption{$A_{\DegHybrid}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$ }
+%  \begin{algorithmic}[1]
+%  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter
+%  
+%  %$RR_\rho(\cdot):\{0,1\} \mapsto \{0,1\}, \rho = \frac{1}{1+e^{2\epsilon}}$ -  Randomized response mechanism satisfying $\epsilon$-relation \DP
+%  \Statex\textbf{Input:} $l \in \{0,1\}^n$ - True adjacency list;
+%  \Statex \textbf{Output:} $q \in \{0,1\}^n$ - Reported adjacency list;
+%   \Statex \hspace{1.1cm} $\tilde{d}^{lap}$ - Reported noisy degree estimate;
+%  \vspace{0.2cm}
+%  
+%  \State Select $r_2\in [0,1]$ 
+%\State $q=A_{\DegRRCheck}^{resp}(l, \epsilon)$
+%\State $\rho=\frac{1}{1+e^{c\epsilon}}$
+%\Statex \hfill\textcolor{blue}{$\rhd$} $c$ determines how the privacy budget is divided between the two types of response as in Alg. \ref{alg:deghybrid}
+%\State $\tilde{count}^{11} \gets m + \E[\sum_{i \in \calH} q_i RR_\rho(l_i)]$
+%\State $e^{rr,resp} = \frac{m + \tilde{count}^{11} - \rho^2 n}{1-2\rho}$
+%\State $\tilde{d}^{Lap} = e^{rr,resp} + r_2 \frac{\tau}{1-2\rho}$
+%\Statex \textbf{return} $q,\tilde{d}^{Lap}$
+%  \end{algorithmic}
+%\end{algorithm}
 
 
 \subsubsection{Degree Deflation Attacks}

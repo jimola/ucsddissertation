@@ -34,7 +34,7 @@ in the network.
 The standard way to analyze graphs with privacy is through differentially private graph analysis \cite{Raskhodnikova_Encyclopedia16,DP,Dwork_ICALP06}. 
 Differential privacy 
 provides individual privacy against adversaries with arbitrary background knowledge, and has currently emerged as the gold standard for private analytics. 
-However, a vast majority of differentially private graph analysis algorithms are in the \textit{centralized (or global) model} \cite{Blocki_FOCS12,Chen_PoPETs20,Day_SIGMOD16,Hay_ICDM09,Karwa_PVLDB11,Kasiviswanathan_TCC13,Nissim_STOC07,Raskhodnikova_arXiv15,Raskhodnikova_Encyclopedia16,Song_arXiv18,Wang_PAKDD13,Wang_TDP13}, where a single trusted data curator holds the entire graph and releases sanitized versions of the statistics. 
+However, a vast majority of differentially private graph analysis algorithms are in the \textit{centralized (or global) model} \cite{blocki2012johnson,Chen_PoPETs20,Day_SIGMOD16,Hay_ICDM09,Karwa_PVLDB11,Kasiviswanathan_TCC13,Nissim_STOC07,Raskhodnikova_arXiv15,Raskhodnikova_Encyclopedia16,Song_arXiv18,Wang_PAKDD13,Wang_TDP13}, where a single trusted data curator holds the entire graph and releases sanitized versions of the statistics. 
 By assuming a trusted party that can access the entire graph, 
 it is possible to release accurate graph statistics 
 (e.g., subgraph counts \cite{Karwa_PVLDB11,Kasiviswanathan_TCC13,Song_arXiv18}, degree distribution \cite{Day_SIGMOD16,Hay_ICDM09,Raskhodnikova_arXiv15}, spectra \cite{Wang_PAKDD13}) 
