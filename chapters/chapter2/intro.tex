@@ -1,5 +1,5 @@
 \section{Introduction}
-\label{sec:intro}
+\label{chap2-sec:intro}
 Counting subgraphs (e.g., triangles, stars, cycles) is
 % a fundamental task 
 one of the most basic tasks 
@@ -21,7 +21,7 @@ a triangle is given by a set of three nodes with three edges, whereas a $k$-star
 These subgraphs
 % are important because they can be used to calculate
 play a crucial role in calculating
-a \textit{clustering coefficient} ($=\frac{3 \times \text{\#triangles}}{\text{\#2-stars}}$) (see Figure~\ref{fig:triangles_stars}). 
+a \textit{clustering coefficient} ($=\frac{3 \times \text{\#triangles}}{\text{\#2-stars}}$) (see Figure~\ref{chap2-fig:triangles_stars}). 
 % which 
 The clustering coefficient 
 measures the average probability that
@@ -112,7 +112,7 @@ However, more complex subgraphs such as triangles are much harder to count under
 % is not aware of
 cannot see
 edges between other users.
-For example, in Figure~\ref{fig:triangles_stars}, user $v_1$ cannot see
+For example, in Figure~\ref{chap2-fig:triangles_stars}, user $v_1$ cannot see
 % an edge between $v_2$ and $v_3$,
 edges between $v_2$, $v_3$, and $v_6$ 
 and therefore 
@@ -134,10 +134,10 @@ Consequently, the server suffers from a
 % very
 prohibitively
 large estimation error
-% as shown in \cite{Imola_USENIX21} and Appendix~\ref{sec:one-round} in our paper 
+% as shown in \cite{Imola_USENIX21} and Appendix~\ref{chap2-sec:one-round} in our paper 
 (e.g., relative error $> 10^2$ in large graphs, 
-as shown in Appendix~\ref{sec:one-round}) 
-% (e.g., relative error $> 10^2$ in large graphs, as shown in Appendix~\ref{sec:one-round} of our paper)
+as shown in Appendix~\ref{chap2-sec:one-round}) 
+% (e.g., relative error $> 10^2$ in large graphs, as shown in Appendix~\ref{chap2-sec:one-round} of our paper)
 because all three edges are noisy in any noisy triangle the server sees.
 
 \begin{figure}[t]
@@ -145,7 +145,7 @@ because all three edges are noisy in any noisy triangle the server sees.
   \includegraphics[width=0.85\linewidth]{fig/triangles_stars.pdf}
   \vspace{-4mm}
   \caption{Triangles, $2$-stars, and clustering coefficient.}
-  \label{fig:triangles_stars}
+  \label{chap2-fig:triangles_stars}
 \end{figure}
 
 A recent study \cite{Imola_USENIX21} shows that the estimation error in
@@ -219,7 +219,7 @@ Our contributions are as follows:
 consisting of \textit{edge sampling} after RR and \textit{selecting edges each user downloads}.
 In particular, we show that a simple extension of \cite{Imola_USENIX21} with edge sampling suffers from a large estimation error for a large or dense graph where the number of 4-cycles (such as $v_1$-$v_2$-$v_3$-$v_6$-$v_1$
 % and $v_4$-$v_5$-$v_7$-$v_6$-$v_4$
-in Figure~\ref{fig:triangles_stars}) is large.
+in Figure~\ref{chap2-fig:triangles_stars}) is large.
 To address this issue, we propose some strategies for selecting edges to download to reduce the error caused by the 4-cycles, which we call the \textit{4-cycle trick}.
 \item We
 show that
@@ -258,7 +258,7 @@ while keeping the relative error much smaller than 1.
 \end{itemize}
 Thus, locally private triangle counting is now much more practical. 
 % Note that the number of interactions between users and a server in our algorithms (i.e, only two) is also much smaller than collaborative approaches that generally requires a number of interactions. 
-In Appendix~\ref{sec:cluster}, we also show that we can estimate the clustering coefficient with a small estimation error and download cost. 
+In Appendix~\ref{chap2-sec:cluster}, we also show that we can estimate the clustering coefficient with a small estimation error and download cost. 
 For example, our algorithms are useful for measuring the effectiveness of friend suggestions or social recommendations in decentralized 
 social networks, 
 % SNS, 
@@ -273,7 +273,7 @@ is available at
 
 All the proofs of our privacy and utility analysis 
 % The proofs of all statements 
-are given in \conference{the full version \cite{Imola_arXiv22}}\arxiv{Appendices~\ref{sec:proof_seq_comp_edge_LDP}, \ref{sec:proof_algorithms}, and \ref{sec:proof_double_clip}}.
+are given in \conference{the full version \cite{Imola_arXiv22}}\arxiv{Appendices~\ref{chap2-sec:proof_seq_comp_edge_LDP}, \ref{chap2-sec:proof_algorithms}, and \ref{chap2-sec:proof_double_clip}}.
 
 \smallskip
 \noindent{\textbf{Technical Novelty.}}~~Below we explain more about 
@@ -290,7 +290,7 @@ there are no such strategic download techniques previously, to our knowledge.
 Third, our utility analysis of our 
 % two-rounds 
 triangle 
-algorithms (Theorem~\ref{thm:l2loss_algorithms}) is 
+algorithms (Theorem~\ref{chap2-thm:l2loss_algorithms}) is 
 % also now because it 
 different from \cite{Imola_USENIX21} in that ours introduces subgraphs such as 4-cycles and $k$-stars. 
 This leads us to our 4-cycle trick. 
@@ -308,7 +308,7 @@ and their problem setting is different from our graph setting.
 In particular, they require a private quantile of the norm distribution. 
 In contrast, we need only a much simpler estimate: a private degree. 
 Here, we use the fact that the degree has a small sensitivity (sensitivity $=1$) in DP for edges. 
-We also provide a new, reasonably tight bound on the probability that the noisy triangle count exceeds a clipping threshold (Theorem~\ref{thm:triangle_excess}). 
+We also provide a new, reasonably tight bound on the probability that the noisy triangle count exceeds a clipping threshold (Theorem~\ref{chap2-thm:triangle_excess}). 
 Thanks to the two differences, we obtain a significant communication improvement: two or three orders of magnitude. 
 
 % Finally, we show an interesting finding when we combine the 4-cycle trick and double clipping. 

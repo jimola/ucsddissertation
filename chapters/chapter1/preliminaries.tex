@@ -1,13 +1,13 @@
  %-------------------------------------------------------------------------------
 \section{Preliminaries}
 %-------------------------------------------------------------------------------
-\label{sec:preliminaries}
+\label{chap1-sec:preliminaries}
 
 % \subsection{Notations and Graphs}
-% \label{sub:notations}
+% \label{chap1-sub:notations}
 % \subsection{Graphs and Centralized Differential Privacy}
 \subsection{Graphs and Differential Privacy}
-\label{sub:graphs_CDP}
+\label{chap1-sub:graphs_CDP}
 \noindent{\textbf{Graphs.}}~~Let $\nats$, $\nnints$, $\reals$, and $\nnreals$ be the sets of natural numbers, non-negative integers, real numbers, and non-negative real numbers, respectively. 
 For $a \in \nats$, let $[a] = \{1, 2, \ldots, a\}$. 
 
@@ -25,7 +25,7 @@ $G$ on $n$ users.
 A graph $G \in \calG$ can be represented as a symmetric adjacency matrix $\bmA=(a_{i,j}) \in \{0,1\}^{n \times n}$, where $a_{i,j}=1$ if $(v_i,v_j) \in E$ and $a_{i,j}=0$ otherwise.
 
 % \subsection{Centralized Differential Privacy}
-% \label{sub:CDP}
+% \label{chap1-sub:CDP}
 \smallskip
 % \noindent{\textbf{Centralized DP.}}~~
 \noindent{\textbf{Types of DP.}}~~
@@ -87,7 +87,7 @@ Below we explain edge DP in the centralized model.
 % Edge centralized DP considers two neighboring graphs that differ in one edge. 
 Formally, it is defined as follows:
 
-\begin{definition} [$\epsilon$-edge centralized DP] \label{def:edge_CDP} 
+\begin{definition} [$\epsilon$-edge centralized DP] \label{chap1-def:edge_CDP} 
 Let $\epsilon \in \nnreals$. 
 A randomized algorithm $\calM$ with domain $\calG$ provides \emph{$\epsilon$-edge centralized DP} 
 if for any two 
@@ -95,7 +95,7 @@ neighboring
 graphs $G, G' \in \calG$ that differ in one edge and any $S \subseteq \mathrm{Range}(\calM)$, 
 \begin{align}
 \Pr[\calM(G) \in S] \leq e^\epsilon \Pr[\calM(G') \in S].
-\label{eq:edge_CDP}
+\label{chap1-eq:edge_CDP}
 \end{align}
 \end{definition}
 Edge centralized DP guarantees that an adversary who has observed the output of $\calM$ cannot determine whether it is come from $G$ or $G'$ with a certain degree of confidence. 
@@ -112,7 +112,7 @@ Specifically, if $\calM$ provides $\epsilon$-edge centralized DP, then for any t
 $\Pr[\calM(G) \in S] \leq e^{k\epsilon} \Pr[\calM(G') \in S]$; i.e., $k$ edges are protected with privacy budget $k\epsilon$.
 
 \subsection{Local Differential Privacy}
-\label{sub:LDP}
+\label{chap1-sub:LDP}
 LDP (Local Differential Privacy) \cite{Kasiviswanathan_FOCS08,Duchi_FOCS13} is a privacy metric to protect personal data of each user in the local model. 
 LDP has been originally introduced to protect each user's data record that is independent from the other records. 
 However, in a graph, each edge is connected to two users. 
@@ -144,7 +144,7 @@ In other words, graph $G$ can be represented as neighbor lists $\textbf{a}_1, \l
 
 Then edge LDP is defined as follows: 
 
-\begin{definition} [$\epsilon$-edge LDP \cite{Qin_CCS17}] \label{def:edge_LDP} 
+\begin{definition} [$\epsilon$-edge LDP \cite{Qin_CCS17}] \label{chap1-def:edge_LDP} 
 Let $\epsilon \in \nnreals$. 
 For any $i \in [n]$, let $\calR_i$ with domain $\{0,1\}^n$ be a randomized algorithm of user $v_i$. 
 % A randomized algorithm $\calR$ with domain $\{0,1\}^n$ 
@@ -159,10 +159,10 @@ $S \subseteq \mathrm{Range}(\calR_i)$,
 \begin{align}
 % \Pr[\calR(\bmb) \in S] \leq e^\epsilon \Pr[\calR(\bmb') \in S].
 \Pr[\calR_i(\bma_i) \in S] \leq e^\epsilon \Pr[\calR_i(\bma'_i) \in S].
-\label{eq:edge_LDP}
+\label{chap1-eq:edge_LDP}
 \end{align}
 \end{definition}
-Edge LDP in Definition~\ref{def:edge_LDP} protects 
+Edge LDP in Definition~\ref{chap1-def:edge_LDP} protects 
 a single bit in a neighbor list with privacy budget $\epsilon$. 
 % For example, consider an application that asks a users how many friends she met today and sends noisy counts and her user ID to a server. 
 % In this case, the user would not mind sending her identity 
@@ -214,7 +214,7 @@ $b_j \neq a_{i,j}$ with probability $p$ and $b_j = a_{i,j}$ with probability $1-
 Since 
 % $\Pr[\calR(\bmb) \in S]$ and $\Pr[\calR(\bmb') \in S]$ 
 $\Pr[\calR(\bma_i) \in S]$ and $\Pr[\calR(\bma'_i) \in S]$ 
-in (\ref{eq:edge_LDP}) differ by $e^\epsilon$ for 
+in (\ref{chap1-eq:edge_LDP}) differ by $e^\epsilon$ for 
 % $\bmb$ and $\bmb'$ 
 $\bma_i$ and $\bma'_i$ 
 that differ in one bit, 
@@ -246,7 +246,7 @@ We introduce a DP definition called relationship DP that hides \textit{one entir
 
 \begin{definition} [$\epsilon$-relationship DP] 
 % [$\epsilon$-entire edge LDP] 
-\label{def:entire_edge_LDP} 
+\label{chap1-def:entire_edge_LDP} 
 Let $\epsilon \in \nnreals$. 
 % Let $\calR_1, \ldots, \calR_n$ be randomized algorithms, each of which is with domain $\{0,1\}^n$. 
 A tuple of randomized algorithms $(\calR_1, \ldots, \calR_n)$, 
@@ -260,7 +260,7 @@ graphs $G, G' \in \calG$ that differ in one edge and any $S \subseteq \mathrm{Ra
 \begin{align}
 &\Pr[(\calR_1(\bma_1), \ldots, \calR_n(\bma_n)) \in S] \nonumber\\
 &\leq e^\epsilon \Pr[(\calR_1(\bma'_1), \ldots, \calR_n(\bma'_n)) \in S],
-\label{eq:entire_edge_LDP}
+\label{chap1-eq:entire_edge_LDP}
 \end{align}
 where $\bma_i$ (resp.~$\bma'_i$) $\in \{0,1\}^n$ is the $i$-th row of the adjacency matrix of graph $G$ (resp.~$G'$).
 \end{definition}
@@ -304,21 +304,21 @@ in the hands of the central party.
 
 Other than the differing threat models, relationship DP and edge LDP are quite closely related:
 
-\begin{proposition} \label{prop:edge_LDP_entire_edge_LDP} 
+\begin{proposition} \label{chap1-prop:edge_LDP_entire_edge_LDP} 
 If randomized algorithms $\calR_1, \ldots, \calR_n$ provide $\epsilon$-edge LDP, 
 then $(\calR_1, \ldots, \calR_n)$ provides $2\epsilon$-relationship DP.
 \end{proposition}
 
 \begin{proof}
 The existence of edge $(v_i, v_j) \in E$ affects two elements $a_{i,j}, a_{j,i} \in \{0,1\}$ in the adjacency matrix $\bmA$. 
-  Then by group privacy~\cite{DP}, Proposition~\ref{prop:edge_LDP_entire_edge_LDP} holds.
+  Then by group privacy~\cite{DP}, Proposition~\ref{chap1-prop:edge_LDP_entire_edge_LDP} holds.
 \end{proof}
 
 % The existence of edge $(v_i, v_j) \in E$ affects two elements $a_{i,j}, a_{j,i} \in \{0,1\}$ in the adjacency matrix $\bmA$. 
-% Therefore, by the composition theorem \cite{DP}, if all of the randomized algorithms $\calR_1, \ldots, \calR_n$ provide $\epsilon$-edge LDP in Definition~\ref{def:edge_LDP}, 
-% then the tuple $(\calR_1, \ldots, \calR_n)$ provides $2\epsilon$-entire edge LDP in Definition~\ref{def:entire_edge_LDP}; i.e., the privacy budget is at most doubled. 
+% Therefore, by the composition theorem \cite{DP}, if all of the randomized algorithms $\calR_1, \ldots, \calR_n$ provide $\epsilon$-edge LDP in Definition~\ref{chap1-def:edge_LDP}, 
+% then the tuple $(\calR_1, \ldots, \calR_n)$ provides $2\epsilon$-entire edge LDP in Definition~\ref{chap1-def:entire_edge_LDP}; i.e., the privacy budget is at most doubled. 
 
-Proposition~\ref{prop:edge_LDP_entire_edge_LDP} states that when we want to protect one edge as a whole, the privacy budget is at most doubled. 
+Proposition~\ref{chap1-prop:edge_LDP_entire_edge_LDP} states that when we want to protect one edge as a whole, the privacy budget is at most doubled. 
 Note, however, that 
 % the privacy budget is not changed for some randomized algorithms. 
 some randomized algorithms do not have this doubling issue. 
@@ -356,17 +356,17 @@ Thus, $(\calR_1, \ldots, \calR_n)$ provides $\epsilon$-relationship DP (not $2\e
 % Note that this extended algorithm requires each user to know who are users with larger user IDs. 
 % One way to do so is to send user IDs of $n$ users from the data collector to each user in advance. 
 
-Our proposed algorithm in Section~\ref{sub:two_rounds} also has this property; i.e., 
+Our proposed algorithm in Section~\ref{chap1-sub:two_rounds} also has this property; i.e., 
 it provides both $\epsilon$-edge LDP and $\epsilon$-relationship DP. 
 % can also be extended so that the tuple $(\calR_1, \ldots, \calR_n)$ provides $\epsilon$-entire edge LDP (not $2\epsilon$), given that each user knows users with larger user IDs. 
-% We describe the extended algorithm in Appendix~\ref{sec:modified_two_rounds}. 
+% We describe the extended algorithm in Appendix~\ref{chap1-sec:modified_two_rounds}. 
 
 
 % \smallskip
 % \noindent{\textbf{Global/local sensitivity.}}~~
 % \subsection{Global Sensitivity and Local Sensitivity}
 \subsection{Global Sensitivity}
-\label{sub:sensitivity}
+\label{chap1-sub:sensitivity}
 In this paper, we use the notion of global sensitivity \cite{DP} to provide edge centralized DP or edge LDP.
 % In this paper, we use the local sensitivity \cite{Nissim_STOC07} to provide 
 % edge centralized DP or edge LDP with small noise.
@@ -381,11 +381,11 @@ Let $f: \calD \rightarrow \reals$ be a function that takes data $D \in \calD$ as
 % Assume that we want to estimate some graph statistics $f(G) \in \reals$. 
 The most basic method for providing DP is to add the Laplacian noise proportional to the global sensitivity \cite{DP}.
 
-\begin{definition} [Global sensitivity] \label{def:global_sen} 
+\begin{definition} [Global sensitivity] \label{chap1-def:global_sen} 
 The global sensitivity of a function $f: \calD \rightarrow \reals$ is given by:
 \begin{align*}
 GS_f = \underset{D,D' \in \calD: D \sim D'}{\max} |f(D) - f(D')|,
-%\label{eq:global_sen}
+%\label{chap1-eq:global_sen}
 \end{align*}
 where $D \sim D'$ represents that $D$ and $D'$ are neighbors; i.e., they differ in one edge in edge centralized DP, and differ in one bit in edge LDP.
 \end{definition}
@@ -427,7 +427,7 @@ in differentially private stochastic gradient descent (SGD) \cite{Pichapati_arXi
 
 % Nissim \textit{et al.} \cite{Nissim_STOC07} introduced a local measure of sensitivity called the \textit{local sensitivity} to address this issue. 
 
-% \begin{definition} [Local sensitivity \cite{Nissim_STOC07}] \label{def:local_sen} 
+% \begin{definition} [Local sensitivity \cite{Nissim_STOC07}] \label{chap1-def:local_sen} 
 % The local sensitivity of a function $f: \calD \rightarrow \reals$ at $D \in \calD$ is given by:
 % \begin{align*}
 % LS_f(D) = \underset{D' \in \calD: D \sim D'}{\max} |f(D) - f(D')|.
@@ -452,7 +452,7 @@ in differentially private stochastic gradient descent (SGD) \cite{Pichapati_arXi
 
 
 \subsection{Graph Statistics and Utility Metrics}
-\label{sub:graph_statistics}
+\label{chap1-sub:graph_statistics}
 
 \noindent{\textbf{Graph statistics.}}~~We consider a graph function that takes a graph $G \in \calG$ as input and outputs some graph statistics. 
 % Here we consider two types of graph statistics. 
@@ -461,18 +461,18 @@ Specifically,
 let $f_\triangle: \calG \rightarrow \nnints$ be a graph function that outputs the number of triangles in $G$. 
 For $k \in \nats$, let $f_{k\star}: \calG \rightarrow \nnints$ be a graph function that outputs the number of $k$-stars in $G$. 
 % We call $f_\triangle$ and $f_{k\star}$ the \textit{triangle function} and \textit{$k$-star function}, respectively. 
-For example, if a graph $G$ is as shown in Figure~\ref{fig:subgraph}, then $f_\triangle(G) = 5$, $f_{2\star}(G) = 20$, and $f_{3\star}(G) = 8$. The clustering coefficient can also be calculated from $f_\triangle(G)$ and $f_{2\star}(G)$ as: $\frac{3 f_\triangle(G)}{f_{2\star}(G)} = 0.75$. 
+For example, if a graph $G$ is as shown in Figure~\ref{chap1-fig:subgraph}, then $f_\triangle(G) = 5$, $f_{2\star}(G) = 20$, and $f_{3\star}(G) = 8$. The clustering coefficient can also be calculated from $f_\triangle(G)$ and $f_{2\star}(G)$ as: $\frac{3 f_\triangle(G)}{f_{2\star}(G)} = 0.75$. 
 
 % The second type of graph statistics is \textit{degree information}. 
 % For this type of statistics, we define the following basic function. 
 % For $i \in [n]$, let $f_{d_i}: \calG \rightarrow \nnints$ be a graph function that 
 % outputs a degree (i.e., the number of edges) of user $v_i$ in $G$. 
 % We call $f_{d_i}$ the \textit{degree function}. 
-% In Figure~\ref{fig:subgraph}, 
+% In Figure~\ref{chap1-fig:subgraph}, 
 % $f_{d_1}(G) = 3, f_{d_2}(G) = 2, \ldots, f_{d_7}(G) = 3$. 
 % A degree distribution can be easily calculated from 
 % $f_{d_1}(G), \ldots, f_{d_n}(G)$. 
-% In Figure~\ref{fig:subgraph}, the degree distribution can be expressed as $(0, 0, \frac{2}{7}, \frac{4}{7}, \frac{1}{7})$, where the $i$-th value represents the ratio of $(i-1)$ in 
+% In Figure~\ref{chap1-fig:subgraph}, the degree distribution can be expressed as $(0, 0, \frac{2}{7}, \frac{4}{7}, \frac{1}{7})$, where the $i$-th value represents the ratio of $(i-1)$ in 
 % $f_{d_1}(G), \ldots, f_{d_n}(G)$; 
 % e.g., the 5th value is $\frac{1}{7}$ because ``4'' appears once ($f_{d_4}(G) = 4$). 
 
@@ -496,7 +496,7 @@ For example, if a graph $G$ is as shown in Figure~\ref{fig:subgraph}, then $f_\t
 % \hline
 % \end{tabular}
 % \hfil}
-% \label{tab:notations}
+% \label{chap1-tab:notations}
 % \end{table}
 
 \begin{table}[t]
@@ -521,11 +521,11 @@ $f_{k\star}(G)$    &  Number of $k$-stars in $G$.\\
 \hline
 \end{tabular}
 \hfil}
-\label{tab:notations}
+\label{chap1-tab:notations}
 \end{table}
 
-% \colorB{We show the basic notations in Table~\ref{tab:notations} of Appendix~\ref{sec:notations}.} 
-Table~\ref{tab:notations} shows the basic notations used in this paper.
+% \colorB{We show the basic notations in Table~\ref{chap1-tab:notations} of Appendix~\ref{chap1-sec:notations}.} 
+Table~\ref{chap1-tab:notations} shows the basic notations used in this paper.
 
 \smallskip
 \noindent{\textbf{Utility metrics.}}~~We use the $l_2$ loss (i.e., squared error) \cite{Kairouz_ICML16,Wang_USENIX17,Murakami_USENIX19} and the relative error \cite{Bindschaedler_SP16,Chen_CCS12,Xiao_SIGMOD11} as utility metrics. 

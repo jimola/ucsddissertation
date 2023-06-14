@@ -1,10 +1,10 @@
 %-------------------------------------------------------------------------------
 \section{Algorithms}
-\label{sec:algorithms}
+\label{chap1-sec:algorithms}
 %-------------------------------------------------------------------------------
 aaa
 \subsection{One-Round Algorithms}
-\label{sub:one_round}
+\label{chap1-sub:one_round}
 
 \begin{algorithm}
   \SetAlgoLined
@@ -24,7 +24,7 @@ aaa
       $B_{(G', H')} \leftarrow B_{(G', H')} + \rho^d (1-\rho)^{
         {{k}\choose{2}}-d}$\;
     }
-    \caption{SubgraphConfusionMatrix\label{alg:subgraph-kernel}}
+    \caption{SubgraphConfusionMatrix\label{chap1-alg:subgraph-kernel}}
 \end{algorithm}
 
 \begin{algorithm}
@@ -41,12 +41,12 @@ aaa
   $\hat{\textbf{t}} \leftarrow \texttt{CountSubgraphs}(P,k)$\;
   $M \leftarrow \texttt{SubgraphConfusionMatrix}(k, \frac{1}{1+\exp(\varepsilon)})$\;
   $\textbf{a} \leftarrow M^{-1}\hat{\textbf{t}}$\; 
-  \caption{CountSubgraphsRR\label{alg:subgraph-non}}
+  \caption{CountSubgraphsRR\label{chap1-alg:subgraph-non}}
 \end{algorithm}
 
-\begin{theorem}\label{thm:rr-algo}
+\begin{theorem}\label{chap1-thm:rr-algo}
   Let $\textbf{t}(G, k)$ be the vector of counts in $G$ for each unlabeled subgraph of
-  size $k$. Let $\textbf{a}(G,k)$ be the output of Algorithm~\ref{alg:subgraph-non} 
+  size $k$. Let $\textbf{a}(G,k)$ be the output of Algorithm~\ref{chap1-alg:subgraph-non} 
   run on $G$, $k$. 
   Then, for all $G,k$, $\E[\textbf{a}(G,k)] = \textbf{t}(G,k)$.
   Suppose $\textbf{G} \sim G(n,p)$, the Erdos-Renyi graph distribution, for any
@@ -54,10 +54,10 @@ aaa
 \end{theorem}
 
 \begin{theorem}
-  Algorithm~\ref{alg:subgraph-non} guarantees $\varepsilon$-edge LDP.
+  Algorithm~\ref{chap1-alg:subgraph-non} guarantees $\varepsilon$-edge LDP.
 \end{theorem}
 \subsection{Two-Rounds Algorithm for Triangles}
-\label{sub:two_rounds}
+\label{chap1-sub:two_rounds}
 \begin{algorithm}
   \SetAlgoLined
   \KwData{Graph $G$ described by distributed neighbor lists $b_1, \ldots, b_n \subseteq \{0,1\}^n$,

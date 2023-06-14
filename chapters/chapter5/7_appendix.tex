@@ -1,7 +1,7 @@
 \graphicspath{{./chapters/chapter5/}}
 \chapter{ }
 
-\section{Related Work}\label{app:related}
+\section{Related Work}\label{chap5-app:related}
 
 \paragraph{Differential Privacy} 
 Differential privacy~\citep{dwork2006calibrating} has recently become the gold standard of privacy used by institutions such as the US census~\citep{dwork2019differential} and large tech companies~\citep{erlingsson2014rappor}. In a nutshell, DP algorithms provide plausible deniability for the input data of any user.   
@@ -26,19 +26,19 @@ The Stochastic Block Model (SBM) is a classic model for random graphs with plant
 
 The study of private algorithms for SBMs is instead very recent and no work has addressed private recovery for hierarchical SBMS. One of the only results known for private (non-hierarchical) SBMs is the work of~\citet{seif2022differentially} which provides a quasi-polynomial time algorithm for some regimes of the model. This paper require either non-poly time or $\epsilon \in \Omega(\log(|V|))$. 
 Finally, very recently and currently to our work, the manuscript of~\citet{chen2023private} has been published. This work provides strong approximation guarantees using semi-definite programming for recovering SBM communities.    
-None of these papers can be used directly to approximate hierarchical clustering on HSBMs. For this reason in Section~\ref{sec:algorithms-hsbm} we design a hierarchical clustering algorithm (Algorithm~\ref{alg:priv-hc-hsbm}) which uses as subroutine a DP SBM community detection algorithm. Moreover, we show a novel algorithm for SBMs (Algorithm~\ref{alg:priv-hsbm}) (independent to that of~\citet{chen2023private}) which is of practical interest as it does not require procedure with large polynomial dependency on the size of the input, such  solving a complex semi-definite program.
+None of these papers can be used directly to approximate hierarchical clustering on HSBMs. For this reason in Section~\ref{chap5-sec:algorithms-hsbm} we design a hierarchical clustering algorithm (Algorithm~\ref{chap5-alg:priv-hc-hsbm}) which uses as subroutine a DP SBM community detection algorithm. Moreover, we show a novel algorithm for SBMs (Algorithm~\ref{chap5-alg:priv-hsbm}) (independent to that of~\citet{chen2023private}) which is of practical interest as it does not require procedure with large polynomial dependency on the size of the input, such  solving a complex semi-definite program.
 
-\section{Omitted proofs from Section~\ref{sec:lower-bounds}}\label{app:lower-bounds}
-\subsection{Proof of Lemma~\ref{lem:packing-2}}
+\section{Omitted proofs from Section~\ref{chap5-sec:lower-bounds}}\label{chap5-app:lower-bounds}
+\subsection{Proof of Lemma~\ref{chap5-lem:packing-2}}
 
 We start with the following lemma:
 
-\begin{lem}\label{lem:two-packing}
+\begin{lem}\label{chap5-lem:two-packing}
     Let $G_1, G_2$ be two graphs drawn uniformly at random from $\calP(n,5)$. Let $\alpha = \frac{1}{100}$. The probability that there exists a balanced cut $(A,B)$ which misses at most $ \frac{\alpha}{5}n$ of the cycles for both $G_1, G_2$ is at most $2^{-0.4n}$.
 \end{lem}
 \begin{proof}
 Let $(A,B)$ be any balanced cut with $|A| = \beta n$, for $\frac{1}{3} \leq \beta \leq \frac{2}{3}$. Let $\calE_1(A,B)$ be the event that $(A,B)$ misses at most $\frac{\alpha}{X}n$ cycles in $G_1$, and define $\calE_2(A,B)$ similarly for $G_2$. We observe the desired probability can be upper bounded by
-\begin{equation}\label{eq:total-prob}
+\begin{equation}\label{chap5-eq:total-prob}
     \sum_{\substack{(A,B) \text{ a balanced cut}}} \Pr[\calE_1(A,B)] \Pr[\calE_2(A,B)].
 \end{equation}
 
@@ -61,27 +61,27 @@ Dividing this number by $\binom{n}{\beta n}$, the total possible number of strin
 where the last line follows from the fact that $\frac{1}{3} \leq \beta \leq \frac{2}{3}$ and that $\alpha = \frac{1}{100}$ so that $H_2(\alpha) \leq 0.081$.
 By a similar argument, we have $\Pr[A_2(B)] \leq 2^{-0.7 n}$.
 
-Thus,~\eqref{eq:total-prob} can be upper bounded by
+Thus,~\eqref{chap5-eq:total-prob} can be upper bounded by
 \[
     2^{n} \Pr[\calE_1(A,B)] \Pr[\calE_2(A,B)] \leq 2^{n} 2^{-2 \times 0.7 n} \leq 2^{-0.4n}.
 \]
 
 \end{proof}
 
-Having shown the result for two random graphs, we apply the union bound to show that for exponentially many random graphs, it is unlikely that any tree can cluster more than one graph in the family well. We now prove Lemma~\ref{lem:packing-2}.
+Having shown the result for two random graphs, we apply the union bound to show that for exponentially many random graphs, it is unlikely that any tree can cluster more than one graph in the family well. We now prove Lemma~\ref{chap5-lem:packing-2}.
 
 \begin{proof}
-    Let $\calF$ consist of $2^{0.2n}$ graphs generated uniformly at random $\calP(n,5)$. For each pair of graphs $G_1, G_2$, we have by Lemma~\ref{lem:two-packing} every balanced cut will miss at least $\frac{\alpha}{5} n$ cycles in either $G_1$ or $G_2$ with probability $1-2^{-0.4n}$. By the union bound applied $\frac{1}{2}2^{0.4n}$ times for each pair of graphs, we have with probability $\frac{1}{2}$ that every balanced cut will miss at least $\frac{\alpha}{5} n$ cycles in all but at most one graph in $\calF$.
+    Let $\calF$ consist of $2^{0.2n}$ graphs generated uniformly at random $\calP(n,5)$. For each pair of graphs $G_1, G_2$, we have by Lemma~\ref{chap5-lem:two-packing} every balanced cut will miss at least $\frac{\alpha}{5} n$ cycles in either $G_1$ or $G_2$ with probability $1-2^{-0.4n}$. By the union bound applied $\frac{1}{2}2^{0.4n}$ times for each pair of graphs, we have with probability $\frac{1}{2}$ that every balanced cut will miss at least $\frac{\alpha}{5} n$ cycles in all but at most one graph in $\calF$.
     
-    Every tree can be mapped to a balanced cut, so by Lemma~\ref{lem:clique-miss-bad}, any tree will cost at least $\frac{4\alpha}{15}n^2 \geq \frac{n^2}{400}$ on all but at most one member of $\calF$. This allows us to conclude that the sets $\calB(G,r)$ are disjoint for all $G \in \calF$.
+    Every tree can be mapped to a balanced cut, so by Lemma~\ref{chap5-lem:clique-miss-bad}, any tree will cost at least $\frac{4\alpha}{15}n^2 \geq \frac{n^2}{400}$ on all but at most one member of $\calF$. This allows us to conclude that the sets $\calB(G,r)$ are disjoint for all $G \in \calF$.
 \end{proof}
 
 
-\section{Omitted proofs from Section~\ref{sec:algorithms}}
+\section{Omitted proofs from Section~\ref{chap5-sec:algorithms}}
 
-\subsection{Proof of Theorem~\ref{thm:dp-spectral-sparse}}
+\subsection{Proof of Theorem~\ref{chap5-thm:dp-spectral-sparse}}
 First, we state a theorem about private graph sparsification.
-\begin{thm}\label{thm:dp-spectral-sparse}
+\begin{thm}\label{chap5-thm:dp-spectral-sparse}
     There is a polynomial-time, $(\epsilon, \delta)$-edge differentially private algorithm which, on input graph $G = (V, E, w)$, outputs a graph $G'$ which with probability $0.9$ is a $(z, O(nz))$-approximation to cut queries in $G$, where $z = O(\frac{\log^2 \frac{1}{\delta}}{\epsilon}\frac{\log n}{\sqrt{n}})$.
 \end{thm}
 \begin{proof}
@@ -97,7 +97,7 @@ where $L_n$ is the Laplacian of an unweighted $K_n$. The value of the cut $w(S, 
 Using the fact that $|S|(n-|S|) \leq n \min \{|S|, n-|S|\}$ and letting $\gamma \rightarrow 0$, we estabish that $G'$ is a $(z, n z)$ approximation to cut queries in $G$.
 \end{proof}
 Next, we reduce the cost to a sum of cuts. This idea appeared in~\citet{agarwal2022sublinear}. 
-\begin{lem}\label{lem:hc-cuts}
+\begin{lem}\label{chap5-lem:hc-cuts}
     Suppose $G'$ is an $(\alpha_n, \beta_n)$-approximation to cut queries in $G$ for some $\alpha < 1$. Let $T'$ be any tree which satisfies $\cost_{G'}(T') \leq a_n \cost_{G'}^*$. Then,
     \[
         \cost_G(T') \leq (1+2\alpha_n) a_n \cost_G^* + (4a_n + 2) \beta_n n^2.
@@ -110,18 +110,18 @@ Next, we reduce the cost to a sum of cuts. This idea appeared in~\citet{agarwal2
 A proof of this lemma appears in the next section.
 
 Finally, we are ready to prove the theorem.
-\begin{proof} (Of Theorem~\ref{thm:dp-spectral-sparse}): 
-    First, release a private graph $G'$ using Theorem~\ref{thm:dp-spectral-sparse}, which is a $(z, nz)$-cut approximation with probability at least $0.9$, where $z = O(\frac{\log^2 \frac{1}{\delta}}{\epsilon}\frac{\log n}{\sqrt{n}})$. We use the black box hierarchical clustering algorithm, which finds a tree such that $\E[\cost_G(T')] \leq a_n \cost_G^*$. Then, we apply Lemma~\ref{lem:hc-cuts}, obtaining
+\begin{proof} (Of Theorem~\ref{chap5-thm:dp-spectral-sparse}): 
+    First, release a private graph $G'$ using Theorem~\ref{chap5-thm:dp-spectral-sparse}, which is a $(z, nz)$-cut approximation with probability at least $0.9$, where $z = O(\frac{\log^2 \frac{1}{\delta}}{\epsilon}\frac{\log n}{\sqrt{n}})$. We use the black box hierarchical clustering algorithm, which finds a tree such that $\E[\cost_G(T')] \leq a_n \cost_G^*$. Then, we apply Lemma~\ref{chap5-lem:hc-cuts}, obtaining
     \[
         \E[\cost_G(T')] \leq (1+2z) a_n \cost_G^* + (4a_n + 2) z n^3.
     \]
-    For the revenue objective, our black box hierarchical clustering finds a tree $T'$ such that $\E[\cost_G^{\mw}(G')] \geq a_n \cost_G^{\mw*}$. We apply Lemma~\ref{lem:hc-cuts}, obtaining
+    For the revenue objective, our black box hierarchical clustering finds a tree $T'$ such that $\E[\cost_G^{\mw}(G')] \geq a_n \cost_G^{\mw*}$. We apply Lemma~\ref{chap5-lem:hc-cuts}, obtaining
     \[
         \cost_G^{\mw}(T') \geq (1-2z) a_n \cost_{G}^{\mw*} - 4(a_n+1)z n^3.
     \]
 \end{proof}
 
-\subsection{Proof of Lemma~\ref{lem:hc-cuts}}\label{app:hc-cuts}
+\subsection{Proof of Lemma~\ref{chap5-lem:hc-cuts}}\label{chap5-app:hc-cuts}
     We start with the well-known representation of $\cost_G(T)$~\citep{dasgupta2016cost}:
     \[
         \cost_G(T) = \sum_{S \rightarrow (S_1, S_2) \text{ in $T$}} |S|w(S_1, S_2),
@@ -143,8 +143,8 @@ Finally, we are ready to prove the theorem.
     \end{align*}
     where the final line comes from an induction argument: if $f(n) \leq \max_{1 \leq i \leq n} f(i)f(n-i) + 2\beta i(n-i)$, then we can show via induction that $f(n) \leq \frac{n^2\beta}{2}$. By a similar process, we can show the following inequalities
     \begin{align}
-    (1-\alpha_n) \cost_{G}^1(T) - \beta_n n^2 &\leq \cost_{G'}^1(T) \leq (1+\alpha_n) w_G^1(T) + \beta_n n^2 \label{eq:cost-decomp1}\\
-    (1-\alpha_n) \cost_{G}^2 - \beta_n n &\leq \cost_{G'}^2 \leq (1+\alpha_n) \cost_{G}^2 + \beta_n n \label{eq:cost-decomp2}
+    (1-\alpha_n) \cost_{G}^1(T) - \beta_n n^2 &\leq \cost_{G'}^1(T) \leq (1+\alpha_n) w_G^1(T) + \beta_n n^2 \label{chap5-eq:cost-decomp1}\\
+    (1-\alpha_n) \cost_{G}^2 - \beta_n n &\leq \cost_{G'}^2 \leq (1+\alpha_n) \cost_{G}^2 + \beta_n n \label{chap5-eq:cost-decomp2}
     \end{align}
     This implies that
     \[
@@ -163,10 +163,10 @@ Finally, we are ready to prove the theorem.
     \]
     We also have that $(1-\alpha_n) \cost_{G}(T') - 2\beta_n n^2 \leq \cost_{G'}(T')$, and we obtain our result by rearranging. 
 
-\subsection{Proof of Lemma~\ref{lem:exp-util}}
+\subsection{Proof of Lemma~\ref{chap5-lem:exp-util}}
 
 Using a general lemma about the exponential mechanism~\citep{mcsherry2007mechanism}, we are able to prove a bound on the algorithm error.
-\begin{lem}\label{lem:exp-util-appendix}
+\begin{lem}\label{chap5-lem:exp-util-appendix}
 Let $f(X,Y)$ be a function with sensitivity $1$ in $X$.
 Suppose we run the exponential mechanism $M : \calX \rightarrow \calY$ with finite range $\calY$ using utility function $u_X(Y) = f(X,Y)$. Let $OPT(X) = \min_{Y \in \calY} u_X(Y)$. If our privacy budget is $\epsilon$, then for each $X \in \calX$, we have
 \[
@@ -188,19 +188,19 @@ Suppose we run the exponential mechanism $M : \calX \rightarrow \calY$ with fini
 For hierarchical clustering, our algorithm is a corollary of the previous result:
 
 \begin{proof}
-We apply the exponential mechanism with utility function $u_G(T) = -\frac{1}{n} \cost_G(T)$, which has sensitivity $1$. The range of the algorithm is the space of trees with $n$ nodes; there are at most $n^n$ trees of this size. By Lemma~\ref{lem:exp-util-appendix}, the utility satisfies $\Pr[ \frac{\cost_G^*}{n} \leq \frac{\cost_G(M(G))}{n} + 2 \frac{n \log n}{\epsilon}] \geq 1-o(1)$, and hence the algorithm is a $(1, O(\frac{n^2 \log n}{\epsilon}))$-approximation. 
+We apply the exponential mechanism with utility function $u_G(T) = -\frac{1}{n} \cost_G(T)$, which has sensitivity $1$. The range of the algorithm is the space of trees with $n$ nodes; there are at most $n^n$ trees of this size. By Lemma~\ref{chap5-lem:exp-util-appendix}, the utility satisfies $\Pr[ \frac{\cost_G^*}{n} \leq \frac{\cost_G(M(G))}{n} + 2 \frac{n \log n}{\epsilon}] \geq 1-o(1)$, and hence the algorithm is a $(1, O(\frac{n^2 \log n}{\epsilon}))$-approximation. 
 
-For the revenue objective, we apply the exponential mechanism with utility function $u_G(T) = \frac{1}{2n} \cost_G^{\mw}(T)$, which has sensitivity $1$. By Lemma~\ref{lem:exp-util}, the utility satisfies $\Pr[\frac{\cost_G^{\mw}(M(G))}{2n} \leq \frac{\cost_G^{\mw*}}{2n} + 2 \frac{n \log n}{\epsilon}] \geq 1-o(1)$. This establishes $(1, O(\frac{n^2\log n}{\epsilon}))$-approximation.
+For the revenue objective, we apply the exponential mechanism with utility function $u_G(T) = \frac{1}{2n} \cost_G^{\mw}(T)$, which has sensitivity $1$. By Lemma~\ref{chap5-lem:exp-util}, the utility satisfies $\Pr[\frac{\cost_G^{\mw}(M(G))}{2n} \leq \frac{\cost_G^{\mw*}}{2n} + 2 \frac{n \log n}{\epsilon}] \geq 1-o(1)$. This establishes $(1, O(\frac{n^2\log n}{\epsilon}))$-approximation.
 \end{proof}
 
 
-\section{Omitted proofs from Section~\ref{sec:algorithms-hsbm}}
+\section{Omitted proofs from Section~\ref{chap5-sec:algorithms-hsbm}}
 
-\subsection{Proof of Theorem~\ref{thm:hc-hsbm-util}}\label{sec:hc-hsbm-util}
+\subsection{Proof of Theorem~\ref{chap5-thm:hc-hsbm-util}}\label{chap5-sec:hc-hsbm-util}
 
 In order to prove this theorem, we will show that \dphcblocks{} finds a $(1+o(1))$-approximate ground-truth tree, and then appeal to a result showing the such trees are approximately optimal with high probability~\citep{cohen2019hierarchical}:
 
-\begin{lem}\label{lem:approx-hsbm-tree-opt} (Lemma 5.10 from~\citet{cohen2019hierarchical})
+\begin{lem}\label{chap5-lem:approx-hsbm-tree-opt} (Lemma 5.10 from~\citet{cohen2019hierarchical})
 Let $G$ be a graph drawn from $\hsbm(B,P,f)$,  where $p_{min} = \min_{i \in B \cup N} f(i) \geq \omega(\sqrt{\frac{\log n}{n}})$. Let $(B,P',f')$ be a $\gamma$-approximate ground-truth tree. Then, with probability $1-2^{-n}$, we have
 \[
     \dcost_G(P') \leq \gamma (1 + o(1)) \dcost_G^*,
@@ -211,12 +211,12 @@ We now show that \dphcblocks{} outputs an approximate ground-truth tree.
 We introduce a high-probability event and prove that if it happens, then the output is an approximate ground-truth tree.
 
 Our event $\calE$ states that $sim(B_i, B_j)$ as used in \dphcblocks{} is a good estimate for $f(LCA_P(B_i, B_j))$. Intuitively, this makes sense, as if one had access to $f(LCA_P(B_i, B_j))$, then it would be easy to construct $P$ (or an equivalent tree) using single linkage. Formally, we let $\calE$ denote the event that there exists $\alpha$ such that for all $B_i, B_j$,
-\begin{equation}\label{eq:good-event}
+\begin{equation}\label{chap5-eq:good-event}
     \big|sim(B_i, B_j) - f(LCA_P(B_i, B_j))\big| \leq \alpha f(LCA_P(B_i, B_j)).
 \end{equation}
 
 The following lemma shows that $\calE$ occurs with high probability.
-\begin{lem}\label{lem:good-event}
+\begin{lem}\label{chap5-lem:good-event}
 If $|B_i| \geq n^{2/3}$ for all $i, j$, $\epsilon \geq \frac{1}{n^{1/2}}$, and $f(x) \geq \frac{\log n}{n^{1/2}}$, then the event $\calE$ occurs with $\alpha = \frac{8}{n^{1/6}}$ with probability at least $1-\frac{2}{n}$.
 \end{lem}
 
@@ -234,8 +234,8 @@ Thus, we obtain $\Pr[|sim(B_i, B_j) - p_{ij}| \geq \alpha p_{ij}] \leq \frac{2}{
 \end{proof}
 
 Finally, we show that when $\calE$ occurs, then \dphcblocks{} finds an approximate ground-truth tree. A similar result was proved in~\citet{cohen2019hierarchical}, though our lemma statement is sufficiently different that we include a proof here.
-\begin{lem}\label{lem:approx-ground-truth}
-Assume that event $\calE$ occurs. Then, the tuple $(B, T, f')$ returned by Algorithm~\ref{alg:priv-hc-hsbm} is a $(1 + \alpha)$-approximate ground-truth tree for $(B, P, f)$.
+\begin{lem}\label{chap5-lem:approx-ground-truth}
+Assume that event $\calE$ occurs. Then, the tuple $(B, T, f')$ returned by Algorithm~\ref{chap5-alg:priv-hc-hsbm} is a $(1 + \alpha)$-approximate ground-truth tree for $(B, P, f)$.
 \end{lem}
 \begin{proof}
 We want to show that for all $B_i, B_j \in V$, we have
@@ -267,9 +267,9 @@ where the second inequality holds because $f$ is decreasing as we ascend $P$.
 However, we also have that $sim(N_L, N_R) \geq sim(C_i, C_j)$, as $sim$ also obeys this property (if the last inequality did not hold, then $N_L, N_R$ would not have been merged). This finishes the last case.
 \end{proof}
 
-The proof follows by applying Lemma~\ref{lem:good-event} and then Lemma~\ref{lem:approx-ground-truth}.
+The proof follows by applying Lemma~\ref{chap5-lem:good-event} and then Lemma~\ref{chap5-lem:approx-ground-truth}.
 
-\subsection{Proof of Theorem~\ref{thm:com-hsbm-priv}}\label{sec:com-hsbm-priv}
+\subsection{Proof of Theorem~\ref{chap5-thm:com-hsbm-priv}}\label{chap5-sec:com-hsbm-priv}
 \subsubsection{Overview}
 When running \dpcom{}, fix $Y,Z_1,Z_2$, and let $(\hat{A}_1, \hat{A}_2)$ and $(\hat{A}_1', \hat{A}_2')$ be the splits of $\hat{A}$ and an adjacent database $\hat{A}'$.
 We will view the matrix $F = P(\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2))$ as a vector, and then show that releasing $F$ plus appropriate Gaussian noise satisfies privacy via the Gaussian mechanism. Our proof will bound the $L_2$ sensitivity of $F$, given by
@@ -277,28 +277,28 @@ We will view the matrix $F = P(\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2))$ as a vector, a
     \Delta_2(F) = \|P(\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)) - P(\Pi_{\hat{A}_1'}^{(k)}(\hat{A}_2'))\|_F,
 \]
 in terms of the quantity $\Gamma = \frac{\sigma_1(\hat{A}_2)}{\sigma_k(\hat{A}_1) - \sigma_k(\hat{A}_2)}$. Recall that $P$ is a random $m \times \frac{n}{2}$ projection matrix. To control this sensitivity, we will need the fact that $P$ preserves the distances in $A$ via the Johnson-Lindenstrauss projection theorem:
-\begin{thm}\label{thm:jl}
+\begin{thm}\label{chap5-thm:jl}
 (Johnson-Lindenstrauss projection theorem~\citep{johnson1984extensions}): Let $0 \leq \alpha < \frac{1}{2}$ and $0 \leq \beta \leq 1$, and $m = 8\frac{ \ln \frac{2}{\beta}}{\alpha^2}$. If $x \in \R^n$ is a vector and $P \sim \calN(0, \frac{1}{\sqrt{m}})^{m \times n}$ is a random matrix then with probability $1-\beta$, we have
 \[
 (1-\alpha) \|x\|_2 \leq \|Px\|_2 \leq (1+\alpha) \|x\|_2
 \]
 \end{thm}
 We use the above theorem to show that the matrix $P$ does not increase the sensitivity $\Delta(F)$ with high probability.
-\begin{lem}\label{lem:proj-sens}
+\begin{lem}\label{chap5-lem:proj-sens}
     Let $0 \leq \delta < 1$ and $m = 64 \ln \frac{2n}{\delta}$. Then, if $P \sim \calN(0, \frac{1}{\sqrt{m}})^{m \times n/2}$ the following holds with probability at least $1-\frac \delta 4$:
     \[
         \Delta(F) \leq \frac 3 2 \|\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2) - \Pi_{\hat{A}_1'}^{(k)}(\hat{A}_2')\|_F.
     \]
 \end{lem}
 \begin{proof}
-Let the columns of $\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$ be $\{a_1, \ldots, a_{n/4}\}$ and the columns of $\Pi_{\hat{A}_1'}^{(k)}(\hat{A}_2')$ be $\{a_1', \ldots, a_{n'/4}\}$. By the union bound, Theorem~\ref{thm:jl} with $\alpha=\frac{1}{2}$ and $\beta = \frac{\delta}{n}$ applies to all vectors $a_i - a_i'$ with probability at least $1-\frac{\delta}{4}$. Thus, we have
+Let the columns of $\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$ be $\{a_1, \ldots, a_{n/4}\}$ and the columns of $\Pi_{\hat{A}_1'}^{(k)}(\hat{A}_2')$ be $\{a_1', \ldots, a_{n'/4}\}$. By the union bound, Theorem~\ref{chap5-thm:jl} with $\alpha=\frac{1}{2}$ and $\beta = \frac{\delta}{n}$ applies to all vectors $a_i - a_i'$ with probability at least $1-\frac{\delta}{4}$. Thus, we have
 \[
 \Delta_2(F)^2 = \sum_{i=1}^{n/4} \|P(a_i) - P(a_i')\|_2^2 \leq (1+\alpha)^2 \sum_{i=1}^{n/4} \|a_i - a_i'\|_2^2 = (1+\alpha)^2  \|\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2) - \Pi_{\hat{A}_1'}^{(k)}(\hat{A}_2')\|_F^2.
 \]
 The result follows.
 \end{proof}
 Finally, we need a bound on the stability of the projection $\Pi_{\hat{A}_1}^{(k)}$ when $\hat{A}_1$ is perturbed. This is the result of the Davis-Kahan Theorem~\citep{bhatia1997}.
-\begin{thm}\label{thm:davis-kahan}
+\begin{thm}\label{chap5-thm:davis-kahan}
 Let $\hat{A}_1, \hat{A}_1'$ be matrices where $d_k= \sigma_k(\hat{A}_1) - \sigma_{k+1}(\hat{A}_1) > 0$. Then, 
 \[
     \|\Pi_{\hat{A}_1}^{(k)} - \Pi_{\hat{A}_1'}^{(k)}\|_F \leq \frac{\|\hat{A}_1 - \hat{A}_1'\|_F}{d_k}.
@@ -307,7 +307,7 @@ Furthermore, the above holds replacing $\|\cdot\|_F$ with $\|\cdot \|_2$.
 \end{thm}
 
 Having bounded the $L_2$-sensitivity, we finally use the well-known Gaussian mechanism~\citep{dwork2014algorithmic}
-\begin{thm}\label{thm:gauss-mech}
+\begin{thm}\label{chap5-thm:gauss-mech}
     If $x \in \R^m$ has $L_2$ sensitivity at most $S$, then releasing $x + N$, where $N \sim \frac{S}{\epsilon} \sqrt{2 \ln \frac{1.25}{\delta}}\calN(0,1)^{m}$ satisfies $(\epsilon, \delta)$-DP.
 \end{thm}
 
@@ -316,7 +316,7 @@ Let $\hat{A}$ and $\hat{A}'$ be two adjacent inputs, and consider two runs of \d
 
 Using Lindskii's inequality~\citep{bhatia1997}, each rank $i$ singular value of $\hat{A}_1, \hat{A}_2$ can only change by $1$ when $\hat{A}$ is changed to $\hat{A}'$. Thus, the sensitivity of $d_k$ is $2$, of $\sigma_1$ is $1$, and thus the release of $\tilde{d}_k = d_k + \frac{8}{\epsilon} \ln \frac{4}{\delta} + Lap(\frac{8}{\epsilon})$ and $\tilde{\sigma}_1 = \sigma_1 + \frac{4}{\epsilon} \ln \frac{4}{\delta} + Lap(\frac{4}{\epsilon})$ both satisfy $(\frac{\epsilon}{4}, 0)$-DP. Thus, we will show that releasing $\tilde{F}$ satisfies $(\frac \epsilon 2, \delta)$-DP, and privacy will follow by composition.
 
-By Lemma~\ref{lem:proj-sens} with probability at least $1-\frac{\delta}{4}$, we have
+By Lemma~\ref{chap5-lem:proj-sens} with probability at least $1-\frac{\delta}{4}$, we have
 \[
     \Delta_2(F) \leq \tfrac 3 2 \|\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2) - \Pi_{\hat{A}_1'}^{(k)}(\hat{A}_2')\|_F
 \]
@@ -334,21 +334,21 @@ where the inequality holds because projecting vectors onto a subspace cannot inc
 \|\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2) - \Pi_{\hat{A}_1'}^{(k)}(\hat{A}_2')\|_F \leq 2k \|(\Pi_{\hat{A}_1}^{(k)} - \Pi_{\hat{A}_1'}^{(k)})(\hat{A}_2)\|_2 \leq 2k\|\Pi_{\hat{A}_1}^{(k)} - \Pi_{\hat{A}_1'}^{(k)}\|_2\|\hat{A}_2\|_2,
 \]
 where the first inequality holds because each term has rank at most $k$, so the entire quantity has rank at most $2k$, and the  second holds by sub-multiplicativity of $\|\cdot\|_2$.
-By Theorem~\ref{thm:davis-kahan}, we have $\|\Pi_{\hat{A}_1}^{(k)} - \Pi_{\hat{A}_1'}^{(k)}\|_2 \leq \frac{1}{d_k}$.
+By Theorem~\ref{chap5-thm:davis-kahan}, we have $\|\Pi_{\hat{A}_1}^{(k)} - \Pi_{\hat{A}_1'}^{(k)}\|_2 \leq \frac{1}{d_k}$.
 Thus, we have
 \[
 \frac 3 2 \|\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2) - \Pi_{\hat{A}_1'}^{(k)}(\hat{A}_2')\|_F \leq \frac{3k\|\hat{A}_2\|_2}{d_k} = 3k\Gamma.
 \]
-By concentration of Laplace variables, we have $\tilde{d}_k \leq d_k$ and $\tilde{\sigma}_1 \geq \sigma_1$, so $\Gamma \leq \frac{\tilde{\sigma}_1}{\tilde{d}_k} = \tilde{\Gamma}$ with probability at least $1-\frac{\delta}{2}$. Thus, the sensitivity $\Delta(F)$ is at most $3k\tilde{\Gamma}$, and $(\tfrac \epsilon 2, \frac{\delta}{4})$-DP follows via Theorem~\ref{thm:gauss-mech}. Factoring in the aformentioned failure probabilities, the entire release of $\tilde{F}$ satisfies $(\tfrac \epsilon 2, \delta)$-DP.
+By concentration of Laplace variables, we have $\tilde{d}_k \leq d_k$ and $\tilde{\sigma}_1 \geq \sigma_1$, so $\Gamma \leq \frac{\tilde{\sigma}_1}{\tilde{d}_k} = \tilde{\Gamma}$ with probability at least $1-\frac{\delta}{2}$. Thus, the sensitivity $\Delta(F)$ is at most $3k\tilde{\Gamma}$, and $(\tfrac \epsilon 2, \frac{\delta}{4})$-DP follows via Theorem~\ref{chap5-thm:gauss-mech}. Factoring in the aformentioned failure probabilities, the entire release of $\tilde{F}$ satisfies $(\tfrac \epsilon 2, \delta)$-DP.
 
 
-\subsection{Proof of Corollary~\ref{thm:com-hsbm-util-inf}}\label{sec:com-hsbm-util}
+\subsection{Proof of Corollary~\ref{chap5-thm:com-hsbm-util-inf}}\label{chap5-sec:com-hsbm-util}
 \subsubsection{Overview}
 
 Recall that \dpcom{} sees a matrix $\hat{A}$ drawn from $\hsbm(B,P,f)$, with expectation matrix $A$. We define $\tau^2 = \max f(x)$, $s = \min_{i=1}^k |B_i|$, and $\Delta=\min_{u \in B_i, v \in B_j, i \neq j} \|A_u - A_v\|_2$. 
 We will show that \dpcom{} approximates $\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$, which is guaranteed to cluster the original communities via the following result~\citep{vu2014simple}. We let the columns of $\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$, which is indexed by the set $Z_2$, be $\{b_i : i \in Z_2\}$.
 
-\begin{thm}\label{thm:svd-recovery} (\citet{vu2014simple}): There exists a universal constant $C$ such that if $\tau^2 \geq C \frac{\log n}{n}$, $s \geq C \log n$, and $k < n^{1/4}$.  $\Delta > C (\tau \sqrt{\frac{n}{s}} + \tau \sqrt{k \log n} + \frac{\tau\sqrt{nk}}{\sigma_k(A)})$, with probability at least $1 - n^{-1}$, then the columns $\{b_i : i \in Z_2\}$ in $\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$ satisfy:
+\begin{thm}\label{chap5-thm:svd-recovery} (\citet{vu2014simple}): There exists a universal constant $C$ such that if $\tau^2 \geq C \frac{\log n}{n}$, $s \geq C \log n$, and $k < n^{1/4}$.  $\Delta > C (\tau \sqrt{\frac{n}{s}} + \tau \sqrt{k \log n} + \frac{\tau\sqrt{nk}}{\sigma_k(A)})$, with probability at least $1 - n^{-1}$, then the columns $\{b_i : i \in Z_2\}$ in $\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$ satisfy:
 \begin{align*}
     \|b_{i} - b_{j}\|_2 &\leq \frac{\Delta}{4}  \ \ \ \text{if $\exists u.~i \in B_u, j \in B_u$ (i.e. $i,j$ are in the same community)} \\ 
     \|b_{i} - b_{j}\|_2 &\geq \Delta  \ \ \ \text{otherwise.}
@@ -358,9 +358,9 @@ We will show that \dpcom{} approximates $\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$, whic
 Thus, the clusters in $\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)$ cluster the original communities assuming $\Delta$ is large enough. We will show that $\tilde{F}$ clusters the original communities assuming some condition on $\Delta$. Since
 \dpcom{} returns $\tilde{F} = P(\Pi_{\hat{A}_1}^{(k)}(\hat{A}_2)) + N$, where $N$ is Gaussian noise, our proof involves showing that the distances in $\tilde{F}$ approximate those in $\Pi_{\hat{A}_1}^{(k)}$ using the Johnson-Lindenstrauss lemma and concentration of the Gaussian noise.
 
-We formally restate Theorem~\ref{thm:com-hsbm-util-inf}:
+We formally restate Theorem~\ref{chap5-thm:com-hsbm-util-inf}:
 
-\begin{thm}\label{thm:com-hsbm-util}
+\begin{thm}\label{chap5-thm:com-hsbm-util}
 Let $\hat{A}$ be drawn from $\hsbm(B,P,f)$. There is a universal constant $C > 2000$ such that if $\tau^2 \geq C \frac{\log n}{n}$, $s \geq C \sqrt{n \log n}$, $k < n^{1/4}$, $\delta < \frac{1}{n}$, $\sigma_k(A) \geq C \max\{ \tau \sqrt{n}, \frac{1}{\epsilon} \ln \frac{4}{\delta}\}$, and 
 \[\Delta > C\max\left\{\tfrac{ k (\ln \frac{1}{\delta})^{3/2}}\epsilon \tfrac{\sigma_1(A)}{\sigma_{k}(A)},  \tau \sqrt{\tfrac{n}{s}} + \tau \sqrt{k \log n} + \tfrac{\tau\sqrt{nk}}{\sigma_k}\right\},\]
 then with probability at least $1 - 3n^{-1}$, \dpcom{} returns a set of points $\tilde{F} = \{f_i : i \in Z_2\}$ such that
@@ -371,9 +371,9 @@ then with probability at least $1 - 3n^{-1}$, \dpcom{} returns a set of points $
 and thus the clusters in $\tilde{F}$ indicate the communities.
 \end{thm}
 
-\subsubsection{Proof of Theorem~\ref{thm:com-hsbm-util}}
+\subsubsection{Proof of Theorem~\ref{chap5-thm:com-hsbm-util}}
 Let the columns of $\tilde{F}$ be $\{f_i : i \in Z_2 \}$.
-We have $f_i = P(b_i) + n_i$, where $n_i \sim \frac{3k \tilde{\Gamma}}{\epsilon} \sqrt{2\ln \frac{5}{\delta}}N(0,1)^{m}$. By concentration bounds, we have with probability $1-\frac{1}{n}$ that each $n_i$ satisfies $\|n_i\|_2 \leq \frac{3k\tilde{\Gamma}}{\epsilon}\sqrt{2\ln \frac{5}{\delta}} \sqrt{2m \ln n} \triangleq K$. Next, applying Theorem~\ref{thm:jl} on the vectors $b_i - b_j$ for $i,j \in Z_2$, we have $0.9 \|b_i - b_j\|_2 \leq \|P(b_i) - P(b_j)\|_2 \leq 1.1 \|b_i - b_j\|_2$ with probability $1-\delta > 1-\frac{1}{n}$. Thus, if $\exists u.~ i \in B_u, j \in B_u$, then
+We have $f_i = P(b_i) + n_i$, where $n_i \sim \frac{3k \tilde{\Gamma}}{\epsilon} \sqrt{2\ln \frac{5}{\delta}}N(0,1)^{m}$. By concentration bounds, we have with probability $1-\frac{1}{n}$ that each $n_i$ satisfies $\|n_i\|_2 \leq \frac{3k\tilde{\Gamma}}{\epsilon}\sqrt{2\ln \frac{5}{\delta}} \sqrt{2m \ln n} \triangleq K$. Next, applying Theorem~\ref{chap5-thm:jl} on the vectors $b_i - b_j$ for $i,j \in Z_2$, we have $0.9 \|b_i - b_j\|_2 \leq \|P(b_i) - P(b_j)\|_2 \leq 1.1 \|b_i - b_j\|_2$ with probability $1-\delta > 1-\frac{1}{n}$. Thus, if $\exists u.~ i \in B_u, j \in B_u$, then
 \begin{align*}
     \|f_i - f_j\|_2 &\leq \|P(b_i) - P(b_j)\|_2 + \|n_i\|_2 + \|n_j\|_2 \\
     &\leq 1.1 \|b_i - b_j\|_2 + 2K \\
@@ -388,7 +388,7 @@ Otherwise, we have
 
 
 Finally, we show that $K$ can be upper bounded by the singular values of the expectation matrix $A$. This can be done with the following two lemmas which are proven implicitly in~\citet{vu2014simple}.
-\begin{lem}\label{lem:rand-mat-sv}
+\begin{lem}\label{chap5-lem:rand-mat-sv}
 Let $A$ be an $m \times n$ (with $m \geq n$) matrix of expectations in $[0,1]$, and let $\hat{A}$ be a randomized rounding of $A$ to $\{0,1\}$. Then, with probability at least $1 - \frac{1}{n}$, we have for all $1 \leq i \leq m$, $|\sigma_i(A) - \sigma_i(\hat{A})| \leq 4\tau \sqrt{n} + 4 \log n$, where $\tau^2$ is the maximum probability in $A$.
 \end{lem}
 
@@ -399,7 +399,7 @@ Let $A_i^*, \hat{A}_i^*$ be rank $i$ matrices such that $\sigma_{i+1}(A) = \|A -
 Thus, it remains to bound $\|A - \hat{A}\|_2$. Let the columns in $A - \hat{A}$ be $a_1, \ldots, a_n$. Using Lemma 7 from~\citet{vu2005spectral}, we have that with probability at least $1-\frac{1}{n^3}$, the length of the projection of $a_i$ onto a basis vector $e_i$ is at most $4(\tau + \frac{\log n}{\sqrt{n}})$. Thus, the total length $\|Ae_i\|_2$ is at most $4(\tau + \frac{\log n}{\sqrt{n}}$, and thus $\|A\|_2 \leq \sqrt{n}4(\tau + \frac{\log n}{\sqrt{n}})$ establishing that $\sigma_{i+1}(A) \leq \sigma_{i+1}(\hat{A}) + 4\sqrt{n}\tau + 4 \log n$. Likewise, we can show that $\sigma_{i+1}(A) \geq \sigma_{i+1}(\hat{A}) - 4\sqrt{n}\tau - 4 \log n$.
 \end{proof}
 
-\begin{lem}\label{lem:subsample-sv}
+\begin{lem}\label{chap5-lem:subsample-sv}
 Let $A$ be an expectation matrix of $\hsbm(B,P,f)$ with $k$ blocks with minimum block size $s \geq 16\sqrt{n \log n}$, and let $C$ be the submatrix of $A$ with rows $Y$ and columns $Z$, where $|Y| = \frac{n}{2}$ and $|Z| = \frac{n}{4}$ are chosen randomly from $[n]$ such that $Y \cap Z = \emptyset$. Then, with probability at least $1-\frac{1}{n}$, for all $1 \leq i \leq k$, we have
 \[
 (\tfrac 1 8 - \tfrac{\sqrt{n \log n}} s)\sigma_i(A_1) \leq \sigma_i(A_1) \leq (\tfrac 1 8 + \tfrac{\sqrt{n \log n}} s)\sigma_i(A_1)
@@ -417,7 +417,7 @@ We have $\sigma_{k}(A) = \min_{\text{rank}(A_{k-1}) = k-1} \|A - A_{k-1}\|_F$ an
 \]
 and thus we see that $(\frac 1 8 - \frac{\sqrt{n \log n}}{s})\sigma_k(A) \leq \sigma_k(A_1)$. By a similar sampling argument, we can show that $(\frac 1 8 + \frac{\sqrt{n \log n}}{s})\sigma_k(A) \geq \sigma_k(A_1)$. Repeating the argument for $\sqrt{\sigma_{i}(A)^2 + \cdots \sigma_{k}(A)^2} = \min_{\text{rank}(A_{i-1})=i-1}\|A - A_{i-1}\|_F$, we obtain the result for all $1 \leq i \leq k$.
 \end{proof}
-Let $A_1, A_2$ be the expectation matrices of $\hat{A}_1, \hat{A}_2$ for fixed $Y,Z_2$. Using Lemmas~\ref{lem:rand-mat-sv} and~\ref{lem:subsample-sv}, we have that $\sigma_{1}(\hat{A}_2) \leq \sigma_1(A_2) + 4\tau \sqrt{n} + 4 \log n \leq (\frac{1}{8} + \frac{\sqrt{n \log n}}{s})\sigma_1(A) + 4\tau \sqrt{n} + 4 \log n \leq \frac{3}{32} \sigma_1(A) + 4\tau \sqrt{n} + 4 \log n$.
+Let $A_1, A_2$ be the expectation matrices of $\hat{A}_1, \hat{A}_2$ for fixed $Y,Z_2$. Using Lemmas~\ref{chap5-lem:rand-mat-sv} and~\ref{chap5-lem:subsample-sv}, we have that $\sigma_{1}(\hat{A}_2) \leq \sigma_1(A_2) + 4\tau \sqrt{n} + 4 \log n \leq (\frac{1}{8} + \frac{\sqrt{n \log n}}{s})\sigma_1(A) + 4\tau \sqrt{n} + 4 \log n \leq \frac{3}{32} \sigma_1(A) + 4\tau \sqrt{n} + 4 \log n$.
 Applying these again, we obtain
 \begin{align*}
     d_k(\hat{A}_1) &= \sigma_{k}(\hat{A}_1) - \sigma_{k+1}(\hat{A}_1) \\
@@ -438,11 +438,11 @@ This implies that
 \]
 where the last step follows because $\delta < \frac{1}{n}$. From our assumption, we have $2K \leq 0.1\Delta$, and the result follows.
 
-\subsection{Proof of Corollary~\ref{cor:com-hsbm-util}}
+\subsection{Proof of Corollary~\ref{chap5-cor:com-hsbm-util}}
 
 In this special case, we can write $A = P \otimes \textbf{1}_B$, where $P$ is a $k \times k$ matrix with $p$ on the diagonal and $q$ everywhere else, $\textbf{1}_s$ is a $s \times s$ matrix consisting of all $1$s, and $\otimes$ denotes the Kronecker product. It is easy to see that the eigenvalues of $P$ are $\{p + q(k-1), p-q, \ldots, p-q\}$, and the eigenvalues of $\textbf{1}_s$ are $\{s, 0, \ldots, 0\}$. The eigenvalues of $A$ are the product of the two sets of eigenvalues of $P$ and $\textbf{1}_s$. Thus, the top $k$ largest eigenvalues are $s(p + q(k-1))$ and then $k-1$ copies of $s(p-q)$.
 
-Thus, the following properties of $A$ hold: (1) $\sigma_1 = s(p + q(k-1)) ] \leq sk (p + q)$, (2) $\sigma_k = s(p-q)$, (3) $\tau = \sqrt{p}$, and (4) $\Delta = (p-q)\sqrt{s}$. We are able to apply Theorem~\ref{thm:com-hsbm-util} when 
+Thus, the following properties of $A$ hold: (1) $\sigma_1 = s(p + q(k-1)) ] \leq sk (p + q)$, (2) $\sigma_k = s(p-q)$, (3) $\tau = \sqrt{p}$, and (4) $\Delta = (p-q)\sqrt{s}$. We are able to apply Theorem~\ref{chap5-thm:com-hsbm-util} when 
 \begin{align*}
     (p-q) \sqrt{s} &\geq \frac{s(p+q)}{s(p-q)} \frac{Ck(\log \frac{1}{\delta})^{3/2}}{\epsilon} \\
     \frac{(p-q)^2}{p+q} &\geq \frac{C(k\log \frac{1}{\delta})^{3/2}}{\sqrt{n}}.

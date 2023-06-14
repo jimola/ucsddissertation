@@ -1,7 +1,7 @@
 % \section{Algorithms}
 \section{Communication-Efficient Triangle Counting Algorithms}
 % \section{Two-Rounds Local Triangle Algorithms}
-\label{sec:algorithms}
+\label{chap2-sec:algorithms}
 The current state-of-the-art triangle counting algorithm~\cite{Imola_USENIX21} under edge LDP suffers from an extremely large per-user download cost; 
 % hence 
 % and therefore 
@@ -10,11 +10,11 @@ e.g., every user has to download a message of $400$ Gbits or more when $n=900000
 Therefore, it is impractical for a large graph. 
 To address this issue, we propose three communication-efficient triangle algorithms under edge LDP.
 
-We explain the overview and details of our proposed algorithms in Sections~\ref{sub:algorithms_overview} and \ref{sub:three_algorithms}, respectively.
-Then we analyze the theoretical properties of our algorithms in Section~\ref{sub:algorithms_theoretical_analysis}.
+We explain the overview and details of our proposed algorithms in Sections~\ref{chap2-sub:algorithms_overview} and \ref{chap2-sub:three_algorithms}, respectively.
+Then we analyze the theoretical properties of our algorithms in Section~\ref{chap2-sub:algorithms_theoretical_analysis}.
 
 \subsection{Overview}
-\label{sub:algorithms_overview}
+\label{chap2-sub:algorithms_overview}
 
 % We begin with the overview of
 % \alg{Local2Rounds$_\triangle$},
@@ -53,7 +53,7 @@ Thus, sampling edges after Warner's RR is a natural choice for our private setti
 Second, we propose three strategies for selecting edges each user downloads.
 The first strategy is to simply select all noisy edges; i.e., each user downloads the whole noisy graph in the same way as \cite{Imola_USENIX21}.
 The second and third strategies select some edges (rather than all edges) in a more clever manner so that the estimation error is significantly reduced.
-We provide a more detailed explanation in Section~\ref{sub:three_algorithms}.
+We provide a more detailed explanation in Section~\ref{chap2-sub:three_algorithms}.
 
 \begin{figure}[t]
   \centering
@@ -65,16 +65,16 @@ We provide a more detailed explanation in Section~\ref{sub:three_algorithms}.
   $p_2 \in [0,1]$).}
   %($\mu \in [0,1]$, $\rho = e^{-\epsilon_1}$).}
   %At the first round, each user obfuscates her edge by ARR ($\mu \in [0,1]$, $\rho \in e^{-\epsilon_1}$) to provide $\epsilon_1$-edge LDP.
-  \label{fig:alg_overview}
+  \label{chap2-fig:alg_overview}
 \end{figure}
 
 % \smallskip
 % \noindent{\textbf{Our Two-Rounds Algorithms.}}~~
 \smallskip
-\noindent{\textbf{Algorithm Overview.}}~~Figure~\ref{fig:alg_overview} shows the overview of our proposed algorithms.
+\noindent{\textbf{Algorithm Overview.}}~~Figure~\ref{chap2-fig:alg_overview} shows the overview of our proposed algorithms.
 % all of which are run in two rounds.
-% Below we explain the overview of our algorithms\footnote{For ease of explanation, we explain algorithms that use all elements in $\bmA$ in Section~\ref{sub:algorithms_overview}.
-% In Section~\ref{sub:three_algorithms}, we propose algorithms that use only the lower triangular part of $\bmA$ to avoid the doubling issue, as described in Section~\ref{sub:LDP}.}.
+% Below we explain the overview of our algorithms\footnote{For ease of explanation, we explain algorithms that use all elements in $\bmA$ in Section~\ref{chap2-sub:algorithms_overview}.
+% In Section~\ref{chap2-sub:three_algorithms}, we propose algorithms that use only the lower triangular part of $\bmA$ to avoid the doubling issue, as described in Section~\ref{chap2-sub:LDP}.}.
 
 At the first round, each user $v_i$ obfuscates
 % $i-1$ bits for smaller user IDs in her neighbor list $\bma_i$ (i.e., lower triangular part of $\bmA$)
@@ -84,7 +84,7 @@ bits for smaller user IDs in her neighbor list $\bma_i$
 % (i.e., lower triangular part of $\bmA$)
 by an LDP mechanism which we call the \textit{ARR (Asymmetric Randomized Response)} 
 and sends the obfuscated bits to a server. 
-% (note that we use only the lower triangular part of $\bmA$ to avoid the doubling issue, as described in Section~\ref{sub:LDP}).
+% (note that we use only the lower triangular part of $\bmA$ to avoid the doubling issue, as described in Section~\ref{chap2-sub:LDP}).
 The ARR is a combination of Warner's RR and edge sampling; i.e.,
 we apply Warner's RR that outputs 1 or 0 as it is with probability
 % $p_1\in[\frac{1}{2},1]$
@@ -101,7 +101,7 @@ depending on the input value.
 As with Warner's RR, the ARR provides edge LDP.
 % Since Warner's RR provides
 % $\epsilon_1$-
-% edge LDP (as described in Section~\ref{sub:LDP}) and
+% edge LDP (as described in Section~\ref{chap2-sub:LDP}) and
 % the sampling is a post-processing process (and
 % DP is immune to post-processing~\cite{DP}, the ARR also provides
 % $\epsilon_1$-
@@ -120,12 +120,12 @@ User $v_i$ downloads $M_i$ from the server.
 % a message $M_i$ from the server consisting of some or all
 % of $E'$.
 % noisy edges between others.
-Then, since user $v_i$ knows her edges, $v_i$ can count \textit{noisy triangles} ($v_i$, $v_j$, $v_k$) such that $j<k<i$ and only one edge ($v_j$, $v_k$) is noisy, as shown in Figure~\ref{fig:alg_overview}. 
+Then, since user $v_i$ knows her edges, $v_i$ can count \textit{noisy triangles} ($v_i$, $v_j$, $v_k$) such that $j<k<i$ and only one edge ($v_j$, $v_k$) is noisy, as shown in Figure~\ref{chap2-fig:alg_overview}. 
 % $(v_i,v_j) \in E$, $(v_i,v_k) \in E$,
 % $(v_j,v_k) \in E'$, and $j<k<i$;
 % i.e., only one edge is noisy
 The condition $j<k<i$ is imposed to use only the lower triangular part of $\bmA$, i.e., 
-to avoid the doubling issue in Section~\ref{sub:LDP}. 
+to avoid the doubling issue in Section~\ref{chap2-sub:LDP}. 
 % Then $v_i$ adds some post-processing (to enable the server to obtain an unbiased estimate of $f_\triangle(G)$) and the Laplacian noise (to provide $\epsilon_2$-edge LDP for $\epsilon_2 \in \nnreals$) to the noisy triangle count, and sends it to a server.
 User $v_i$ adds %some post-processing
 a corrective term
@@ -143,7 +143,7 @@ edge LDP.
 Finally,
 the server calculates an unbiased estimate of $f_\triangle(G)$
 from the noisy data sent by users.
-By composition (Proposition~\ref{prop:seq_comp_edge_LDP}),
+By composition (Proposition~\ref{chap2-prop:seq_comp_edge_LDP}),
 % the compositionality of DP~\cite{DP},
 our algorithms provide
 % ($\epsilon_1 + \epsilon_2$)-
@@ -166,8 +166,8 @@ In contrast, only one edge is noisy in each noisy triangle at the second round b
 % $(v_i,v_j) \in E$ and $(v_i,v_k) \in E$
 connected to $v_i$.
 Consequently, we can obtain an unbiased estimate with a much smaller variance.
-See Appendix~\ref{sec:one-round} for a detailed comparison.
-% In Appendix~\ref{sec:one-round}, we show that
+See Appendix~\ref{chap2-sec:one-round} for a detailed comparison.
+% In Appendix~\ref{chap2-sec:one-round}, we show that
 % our two-rounds algorithms significantly outperform the existing one-round triangle algorithms.
 % ~\cite{Imola_USENIX21,Ye_TKDE21}.
 % (with sampling).
@@ -175,7 +175,7 @@ See Appendix~\ref{sec:one-round} for a detailed comparison.
 
 % \subsection{Three Algorithms}
 \subsection{Algorithms}
-\label{sub:three_algorithms}
+\label{chap2-sub:three_algorithms}
 
 \smallskip
 \noindent{\textbf{ARR.}}~~First, we formally define the ARR.
@@ -188,21 +188,21 @@ Let
 % $\calR_{ARR}$
 $ARR_{\epsilon,\mu}$ be the ARR with parameters $\epsilon$ and $\mu$. It takes $0/1$ as input and outputs $0/1$ with the following probability:
 \begin{align}
-    \Pr[ARR_{\epsilon,\mu}(1) = b] &= \begin{cases}\mu & (b=1) \\ 1-\mu & (b=0)\end{cases} \label{eq:ARR_1}\\
-    \Pr[ARR_{\epsilon,\mu}(0) = b] &= \begin{cases}\mu\rho & (b=1) \\ 1-\mu \rho & (b=0), \end{cases} \label{eq:ARR_0}
+    \Pr[ARR_{\epsilon,\mu}(1) = b] &= \begin{cases}\mu & (b=1) \\ 1-\mu & (b=0)\end{cases} \label{chap2-eq:ARR_1}\\
+    \Pr[ARR_{\epsilon,\mu}(0) = b] &= \begin{cases}\mu\rho & (b=1) \\ 1-\mu \rho & (b=0), \end{cases} \label{chap2-eq:ARR_0}
 \end{align}
 where $\rho = e^{-\epsilon}$.
-By Figure~\ref{fig:alg_overview},
+By Figure~\ref{chap2-fig:alg_overview},
 we can view this randomizer as a combination of Warner's RR~\cite{Warner_JASA65}
 % with $p_1=\frac{e^{\epsilon}}{e^{\epsilon}+1}$
 and edge sampling, where $\mu=p_1 p_2$.
 In fact, the ARR with $\mu = p_1 =\frac{e^{\epsilon}}{e^{\epsilon}+1}$ (i.e., $p_2=1$) is equivalent to Warner's RR.
 
 Each user $v_i$ applies the ARR to bits for smaller user IDs in her neighbor list $\bma_i$; i.e., $\calR_i(\bma_i) = (ARR_{\epsilon,\mu}(a_{i,1}), \ldots, \allowbreak ARR_{\epsilon,\mu}(a_{i,i-1}))$.
-% Note that we use only the lower triangular part of $\bmA$ to avoid the doubling issue described in Section~\ref{sub:LDP}.
+% Note that we use only the lower triangular part of $\bmA$ to avoid the doubling issue described in Section~\ref{chap2-sub:LDP}.
 Then $v_i$ sends $\calR_i(\bma_i)$ to the server.
-% Applying Warner's RR to each bit of $\bma_i$ provides $\epsilon$-edge LDP (as described in Section~\ref{sub:LDP}).
-Since applying Warner's RR to $\bma_i$ provides $\epsilon$-edge LDP (as described in Section~\ref{sub:LDP}) and the sampling is a post-processing process, applying the ARR to $\bma_i$ also provides $\epsilon$-edge LDP by the immunity to post-processing~\cite{DP}.
+% Applying Warner's RR to each bit of $\bma_i$ provides $\epsilon$-edge LDP (as described in Section~\ref{chap2-sub:LDP}).
+Since applying Warner's RR to $\bma_i$ provides $\epsilon$-edge LDP (as described in Section~\ref{chap2-sub:LDP}) and the sampling is a post-processing process, applying the ARR to $\bma_i$ also provides $\epsilon$-edge LDP by the immunity to post-processing~\cite{DP}.
 
 Let $E' \subseteq V \times V$ be a set of noisy edges sent by users.
 
@@ -230,10 +230,10 @@ Thus, a natural solution would be to download \textit{all noisy edges between ot
 % (except for the ones connected to $v_i$).
 (with smaller user IDs); i.e.,
 % \begin{align}
-% M_i =\{(v_j, v_k) \in E' | j<k<i\}. \label{eq:M_i_I}
+% M_i =\{(v_j, v_k) \in E' | j<k<i\}. \label{chap2-eq:M_i_I}
 % \end{align}
 $M_i =\{(v_j, v_k) \in E' | j<k<i\}$.
-% as shown in Figure~\ref{fig:noisy_edge_DL}.
+% as shown in Figure~\ref{chap2-fig:noisy_edge_DL}.
 We denote our algorithm with this full download strategy by \AlgOne{}.
 The (inefficient) two-rounds algorithm in~\cite{Imola_USENIX21} is a special case of \AlgOne{}
 without sampling ($\mu = p_1$).
@@ -251,14 +251,14 @@ In this paper,
 we show that we can do much better
 % we achieve much higher utility
 than \AlgOne{}.
-Specifically, we prove in Section~\ref{sub:algorithms_theoretical_analysis} that \AlgOne{} results in a high estimation error when the number of 4-cycles (cycles of length 4) in $G$ is large.
+Specifically, we prove in Section~\ref{chap2-sub:algorithms_theoretical_analysis} that \AlgOne{} results in a high estimation error when the number of 4-cycles (cycles of length 4) in $G$ is large.
 Intuitively, this can be explained as follows.
 Suppose that $v_i$, $v_j$, $v_{i'}$, and $v_k$
 ($j<k<i$, $j<k<i'$)
 form a 4-cycle. 
 % $v_i-v_j-v_{i'}-v_k-v_i$.
 % (denoted by $v_i$-$v_j$-$v_{i'}$-$v_k$).
-% , as shown in the left panel of Figure~\ref{fig:four-cycle}.
+% , as shown in the left panel of Figure~\ref{chap2-fig:four-cycle}.
 There is no triangle in this graph.
 However, if there is a noisy edge between $v_j$ and $v_k$, then two (incorrect) noisy triangles appear: ($v_i$, $v_j$, $v_k$) counted by $v_i$ and ($v_{i'}$, $v_j$, $v_k$) counted by $v_{i'}$.
 More generally, let $E_{ijk}$ (resp.~$E_{i'jk}$) $\in \{0,1\}$ be a random variable that takes $1$ if ($v_i$, $v_j$, $v_k$) (resp.~($v_{i'}$, $v_j$, $v_k$)) forms a noisy triangle and $0$ otherwise.
@@ -286,7 +286,7 @@ one noisy edge is connected from $v_k$ to $v_i$;
 i.e.,
 $M_i = \{(v_j, v_k) \in E' | (v_i, v_k) \in E', j<k<i\}$.
 % \begin{align}
-% M_i = \{(v_j, v_k) \in E' | (v_i, v_k) \in E', j<k<i\}. \label{eq:M_i_II}
+% M_i = \{(v_j, v_k) \in E' | (v_i, v_k) \in E', j<k<i\}. \label{chap2-eq:M_i_II}
 % \end{align}
 We call this algorithm \AlgTwo{}, as one noisy edge is connected to $v_i$.
 In the second algorithm,
@@ -296,17 +296,17 @@ noisy edges $(v_j, v_k)$ such that
 two noisy edges are connected from these nodes to $v_i$; i.e.,
 $M_i = \{(v_j, v_k) \in E' | (v_i, v_j) \in E', (v_i, v_k) \in E', j<k<i\}$.
 % \begin{align}
-% \hspace{-2mm} M_i \hspace{-0.5mm} = \hspace{-0.5mm}  \{(v_j, v_k) \in E' | (v_i, v_j) \in E', (v_i, v_k) \in E', j<k<i\}. \label{eq:M_i_III}
+% \hspace{-2mm} M_i \hspace{-0.5mm} = \hspace{-0.5mm}  \{(v_j, v_k) \in E' | (v_i, v_j) \in E', (v_i, v_k) \in E', j<k<i\}. \label{chap2-eq:M_i_III}
 % \end{align}
 We call this algorithm \AlgThree{}, as two noisy edges are connected to $v_i$.
 Note that user $v_i$ does not leak her original edges to the server at the time of download in these algorithms, because
 % $v_i$ uses only noisy edges the server has.
 the server uses only noisy edges $E'$ sent by users to calculate $M_i$.
 
-Figure~\ref{fig:noisy_edge_DL} shows our three algorithms.
+Figure~\ref{chap2-fig:noisy_edge_DL} shows our three algorithms.
 % Let $\mu_F, \mu_O, \mu_T \in \nnreals$ be values of $\mu$ in the ARR used for \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively.
 % Then the
-The download cost $\CostDL{}$ in (\ref{eq:cost_DL}) is
+The download cost $\CostDL{}$ in (\ref{chap2-eq:cost_DL}) is
 $O(\mu n^2 \log n)$, $O(\mu^2 n^2 \log n)$, and $O(\mu^3 n^2 \log n)$,
 % $O(\mu_F n^2 \log n)$, $O(\mu_O^2 n^2 \log n)$, and $O(\mu_T^3 n^2 \log n)$,
 respectively, when we regard $\epsilon$ as a constant.
@@ -330,7 +330,7 @@ is the same between the three algorithms.
   % and expected download size
   in our three algorithms.}
   %$\mu_F$, $\mu_O$, and $\mu_T$ are values of $\mu$ in the ARR used for \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively.}
-  \label{fig:noisy_edge_DL}
+  \label{chap2-fig:noisy_edge_DL}
 % \end{figure}
 \vspace{4mm}
 % \begin{figure}[t]
@@ -341,11 +341,11 @@ is the same between the three algorithms.
   % 4-cycle issue.
   \AlgOne{} counts two (incorrect) noisy triangles when one noisy edge appears.
   \AlgTwo{} and \AlgThree{} avoid this by increasing independent noise.}
-  \label{fig:four-cycle}
+  \label{chap2-fig:four-cycle}
 \end{figure}
 
-% Figure\ref{fig:four-cycle} shows why and how \AlgTwo{} and \AlgThree{} address the 4-cycle issue.
-Figure~\ref{fig:four-cycle} shows our $4$-cycle trick.
+% Figure\ref{chap2-fig:four-cycle} shows why and how \AlgTwo{} and \AlgThree{} address the 4-cycle issue.
+Figure~\ref{chap2-fig:four-cycle} shows our $4$-cycle trick.
 \AlgOne{} counts two (incorrect) noisy triangles when a noisy edge ($v_j$, $v_k$) appears.
 % there is a noisy edge ($v_j$, $v_k$).
 In contrast,
@@ -354,7 +354,7 @@ In contrast,
 % this bad event happens
 only when three (resp.~five) independent noisy edges appear,
 % in \AlgTwo{} (resp.~\AlgThree{}),
-as shown in Figure~\ref{fig:four-cycle}.
+as shown in Figure~\ref{chap2-fig:four-cycle}.
 % Since these noisy edges are independent,
 Thus, this bad event happens with a much smaller probability.
 For example,
@@ -381,29 +381,29 @@ large.
 
 \smallskip
 \noindent{\textbf{\AlgTwo{} vs. \AlgThree{}.}}~~One
-% The number of independent noisy edges in a 4-cycle is three and five in \AlgTwo{} and \AlgThree{}, respectively, as shown in Figure\ref{fig:four-cycle}.
+% The number of independent noisy edges in a 4-cycle is three and five in \AlgTwo{} and \AlgThree{}, respectively, as shown in Figure\ref{chap2-fig:four-cycle}.
 % Thus
 might expect that \AlgThree{} outperforms \AlgTwo{} because \AlgThree{} addresses the 4-cycle issue more aggressively; i.e.,
 % \AlgThree{} has the largest number of independent noisy edges in a 4-cycle,
 the number of independent noisy edges in a 4-cycle is larger in \AlgThree{},
-as shown in Figure \ref{fig:four-cycle}.
+as shown in Figure \ref{chap2-fig:four-cycle}.
 However,
 % \AlgThree{} suffers from a large global sensitivity of the Laplacian noise at the second round.
 \AlgTwo{} can reduce the global sensitivity of the Laplacian noise
 at the second round
-more effectively than \AlgThree{}, as explained in Section~\ref{sec:double_clip}.
+more effectively than \AlgThree{}, as explained in Section~\ref{chap2-sec:double_clip}.
 % in detail.
 Consequently, \AlgTwo{}, which is the most tricky algorithm, achieves the smallest estimation error in our experiments.
-See Sections~\ref{sec:double_clip} and \ref{sec:experiments} for details of the global sensitivity and experiments, respectively.
+See Sections~\ref{chap2-sec:double_clip} and \ref{chap2-sec:experiments} for details of the global sensitivity and experiments, respectively.
 
 \smallskip
 \noindent{\textbf{Three Algorithms.}}~~Below we explain the details of our three algorithms.
-For ease of explanation, we assume that the maximum degree $d_{max}$ is public in Section~\ref{sub:three_algorithms}\footnote{For example, $d_{max}$ is public in Facebook: $d_{max} = 5000$~\cite{Facebook_Limit}.
+For ease of explanation, we assume that the maximum degree $d_{max}$ is public in Section~\ref{chap2-sub:three_algorithms}\footnote{For example, $d_{max}$ is public in Facebook: $d_{max} = 5000$~\cite{Facebook_Limit}.
 If the server does not have prior knowledge about $d_{max}$, she can privately estimate $d_{max}$ and use graph projection to guarantee that each user's degree never exceeds the private estimate of $d_{max}$~\cite{Imola_USENIX21}.
-In any case, the assumption in Section~\ref{sub:three_algorithms} does not undermine our algorithms, because our entire algorithms with double clipping in Section~\ref{sec:double_clip} does \textit{not} assume that $d_{max}$ is public.}.
+In any case, the assumption in Section~\ref{chap2-sub:three_algorithms} does not undermine our algorithms, because our entire algorithms with double clipping in Section~\ref{chap2-sec:double_clip} does \textit{not} assume that $d_{max}$ is public.}.
 Note, however, that
 % we propose a technique to significantly reduce the global sensitivity
-our double clipping (which is proposed to significantly reduce the global sensitivity) in Section~\ref{sec:double_clip} does \textit{not} assume that $d_{max}$ is public.
+our double clipping (which is proposed to significantly reduce the global sensitivity) in Section~\ref{chap2-sec:double_clip} does \textit{not} assume that $d_{max}$ is public.
 Consequently, our entire algorithms 
 % (i.e., \AlgOne, \AlgTwo, \AlgThree with double clipping)
 % three triangle counting algorithms (\AlgOne, \AlgTwo, \AlgThree) with our double clipping
@@ -434,7 +434,7 @@ do \textit{not} require the assumption that $d_{max}$ is public.
   \tcc{Second round.}
   \For{$i=1$ \KwTo $n$}{
     [s] Compute
-    $M_i$ by (\ref{eq:M_i_I}), (\ref{eq:M_i_II}), and (\ref{eq:M_i_III}) in F, O, and T, respectively\;
+    $M_i$ by (\ref{chap2-eq:M_i_I}), (\ref{chap2-eq:M_i_II}), and (\ref{chap2-eq:M_i_III}) in F, O, and T, respectively\;
     %$M_i = \{(v_j,v_k) \in E': j < k < i\}$\;
     %$M_i = \{(v_j,v_k) \in E': (v_i,v_k) \in E', j < k < i\}$\;
     %$M_i = \{(v_j,v_k) \in E': (v_i,v_k), (v_j,v_k) \in E', j < k < i\}$\;
@@ -454,48 +454,48 @@ do \textit{not} require the assumption that $d_{max}$ is public.
   %$\mu^*=\mu_F$, $\mu_O^2$, and $\mu_T^3$ in
   \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively.
   [$v_i$] and [s] represent that the process is run by $v_i$ and the server, respectively.
-  }\label{alg:unify}
+  }\label{chap2-alg:unify}
 \end{algorithm}
 
 % As explained above,
 Recall that the server calculates a message $M_i$ for $v_i$ as:
 \begin{align}
-\hspace{-1mm} M_i \hspace{-0.5mm} &= \hspace{-0.5mm} \{(v_j, v_k) \in E' | j<k<i\} \label{eq:M_i_I}\\
-\hspace{-1mm} M_i \hspace{-0.5mm} &= \hspace{-0.5mm} \{(v_j, v_k) \in E' | (v_i, v_k) \in E', j<k<i\} \label{eq:M_i_II}\\
-\hspace{-1mm} M_i \hspace{-0.5mm} &= \hspace{-0.5mm}  \{(v_j, v_k) \in E' | (v_i, v_j) \in E', (v_i, v_k) \in E', j<k<i\} \label{eq:M_i_III}
+\hspace{-1mm} M_i \hspace{-0.5mm} &= \hspace{-0.5mm} \{(v_j, v_k) \in E' | j<k<i\} \label{chap2-eq:M_i_I}\\
+\hspace{-1mm} M_i \hspace{-0.5mm} &= \hspace{-0.5mm} \{(v_j, v_k) \in E' | (v_i, v_k) \in E', j<k<i\} \label{chap2-eq:M_i_II}\\
+\hspace{-1mm} M_i \hspace{-0.5mm} &= \hspace{-0.5mm}  \{(v_j, v_k) \in E' | (v_i, v_j) \in E', (v_i, v_k) \in E', j<k<i\} \label{chap2-eq:M_i_III}
 \end{align}
 in \AlgOne{}, \AlgTwo{}, \AlgThree{}, respectively.
 
 %Using these equations,
-% our three algorithms can be unified in Algorithm~\ref{alg:unify}.
-Algorithm~\ref{alg:unify} shows our three algorithms.
+% our three algorithms can be unified in Algorithm~\ref{chap2-alg:unify}.
+Algorithm~\ref{chap2-alg:unify} shows our three algorithms.
 These algorithms are processed differently in lines 2 and 9; ``F'', ``O'', ``T'' are shorthands for \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively.
 % It uses two rounds of private computation, and
 % in both rounds each user $v_i$ applies a local randomizer to her neighbor list $\bma_i$.
 The privacy budgets for the first and second
 rounds are $\epsilon_1, \epsilon_2 \in \nnreals$, respectively.
 
-The first round appears in lines 3-7 of Algorithm~\ref{alg:unify}.
+The first round appears in lines 3-7 of Algorithm~\ref{chap2-alg:unify}.
 In this round, each user applies
 $ARR_{\epsilon_1, \mu}$
 % the ARR
-defined by (\ref{eq:ARR_1}) and (\ref{eq:ARR_0}) to bits $a_{i,1}, \ldots, a_{i,i-1}$ for smaller user IDs in her neighbor list $\bma_i$, i.e., lower triangular part of $\bmA$.
+defined by (\ref{chap2-eq:ARR_1}) and (\ref{chap2-eq:ARR_0}) to bits $a_{i,1}, \ldots, a_{i,i-1}$ for smaller user IDs in her neighbor list $\bma_i$, i.e., lower triangular part of $\bmA$.
 % explained in the beginning of
-% Section~\ref{sub:three_algorithms}.
+% Section~\ref{chap2-sub:three_algorithms}.
 Let $\bmr_i = (r_{i,1}, \ldots, r_{i,i-1}) \in \{0,1\}^{i-1}$ be the obfuscated bits of $v_i$.
 User $v_i$ uploads $\bmr_i$ to the server.
 Then the server combines the noisy edges together, forming $E' = \{(v_j, v_k) : r_{k,j} = 1, j < k\}$.
 
-The second round appears in lines 8-17 of Algorithm~\ref{alg:unify}.
+The second round appears in lines 8-17 of Algorithm~\ref{chap2-alg:unify}.
 In this round, the server computes a message $M_i$
-by (\ref{eq:M_i_I}), (\ref{eq:M_i_II}), or (\ref{eq:M_i_III}),
+by (\ref{chap2-eq:M_i_I}), (\ref{chap2-eq:M_i_II}), or (\ref{chap2-eq:M_i_III}),
 % depending on the algorithm,
 and user $v_i$ downloads it.
-% As explained above, \AlgOne{}, \AlgTwo{}, and \AlgThree{} computes $M_i$ by (\ref{eq:M_i_I}), (\ref{eq:M_i_II}), and  (\ref{eq:M_i_III}), respectively.
+% As explained above, \AlgOne{}, \AlgTwo{}, and \AlgThree{} computes $M_i$ by (\ref{chap2-eq:M_i_I}), (\ref{chap2-eq:M_i_II}), and  (\ref{chap2-eq:M_i_III}), respectively.
 Then user $v_i$ calculates the number $t_i \in \nnints$ of noisy triangles ($v_i$, $v_j$, $v_k$) such that
 % $j<k<i$ and
-only one edge ($v_j$, $v_k$) is noisy, as shown in Figure~\ref{fig:alg_overview}.
-% involving two edges in user $v_i$'s neighbor list and one noisy edge in $E'$ (as shown in Figure~\ref{fig:alg_overview}).
+only one edge ($v_j$, $v_k$) is noisy, as shown in Figure~\ref{chap2-fig:alg_overview}.
+% involving two edges in user $v_i$'s neighbor list and one noisy edge in $E'$ (as shown in Figure~\ref{chap2-fig:alg_overview}).
 % We also emphasize that the condition $j<k<i$ is imposed to use only the lower triangular part of $\bmA$.
 % (and avoid the doubling issue).
 User $v_i$ also calculate a corrective term $s_i \in \nnints$.
@@ -520,13 +520,13 @@ As we prove later, $\hf_\triangle(G)$ is an unbiased estimate of $f_\triangle(G)
 % \smallskip
 % \noindent{\textbf{\AlgOne.}}
 
-% Our first algorithm, \AlgOne, appears in Algorithm~\ref{alg:one}. It uses two
+% Our first algorithm, \AlgOne, appears in Algorithm~\ref{chap2-alg:one}. It uses two
 % rounds of private computation, and in both rounds each user applies a local
 % randomizer to his data.
 % The privacy budgets for the two
 % rounds are $\epsilon_1, \epsilon_2$.
 
-% The first round appears in Lines 3-4 of Algorithm~\ref{alg:one}. This round
+% The first round appears in Lines 3-4 of Algorithm~\ref{chap2-alg:one}. This round
 % collects the noisy edges from the users.
 % The noisy edges are produced
 % using the asymmetric randomized response mechanism, which we denote
@@ -540,11 +540,11 @@ As we prove later, $\hf_\triangle(G)$ is an unbiased estimate of $f_\triangle(G)
 % upload the
 % edge using ARR. This prevents releasing the edge twice, and allows us to prove
 % that our mechanism satisfies relationship DP without the doubling factor in
-% $\epsilon$ (see Proposition~\ref{prop:edge_LDP_entire_edge_LDP}).
+% $\epsilon$ (see Proposition~\ref{chap2-prop:edge_LDP_entire_edge_LDP}).
 % Given the collection of ARR queries to the users, the server concludes the first
 % round by combining the noisy edges together and unordering them, forming $E'$.
 
-% The second round appears in Lines 8-13 of Algorithm~\ref{alg:one}.
+% The second round appears in Lines 8-13 of Algorithm~\ref{chap2-alg:one}.
 % In this round, each user $v_i$ computes an unbiased estimator $w_i$ for
 % the number of triangles involving $v_i$ for which the maximum index of the
 % triangle is $i$. It is easy to see that the sum of the $w_i$ estimates the total
@@ -590,15 +590,15 @@ As we prove later, $\hf_\triangle(G)$ is an unbiased estimate of $f_\triangle(G)
 %     Upload $\hw_i$ to server\;
 %   }
 %   \KwRet{$\frac{1}{\mu_F(1-p_1)}\sum_{i=1}^n \hw_i$}
-%   \caption{\AlgOne}\label{alg:one}
+%   \caption{\AlgOne}\label{chap2-alg:one}
 % \end{algorithm}
 
 % \smallskip
 % \noindent{\textbf{\AlgTwo.}}
 
-% Our second Algorithm, \AlgTwo, appears in Algorithm~\ref{alg:two}. Like
+% Our second Algorithm, \AlgTwo, appears in Algorithm~\ref{chap2-alg:two}. Like
 % \AlgOne, it uses two rounds with budgets $\epsilon_1$ and $\epsilon_2$.
-% The first round is identical to \AlgOne, and for brevity, Algorithm~\ref{alg:two} does not
+% The first round is identical to \AlgOne, and for brevity, Algorithm~\ref{chap2-alg:two} does not
 % include a description of the first round.
 % Recall that the goal of the second round is for each user $v_i$ to compute an estimate of the
 % number of triangles in which $i$ is the maximum index, which is the variable
@@ -648,7 +648,7 @@ As we prove later, $\hf_\triangle(G)$ is an unbiased estimate of $f_\triangle(G)
 %   }
 %   \KwRet{$\frac{1}{\mu_O^2(1-p_1)}\sum_{i=1}^n \hw_i$}
 %   \caption{\AlgTwo, second round only (first round is identical to \AlgOne with
-%   sampling parameter $\mu_O$).}\label{alg:two}
+%   sampling parameter $\mu_O$).}\label{chap2-alg:two}
 % \end{algorithm}
 
 % \smallskip
@@ -678,7 +678,7 @@ As we prove later, $\hf_\triangle(G)$ is an unbiased estimate of $f_\triangle(G)
 %   }
 %   \KwRet{$\frac{1}{\mu_T^3(1-p_1)}\sum_{i=1}^n \hw_i$}
 %   \caption{\AlgThree, second round only (first round is identical to \AlgOne
-%   with sampling parameter $\mu_T$).}\label{alg:three}
+%   with sampling parameter $\mu_T$).}\label{chap2-alg:three}
 % \end{algorithm}
 
 % \smallskip
@@ -688,14 +688,14 @@ As we prove later, $\hf_\triangle(G)$ is an unbiased estimate of $f_\triangle(G)
 % \end{itemize}}
 
 \subsection{Theoretical Analysis}
-\label{sub:algorithms_theoretical_analysis}
+\label{chap2-sub:algorithms_theoretical_analysis}
 We now introduce the theoretical guarantees on
 % theoretically analyze
 the privacy, communication, and
 utility of 
 our algorithms. 
 % \AlgOne{}, \AlgTwo{}, and \AlgThree{}.
-% All the proofs appear in Appendix~\ref{sec:proof_algorithms}.
+% All the proofs appear in Appendix~\ref{chap2-sec:proof_algorithms}.
 % The first round of the
 % algorithms is all the same: Each user applies a randomizer $\calR_i^1(\bma_i)$
 % to his neighbor list which releases the ARR of his neighbors. Then, the server
@@ -703,7 +703,7 @@ our algorithms.
 % Let $M_i^F, M_i^O,
 % M_i^T$ be the message $M_i$ used in \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively.
 % Formulas for these values appear in
-% equations~\eqref{eq:M_i_I},~\eqref{eq:M_i_II}, and~\eqref{eq:M_i_III},
+% equations~\eqref{chap2-eq:M_i_I},~\eqref{chap2-eq:M_i_II}, and~\eqref{chap2-eq:M_i_III},
 % respectively.
 % For fixed $M_i$ and $\mu^*$, the second round of the algorithms is
 % also the same, and we denote it with $\calR_i^{2}(M_i, \mu^*)(\bma_i)$, where $\mu^* =
@@ -718,16 +718,16 @@ our algorithms.
 % $\calR_i^1(\bma_i)$ and $\calR_i^2(M_i, \mu^*)(\bma_i)$ satisfies $\epsilon$-edge DP for any choice of $M_i, \mu^*$,
 % they satisfy $\epsilon_1$ and $\epsilon_2$-edge LDP at the first and second round, respectively,
 % $\epsilon$-edge DP for any choice of $M_i, \mu^*$,
-% and then using sequential composition (Proposition~\ref{prop:seq_comp_edge_LDP}):
+% and then using sequential composition (Proposition~\ref{chap2-prop:seq_comp_edge_LDP}):
 % and post-processing:
-\begin{theorem}\label{thm:privacy_algorithms}
+\begin{theorem}\label{chap2-thm:privacy_algorithms}
   % Let $\mu, d_{max}$ be fixed.
   For $i \in [n]$,
   let
 %   $\calR_i^1, \calR_i^2(M_i, \mu^*)$
   $\calR_i^1, \calR_i^2(M_i)$
   be the randomizers used by user $v_i$ in
-  rounds $1$ and $2$ of Algorithm~\ref{alg:unify}. % where $M_i = M_i^F, M_i^O$, or $M_i^T$.
+  rounds $1$ and $2$ of Algorithm~\ref{chap2-alg:unify}. % where $M_i = M_i^F, M_i^O$, or $M_i^T$.
   Let
 %   $\calR_i(\bma_i) = (\calR_i^1(\bma_i), \calR_i^2(M_i, \mu^*)(\bma_i))$
   $\calR_i(\bma_i) = (\calR_i^1(\bma_i), \calR_i^2(M_i)(\bma_i))$
@@ -735,29 +735,29 @@ our algorithms.
   $\calR_i$
 %   $\calR_i$ satisfies $(\epsilon_1 + \epsilon_2)$-edge LDP for $i \in [n]$, and $(\calR_1,
 %   \ldots, \calR_n)$ satisfies $(\epsilon_1 + \epsilon_2)$-relationship DP.
-%   Thus, by post-processing, the output of Algorithm~\ref{alg:unify}
+%   Thus, by post-processing, the output of Algorithm~\ref{chap2-alg:unify}
   satisfies
   $(\epsilon_1+\epsilon_2)$-edge LDP and
   $(\calR_1,
   \ldots, \calR_n)$ satisfies  $(\epsilon_1+\epsilon_2)$-relationship DP.
 \end{theorem}
 
-% A full proof of this claim appears in Appendix~\ref{sec:proof_algorithms}.
+% A full proof of this claim appears in Appendix~\ref{chap2-sec:proof_algorithms}.
 % The algorithms satisfy both $(\epsilon_1+\epsilon_2)$-edge LDP and $(\epsilon_1+\epsilon_2)$-relationship DP
-Note that the doubling issue in Section~\ref{sub:LDP} does not occur, 
+Note that the doubling issue in Section~\ref{chap2-sub:LDP} does not occur, 
 because we use only the lower triangular part of $\bmA$. 
-% (i.e., avoid the doubling issue in Section~\ref{sub:LDP}).
+% (i.e., avoid the doubling issue in Section~\ref{chap2-sub:LDP}).
 % each user ignores edges in her neighbor list to users with smaller index than his own.
 % Thus, each edge affects the output of at most one randomizer in
 % each round. This allows us to prove a tighter bound on the relationship DP
-% parameter than that given by Proposition~\ref{prop:edge_LDP_entire_edge_LDP}.
+% parameter than that given by Proposition~\ref{chap2-prop:edge_LDP_entire_edge_LDP}.
 By the immunity to post-processing, the estimate  $\hf_\triangle(G)$
-% in Algorithm~\ref{alg:unify}
+% in Algorithm~\ref{chap2-alg:unify}
 also satisfies $(\epsilon_1+\epsilon_2)$-edge LDP and $(\epsilon_1+\epsilon_2)$-relationship DP.
 
 % \paragraph{Communication}
 \smallskip
-\noindent{\textbf{Communication.}}~~Recall that we evaluate the algorithms based on their download cost~\eqref{eq:cost_DL} and upload cost~\eqref{eq:cost_UL}.
+\noindent{\textbf{Communication.}}~~Recall that we evaluate the algorithms based on their download cost~\eqref{chap2-eq:cost_DL} and upload cost~\eqref{chap2-eq:cost_UL}.
 
 \textit{Download Cost:} The download cost is the number of bits required
 to download $M_i$.
@@ -774,11 +774,11 @@ There are $\frac{(n-1)(n-2)}{2} \approx \frac{n^2}{2}$ edges between others.
 % Given 1 (resp.~0) as input, $ARR_{\epsilon_1,\mu}$ outputs 1 with probability $\mu$ (resp.~$\mu e^{- \epsilon_1}$).
 $ARR_{\epsilon_1,\mu}$ outputs 1 with probability at most $\mu$. 
 % When $d_{max} \ll n$, most input values are 0.
-In addition, each noisy triangle must have $1$, $2$, and $3$ noisy edges in \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively, as shown in Figure~\ref{fig:noisy_edge_DL}.
+In addition, each noisy triangle must have $1$, $2$, and $3$ noisy edges in \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively, as shown in Figure~\ref{chap2-fig:noisy_edge_DL}.
 
 Thus, 
 % when $d_{max} \ll n$, 
-the download cost in Algorithm~\ref{alg:unify} 
+the download cost in Algorithm~\ref{chap2-alg:unify} 
 % for each algorithm 
 can be written as:
 % ($F$, $O$, and $T$ are shorthands for \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively):
@@ -791,14 +791,14 @@ can be written as:
 % and $\E[|M_i^F|] \leq \mu^3 \binom{n}{2}$. In summary, we have (where $F,O,T$ is a
 % shorthand for \AlgOne{}, \AlgTwo{}, and \AlgThree{}),
 \begin{align}
-   Cost_{DL} &\leq \mu^* n^2 \log n,  \label{eq:CostDL_F}
-%   Cost_{DL}(F) &\leq \mu n^2 \log n,  \label{eq:CostDL_F}\\
-%   Cost_{DL}(O) &\leq \mu^2 n^2 \log n \label{eq:CostDL_O}\\
-%   Cost_{DL}(T) &\leq \mu^3 n^2 \log n. \label{eq:CostDL_T}
-%   Cost_{DL}(F) &\leq \mu n^2 \log n \label{eq:CostDL_F}\\
-%   Cost_{DL}(O) &\leq \mu^2 n^2 \log n \label{eq:CostDL_O}\\
-%   Cost_{DL}(T) &\leq \mu^3 n^2 \log n. \label{eq:CostDL_T}
-%   Cost_{DL}(F) &\approx \mu e^{-\epsilon_1} n^2 \log n \label{eq:CostDL_F}\\
+   Cost_{DL} &\leq \mu^* n^2 \log n,  \label{chap2-eq:CostDL_F}
+%   Cost_{DL}(F) &\leq \mu n^2 \log n,  \label{chap2-eq:CostDL_F}\\
+%   Cost_{DL}(O) &\leq \mu^2 n^2 \log n \label{chap2-eq:CostDL_O}\\
+%   Cost_{DL}(T) &\leq \mu^3 n^2 \log n. \label{chap2-eq:CostDL_T}
+%   Cost_{DL}(F) &\leq \mu n^2 \log n \label{chap2-eq:CostDL_F}\\
+%   Cost_{DL}(O) &\leq \mu^2 n^2 \log n \label{chap2-eq:CostDL_O}\\
+%   Cost_{DL}(T) &\leq \mu^3 n^2 \log n. \label{chap2-eq:CostDL_T}
+%   Cost_{DL}(F) &\approx \mu e^{-\epsilon_1} n^2 \log n \label{chap2-eq:CostDL_F}\\
 %   Cost_{DL}(O) &\approx \mu^2 e^{-\epsilon_1} n^2 \log n \nonumber\\
 %   Cost_{DL}(T) &\approx \mu^3 e^{-\epsilon_1} n^2 \log n. \nonumber
 %   Cost_{DL}(F) &= \max_{i=1}^n 2(\log n) \E[|M_i^F|] \leq \mu n^2 \log n \\
@@ -806,13 +806,13 @@ can be written as:
 %   Cost_{DL}(T) &= \max_{i=1}^n 2(\log n) \E[|M_i^T|] \leq \mu^3 n^2 \log n
 \end{align}
 where $\mu^* = \mu$, $\mu^2$, and $\mu^3$ in \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively. 
-In (\ref{eq:CostDL_F}), 
-% (\ref{eq:CostDL_O}), and (\ref{eq:CostDL_T}), 
+In (\ref{chap2-eq:CostDL_F}), 
+% (\ref{chap2-eq:CostDL_O}), and (\ref{chap2-eq:CostDL_T}), 
 we upper-bounded $\CostDL{}$ by using the fact that $ARR_{\epsilon_1,\mu}$ outputs 1 with probability at most $\mu$. 
 However, when $d_{max} \ll n$, 
 $ARR_{\epsilon_1,\mu}$ outputs 1 with probability $\mu e^{- \epsilon_1}$ in most cases. 
-In that case, we can roughly approximate $\CostDL{}$ by replacing $\mu$ with $\mu e^{- \epsilon_1}$ in (\ref{eq:CostDL_F}). 
-% , (\ref{eq:CostDL_O}), and (\ref{eq:CostDL_T}). 
+In that case, we can roughly approximate $\CostDL{}$ by replacing $\mu$ with $\mu e^{- \epsilon_1}$ in (\ref{chap2-eq:CostDL_F}). 
+% , (\ref{chap2-eq:CostDL_O}), and (\ref{chap2-eq:CostDL_T}). 
 % In our experiments, we also confirmed that this approximation is accurate up to three significant digits.
 
 \textit{Upload Cost:}
@@ -827,7 +827,7 @@ the indices (user IDs) of the $1$s in $\bmr_i$, each user sends $\|\bmr_i\|_1 \l
 where $\|\bmr_i\|_1$ is the number of 1s in $\bmr_i$.
 % (note that $\log n$ bits are required to express each index).
 When we use $ARR_{\epsilon_1,\mu}$,
-% defined by (\ref{eq:ARR_1}) and (\ref{eq:ARR_0}),
+% defined by (\ref{chap2-eq:ARR_1}) and (\ref{chap2-eq:ARR_0}),
 we have $\E[\|\bmr_i\|_1] \leq \mu n$.
 % since the probability of any bit of $\bmr_i$ is
 % at most $\mu$.
@@ -848,7 +848,7 @@ involves uploading a single real number $\hw_i$ (line 15), which is negligibly s
 
 Thus,
 % when $d_{max} \ll n$, 
-the upload cost in Algorithm~\ref{alg:unify} can be written as:
+the upload cost in Algorithm~\ref{chap2-alg:unify} can be written as:
 % approximated as:
 % for each of the three algorithms, we have
 %
@@ -857,7 +857,7 @@ the upload cost in Algorithm~\ref{alg:unify} can be written as:
 %   Cost_{UL} \approx \mu e^{- \epsilon_1} n \log n.
   Cost_{UL} \leq \mu n \log n.
 % \]
-\label{eq:CostUL_proposal}
+\label{chap2-eq:CostUL_proposal}
 \end{align}
 % where $\mu$ is $\mu_F$, $\mu_O$, and $\mu_T$ in \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively.
 Clearly, 
@@ -882,7 +882,7 @@ variance $\V[\hf_\triangle(G)]$ to obtain an upper-bound on
 $l_2^2(f_\triangle(G), \hf_\triangle(G))$.
 This is given in the following:
 
-\begin{theorem}\label{thm:l2loss_algorithms}
+\begin{theorem}\label{chap2-thm:l2loss_algorithms}
   %Let $G, \mu, \epsilon$ be fixed.
   Let $G \in \calG$, $\epsilon_1, \epsilon_2 \in \nnreals$, and
   $\mu \in [0,\frac{e^{\epsilon_1}}{e^{\epsilon_1} + 1}]$.
@@ -893,7 +893,7 @@ This is given in the following:
   the
   % estimators returned
   estimates output
-  respectively by \AlgOne{}, \AlgTwo{}, and \AlgThree{} in Algorithm~\ref{alg:unify}.
+  respectively by \AlgOne{}, \AlgTwo{}, and \AlgThree{} in Algorithm~\ref{chap2-alg:unify}.
   %, respectively.
   Then, $\E[\hf_\triangle^F(G)] = \E[\hf_\triangle^O(G)] = \E[\hf_\triangle^T(G)] = f_\triangle(G)$ (i.e., estimates are unbiased) and
    %Furthermore,
@@ -906,11 +906,11 @@ This is given in the following:
    \end{align*}
    where $C_4(G)$ is the number of $4$-cycles in $G$
    %$P_3(G)$ is the number of $3$-paths in $G$,
-   and $S_k(G)$ is the number of $k$-stars in $G$. %(see Figure~\ref{fig:subgraphs} in Appendix~\ref{sec:notations_subgraphs} for their shapes).
+   and $S_k(G)$ is the number of $k$-stars in $G$. %(see Figure~\ref{chap2-fig:subgraphs} in Appendix~\ref{chap2-sec:notations_subgraphs} for their shapes).
    %For a general $\epsilon_2$, the above quantities increase by an additive factor of
    %$2n \left(\frac{d_{max}}{\mu^*(1-e^{\epsilon_1})\epsilon_2}\right)^2$.
 \end{theorem}
-For each of the three upper-bounds in Theorem~\ref{thm:l2loss_algorithms}, the first and second terms are the estimation errors caused by empirical estimation and the Laplacian noise, respectively.
+For each of the three upper-bounds in Theorem~\ref{chap2-thm:l2loss_algorithms}, the first and second terms are the estimation errors caused by empirical estimation and the Laplacian noise, respectively.
 We also note that
 % $C_4(G) = P_3(G) = S_3(G) = O(n d_{max}^3)$
 $C_4(G) = S_3(G) = O(n d_{max}^3)$
@@ -930,22 +930,22 @@ diminish for small $\mu$).
 
 This highlights our $4$-cycle trick.
 The large $l_2$ loss of \AlgOne{} is caused by the number $C_4(G) = O(n d_{max}^3)$ of $4$-cycles.
-\AlgTwo{} and \AlgThree{} addresses this issue by increasing independent noise, as shown in Figure~\ref{fig:four-cycle}.
+\AlgTwo{} and \AlgThree{} addresses this issue by increasing independent noise, as shown in Figure~\ref{chap2-fig:four-cycle}.
 % The theorem highlights the $4$-cycle issue of \AlgOne{}, because its utility guarantee depends on the number of $4$-cycles in $G$. While the number of $4$-cycles is strictly less than the number of $3$-paths, the other algorithms benefit from being able to set $\mu$ higher, and thus sample less.
 
 % However,
 % % all of our three algorithms still suffer from a very large estimation error. due to a large amount of the Laplacian noise.
-% all of the upper-bounds in Theorem~\ref{thm:l2loss_algorithms} are still very large.
+% all of the upper-bounds in Theorem~\ref{chap2-thm:l2loss_algorithms} are still very large.
 % % due to a large amount of the Laplacian noise (as shown in our experiments).
 % % In particular,
 % This is because
 % the Laplacian noise is very large especially for small $\epsilon_2$ or
 % % $\mu_F$ ($=\mu_O^2 = \mu_T^3$),
 % $\mu$,
-% as shown in Theorem~\ref{thm:l2loss_algorithms}.
-% % In Section~\ref{sec:double_clip}, we introduce a double clipping technique to significantly reduce the amount of Laplacian noise.
+% as shown in Theorem~\ref{chap2-thm:l2loss_algorithms}.
+% % In Section~\ref{chap2-sec:double_clip}, we introduce a double clipping technique to significantly reduce the amount of Laplacian noise.
 % In
-% % Section~\ref{sec:double_clip},
+% % Section~\ref{chap2-sec:double_clip},
 % the next section,
 % we introduce \textit{double clipping} to significantly reduce the amount of Laplacian noise.
 

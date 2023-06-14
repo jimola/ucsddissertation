@@ -2,10 +2,10 @@
 \chapter{ }
 
 \section{Basic Notations}
-\label{sec:notations_subgraphs}
+\label{chap2-sec:notations_subgraphs}
 
-Table~\ref{tab:notations} shows the basic notations used in this paper.
-% We also show subgraphs that appear in our theoretical analysis (Theorem~\ref{thm:l2loss_algorithms}) in Figure~\ref{fig:subgraphs}.
+Table~\ref{chap2-tab:notations} shows the basic notations used in this paper.
+% We also show subgraphs that appear in our theoretical analysis (Theorem~\ref{chap2-thm:l2loss_algorithms}) in Figure~\ref{chap2-fig:subgraphs}.
 
 \begin{table}[t]
 \caption{Basic notations.}
@@ -42,16 +42,16 @@ $\epsilon$     &       Total privacy budget.\\
 \hline
 \end{tabular}
 \hfil}
-\label{tab:notations}
+\label{chap2-tab:notations}
 \end{table}
 
 \section{Comparison with One-Round Algorithms}
-\label{sec:one-round}
+\label{chap2-sec:one-round}
 % Some studies \cite{Imola_USENIX21,Ye_ICDE20,Ye_TKDE21} propose one-round triangle counting algorithms.
 
 Below we show that one-round triangle counting algorithms suffer from a prohibitively large estimation error.
 
-First, we note that all of the existing one-round triangle algorithms in \cite{Imola_USENIX21,Ye_ICDE20,Ye_TKDE21} are inefficient and \textit{cannot be directly applied to a large-scale graph} such as \GPlus{} and \IMDB{} in Section~\ref{sec:experiments}.
+First, we note that all of the existing one-round triangle algorithms in \cite{Imola_USENIX21,Ye_ICDE20,Ye_TKDE21} are inefficient and \textit{cannot be directly applied to a large-scale graph} such as \GPlus{} and \IMDB{} in Section~\ref{chap2-sec:experiments}.
 Specifically, in their algorithms, each user $v_i$ applies Warner's RR to each bit of her neighbor list $\bma_i$ and sends the noisy neighbor list to the server.
 Then the server counts the number of noisy triangles, each of which has three noisy edges,
 % from the noisy graph $G'$,
@@ -62,11 +62,11 @@ It is also reported in \cite{Imola_USENIX21} that when $n=10^6$, the one-round a
 
 Therefore, we evaluated the existing one-round algorithms by taking the following two steps.
 First, we evaluate all the existing algorithms in \cite{Imola_USENIX21,Ye_ICDE20,Ye_TKDE21} using small graph datasets ($n=10000$) and show that the algorithm in \cite{Imola_USENIX21} achieves the lowest estimation error.
-Second, we improve the time complexity of the algorithm in \cite{Imola_USENIX21} using the ARR (i.e., edge sampling after Warner's RR) and compare it with our two-rounds algorithms using large graph datasets in Section~\ref{sec:experiments}.
+Second, we improve the time complexity of the algorithm in \cite{Imola_USENIX21} using the ARR (i.e., edge sampling after Warner's RR) and compare it with our two-rounds algorithms using large graph datasets in Section~\ref{chap2-sec:experiments}.
 
 \smallskip
 \noindent{\textbf{Small Datasets.}}~~We first evaluated the existing algorithms in \cite{Imola_USENIX21,Ye_ICDE20,Ye_TKDE21} using small datasets.
-For both \GPlus{} and \IMDB{} in Section~\ref{sec:experiments}, we first randomly selected $n=10000$ users from all users and extracted a graph with $n$ users.
+For both \GPlus{} and \IMDB{} in Section~\ref{chap2-sec:experiments}, we first randomly selected $n=10000$ users from all users and extracted a graph with $n$ users.
 Then we evaluated the relative error of the following three algorithms:
 (i) \textsf{RR (biased)} \cite{Imola_USENIX21,Ye_ICDE20},
 (ii) \textsf{RR (bias-reduced)} \cite{Ye_TKDE21}, and
@@ -90,7 +90,7 @@ We used the mean of the noisy degrees as a representative degree to obtain the o
 
 In all of the three algorithms, each user $v_i$ obfuscates bits for smaller user IDs in her neighbor list $\bma_i$. 
 % (i.e., the lower triangular part of $\bmA$) 
-% to avoid the doubling issue in Section~\ref{sub:LDP}.
+% to avoid the doubling issue in Section~\ref{chap2-sub:LDP}.
 We averaged the relative error over $10$ runs.
 
 \begin{figure}[t]
@@ -98,17 +98,17 @@ We averaged the relative error over $10$ runs.
   \includegraphics[width=0.99\linewidth]{fig/resB_one_round_small.pdf}
   \vspace{-4mm}
   \caption{Relative error of one-round algorithms for small datasets ($n=10000$).}
-  \label{fig:resB_small}
+  \label{chap2-fig:resB_small}
 \end{figure}
 
-Figure~\ref{fig:resB_small} shows the results.
+Figure~\ref{chap2-fig:resB_small} shows the results.
 \textsf{RR (bias-reduced)} significantly outperforms \textsf{RR (biased)} and is significantly outperformed by \textsf{RR (unbiased)}.
 We believe 
 % that 
 this is caused by the fact that \textsf{RR (bias-reduced)} introduces some approximation and does not calculate an unbiased estimate of $f_\triangle(G)$.
 
 \smallskip
-\noindent{\textbf{Large Datasets.}}~~Based on Figure~\ref{fig:resB_small}, we improve the time complexity of \textsf{RR (unbiased)} using the ARR and compare it with our two-rounds algorithms in large datasets.
+\noindent{\textbf{Large Datasets.}}~~Based on Figure~\ref{chap2-fig:resB_small}, we improve the time complexity of \textsf{RR (unbiased)} using the ARR and compare it with our two-rounds algorithms in large datasets.
 
 Specifically, \textsf{RR (unbiased)} counts \textit{triangles}, \textit{$2$-edges} (three nodes with two edges), \textit{$1$-edges} (three nodes with one edge), and \textit{no-edges} (three nodes with no edges) in $G'$ obtained by Warner's RR.
 Let $m_3, m_2, m_1, m_0 \in \nnints$ be the numbers of triangles, $2$-edges, $1$-edges, and no-edges, respectively, after applying Warner's RR.
@@ -128,12 +128,12 @@ By these equations,
 % and $\hat{m}_3 + \hat{m}_2 + \hat{m}_1 + \hat{m}_0 = \frac{n(n-1)(n-2)}{6}$,
 we obtain:
 \begin{align}
-    \hat{m}_3 &= \textstyle{\frac{m_3^*}{p_2^3}} \label{eq:hm_3} \\
-    \hat{m}_2 &= \textstyle{\frac{m_2^*}{p_2^2} - 3(1-p_2)\hat{m}_3} \label{eq:hm_2} \\
-    \hat{m}_1 &= \textstyle{\frac{m_1^*}{p_2} - 3(1-p_2)^2\hat{m}_3 - 2(1-p_2)\hat{m}_2} \label{eq:hm_1} \\
-    \hat{m}_0 &= \textstyle{\frac{n(n-1)(n-2)}{6} - \hat{m}_3 - \hat{m}_2 - \hat{m}_1.} \label{eq:hm_0}
+    \hat{m}_3 &= \textstyle{\frac{m_3^*}{p_2^3}} \label{chap2-eq:hm_3} \\
+    \hat{m}_2 &= \textstyle{\frac{m_2^*}{p_2^2} - 3(1-p_2)\hat{m}_3} \label{chap2-eq:hm_2} \\
+    \hat{m}_1 &= \textstyle{\frac{m_1^*}{p_2} - 3(1-p_2)^2\hat{m}_3 - 2(1-p_2)\hat{m}_2} \label{chap2-eq:hm_1} \\
+    \hat{m}_0 &= \textstyle{\frac{n(n-1)(n-2)}{6} - \hat{m}_3 - \hat{m}_2 - \hat{m}_1.} \label{chap2-eq:hm_0}
 \end{align}
-Therefore, after applying the ARR to the lower triangular part of $\bmA$, the server counts $m_3^*$, $m_2^*$, $m_1^*$, and $m_0^*$ in $G'$, and then calculates the unbiased estimates $\hat{m}_3$, $\hat{m}_2$, $\hat{m}_1$, and $\hat{m}_0$ by (\ref{eq:hm_3}), (\ref{eq:hm_2}), (\ref{eq:hm_1}), and (\ref{eq:hm_0}), respectively.
+Therefore, after applying the ARR to the lower triangular part of $\bmA$, the server counts $m_3^*$, $m_2^*$, $m_1^*$, and $m_0^*$ in $G'$, and then calculates the unbiased estimates $\hat{m}_3$, $\hat{m}_2$, $\hat{m}_1$, and $\hat{m}_0$ by (\ref{chap2-eq:hm_3}), (\ref{chap2-eq:hm_2}), (\ref{chap2-eq:hm_1}), and (\ref{chap2-eq:hm_0}), respectively.
 Finally, the server estimates $f_\triangle(G)$ from $\hat{m}_3$, $\hat{m}_2$, $\hat{m}_1$, and $\hat{m}_0$ in the same way as \textsf{RR (unbiased)}.
 We denote this algorithm by \textsf{ARR (unbiased)}.
 The time complexity of \textsf{ARR (unbiased)} is $O(\mu^3 n^3)$, where $\mu$ is the ARR parameter.
@@ -147,17 +147,17 @@ We averaged the relative error over $10$ runs.
   \includegraphics[width=0.99\linewidth]{fig/resB_one_round_large.pdf}
   \vspace{-4mm}
   \caption{Relative error of the one-round algorithm \textsf{ARR (unbiased)} and our three two-rounds algorithms with double clipping for large datasets ($n=107614$ in \GPlus{}, $n=896308$ in \IMDB{}).}
-  \label{fig:resB_large}
+  \label{chap2-fig:resB_large}
 \end{figure}
 
-Figure~\ref{fig:resB_large} shows the results, where we set
+Figure~\ref{chap2-fig:resB_large} shows the results, where we set
 % $\mu_F$ ($=\mu_o^2=\mu_T^3$)
 $\mu^* = 10^{-6}$ or $10^{-3}$.
 In \textsf{ARR (unbiased)}, we used $\mu^*$ as 
 % a parameter $\mu$ of the ARR.
 the ARR parameter $\mu$. 
 Thus, we can see \textit{how much the relative error is reduced by introducing an additional round with \AlgOne{}}.
-Figure~\ref{fig:resB_large} shows that the relative error of \textsf{ARR (unbiased)} is prohibitively large; i.e., relative error $\gg 1$.
+Figure~\ref{chap2-fig:resB_large} shows that the relative error of \textsf{ARR (unbiased)} is prohibitively large; i.e., relative error $\gg 1$.
 % even when $\mu_F = 10^{-3}$.
 This is because three edges are noisy in any noisy triangle. 
 % and edge sampling is introduced to reduce the time complexity. 
@@ -171,7 +171,7 @@ because only one edge is noisy in each noisy triangle at the second round.
 In summary, one-round algorithms are far from acceptable in terms of the estimation error for large graphs, and two-round algorithms such as ours are necessary.
 
 \section{Clustering Coefficient}
-\label{sec:cluster}
+\label{chap2-sec:cluster}
 % \smallskip
 % \noindent{\textbf{Clustering Coefficient.}}~~We
 Here we
@@ -184,12 +184,12 @@ evaluate the estimation error of the clustering coefficient using our algorithms
 We first estimated a triangle count by using our \AlgTwo{} with double clipping
 ($\epsilon_0 = \frac{\epsilon}{10}$ and
 $\epsilon_1 = \epsilon_2 = \frac{9\epsilon}{20}$)
-because it provides the best performance in Figures~\ref{fig:res2_w_Lap_abst}, \ref{fig:res2_w_Lap}, and \ref{fig:res3_n}.
+because it provides the best performance in Figures~\ref{chap2-fig:res2_w_Lap_abst}, \ref{chap2-fig:res2_w_Lap}, and \ref{chap2-fig:res3_n}.
 Then we estimated a $2$-star count by
-% a modified version of the algorithm in~\cite{Imola_USENIX21} using the adaptive edge clipping in Section~\ref{sec:double_clip}.
+% a modified version of the algorithm in~\cite{Imola_USENIX21} using the adaptive edge clipping in Section~\ref{chap2-sec:double_clip}.
 using the one-round $2$-star algorithm in~\cite{Imola_USENIX21} with the
 % adaptive
-edge clipping in Section~\ref{sec:double_clip}.
+edge clipping in Section~\ref{chap2-sec:double_clip}.
 
 Specifically, we calculated a noisy degree $\td_i$ of each user $v_i$ 
 % (possibly with edge clipping) 
@@ -212,31 +212,31 @@ where $\hf_\triangle(G)$ (resp.~$\hf_{2\star}(G)$) is the estimate of the triang
   \includegraphics[width=0.99\linewidth]{fig/res5_cluster.pdf}
   \vspace{-4mm}
   \caption{Relative errors of \#triangles, \#$2$-stars, and the clustering coefficient in \AlgTwo{} with double clipping.
-  $\CostDL$ is calculated by (\ref{eq:CostDL_F})
+  $\CostDL$ is calculated by (\ref{chap2-eq:CostDL_F})
   (when $\mu^* \geq 0.1$,
   $\CostDL$ can be $6$ Gbits and $400$ Gbits in \GPlus{} and \IMDB{}, respectively).
   }
-  \label{fig:res5_cluster}
+  \label{chap2-fig:res5_cluster}
 \end{figure}
 
-Figure~\ref{fig:res5_cluster} shows the relative errors of the triangle count, $2$-star count, and clustering coefficient.
+Figure~\ref{chap2-fig:res5_cluster} shows the relative errors of the triangle count, $2$-star count, and clustering coefficient.
 Note that the relative error of the 2-star count is not changed by changing
 % $\mu_F$ ($=\mu_O^2=\mu_T^3$)
 $\mu^*$
 because the 2-star algorithm does not use the ARR.
-Figure~\ref{fig:res5_cluster} shows that the relative error of the $2$-star count is much smaller than that of the triangle count.
-This is because each user can count her 2-stars locally (whereas she cannot count her triangles), as described in Section~\ref{sec:intro}.
+Figure~\ref{chap2-fig:res5_cluster} shows that the relative error of the $2$-star count is much smaller than that of the triangle count.
+This is because each user can count her 2-stars locally (whereas she cannot count her triangles), as described in Section~\ref{chap2-sec:intro}.
 Consequently, the relative error of the clustering coefficient is almost the same as that of the triangle count, as the denominator $\hf_{2\star}(G)$ in the clustering coefficient is very accurate.
 
 Note that the clustering coefficient requires the privacy budgets for
 calculating both $\hf_\triangle(G)$ and $\hf_{2\star}(G)$
 % both the triangle count and $2$-star count
-(in Figure~\ref{fig:res5_cluster}, $2\epsilon$ in total).
+(in Figure~\ref{chap2-fig:res5_cluster}, $2\epsilon$ in total).
 % $2\epsilon$ because it needs both the triangle count and $2$-star count.
 However, we can accurately
 % estimate the $2$-star count
 calculate $\hf_{2\star}(G)$
-with a very small privacy budget, as shown in Figure~\ref{fig:res5_cluster}.
+with a very small privacy budget, as shown in Figure~\ref{chap2-fig:res5_cluster}.
 Thus, we can accurately estimate the clustering coefficient with almost the same privacy budget as
 the triangle count
 % $\hf_\triangle(G)$
@@ -249,8 +249,8 @@ In summary, we can accurately estimate the clustering coefficient as well as the
 
 \arxiv{
 \section{Experiments Using the Barab\'{a}si-Albert Graph Datasets}
-\label{sec:BAmodel}
-In Section~\ref{sec:experiments}, we evaluated our algorithms using two real datasets.
+\label{chap2-sec:BAmodel}
+In Section~\ref{chap2-sec:experiments}, we evaluated our algorithms using two real datasets.
 Below we also evaluate our algorithms using a synthetic graph based on the BA (Barab\'{a}si-Albert) graph model~\cite{NetworkScience}, which has a power-law degree distribution.
 
 In the BA graph model, a graph of $n$ nodes is generated by attaching new nodes one by one.
@@ -268,7 +268,7 @@ For the number $m$ of edges per node, we set $m=50$, $114$, or $500$.
 % When $m=114$, most nodes have the degree of $114$, which is the average degree in \GPlus{}. 
 % Thus, we can see the difference between them.
 Using these graphs, we evaluated our three algorithms with double clipping.
-We set parameters in the same as Section~\ref{sec:experiments}; i.e.,
+We set parameters in the same as Section~\ref{chap2-sec:experiments}; i.e.,
 $\alpha = 150$, $\beta = 10^{-6}$, $\epsilon_0 = \frac{\epsilon}{10}$, and $\epsilon_1 = \epsilon_2 = \frac{9\epsilon}{20}$.
 % We ran each algorithm $10$ times, and averaged the relative error over the $10$ cases.
 For each algorithm, we averaged the relative error over $10$ runs.
@@ -278,42 +278,42 @@ For each algorithm, we averaged the relative error over $10$ runs.
 %   \includegraphics[width=0.95\linewidth]{fig/subgraphs.pdf}
 %   \vspace{-4mm}
 %   \caption{Subgraphs used in our theoretical analysis.}
-%   \label{fig:subgraphs}
+%   \label{chap2-fig:subgraphs}
 % \end{figure}
 
-Figure~\ref{fig:resA_BAGraph} shows the results, where $\epsilon=1$ and
+Figure~\ref{chap2-fig:resA_BAGraph} shows the results, where $\epsilon=1$ and
 % $\mu_F$ ($= \mu_O^2 = \mu_T^3$)
 $\mu^* = 10^{-3}$.
 We observe that \AlgTwo{} significantly outperforms \AlgOne{} and \AlgThree{} when $m=500$, and that \AlgTwo{} performs almost the same as \AlgOne{} when $m=50$ or $114$.
 
-To examine the reason for this, we also decomposed the estimation error into two components (the first error by empirical estimation and the second error by the Laplacian noise) in the same way as Figure~\ref{fig:res3_emp_Lap}.
-Figure~\ref{fig:resA_BAGraph_emp_Lap} shows the results.
+To examine the reason for this, we also decomposed the estimation error into two components (the first error by empirical estimation and the second error by the Laplacian noise) in the same way as Figure~\ref{chap2-fig:res3_emp_Lap}.
+Figure~\ref{chap2-fig:resA_BAGraph_emp_Lap} shows the results.
 % In addition, we calculated the number $C_4$ of $4$-cycles in the BA graph.
-We also show in Table~\ref{tab:resA_4cycles} the number $C_4$ of $4$-cycles in each BA graph ($m=50$, $114$, or $500$) and \GPlus{}.
+We also show in Table~\ref{chap2-tab:resA_4cycles} the number $C_4$ of $4$-cycles in each BA graph ($m=50$, $114$, or $500$) and \GPlus{}.
 
-From Figure~\ref{fig:resA_BAGraph_emp_Lap} and Table~\ref{tab:resA_4cycles}, we can explain Figure~\ref{fig:resA_BAGraph} as follows.
-The BA graphs with $m=50$ and $114$ have a much smaller number $C_4$ of $4$-cycles than \GPlus{}, as shown in Table~\ref{tab:resA_4cycles}.
+From Figure~\ref{chap2-fig:resA_BAGraph_emp_Lap} and Table~\ref{chap2-tab:resA_4cycles}, we can explain Figure~\ref{chap2-fig:resA_BAGraph} as follows.
+The BA graphs with $m=50$ and $114$ have a much smaller number $C_4$ of $4$-cycles than \GPlus{}, as shown in Table~\ref{chap2-tab:resA_4cycles}.
 Consequently,
 % the error caused by
-the Laplacian noise is relatively large and dominant for these two graphs, as shown in Figure~\ref{fig:resA_BAGraph_emp_Lap}.
+the Laplacian noise is relatively large and dominant for these two graphs, as shown in Figure~\ref{chap2-fig:resA_BAGraph_emp_Lap}.
 In particular,
 % the relative error of
-the Laplacian noise is the largest in \AlgThree{} because it cannot effectively reduce the global sensitivity by double clipping, as explained in Section~\ref{sec:double_clip}.
+the Laplacian noise is the largest in \AlgThree{} because it cannot effectively reduce the global sensitivity by double clipping, as explained in Section~\ref{chap2-sec:double_clip}.
 In contrast, the BA graph with $m=500$ has a larger number $C_4$ of $4$-cycles than \GPlus{}, and therefore the Laplacian noise is not dominant (except for \AlgThree{}).
-This explains the results in Figure~\ref{fig:resA_BAGraph}.
+This explains the results in Figure~\ref{chap2-fig:resA_BAGraph}.
 
 These results
-% , along with Section~\ref{sec:experiments},
-% Our experimental results in Appendix~\ref{sec:BAmodel} and Section~\ref{sec:experiments},
+% , along with Section~\ref{chap2-sec:experiments},
+% Our experimental results in Appendix~\ref{chap2-sec:BAmodel} and Section~\ref{chap2-sec:experiments},
 show that \AlgTwo{} outperforms \AlgOne{} especially when the number $C_4$ of $4$-cycles is large.
-As we have shown in Section~\ref{sec:experiments} and Appendix~\ref{sec:BAmodel}, $C_4$ is large in a large graph (e.g., $n \approx 10^6$) or dense graph (e.g., \GPlus{}, BA graph with $m=500$).
+As we have shown in Section~\ref{chap2-sec:experiments} and Appendix~\ref{chap2-sec:BAmodel}, $C_4$ is large in a large graph (e.g., $n \approx 10^6$) or dense graph (e.g., \GPlus{}, BA graph with $m=500$).
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.99\linewidth]{fig/resA_BAGraph.pdf}
   \vspace{-4mm}
   \caption{Relative error of our three algorithms with double clipping in the BA graphs ($n=107614$, $\epsilon=1$, $\mu^* = 10^{-3}$).}
-  \label{fig:resA_BAGraph}
+  \label{chap2-fig:resA_BAGraph}
 % \end{figure}
 \vspace{5mm}
 % \begin{figure}[t]
@@ -321,14 +321,14 @@ As we have shown in Section~\ref{sec:experiments} and Appendix~\ref{sec:BAmodel}
   \includegraphics[width=0.95\linewidth]{fig/resA_BAGraph_emp_Lap.pdf}
   \vspace{-4mm}
   \caption{Relative error of empirical estimation and the Laplacian noise in our three algorithms with double clipping in the BA graphs ($n=107614$, $\epsilon=1$, $\mu^* = 10^{-3}$).}
-  \label{fig:resA_BAGraph_emp_Lap}
+  \label{chap2-fig:resA_BAGraph_emp_Lap}
 \end{figure}
 
 \section{Edge Clipping and Noisy Triangle Clipping}
-\label{sec:EC_DC}
+\label{chap2-sec:EC_DC}
 % \smallskip
 % \noindent{\textbf{Edge Clipping and Noisy Triangle Clipping.}}~~
-In Section~\ref{sec:experiments}, we showed that our double clipping significantly reduces the estimation error.
+In Section~\ref{chap2-sec:experiments}, we showed that our double clipping significantly reduces the estimation error.
 To investigate the effect of
 % adaptive
 edge clipping and noisy triangle clipping independently, we also performed the following ablation study.
@@ -350,7 +350,7 @@ $C_4$   &   $8.8 \times 10^8$ &  $1.7 \times 10^{10}$ &   $3.1 \times 10^{12}$ &
 \hline
 \end{tabular}
 \hfil}
-\label{tab:resA_4cycles}
+\label{chap2-tab:resA_4cycles}
 \end{table}
 
 \begin{figure}[t]
@@ -358,10 +358,10 @@ $C_4$   &   $8.8 \times 10^8$ &  $1.7 \times 10^{10}$ &   $3.1 \times 10^{12}$ &
   \includegraphics[width=0.99\linewidth]{fig/res2_w_Lap_EC.pdf}
   \vspace{-4mm}
   \caption{Relative error of our three algorithms without clipping (``$d_{max}$''), with only edge clipping (``EC''), and double clipping (``DC'') when $\epsilon=1$ and $\mu^* = 10^{-6}$ or $10^{-3}$ ($n=107614$ in \GPlus{}, $n=896308$ in \IMDB{}).}
-  \label{fig:res2_w_Lap_EC}
+  \label{chap2-fig:res2_w_Lap_EC}
 \end{figure}
 
-Figure~\ref{fig:res2_w_Lap_EC} shows the results, where $\epsilon=1$, $\mu^* = 10^{-6}$ or $10^{-3}$, and ``EC'' represents our algorithms with only
+Figure~\ref{chap2-fig:res2_w_Lap_EC} shows the results, where $\epsilon=1$, $\mu^* = 10^{-6}$ or $10^{-3}$, and ``EC'' represents our algorithms with only
 % adaptive
 edge clipping.
 We observe that ``EC''
@@ -371,16 +371,16 @@ The difference between ``EC'' and ``DC'' is significant especially when $\mu^* =
 This is because our noisy triangle clipping reduces the global sensitivity by using a small value of
 $\mu^*$. 
 % $\mu_F$ ($=\mu_O^2 = \mu_T^3$).
-From Figure~\ref{fig:res2_w_Lap_EC}, we conclude that each component (i.e.,
+From Figure~\ref{chap2-fig:res2_w_Lap_EC}, we conclude that each component (i.e.,
 % adaptive
 edge clipping, noisy triangle clipping) is essential in our double clipping.
 
-\section{Proof of Proposition~\ref{prop:seq_comp_edge_LDP}}
-\label{sec:proof_seq_comp_edge_LDP}
+\section{Proof of Proposition~\ref{chap2-prop:seq_comp_edge_LDP}}
+\label{chap2-sec:proof_seq_comp_edge_LDP}
 Let $\calR_i(\bma_i) = (\calR_i^1(\bma_i), \calR_i^2(M_i)(\bma_i))$ be the
 randomizer used by user $v_i$ in the composition. To establish that
 $\calR_i(\bma_i)$ satisfies $\epsilon$-edge LDP for every $v_i \in V$, we will
-prove that~\eqref{eq:edge_LDP} holds for $\calR_i(\bma_i)$. To do this, first write
+prove that~\eqref{chap2-eq:edge_LDP} holds for $\calR_i(\bma_i)$. To do this, first write
 \begin{align*}
   &\;\Pr[(\calR_i^1(\bma_i), \calR_i^2(M_i)(\bma_i)) = (r_i^1, r_i^2)] = \\
   &\qquad\Pr[\calR_i^1(\bma_i) = r_i^1]\Pr[\calR_i^2(M_i)(\bma_i) = r_i^2 | \calR_i^1(\bma_i) = r_i^1] \\
@@ -397,11 +397,11 @@ we have
 \end{align*}
 This establishes the result. \qed
 
-\section{Proof of Statements in Section~\ref{sec:algorithms}}
-\label{sec:proof_algorithms}
-\subsection{Proof of Theorem~\ref{thm:privacy_algorithms}}
+\section{Proof of Statements in Section~\ref{chap2-sec:algorithms}}
+\label{chap2-sec:proof_algorithms}
+\subsection{Proof of Theorem~\ref{chap2-thm:privacy_algorithms}}
 Let $\bma_i, \bma'_i \in \{0,1\}^n$ be two neighbor lists that differ in one bit.
-Let $t'_i$, $s'_i$, and $w'_i$ be respectively the values of $t_i$ (line 11 of Algorithm~\ref{alg:unify}), $s_i$ (line 12), and $w_i$ (line 13) when the neighbor list of user $v_i$ is $\bma'_i$.
+Let $t'_i$, $s'_i$, and $w'_i$ be respectively the values of $t_i$ (line 11 of Algorithm~\ref{chap2-alg:unify}), $s_i$ (line 12), and $w_i$ (line 13) when the neighbor list of user $v_i$ is $\bma'_i$.
 Let $\Delta w_i = |w'_i - w_i|$.
 Then we have $t'_i - t_i \in [0,d_{max}]$ and $s'_i - s_i \in [0,d_{max}]$, and therefore $\Delta w_i = |(t'_i - t_i) - \mu^* \rho(s'_i - s_i)| \leq d_{max}$.
 
@@ -409,14 +409,14 @@ Since we add
 $\Lap\left(\frac{d_{max}}{\epsilon_2}\right)$
 to $w_i$, the second round provides $\epsilon_2$-edge LDP.
 The first round uses $ARR_{\epsilon_1,\mu}$ and provides $\epsilon_1$-edge LDP.
-Thus, by sequential composition (Proposition~\ref{prop:seq_comp_edge_LDP}),
-Algorithm~\ref{alg:unify} provides ($\epsilon_1+\epsilon_2$)-edge LDP in total.
-It also provides ($\epsilon_1+\epsilon_2$)-relationship DP because it uses only the lower-triangular part of $\bmA$ (Proposition~\ref{prop:edge_LDP_entire_edge_LDP}).
+Thus, by sequential composition (Proposition~\ref{chap2-prop:seq_comp_edge_LDP}),
+Algorithm~\ref{chap2-alg:unify} provides ($\epsilon_1+\epsilon_2$)-edge LDP in total.
+It also provides ($\epsilon_1+\epsilon_2$)-relationship DP because it uses only the lower-triangular part of $\bmA$ (Proposition~\ref{chap2-prop:edge_LDP_entire_edge_LDP}).
 % \ji{We should formally state the lower-triangular relationship DP result somewhere, I think maybe add it to proposition 1.}
 \qed
 
-\subsection{Proof of Theorem~\ref{thm:l2loss_algorithms}}
-\label{sub:prrof_l2loss_algorithms}
+\subsection{Proof of Theorem~\ref{chap2-thm:l2loss_algorithms}}
+\label{chap2-sub:prrof_l2loss_algorithms}
 % \paragraph{Unbiased Estimators}
 % \smallskip
 \noindent{\textbf{Unbiased Estimators.}}~~First, we will show that $\hf_\triangle(G)$ satisfies
@@ -427,15 +427,15 @@ Regardless of algorithm, we have
   &= \frac{1}{\mu^*(1-\rho)}\sum_{i=1}^n \E[w_i] \nonumber \\
   &= \frac{1}{\mu^*(1-\rho)}\sum_{i=1}^n \E[t_i - \mu^* \rho s_i] \nonumber \\
   &= \frac{1}{\mu^*(1-\rho)}\sum_{i=1}^n \sum_{\substack{1 \leq j < k < i \leq n \\ a_{i,j} = a_{i,k} = 1}} \E[\textbf{1}_{(v_j, v_k) \in M_i} - \mu^* \rho],
-  \label{eq:unbias_1}
+  \label{chap2-eq:unbias_1}
 \end{align}
 where $\rho = e^{-\epsilon_1}$, and the quantites $\mu^*, t_i, s_i$ are defined in
-Algorithm~\ref{alg:unify}. Given that $a_{i,j} = a_{i,k} = 1$, we have that
+Algorithm~\ref{chap2-alg:unify}. Given that $a_{i,j} = a_{i,k} = 1$, we have that
 $\Pr[(v_i, v_j) \in E'] = \Pr[(v_i, v_k) \in E'] = \mu$ by definition of ARR.
 Furthermore,
 % $\Pr[(v_i, v_k) \in E'] = \mu$ if $a_{i,k} = 1$, and $\Pr[(v_i, v_k) \in E'] = \mu\rho$ otherwise.
 $\Pr[(v_j, v_k) \in E'] = \mu$ if $a_{j,k} = 1$, and $\Pr[(v_j, v_k) \in E'] = \mu\rho$ otherwise.
-Examining~\eqref{eq:M_i_I},~\eqref{eq:M_i_II}, and~\eqref{eq:M_i_III}, we have
+Examining~\eqref{chap2-eq:M_i_I},~\eqref{chap2-eq:M_i_II}, and~\eqref{chap2-eq:M_i_III}, we have
 \[
   \Pr[(v_j, v_k) \in M_i] =
   \begin{cases}
@@ -446,7 +446,7 @@ Examining~\eqref{eq:M_i_I},~\eqref{eq:M_i_II}, and~\eqref{eq:M_i_III}, we have
 for all the three algorithms (note that $\mu^* = \mu$, $\mu^2$, and $\mu^3$ in \AlgOne{}, \AlgTwo{}, \AlgThree{}, respectively).
 Thus, $\E[\textbf{1}_{(v_j, v_k) \in M_i}] = \mu^* (\rho + (1-\rho) a_{j,k})$
 ($= \mu^*$ if $a_{i,j}=1$ and $\mu^* \rho$ if $a_{i,j}=0$).
-Plugging into~\eqref{eq:unbias_1}, we have
+Plugging into~\eqref{chap2-eq:unbias_1}, we have
 \begin{align*}
   &\;\E[\hf_\triangle(G)] \\
   &=
@@ -479,7 +479,7 @@ Since $\hf_\triangle(G) = \frac{1}{\mu^*(1-\rho)} \sum_{i=1}^n \hw_i$, we have
   &= \frac{1}{(\mu^*)^2(1-\rho)^2}\left(\V\left[\sum_{i=1}^n w_i\right] +
   n\V\left[\Lap\left(\frac{d_{max}}{\epsilon_2}\right)\right]\right) \nonumber \\
   &= \frac{1}{(\mu^*)^2(1-\rho)^2}\left(\V\left[\sum_{i=1}^n w_i\right] +
-  2n\frac{d_{max}^2}{\epsilon_2^2}\right), \label{eq:inter_var}
+  2n\frac{d_{max}^2}{\epsilon_2^2}\right), \label{chap2-eq:inter_var}
 \end{align}
 where the
 % third
@@ -493,7 +493,7 @@ $G$ and $C_4(G)$ be the number of $4$-cycles in $G$
 
 % \paragraph{Bounding the Variance in \AlgOne{}}
 \smallskip
-\noindent{\textbf{Bounding the Variance in \AlgOne{}.}}~~In \AlgOne{}, $M_i$ is defined by \eqref{eq:M_i_I}. Thus we have
+\noindent{\textbf{Bounding the Variance in \AlgOne{}.}}~~In \AlgOne{}, $M_i$ is defined by \eqref{chap2-eq:M_i_I}. Thus we have
 % we have $M_i = E'$, so we can write
 \begin{align*}
   \sum_{i=1}^n w_i &= \sum_{i=1}^n \sum_{\substack{1 \leq j < k < i \leq n \\ a_{i,j} = 1, a_{i,k} = 1}} \textbf{1}_{(v_j, v_k) \in M_i} \\
@@ -512,8 +512,8 @@ E'}] \leq \mu$. We have
   &= \sum_{1 \leq j < k \leq n} \V[\textbf{1}_{(v_j, v_k) \in E'}c_{jk}] \\
   &= \sum_{1 \leq j < k \leq n} \mu c_{jk}^2.
 \end{align*}
-By Lemma~\ref{lem:c_ij_4cycle_2star} (which is shown at the end of Appendix~\ref{sub:prrof_l2loss_algorithms}), we have $\sum_{1 \leq j < k \leq n} c_{jk}^2 \leq 2 C_4(G) + S_2(G)$.
-Plugging into~\eqref{eq:inter_var} (and substituting $\mu^* = \mu$), we obtain
+By Lemma~\ref{chap2-lem:c_ij_4cycle_2star} (which is shown at the end of Appendix~\ref{chap2-sub:prrof_l2loss_algorithms}), we have $\sum_{1 \leq j < k \leq n} c_{jk}^2 \leq 2 C_4(G) + S_2(G)$.
+Plugging into~\eqref{chap2-eq:inter_var} (and substituting $\mu^* = \mu$), we obtain
 \begin{align*}
   \V[\hf_\triangle(G)]
   &= \frac{1}{(1-\rho)^2}\left(\frac{1}{\mu}(2C_4(G) + S_2(G)) +
@@ -525,7 +525,7 @@ This establishes the result. \qed
 \smallskip
 \noindent{\textbf{Bounding the Variance in \AlgTwo{}.}}~~In \AlgTwo{}, for a fixed
 $v_i \in V$, we have $(v_j, v_k) \in M_i$ if and only if
-$j < k < i$, $(v_j, v_k) \in E'$, and $(v_i, v_k) \in E'$ from~\eqref{eq:M_i_II}. Thus,
+$j < k < i$, $(v_j, v_k) \in E'$, and $(v_i, v_k) \in E'$ from~\eqref{chap2-eq:M_i_II}. Thus,
 \begin{align*}
 \sum_{i=1}^n w_i &= \sum_{i=1}^n~\sum_{\substack{1 \leq j < k < i \leq n \\
 a_{i,j} = 1, a_{i,k} = 1}} \textbf{1}_{(v_j, v_k) \in M_i} \\
@@ -625,7 +625,7 @@ subgraph, we now go over the number of possible valid choices that can map to it
     2-star. We then have just one mapping for the remaining indices. Thus, there
     is $\textbf{1}$ valid choice.
 \end{enumerate}
-Figure~\ref{fig:associated_subgraphs} shows an example of two 4-cycles, six 3-stars, and one 2-stars.
+Figure~\ref{chap2-fig:associated_subgraphs} shows an example of two 4-cycles, six 3-stars, and one 2-stars.
 We can see that the other possible subgraphs on 3 or 4 nodes are immediately
 ruled out because they have too many or too few edges, violating edge requirements.
 
@@ -634,11 +634,11 @@ ruled out because they have too many or too few edges, violating edge requiremen
   \includegraphics[width=0.99\linewidth]{fig/associated_subgraphs.pdf}
   \vspace{-4mm}
   \caption{Examples of two 4-cycles, six 3-stars, and one 2-stars.}
-  \label{fig:associated_subgraphs}
+  \label{chap2-fig:associated_subgraphs}
 \end{figure}
 
 In the following, let $P(i,j,k)$ be the event that $F_{ijk} = F_{i'j'k'} = 1$.
-Observing Figure~\ref{fig:four-cycle}, we can see that in both possible ways in
+Observing Figure~\ref{chap2-fig:four-cycle}, we can see that in both possible ways in
 which a valid choice maps to a $4$-cycle, then $P(i,j,k)$ holds when at least $3$
 edges in $E'$ are present. Each edge in $E'$ is independent,
 and is present with probability at most $\mu$. Thus, $\Pr[P(i,j,k)] \leq \mu^3$.
@@ -651,7 +651,7 @@ Putting this together,
 \[
   \V\left[\sum_{i=1}^n w_i\right] \leq 2 C_4(G) \mu^3 + 6 S_3(G) \mu^3 + S_2(G) \mu^2.
 \]
-Plugging into~\eqref{eq:inter_var}, we get
+Plugging into~\eqref{chap2-eq:inter_var}, we get
 % \[
 \begin{align*}
   &\;\V[\hf_\triangle(G)] \\
@@ -664,7 +664,7 @@ This establishes the result. \qed
 \noindent{\textbf{Bounding the Variance in \AlgThree{}.}}~~In \AlgThree{}, for a fixed
 $v_i \in V$, we have $(v_j, v_k) \in M_i$ if and only if
 $j < k < i$, $(v_j, v_k) \in E'$, $(v_i, v_k) \in E'$, and $(v_i, v_k) \in E'$
-from~\eqref{eq:M_i_III}. Thus,
+from~\eqref{chap2-eq:M_i_III}. Thus,
 \begin{align*}
 \sum_{i=1}^n w_i &= \sum_{i=1}^n~\sum_{\substack{1 \leq j < k < i \leq n \\
 a_{i,j} = 1, a_{i,k} = 1}} \textbf{1}_{(v_j, v_k) \in M_i} \\
@@ -689,7 +689,7 @@ choices mapped to it, and each $2$-star of $G$ has at most one valid choice
 mapped to it.
 
 In the following, let $P(i,j,k)$ be the event that $F_{ijk} = F_{i'j'k'} = 1$.
-Observing Figure~\ref{fig:four-cycle}, we can see that for each possible
+Observing Figure~\ref{chap2-fig:four-cycle}, we can see that for each possible
 mapping of a valid choice to a $4$-cycle, five edges must be present in $G'$ in
 order for $P(i,j,k) = 1$. Thus, $\Pr[P(i,j,k) = 1] \leq \mu^5$. For each possible
 mapping of a valid choice to a $3$-star, five edges must be present in $G'$ in
@@ -697,7 +697,7 @@ order for $P(i,j,k) = 1$. Thus, $\Pr[P(i,j,k) = 1] \leq \mu^5$. For each possibl
 mapping of a valid choice to a $2$-star, three edges must be present in $G'$ in
 order for $P(i,j,k) = 1$. Thus, $\Pr[P(i,j,k) = 1] \leq \mu^3$.
 
-Plugging into~\eqref{eq:inter_var}, we get
+Plugging into~\eqref{chap2-eq:inter_var}, we get
 % \[
 \begin{align*}
   &\;\V[\hf_\triangle(G)] \\
@@ -708,7 +708,7 @@ This establishes the result.
 \qed
 
 \begin{lemma}
-  \label{lem:c_ij_4cycle_2star}
+  \label{chap2-lem:c_ij_4cycle_2star}
   Let $c_{ij} = \sum_{l < i \leq n} a_{l,i} a_{l,j}$. Then,
 \[
     \sum_{i,j=1, i<j}^n c_{ij}^2 \leq 2 C_4(G) + S_2(G).
@@ -737,12 +737,12 @@ The last inequality comes from the fact that
 two nodes with the largest indices may not be opposite to each other in some 4-cycles in $G$.
 \end{proof}
 
-\section{Proof of Statements in Section~\ref{sec:double_clip}}
-\label{sec:proof_double_clip}
-\subsection{Proof of Theorem~\ref{thm:privacy_DC}}
+\section{Proof of Statements in Section~\ref{chap2-sec:double_clip}}
+\label{chap2-sec:proof_double_clip}
+\subsection{Proof of Theorem~\ref{chap2-thm:privacy_DC}}
 
 Let $\bma_i, \bma'_i \in \{0,1\}^n$ be two neighbor lists that differ in one bit.
-Let ${t_i}'$, $s'_i$, and ${w_i}'$ be respectively the values of $t_i$ (in line 8 of Algorithm~\ref{alg:clip}), $s_i$ (in line 9), and $w_i$ (in line 10) when the neighbor list of user $v_i$ is $\bma'_i$.
+Let ${t_i}'$, $s'_i$, and ${w_i}'$ be respectively the values of $t_i$ (in line 8 of Algorithm~\ref{chap2-alg:clip}), $s_i$ (in line 9), and $w_i$ (in line 10) when the neighbor list of user $v_i$ is $\bma'_i$.
 Let $\Delta w_i = |{w_i}' - w_i|$.
 
 We assume that $|\bma'_i| = |\bma_i| + 1$ without loss of generality.
@@ -771,12 +771,12 @@ to $d_i$ and
 $\Lap(\frac{\kappa_i}{\epsilon_2})$
 to $w_i^*$, the second round provides ($\epsilon_0+\epsilon_2$)-edge LDP.
 The first round provides $\epsilon_1$-edge LDP and we use only the lower-triangular part of $\bmA$.
-Thus, by sequential composition (Proposition~\ref{prop:seq_comp_edge_LDP}) 
-and Proposition~\ref{prop:edge_LDP_entire_edge_LDP},
+Thus, by sequential composition (Proposition~\ref{chap2-prop:seq_comp_edge_LDP}) 
+and Proposition~\ref{chap2-prop:edge_LDP_entire_edge_LDP},
 $\calR_i$ satisfies $(\epsilon_0 + \epsilon_1 + \epsilon_2)$-edge LDP, and $(\calR_1, \ldots, \calR_n)$ satisfies $(\epsilon_0 + \epsilon_1 + \epsilon_2)$-relationship DP.
 \qed
 
-\subsection{Proof of Theorem~\ref{thm:triangle_excess}}
+\subsection{Proof of Theorem~\ref{chap2-thm:triangle_excess}}
 
 Recall that
 $t_{i,j} = |\{(v_i,v_j,v_k) : a_{i,k} = 1, (v_j,v_k) \in M_i, j<k<i \}|$.
@@ -788,10 +788,10 @@ Thus we have
     \Pr(t_{i,j} > \kappa_i) \leq \Pr(t_{i,j} \geq \kappa_i) \leq \Pr(t'_{i,j} \geq \kappa_i).
 \end{align*}
 
-Below we first prove (\ref{eq:AlgI_clip_bound}) and (\ref{eq:AlgII_clip_bound}). Then we prove (\ref{eq:AlgIII_clip_bound}).
+Below we first prove (\ref{chap2-eq:AlgI_clip_bound}) and (\ref{chap2-eq:AlgII_clip_bound}). Then we prove (\ref{chap2-eq:AlgIII_clip_bound}).
 
 \smallskip
-\noindent{\textbf{Proof of (\ref{eq:AlgI_clip_bound}) and (\ref{eq:AlgII_clip_bound}).}}~~For each edge $(v_i,v_j)$, we have $\sum_{k \ne i,j} \textbf{1}_{(v_i,v_k) \in E} \leq \td_i$.
+\noindent{\textbf{Proof of (\ref{chap2-eq:AlgI_clip_bound}) and (\ref{chap2-eq:AlgII_clip_bound}).}}~~For each edge $(v_i,v_j)$, we have $\sum_{k \ne i,j} \textbf{1}_{(v_i,v_k) \in E} \leq \td_i$.
 % In addition, each edge $(v_j,v_k)$ is included in $E'$ with probability at most $\mu^*$, and all the events are independent in \AlgOne{} and \AlgTwo{}.
 In \AlgOne{}, each edge $(v_j,v_k)$ is included in $E'$ with probability at most $\mu$, and all the events are independent.
 In \AlgTwo{}, each of the edges $(v_i,v_k)$ and $(v_j,v_k)$ is included in $E'$ with probability at most $\mu$, and all the events are independent.
@@ -806,10 +806,10 @@ Since $\kappa_i \geq \mu^* \td_i$, we have
     &\leq \exp \left[-\td_i D \left(\frac{\td_i - \kappa_i}{\td_i} \parallel 1-\mu^* \right) \right]  \text{(by Chernoff bound)}\\
     &= \exp \left[-\td_i D \left(\frac{\kappa_i}{\td_i} \parallel \mu^* \right) \right],
 \end{align*}
-which proves (\ref{eq:AlgI_clip_bound}) and (\ref{eq:AlgII_clip_bound}) (as $\Pr(t_{i,j} > \kappa_i) \leq \Pr(t'_{i,j} \geq \kappa_i)$).
+which proves (\ref{chap2-eq:AlgI_clip_bound}) and (\ref{chap2-eq:AlgII_clip_bound}) (as $\Pr(t_{i,j} > \kappa_i) \leq \Pr(t'_{i,j} \geq \kappa_i)$).
 
 \smallskip
-\noindent{\textbf{Proof of (\ref{eq:AlgIII_clip_bound}).}}~~Assume that $\kappa_i \geq \mu^2 \td_i$ in \AlgThree{}.
+\noindent{\textbf{Proof of (\ref{chap2-eq:AlgIII_clip_bound}).}}~~Assume that $\kappa_i \geq \mu^2 \td_i$ in \AlgThree{}.
 For each edge $(v_i,v_j)$, we have $\sum_{k \ne i,j} \textbf{1}_{(i,k) \in E} \leq \td_i$.
 In addition, each of the edges $(v_i,v_k)$ and
 $(v_j,v_k)$ are included in $E'$ with probability at most $\mu$, and all the events are independent.
@@ -825,10 +825,10 @@ Thus, if $\kappa_i \geq \mu^2 \td_i$, we have
     &\leq \mu \exp \left[-\td_i D \left(\frac{\td_i - \kappa_i}{\td_i} \parallel 1-\mu^2 \right) \right]  ~ \text{(by Chernoff bound)}\\
     &= \mu \exp \left[-\td_i D \left(\frac{\kappa_i}{\td_i} \parallel \mu^2 \right) \right],
 \end{align*}
-and therefore (\ref{eq:AlgIII_clip_bound}) holds (as $\Pr(t_{i,j} > \kappa_i) \leq \Pr(t'_{i,j} \geq \kappa_i)$).
+and therefore (\ref{chap2-eq:AlgIII_clip_bound}) holds (as $\Pr(t_{i,j} > \kappa_i) \leq \Pr(t'_{i,j} \geq \kappa_i)$).
 
 
-If $\mu^3 \td_i \leq \kappa_i < \mu^2 \td_i$, (\ref{eq:AlgIII_clip_bound}) can be written as: $\Pr(t_{i,j} > \kappa_i) \leq \mu \exp \left[-\td_i D \left(\mu^2 \parallel \mu^2 \right) \right] = \mu$.
+If $\mu^3 \td_i \leq \kappa_i < \mu^2 \td_i$, (\ref{chap2-eq:AlgIII_clip_bound}) can be written as: $\Pr(t_{i,j} > \kappa_i) \leq \mu \exp \left[-\td_i D \left(\mu^2 \parallel \mu^2 \right) \right] = \mu$.
 This clearly holds because each edge $(v_i,v_j)$ is included in $E'$ with probability at most $\mu$.
 \qed
 }

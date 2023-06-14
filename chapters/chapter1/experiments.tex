@@ -1,11 +1,11 @@
 %-------------------------------------------------------------------------------
 \section{Experiments}
-\label{sec:experiments}
+\label{chap1-sec:experiments}
 %-------------------------------------------------------------------------------
 
 % We conducted experiments to evaluate our proposed algorithms. 
 % In particular, we 
-Based on our theoretical results in Section~\ref{sec:algorithms}, we would like to pose the following questions:
+Based on our theoretical results in Section~\ref{chap1-sec:algorithms}, we would like to pose the following questions:
 \begin{itemize}
     \item For triangle counts, how much does the two-rounds interaction help over a single round in practice?
     \item What is the privacy-utility trade-off 
@@ -17,7 +17,7 @@ Based on our theoretical results in Section~\ref{sec:algorithms}, we would like 
 We conducted experiments to answer to these questions. 
 
 \subsection{Experimental Set-up}
-\label{sub:setup}
+\label{chap1-sub:setup}
 % We conducted experiments to evaluate our proposed algorithms. 
 % In our experiments, 
 We used the following two large-scale datasets:
@@ -52,27 +52,27 @@ Therefore, \Orkut{} is more sparse than \IMDB{} (whose average degree in $G^*$ i
 For each dataset, we randomly selected $n$ users from the whole graph $G^*$, and extracted a graph $G=(V,E)$ with 
 % the 
 $n$ users. 
-Then we estimated the number of triangles $f_\triangle(G)$, the number of $k$-stars $f_{k\star}(G)$, and the clustering coefficient ($=\frac{3 f_\triangle(G)}{f_{2\star}(G)}$) using $\epsilon$-edge LDP (or $\epsilon$-edge centralized DP) algorithms in Section~\ref{sec:algorithms}. 
+Then we estimated the number of triangles $f_\triangle(G)$, the number of $k$-stars $f_{k\star}(G)$, and the clustering coefficient ($=\frac{3 f_\triangle(G)}{f_{2\star}(G)}$) using $\epsilon$-edge LDP (or $\epsilon$-edge centralized DP) algorithms in Section~\ref{chap1-sec:algorithms}. 
 Specifically, we used the following algorithms:
 
 \smallskip
 \noindent{\textbf{Algorithms for triangles.}}~~For algorithms for estimating $f_\triangle(G)$, we used the following three algorithms: 
-(1) the RR (Randomized Response) with the empirical estimation method in the local model (i.e., \alg{LocalRR$_\triangle$} in Section~\ref{sub:non-interactive_triangles}), 
-(2) the two-rounds algorithm in the local model (i.e., \alg{Local2Rounds$_\triangle$} in Section~\ref{sub:two_rounds}), and 
-(3) the Laplacian mechanism in the centralized model (i.e., \alg{CentralLap$\triangle$} in Section~\ref{sub:non-interactive_triangles}).
+(1) the RR (Randomized Response) with the empirical estimation method in the local model (i.e., \alg{LocalRR$_\triangle$} in Section~\ref{chap1-sub:non-interactive_triangles}), 
+(2) the two-rounds algorithm in the local model (i.e., \alg{Local2Rounds$_\triangle$} in Section~\ref{chap1-sub:two_rounds}), and 
+(3) the Laplacian mechanism in the centralized model (i.e., \alg{CentralLap$\triangle$} in Section~\ref{chap1-sub:non-interactive_triangles}).
 
 \smallskip
 \noindent{\textbf{Algorithms for $k$-stars.}}~~For algorithms for estimating $f_{k\star}(G)$, we used the following two algorithms: 
-(1) the Laplacian mechanism in the local model (i.e., \alg{LocalLap$_k\star$} in Section~\ref{sub:non-interactive_k_stars}) and 
-(2) the Laplacian mechanism in the centralized model (i.e., \alg{CentralLap$_k\star$} in Section~\ref{sub:non-interactive_k_stars}). 
+(1) the Laplacian mechanism in the local model (i.e., \alg{LocalLap$_k\star$} in Section~\ref{chap1-sub:non-interactive_k_stars}) and 
+(2) the Laplacian mechanism in the centralized model (i.e., \alg{CentralLap$_k\star$} in Section~\ref{chap1-sub:non-interactive_k_stars}). 
 % \alg{central (Lap)} for $k$-stars differs from \alg{central (Lap)} for triangles only in the sensitivity. 
 
 \smallskip
-For each algorithm, we evaluated the $l_2$ loss and the relative error (as described in Section~\ref{sub:graph_statistics}), while changing the values of $n$ and $\epsilon$. 
+For each algorithm, we evaluated the $l_2$ loss and the relative error (as described in Section~\ref{chap1-sub:graph_statistics}), while changing the values of $n$ and $\epsilon$. 
 To stabilize the performance, we attempted $\gamma \in \nats$ ways to randomly select $n$ users from $G^*$, and averaged the utility value over all the $\gamma$ ways to randomly select $n$ users. 
 When we changed $n$ from $1000$ to $10000$, we set $\gamma = 100$ because the variance was large. For other cases, we set $\gamma = 10$. 
 
-In Appendix~\ref{sec:BAGraph}, 
+In Appendix~\ref{chap1-sec:BAGraph}, 
 we also report experimental results using artificial graphs based on the Barab\'{a}si-Albert model \cite{NetworkScience}.
 
 \begin{figure}[t]
@@ -80,8 +80,8 @@ we also report experimental results using artificial graphs based on the Barab\'
 \includegraphics[width=0.99\linewidth]{fig/res1_n_l2loss_tri.pdf}
 \vspace{-4mm}
 \caption{Relation between the number of users $n$ and the $l_2$ loss in triangle counts when $\epsilon = 1$ ($\epsilon_1 = \epsilon_2 = \frac{1}{2}$, $\td_{max} = d_{max}$). 
-Here we do not evaluate \alg{LocalRR$_\triangle$} when $n > 10000$, because it is inefficient (see Section~\ref{sub:two_rounds} ``Time complexity'').}
-\label{fig:res1_n_l2loss_tri}
+Here we do not evaluate \alg{LocalRR$_\triangle$} when $n > 10000$, because it is inefficient (see Section~\ref{chap1-sub:two_rounds} ``Time complexity'').}
+\label{chap1-fig:res1_n_l2loss_tri}
 \end{figure}
 
 \begin{figure}[t]
@@ -89,11 +89,11 @@ Here we do not evaluate \alg{LocalRR$_\triangle$} when $n > 10000$, because it i
 \includegraphics[width=0.99\linewidth]{fig/res1_n_l2loss_kst.pdf}
 \vspace{-5mm}
 \caption{Relation between the number of users $n$ and the $l_2$ loss in $k$-star counts when $\epsilon=1$ ($\epsilon_1 = \epsilon_2 = \frac{1}{2}$, $\td_{max} = d_{max}$).}
-\label{fig:res1_n_l2loss_kst}
+\label{chap1-fig:res1_n_l2loss_kst}
 \end{figure}
 
 \subsection{Experimental Results}
-\label{sub:results}
+\label{chap1-sub:results}
 \noindent{\textbf{Relation between $n$ and the $l_2$ loss.}}~~We first evaluated the $l_2$ loss of the estimates of 
 % the numbers of triangles ($f_\triangle(G)$), $2$-stars ($f_{2\star}(G)$), and $3$-stars ($f_{3\star}(G)$), 
 $f_\triangle(G)$, 
@@ -103,14 +103,14 @@ $f_{2\star}(G)$,
 and $f_{3\star}(G)$ 
 % ($3$-star counts) 
 while changing the number of users $n$. 
-Figures~\ref{fig:res1_n_l2loss_tri} and \ref{fig:res1_n_l2loss_kst} shows the results ($\epsilon=1$). 
+Figures~\ref{chap1-fig:res1_n_l2loss_tri} and \ref{chap1-fig:res1_n_l2loss_kst} shows the results ($\epsilon=1$). 
 Here 
 % we changed $n$ from $1000$ to $200000$ in \IMDB{}, and from $1000$ to $1600000$ in \Orkut{}. 
 % Note that 
 we did not evaluate \alg{LocalRR$_\triangle$} when $n$ was larger than $10000$, because \alg{LocalRR$_\triangle$} was inefficient 
-% (the time complexity of \alg{LocalRR$_\triangle$} is $O(n^3)$, as described in Section~\ref{sub:two_rounds}). 
-(as described in Section~\ref{sub:two_rounds} ``Time complexity''). 
-% In Figures~\ref{fig:res1_n_l2loss_tri} and \ref{fig:res1_n_l2loss_kst}, 
+% (the time complexity of \alg{LocalRR$_\triangle$} is $O(n^3)$, as described in Section~\ref{chap1-sub:two_rounds}). 
+(as described in Section~\ref{chap1-sub:two_rounds} ``Time complexity''). 
+% In Figures~\ref{chap1-fig:res1_n_l2loss_tri} and \ref{chap1-fig:res1_n_l2loss_kst}, 
 In \alg{Local2Rounds$_\triangle$}, we set $\epsilon_1 = \epsilon_2 = \frac{1}{2}$. 
 % so that $\epsilon = \epsilon_1 + \epsilon_2 = 1$. 
 % In \alg{Local2Rounds$_\triangle$},  \alg{CentralLap$_\triangle$}, \alg{LocalLap$_k\star$}, and \alg{CentralLap$_k\star$}, 
@@ -119,14 +119,14 @@ we set $\td_{max} = d_{max}$ (i.e., we assumed that $d_{max}$ is publicly availa
 % , 
 because we want to examine how well our theoretical results hold in our experiments. 
 % we added the Laplacian noise with the local sensitivity in \alg{Proposal}, \alg{central (Lap)}, and \alg{local (Lap)}. 
-We also evaluate the effectiveness of the private calculation of $d_{max}$ at the end of Section~\ref{sub:results}. 
+We also evaluate the effectiveness of the private calculation of $d_{max}$ at the end of Section~\ref{chap1-sub:results}. 
 
-Figure~\ref{fig:res1_n_l2loss_tri} shows that \alg{Local2Rounds$_\triangle$} significantly outperforms \alg{LocalRR$_\triangle$}. 
+Figure~\ref{chap1-fig:res1_n_l2loss_tri} shows that \alg{Local2Rounds$_\triangle$} significantly outperforms \alg{LocalRR$_\triangle$}. 
 % for estimating $f_\triangle(G)$. 
 Specifically, the $l_2$ loss of \alg{Local2Rounds$_\triangle$} is smaller than that of \alg{LocalRR$_\triangle$} by a factor of about $10^2$. 
 % and $10^2 \sim 10^3$ in \IMDB{} and \Orkut{}, respectively. 
 The difference between \alg{Local2Rounds$_\triangle$} and \alg{LocalRR$_\triangle$} is larger in \Orkut{}. 
-This is because \Orkut{} is more sparse, as described in Section~\ref{sub:setup}. 
+This is because \Orkut{} is more sparse, as described in Section~\ref{chap1-sub:setup}. 
 For example, when $n=10000$, the maximum degree $d_{max}$ in $G$ was $73.5$ and $27.8$ on average in \IMDB{} and \Orkut{}, respectively. 
 Recall that for a fixed $\epsilon$, 
 the expected $l_2$ loss of \alg{Local2Rounds$_\triangle$} and \alg{LocalRR$_\triangle$} 
@@ -134,9 +134,9 @@ can be expressed as $O(nd_{max}^3)$ and $O(n^4)$, respectively.
 Thus \alg{Local2Rounds$_\triangle$} significantly outperforms \alg{LocalRR$_\triangle$}, especially in sparse graphs. 
 % datasets. 
 
-% Figures~\ref{fig:res1_n_l2loss_tri} and \ref{fig:res1_n_l2loss_kst} show that \alg{central (Lap)} provides the best performance, which is consistent with our theoretical results; i.e., 
+% Figures~\ref{chap1-fig:res1_n_l2loss_tri} and \ref{chap1-fig:res1_n_l2loss_kst} show that \alg{central (Lap)} provides the best performance, which is consistent with our theoretical results; i.e., 
 
-Figures~\ref{fig:res1_n_l2loss_tri} and \ref{fig:res1_n_l2loss_kst} show that the $l_2$ loss is roughly consistent with 
+Figures~\ref{chap1-fig:res1_n_l2loss_tri} and \ref{chap1-fig:res1_n_l2loss_kst} show that the $l_2$ loss is roughly consistent with 
 our upper-bounds in terms of $n$. 
 Specifically, 
 \alg{LocalRR$_\triangle$}, 
@@ -147,7 +147,7 @@ the expected $l_2$ loss of $O(n^4)$, $O(nd_{max}^3)$, $O(d_{max}^2)$, $O(nd_{max
 Here note that 
 % the maximum degree $d_{max}$ increases roughly in proportion to $n$ (though $d_{max}$ is much smaller than $n$), 
 each user's degree increases roughly in proportion to $n$ (though the degree is much smaller than $n$), 
-as we randomly select $n$ users from the whole graph $G^*$. Assuming that $d_{max} = O(n)$,  Figures~\ref{fig:res1_n_l2loss_tri} and \ref{fig:res1_n_l2loss_kst} are roughly consistent with the upper-bounds. 
+as we randomly select $n$ users from the whole graph $G^*$. Assuming that $d_{max} = O(n)$,  Figures~\ref{chap1-fig:res1_n_l2loss_tri} and \ref{chap1-fig:res1_n_l2loss_kst} are roughly consistent with the upper-bounds. 
 The figures also show the limitations of the local model in terms of the utility when compared to the centralized model.
 
 % when we increase $n$ by a factor of $10$, 
@@ -159,12 +159,12 @@ The figures also show the limitations of the local model in terms of the utility
 \noindent{\textbf{Relation between $\epsilon$ and the $l_2$ loss.}}~~Next we evaluated the $l_2$ loss 
 % of the estimates of $f_\triangle(G)$ (triangle counts) and $f_{2\star}(G)$ ($2$-star counts), 
 when we changed the privacy budget $\epsilon$ in edge LDP. 
-Figure~\ref{fig:res2_eps_l2loss} shows the results for triangles and $2$-stars ($n=10000$). 
+Figure~\ref{chap1-fig:res2_eps_l2loss} shows the results for triangles and $2$-stars ($n=10000$). 
 % (the result of $3$-stars is similar to that of $2$-stars, and therefore we omit the result of $3$-stars). 
 Here we omit the result of $3$-stars because it is similar to that of $2$-stars. 
 In \alg{Local2Rounds$_\triangle$}, we set $\epsilon_1 = \epsilon_2 = \frac{\epsilon}{2}$. 
 
-Figure~\ref{fig:res2_eps_l2loss} shows that the $l_2$ loss is roughly consistent with 
+Figure~\ref{chap1-fig:res2_eps_l2loss} shows that the $l_2$ loss is roughly consistent with 
 % the expected $l_2$ loss in 
 % our theoretical analysis 
 our upper-bounds in terms of $\epsilon$. 
@@ -182,7 +182,7 @@ that for small $\epsilon$, the expected $l_2$ loss of \alg{LocalRR$_\triangle$},
 \includegraphics[width=0.99\linewidth]{fig/res2_eps_l2loss.pdf}
 \vspace{-5mm}
 \caption{Relation between $\epsilon$ in edge LDP and the $l_2$ loss when $n=10000$ ($\epsilon_1 = \epsilon_2 = \frac{\epsilon}{2}$, $\td_{max} = d_{max}$).}
-\label{fig:res2_eps_l2loss}
+\label{chap1-fig:res2_eps_l2loss}
 \end{figure}
 
 \begin{figure}[t]
@@ -192,10 +192,10 @@ that for small $\epsilon$, the expected $l_2$ loss of \alg{LocalRR$_\triangle$},
 \caption{Relation between 
 % the number of users 
 $n$ and the relative error. In the local model, we used \alg{Local2Rounds$_\triangle$} ($\epsilon = 1$ or $2$) and \alg{LocalLap$_k\star$} ($\epsilon = 1$ or $2$) for estimating triangle counts $f_\triangle(G)$ and $k$-star counts $f_{k\star}(G)$, respectively ($\td_{max} = d_{max}$).}
-\label{fig:res3_n_relerr}
+\label{chap1-fig:res3_n_relerr}
 \end{figure}
 
-Figure~\ref{fig:res2_eps_l2loss} also shows that 
+Figure~\ref{chap1-fig:res2_eps_l2loss} also shows that 
 \alg{Local2Rounds$_\triangle$} significantly outperforms \alg{LocalRR$_\triangle$} especially when $\epsilon$ is small, which is also consistent with our theoretical results. 
 Conversely, the difference between \alg{LocalRR$_\triangle$} and \alg{Local2Rounds$_\triangle$} is small when $\epsilon$ is large. 
 This is because when $\epsilon$ is large, the RR outputs the true value with high probability. 
@@ -220,9 +220,9 @@ with a strong privacy guarantee; e.g., $\epsilon \leq 1$ \cite{DP_Li}.
 \noindent{\textbf{Relative error.}}~~As the number of users $n$ increases, the numbers of triangles $f_\triangle(G)$ and $k$-stars $f_{k\star}(G)$ increase. 
 % , and this 
 This causes the increase of the $l_2$ loss. 
-Therefore, we also evaluated the relative error, as described in Section~\ref{sub:graph_statistics}. 
+Therefore, we also evaluated the relative error, as described in Section~\ref{chap1-sub:graph_statistics}. 
 
-Figure~\ref{fig:res3_n_relerr} shows the relation between $n$ and the relative error 
+Figure~\ref{chap1-fig:res3_n_relerr} shows the relation between $n$ and the relative error 
 (we omit the result of $3$-stars because it is similar to that of $2$-stars). 
 In the local model, we used \alg{Local2Rounds$_\triangle$} and \alg{LocalLap$_k\star$} for estimating 
 % triangle counts 
@@ -240,7 +240,7 @@ $\hf_{k\star}(G, \epsilon, d_{max})$ are the estimates of $f_\triangle(G)$ and $
 If the estimate of the clustering coefficient is smaller than $0$ (resp.~larger than $1$), we set the estimate to $0$ (resp.~$1$) because the clustering coefficient is always between $0$ and $1$. 
 In the centralized model, we used \alg{CentralLap$_\triangle$} and \alg{CentralLap$_k\star$} ($\epsilon=1$ or $2$, $\td_{max} = d_{max}$) and calculated the clustering coefficient in the same way. 
 
-Figure~\ref{fig:res3_n_relerr} shows that for all cases, the relative error decreases with increase in $n$. 
+Figure~\ref{chap1-fig:res3_n_relerr} shows that for all cases, the relative error decreases with increase in $n$. 
 This is because both $f_\triangle(G)$ and $f_{k\star}(G)$ significantly increase with increase in $n$. 
 Specifically, let $f_{\triangle,v_i}(G) \in \nnints$ the number of triangles that involve user $v_i$, and $f_{k\star,v_i}(G) \in \nnints$ be the number of $k$-stars of which user $v_i$ is a center. 
 Then $f_\triangle(G) = \frac{1}{3}\sum_{i=1}^n f_{\triangle,v_i}(G)$ and $f_{k\star,v_i}(G) = \sum_{i=1}^n f_{k\star,v_i}(G)$. 
@@ -292,7 +292,7 @@ $\hd_{max}$ (noisy max degree).
 We used \alg{Local2Rounds$_\triangle$} ($\epsilon = 1$ or $2$) and \alg{LocalLap$_k\star$} ($\epsilon = 1$ or $2$) for estimating triangle counts $f_\triangle(G)$ and $k$-star counts $f_{k\star}(G)$, respectively. 
 % In ``Local sensitivity (Cauchy),'' we added the Cauchy noise (rather than the Laplacian noise) with the local sensitivity, which is always smaller than or equal to the smooth sensitivity \cite{Karwa_PVLDB11}.
 }
-\label{fig:res4_noisy_local}
+\label{chap1-fig:res4_noisy_local}
 \end{figure}
 
 \smallskip
@@ -302,13 +302,13 @@ We used \alg{Local2Rounds$_\triangle$} ($\epsilon = 1$ or $2$) and \alg{LocalLap
 We 
 finally evaluate the methods to privately calculate $d_{max}$ with $\epsilon_0$-edge LDP 
 % , which are 
-(described in Sections~\ref{sub:non-interactive_k_stars} and \ref{sub:two_rounds}). 
+(described in Sections~\ref{chap1-sub:non-interactive_k_stars} and \ref{chap1-sub:two_rounds}). 
 % show that even if we privately calculate $d_{max}$ with edge LDP, we can accurately estimate graph statistics in the local model. 
 
 Specifically, we used \alg{Local2Rounds$_\triangle$} and \alg{LocalLap$_k\star$} for estimating $f_\triangle(G)$ and $f_{k\star}(G)$, respectively, and evaluated the following three methods for setting $\td_{max}$: 
 % the sensitivity: 
 % \begin{enumerate}
-%     \item Set $\td_{max} = n$. We call this method the \textit{global sensitivity method} because it results in adding the Laplacian noise with the global sensitivity in Definition~\ref{def:global_sen}.
+%     \item Set $\td_{max} = n$. We call this method the \textit{global sensitivity method} because it results in adding the Laplacian noise with the global sensitivity in Definition~\ref{chap1-def:global_sen}.
 %     \item Set $\td_{max} = d_{max}$. We call this method the \textit{local sensitivity method} because it results in adding the Laplacian noise with the local sensitivity. 
 % \end{enumerate}
 (i) 
@@ -321,7 +321,7 @@ $\td_{max} = d_{max}$;
 % set 
 $\td_{max} = \hd_{max}$, where $\hd_{max}$ is the private estimate of $d_{max}$ 
 % (i.e., 
-(noisy max degree) in Sections~\ref{sub:non-interactive_k_stars} and \ref{sub:two_rounds}. 
+(noisy max degree) in Sections~\ref{chap1-sub:non-interactive_k_stars} and \ref{chap1-sub:two_rounds}. 
 % Note that the first (resp.~second) method results in adding the Laplacian noise with the global (resp.~local) sensitivity without using graph projection. 
 % Therefore, we refer to the first method (i) as the \textit{global sensitivity method}, the second method (ii) as the \textit{local sensitivity method}, and the third method (iii) as the \textit{noisy local sensitivity method}. 
 
@@ -330,11 +330,11 @@ Regarding the total privacy budget $\epsilon$ in edge LDP for estimating $f_\tri
 We used $\frac{\epsilon}{10}$ for privately calculating $d_{max}$ (i.e., $\epsilon_0 = \frac{\epsilon}{10}$), and the remaining privacy budget $\frac{9\epsilon}{10}$ as input to \alg{Local2Rounds$_\triangle$} or \alg{LocalLap$_k\star$}. 
 % estimating $f_\triangle(G)$ or $f_{k\star}(G)$. 
 In \alg{Local2Rounds$_\triangle$}, we set $\epsilon_1 = \epsilon_2$; i.e., we set $(\epsilon_0, \epsilon_1, \epsilon_2) = (0.1, 0.45, 0.45)$ or $(0.2, 0.9, 0.9)$. 
-% For example, \alg{Local2Rounds$_\triangle$} with $(\epsilon_0, \epsilon_1, \epsilon_2) = (0.1, 0.45, 0.45)$ provides $1$-edge LDP and $1.1$-entire edge LDP (see Section~\ref{sub:two_rounds}). 
-Then we estimated the clustering coefficient in the same way as Figure~\ref{fig:res3_n_relerr}. 
+% For example, \alg{Local2Rounds$_\triangle$} with $(\epsilon_0, \epsilon_1, \epsilon_2) = (0.1, 0.45, 0.45)$ provides $1$-edge LDP and $1.1$-entire edge LDP (see Section~\ref{chap1-sub:two_rounds}). 
+Then we estimated the clustering coefficient in the same way as Figure~\ref{chap1-fig:res3_n_relerr}. 
 
-Figure~\ref{fig:res4_noisy_local} shows the results. 
-Figure~\ref{fig:res4_noisy_local} shows that 
+Figure~\ref{chap1-fig:res4_noisy_local} shows the results. 
+Figure~\ref{chap1-fig:res4_noisy_local} shows that 
 % the noisy local sensitivity method 
 the algorithms with $\td_{max} = \hd_{max}$ (noisy max degree) 
 achieves the relative error close to (sometimes almost the same as) 
@@ -360,7 +360,7 @@ we can achieve small relative errors
 with privacy budget $\epsilon=1$ or $2$ in edge LDP. 
 % The results also showed that we can privately estimate the maximum degree $d_{max}$, which is required in both \alg{Local2Rounds$_\triangle$} and \alg{LocalLap$_k\star$}, without a significant loss of utility. 
 
-As described in Section~\ref{sec:intro}, non-private 
+As described in Section~\ref{chap1-sec:intro}, non-private 
 % triangle or $k$-star 
 subgraph 
 counts may reveal some friendship information, and a central server may face data breaches. 

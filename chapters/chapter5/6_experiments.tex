@@ -1,4 +1,4 @@
-The purpose of this section is evaluate Algorithm~\ref{alg:priv-hc-hsbm} designed for the HSBM model. First, we outline our methods and then we discuss our results.
+The purpose of this section is evaluate Algorithm~\ref{chap5-alg:priv-hc-hsbm} designed for the HSBM model. First, we outline our methods and then we discuss our results.
 
 \paragraph{Experimental Setup}
 We tested our clustering algorithms on a real-world graph and generated synthetic graphs from the HSBM model. We compared the performance of \dphchsbm{} to several baseline algorithms.
@@ -15,7 +15,7 @@ For our baselines, we considered a naive private approach in which we release $A
 \paragraph{Metrics}
 For each graph and clustering algorithm, and the value of $\epsilon$, we computed $\cost_G(T)$, averaged over 5 runs.
 
-\subsection{Results}\label{sec:exp-discuss}
+\subsection{Results}\label{chap5-sec:exp-discuss}
 \begin{figure}
     \begin{subfigure}[b]{\linewidth}
             \centering\includegraphics[width=0.8\linewidth]{plots/legend.pdf}
@@ -27,11 +27,11 @@ For each graph and clustering algorithm, and the value of $\epsilon$, we compute
         \includegraphics[width=0.48\linewidth]{plots/mnist_cost.pdf}
     \end{subfigure}
     \caption{Cost for HSBM graphs with $2048$ nodes and $k$ clusters and MNIST graph with $1797$ nodes.}
-    \label{fig:exp-results}
+    \label{chap5-fig:exp-results}
     
 \end{figure}
 
-Our results appear in Figure~\ref{fig:exp-results}. In addition to the cost for each algorithm, we included the cost of a random tree. The data had low variance: for each of the 5 runs used to compute each bar, the values were within $0.5\%$ of each other.
+Our results appear in Figure~\ref{chap5-fig:exp-results}. In addition to the cost for each algorithm, we included the cost of a random tree. The data had low variance: for each of the 5 runs used to compute each bar, the values were within $0.5\%$ of each other.
 
 For all trials, 
 the cost of \linkage{} was much higher than the other two algorithms; even with $\epsilon = 2$, \linkage{} did not offer improvement of more than $10\%$ reduction in cost over the random tree. Thus, the rest of our discussion focuses on \dphchsbm{} and \sparsecut{}.

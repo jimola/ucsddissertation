@@ -1,5 +1,5 @@
 \section{Related Work}
-\label{sec:related}
+\label{chap3-sec:related}
 % \smallskip
 \noindent{\textbf{Non-private Subgraph Counting.}}~~Subgraph counting has been extensively studied in a non-private setting (see \cite{Ribeiro_CS21} for a recent survey). 
 % Differentially priate graph analysis has been widely studied in the literature. 
@@ -21,11 +21,11 @@ Although our triangle algorithm also samples user-pairs, ours is different from 
 First, our algorithm does not sample an edge but samples a pair of users who may or may not be a friend. 
 % have an edge between them. 
 Second, our algorithm samples user-pairs that share no common users to avoid the increase of the privacy budget $\epsilon$ as well as to reduce the time complexity 
-(see Section~\ref{sec:triangle} for details). 
+(see Section~\ref{chap3-sec:triangle} for details). 
 
 \smallskip
 \noindent{\textbf{Private Subgraph Counting.}}~~Differentially private subgraph counting has been widely studied, and the previous work assumes either the central \cite{Ding_TKDE21,Karwa_PVLDB11,Kasiviswanathan_TCC13} or local \cite{Imola_USENIX21,Imola_USENIX22,Sun_CCS19,Ye_ICDE20,Ye_TKDE21} models. 
-The central model assumes a centralized social network and has a data breach issue, as explained in Section~\ref{sec:intro}. 
+The central model assumes a centralized social network and has a data breach issue, as explained in Section~\ref{chap3-sec:intro}. 
 
 Subgraph counting in the local model has recently attracted attention. 
 Sun \textit{et al.} \cite{Sun_CCS19} propose subgraph counting algorithms 
@@ -38,7 +38,7 @@ Therefore, we make a minimal assumption -- each user knows only her friends.
 % Some studies \cite{Imola_USENIX21,Imola_USENIX22,Ye_ICDE20,Ye_TKDE21} focus on this setting. 
 
 In this setting, recent studies propose triangle \cite{Imola_USENIX21,Imola_USENIX22,Ye_ICDE20,Ye_TKDE21} and $k$-star \cite{Imola_USENIX21} counting algorithms. 
-% As described in Section~\ref{sec:intro}, 
+% As described in Section~\ref{chap3-sec:intro}, 
 For $k$-stars, Imola \textit{et al.} \cite{Imola_USENIX21} propose a one-round algorithm that is order optimal and show that it provides a very small estimation error. 
 % Triangles are much more challenging than $k$-stars. 
 % Ye \textit{et al.} \cite{Ye_ICDE20} propose a one-round algorithm that applies the RR to each bit of the neighbor list and then counts the number of triangles in the noisy graph. 
@@ -62,10 +62,10 @@ Thus, we compare our shuffle algorithm with its local version, which does not sh
 
 For triangles, Imola \textit{et al.} also propose a two-round local algorithm in \cite{Imola_USENIX21} and significantly reduce its download cost in \cite{Imola_USENIX22}. 
 Although we focus on one-round algorithms, 
-% as described in Section~\ref{sec:intro}. 
+% as described in Section~\ref{chap3-sec:intro}. 
 we show in 
-% Section~\ref{sec:experiments} 
-\conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sec:two-round}} 
+% Section~\ref{chap3-sec:experiments} 
+\conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{chap3-sec:two-round}} 
 that our one-round algorithm is comparable to the two-round algorithm in \cite{Imola_USENIX22}, which requires a lot of user effort and synchronization, in terms of accuracy. 
 
 % In this paper, we compare our triangle algorithms with \AlgRRTri{} and \AlgARRTri{} in our theoretical analysis and with \AlgARRTri{} in our experiments (we cannot apply \AlgRRTri{} to large-scale graphs, as it is too inefficient; see ). 

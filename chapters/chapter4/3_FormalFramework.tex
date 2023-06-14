@@ -1,10 +1,10 @@
 
-\section{Quantifying Robustness}\label{sec:framework}
+\section{Quantifying Robustness}\label{chap4-sec:framework}
 
 In this section, we present our formal framework for analyzing the robustness of a protocol for degree estimation. Specifically, we measure the robustness along two dimensions, \textit{correctness} (for honest users) and \textit{soundness} (for malicious users). Intuitively, good correctness means that the protocol is accurate for honest users, and good soundness means that it can detect/restrict malicious users. Hence, a protocol which has both properties is robust to poisoning attacks. %To the best of our knowledge, we are the first to analyze the correctness and soundness to \ldp~protocols for graphs. \ji{Is this right/adequate?}
 
 
-\subsection{Metrics}\label{sec:robustframework}
+\subsection{Metrics}\label{chap4-sec:robustframework}
 
 %In order to achieve robustness, we permit our algorithms to return $\hat{d}_i = \bottom$ (abort the estimate for user $\DO_i$) if it detects poisoning in that user's data. The symbol $\bottom$ means that the data received about $\DO_i$ does not constitute a valid input and their degree estimate is aborted. 
 Our notion of correctness guarantees that the protocol will produce an accurate degree estimate $\hat{d}_i$ for an honest user $\DO_i \in \mathcal{H}$ even under poisoning. On the other hand, good soundness prevents a malicious user $\DO_i \in \calM$ from  manipulating their degree estimate by too much \textit{without} detection.   We describe them in details as follows.  \vspace{-0.2cm}  
@@ -14,12 +14,12 @@ The \textit{correctness} of a protocol assesses its resilience to manipulation o
 Correctness protects the honest user $\DO_i$ along the above dimensions and is formally defined as follows:
 
 
-\begin{defn}\label{def:correct}(\textbf{Correctness}) Let 
+\begin{defn}\label{chap4-def:correct}(\textbf{Correctness}) Let 
   $\langle R_1, \ldots, R_n\rangle$ be a non-interactive, \ldp{} protocol for degree estimation producing estimates $\langle \hd_1, \ldots, \hd_n\rangle$. Let $\calM$ be a set of malicious users with $|\calM| = m$ and $\calH$ be the set of honest users. 
 Then, the protocol is defined to be $(\alpha_1,\delta_1)$-correct w.r.t. an attack from $\calM$ if for all input graphs $G\in \calG$ we have:
   \begin{gather}  \vspace{-0.2cm}  
     \forall \DO_i \in \calH, \mathrm{Pr}\left[\hat{d}_i = \bottom \vee
-    |\hat{d}_i-d_i|\geq \alpha_1\right]\leq \delta_1,\label{eq:correct1}
+    |\hat{d}_i-d_i|\geq \alpha_1\right]\leq \delta_1,\label{chap4-eq:correct1}
   \end{gather}
 where the above probability is taken w.r.t  the randomness in the protocol and the attack.
 \end{defn}
@@ -30,13 +30,13 @@ Complementary to the above definition, we introduce the notion of $\alpha_1$-\te
 
 Lower the value of
 $\alpha_1$ and $\delta_1$, better is the robustness of the protocol for honest users.  \vspace{-0.2cm}  \\\\ 
-%This definition is the complement of Definition~\ref{def:correct}, and we use it to show that there are attacks which, in a strong sense, are very successful against the protocol: They are always able to return $\bottom$ or an inaccurate response for an honest user. We use this definition to motivate the need for more robust algorithms.\\\\
+%This definition is the complement of Definition~\ref{chap4-def:correct}, and we use it to show that there are attacks which, in a strong sense, are very successful against the protocol: They are always able to return $\bottom$ or an inaccurate response for an honest user. We use this definition to motivate the need for more robust algorithms.\\\\
 \noindent\textbf{Soundness (For Malicious Users). } The \textit{soundness} of a protocol assesses its ability to restrict adversarial manipulations of a malicious user's estimator. In particular, the protocol either returns an accurate estimate or returns $\hd_i = \bottom$ for these malicious users, regardless of the poisoning attack used. Formally, we use the following definition (which uses the complement event $\hd_i \neq \bottom \wedge |\hd_i - d_i| \geq \alpha_2$):
 
-\begin{defn}\label{def:sound}(\textbf{Soundness}) Let $\langle R_1, \ldots, R_n\rangle$ be a non-interactive, \ldp{} protocol for degree estimation producing estimates $\hd_1, \ldots, \hd_n$. Let $\calM$ be a set of malicious users with $|\calM| = m$ and $\calH$ be the complement set of honest users. Then, the protocol is defined to be $(\alpha_2, \delta_2)$-sound w.r.t an attack from $\calM$ if, for all input graphs $G \in \calG$ we have
+\begin{defn}\label{chap4-def:sound}(\textbf{Soundness}) Let $\langle R_1, \ldots, R_n\rangle$ be a non-interactive, \ldp{} protocol for degree estimation producing estimates $\hd_1, \ldots, \hd_n$. Let $\calM$ be a set of malicious users with $|\calM| = m$ and $\calH$ be the complement set of honest users. Then, the protocol is defined to be $(\alpha_2, \delta_2)$-sound w.r.t an attack from $\calM$ if, for all input graphs $G \in \calG$ we have
   \begin{gather}
     \forall \DO_i \in \calM, \mathrm{Pr}\left[\hd_i \neq \bottom \wedge |\hd_i -
-    d_i| \geq \alpha_2\right]\leq \delta_2, \label{eq:sound1}
+    d_i| \geq \alpha_2\right]\leq \delta_2, \label{chap4-eq:sound1}
   \end{gather}
   where the above probability is taken w.r.t randomness in the protocol and attack.
 \end{defn}
@@ -51,7 +51,7 @@ $\alpha_2$ and lower the value of $\delta_2$, better is the robustness of the pr
 %\arc{Expand on this}
 \section{Impact of Poisoning on Baseline Protocols}
 
-Within our robustness framework, we analyze the two naive private mechanisms outlined in Sec.~\ref{sec:ldp} -- the Laplace mechanism and randomized response. The shortcomings of these mechanisms motivate the design of our robust protocols discussed later in the paper. We present all our results for the stronger threat model of response poisoning attacks first. We defer all our discussion for the input poisoning attack to Sec. \ref{sec:input-attacks}. 
+Within our robustness framework, we analyze the two naive private mechanisms outlined in Sec.~\ref{chap4-sec:ldp} -- the Laplace mechanism and randomized response. The shortcomings of these mechanisms motivate the design of our robust protocols discussed later in the paper. We present all our results for the stronger threat model of response poisoning attacks first. We defer all our discussion for the input poisoning attack to Sec. \ref{chap4-sec:input-attacks}. 
 
 \subsection{Laplace Mechanism}
 
@@ -60,14 +60,14 @@ exists a graph and an attack against \RLap{} in
 which a malicious user is guaranteed to manipulate their true degree by $n -1$ --
 this holds for the case where the malicious user is an isolated node but
 lies that their degree is $n - 1$. The robustness of \RLap{} against response poisoning attacks is formalized as follows: 
-\begin{thm}\label{thm:response:laplace}
+\begin{thm}\label{chap4-thm:response:laplace}
 	Let $\calM$ be a set of malicious users with $|\calM| = m$. The \RLap{} protocol is $(\frac{1}{\epsilon}\log\frac{n}{\delta}),\delta)$-correct with respect to any response poisoning attack from $\calM$. However, there is a response poisoning attack $\calA$ such that \RLap{} is $(n-1)$-tight sound with respect to $\calA$.
 \end{thm}
-The proof of the above theorem is in App. \ref{app:thm:response:laplace}.
+The proof of the above theorem is in App. \ref{chap4-app:thm:response:laplace}.
 Thus according to our robustness framework, \RLap{} has good correctness but not soundness. Intuitively, \RLap{} fails to provide good soundness because there is no way to verify the malicious users' reports. 
 It is important to note that  \RLap{} has good correctness guarantee even with $n-1$ malicious users while the worst-case soundness is inevitable even with a single malicious user. 
-\subsection{Randomized Response}\label{sec:protocol:naive}
-In this section, we look at an alternative mechanism where the users release their edges via randomized response. Recall that the information about an edge is shared between two users -- the idea here is to leverage this \textit{distributed information}. For our baseline algorithm, \DegRRNaive~(described in Alg.~\ref{alg:degrrnaive}), the data aggregator collects information about an edge from a \textit{single} user. Specifically, for edge $(i,j)$ with $i < j$, it simply uses the response from user $\DO_i$ to decide if the edge exists. To estimate the degree, it counts the total number of edges to user $\DO_i$ with the random variable $count_i^1$ and then computes a debiased estimate of the degree. Note that this naive approach is used by many prior works in local graph algorithms, such as~\cite{LDPGraph1, LDPGraph2,imola2021locally,imola_communication-efficient_2022}.
+\subsection{Randomized Response}\label{chap4-sec:protocol:naive}
+In this section, we look at an alternative mechanism where the users release their edges via randomized response. Recall that the information about an edge is shared between two users -- the idea here is to leverage this \textit{distributed information}. For our baseline algorithm, \DegRRNaive~(described in Alg.~\ref{chap4-alg:degrrnaive}), the data aggregator collects information about an edge from a \textit{single} user. Specifically, for edge $(i,j)$ with $i < j$, it simply uses the response from user $\DO_i$ to decide if the edge exists. To estimate the degree, it counts the total number of edges to user $\DO_i$ with the random variable $count_i^1$ and then computes a debiased estimate of the degree. Note that this naive approach is used by many prior works in local graph algorithms, such as~\cite{LDPGraph1, LDPGraph2,imola2021locally,imola_communication-efficient_2022}.
 \setlength{\textfloatsep}{4pt}
 
 \begin{algorithm}[t]
@@ -85,13 +85,13 @@ In this section, we look at an alternative mechanism where the users release the
     $\hd_i = \frac{1}{1-2\rho}(count^1_i - \rho (n-1))$\;
 	}
 \KwRet{$(\hd_1, \hd_2, \ldots, \hd_n)$}
-\caption{\DegRRNaive$: \{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{alg:degrrnaive}
+\caption{\DegRRNaive$: \{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{chap4-alg:degrrnaive}
 
 \end{algorithm}
 
 
 % \begin{algorithm}
-%  \caption{\DegRRNaive$: \{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{alg:degrrnaive}
+%  \caption{\DegRRNaive$: \{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{chap4-alg:degrrnaive}
 %  \begin{algorithmic}[1]
 %  \Statex \textbf{Parameter:} $\epsilon$ - Privacy parameter
 %  \Statex \textbf{Input:} $\{l_1,\cdots,l_n\}$ where $l_i \in \{0,1\}^n$ is the adjacency \Statex \hspace{1.2cm} list of user $\DO_i$;
@@ -112,13 +112,13 @@ In this section, we look at an alternative mechanism where the users release the
 
 Formally
 for response poisoning attacks, we have:
-\begin{thm}\label{thm:b3a2_hard} 
+\begin{thm}\label{chap4-thm:b3a2_hard} 
 Let $\calM$ be a set of malicious users with $|\calM| = m$. Then, 
 the \DegRRNaive{} protocol is $(m\frac{e^\epsilon+1}{e^\epsilon-1}+\sqrt{n}\frac{\sqrt{(e^\epsilon+1)\ln\frac{2n}{\delta}}}{e^\epsilon-1},\delta)$-correct with respect to any response poisoning attack from $\calM$. However, there is a response poisoning attack $\calA$ such that \DegRRNaive{} is $(n-1)$-tight sound with respect to $\calA$.
-\label{thm:response:naive}\end{thm}
-The above theorem is proved in App. \ref{app:thm:response:naive}.
+\label{chap4-thm:response:naive}\end{thm}
+The above theorem is proved in App. \ref{chap4-app:thm:response:naive}.
 For $\epsilon < 1$, the correctness guarantee is $\approx m(1+\frac{1}{\epsilon})+\frac{\sqrt{n}}{\epsilon}$. Intuitively, the $\frac{\sqrt{n}}{\epsilon}$ term comes from the error introduced by randomized response. The $m(1+\frac{1}{\epsilon})$ term comes from the adversarial behavior of the malicious users -- $m$ term is inevitable and 
- accounts for the worst case scenario where all $m$ malicious users are colluding  (see Sec. \ref{sec:discussion}  for more details), while the $\frac{1}{\epsilon}$ factor corresponds to the scaling factor required for de-biasing. This observation is in line with prior work \cite{Cheu21} that assesses the impact of poisoning attacks on tabular data.  Clearly, smaller the value of $\epsilon$, worse is the impact of the attack.   %  who can carry out an increasingly strong attack with smaller $\epsilon$ since they can deterministically report $0$s for the edges to user $i$, not following randomized response which would dictate that $0$ or $1$ is returned with probability close to $\frac{1}{2}$. This harms the debiasing step used to compute $\hat{d}_i$.  %We will more completely discuss this phenomenon in later sections.
+ accounts for the worst case scenario where all $m$ malicious users are colluding  (see Sec. \ref{chap4-sec:discussion}  for more details), while the $\frac{1}{\epsilon}$ factor corresponds to the scaling factor required for de-biasing. This observation is in line with prior work \cite{Cheu21} that assesses the impact of poisoning attacks on tabular data.  Clearly, smaller the value of $\epsilon$, worse is the impact of the attack.   %  who can carry out an increasingly strong attack with smaller $\epsilon$ since they can deterministically report $0$s for the edges to user $i$, not following randomized response which would dictate that $0$ or $1$ is returned with probability close to $\frac{1}{2}$. This harms the debiasing step used to compute $\hat{d}_i$.  %We will more completely discuss this phenomenon in later sections.
 
 
 Similar to the Laplace mechanism, \DegRRNaive{} is $(n-1)$-tight sound, i.e., a malicious user can always get away with the worst-case $n-1$ error. This happens when $\DO_n$ is an isolated node who acts maliciously and reports an all-one list. Thus, once again this  worst-case soundness is inevitable even with a single malicious user.   In the next section, we discuss how to leverage the data redundancy in graphs and verify the data collected via randomized response to improve the soundness.

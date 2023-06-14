@@ -1,4 +1,4 @@
-\section{Preliminaries}\label{sec:background}
+\section{Preliminaries}\label{chap4-sec:background}
 %In this section, we introduce the necessary background on \ldp~for graph analysis followed by .\\\\\noindent
 \textbf{Notation.}
 Throughout this paper, let $G = (V, E)$ be an undirected 
@@ -6,7 +6,7 @@ graph with $V$ and $E$ representing the set of nodes (vertices) and edges, respe
 Let $\textbf{d}=\langle d_1, \ldots, d_n\rangle \in \R^n$ denote the vector of degrees in $G$. $m$ denotes the number of malicious users.
 
 
-\subsection{Local Differential Privacy for Graphs}\label{sec:ldp}
+\subsection{Local Differential Privacy for Graphs}\label{chap4-sec:ldp}
 %Differential privacy (\DP) is a quantifiable measure of the stability of the output of a randomized mechanism to changes to its input. 
 Our paper focuses on the \textit{local} model of \DP, one of the most popular models. % There are two popular models of differential privacy, \textit{local} and \textit{central}.
 The local model consists of a set of individual users (\DO) and an untrusted data aggregator (analyst); each user perturbs their data using a (local) \DP~algorithm and sends it to the aggregator which uses these noisy data to estimate certain statistics of the entire dataset. %Thus, the \ldp~model allows gleaning of useful information from the dataset without requiring the data owners to trust any third-party entity. %This makes it an attractive model for commercial deployment~\cite{Apple,Rappor1,Rappor2,Uber}.
@@ -49,7 +49,7 @@ $\epsilon$-edge \ldp~protects the information about an edge $e_{ij}$ from the ad
 \noindent\textbf{Randomized Response.} Randomized Response ($RR_\rho(\cdot)$)~\cite{RR} releases a bit $b \in \{0,1\}$ by
 flipping it with probability $\rho = \frac{1}{1+e^\epsilon}$. We extend the
 mechanism to inputs in $\{0,1\}^n$ by flipping each bit independently with
-probability $\rho$ (Alg.~\ref{alg:rr} in App. \ref{app:background}) which satisfies
+probability $\rho$ (Alg.~\ref{chap4-alg:rr} in App. \ref{chap4-app:background}) which satisfies
  $\epsilon$-edge \DP. 
  
 \noindent\textbf{Laplace Mechanism.} 
@@ -60,7 +60,7 @@ Every protocol used in this paper is based on randomized response, the Laplace m
 \subsection{Protocol Setup}
 \noindent\textbf{Problem Statement.}  
 We consider single round,  non-interactive protocols in which each user $\DO_i, i \in [n]$ runs the local randomizer
-$R_i : \{0,1\}^n \rightarrow \calX$ for some output space $\calX$ on their adjacency lists $l_i$ (Fig. \ref{fig:setting}). The data aggregator collects the noisy responses and applies a function 
+$R_i : \{0,1\}^n \rightarrow \calX$ for some output space $\calX$ on their adjacency lists $l_i$ (Fig. \ref{chap4-fig:setting}). The data aggregator collects the noisy responses and applies a function 
 $D : \calX^n \rightarrow (\mathbb{N} \cup \{\bottom\})^d$ to produce final degree estimates  $\hat{\textbf{d}}=\langle \hd_1, \ldots, \hd_n\rangle)$. Here, $\hd_i$ is the aggregator's estimate for $d_i$ for user $\DO_i$. Note that the aggregator is allowed to output a special symbol $\bottom$ for a user $\DO_i$ if they believe the estimate $\hat{d}_i$ to be invalid (i.e., $\DO_i$ is malicious).
   \vspace{-0.2cm}  \\\\
 \noindent\textbf{Threat Model.}
@@ -72,12 +72,12 @@ We do not make any assumptions on how the malicious users are instantiated in pr
 Based on the specifications of the practical implementation of the \ldp, there is an important distinction between the way in which the malicious users may carry out their poisoning attacks. We outline them as follows:
 
 \squishlist
-    \item \textbf{Input Poisoning.} In this threat model, the users do not have access to the implementation of the \ldp{} randomizer. For instance, mobile applications might run proprietary code which the users do not have permission to tamper with. Consequently, the only thing a malicious user can do is falsify their underlying input data, i.e.,  change their input from $l_i$ to an arbitrary $l_i'$, and then report $q_i = R_i(l_i')$ (Fig. \ref{fig:input}).
+    \item \textbf{Input Poisoning.} In this threat model, the users do not have access to the implementation of the \ldp{} randomizer. For instance, mobile applications might run proprietary code which the users do not have permission to tamper with. Consequently, the only thing a malicious user can do is falsify their underlying input data, i.e.,  change their input from $l_i$ to an arbitrary $l_i'$, and then report $q_i = R_i(l_i')$ (Fig. \ref{chap4-fig:input}).
     
-    \item \textbf{Response Poisoning.} This is a stronger threat model where a malicious user has direct control over the implementation of the \ldp{} randomizer. For instance, the user could hack into the mobile application collecting their data. Consequently, the user can completely bypass the randomizer and submit an arbitrary response $q_{i}$ (Fig. \ref{fig:response}) to the aggregator.
+    \item \textbf{Response Poisoning.} This is a stronger threat model where a malicious user has direct control over the implementation of the \ldp{} randomizer. For instance, the user could hack into the mobile application collecting their data. Consequently, the user can completely bypass the randomizer and submit an arbitrary response $q_{i}$ (Fig. \ref{chap4-fig:response}) to the aggregator.
 \squishend
 
-Note that input poisoning attack applies to \textit{any} protocol, private or not, because a user is free to change their input anytime. However, response poisoning attacks are unique to \ldp{} -- the distinction between an user's input and their response is a characteristic of \ldp{} which we results in a separation in the efficacy of the two types of attacks (see Sec. \ref{sec:input-attacks} for details). 
+Note that input poisoning attack applies to \textit{any} protocol, private or not, because a user is free to change their input anytime. However, response poisoning attacks are unique to \ldp{} -- the distinction between an user's input and their response is a characteristic of \ldp{} which we results in a separation in the efficacy of the two types of attacks (see Sec. \ref{chap4-sec:input-attacks} for details). 
 
 
 \begin{figure}
@@ -86,7 +86,7 @@ Note that input poisoning attack applies to \textit{any} protocol, private or no
     \includegraphics[width=0.8\columnwidth]{graph_pic_3.pdf}
     \vspace{-0.5cm}
     \caption{Input Poisoning Attack}
-    \label{fig:input} 
+    \label{chap4-fig:input} 
         \vspace{-0.6cm}
 \end{figure}
 \begin{figure}[bt]
@@ -94,16 +94,16 @@ Note that input poisoning attack applies to \textit{any} protocol, private or no
  \includegraphics[width=0.8\columnwidth]{graph_pic_2.pdf}
      \vspace{-0.5cm}
    \caption{Response Poisoning Attack}
-    \label{fig:response} \vspace{-0.5cm}
+    \label{chap4-fig:response} \vspace{-0.5cm}
 \end{figure}
 
 
 
 
 
-  \vspace{-0.2cm}  \subsection{Motivating Attacks}\label{sec:attacks}
+  \vspace{-0.2cm}  \subsection{Motivating Attacks}\label{chap4-sec:attacks}
 
-For the Laplace mechanism, \RLap, and randomized response mechanism, $RR_\rho$,  outlined in Sec.~\ref{sec:ldp}, we present two concrete motivating attacks. We consider the attacks in the context of the task of influential node identification, where the goal of the data aggregator is to identify certain nodes with a high measure of ``influence". This is useful for various applications where the influential nodes are selected for disseminating information/advertisement. Here, we consider the simplest measure of influence -- degree; nodes with the top-$k$ degrees are selected as the influencers. With the goal of modifying the influence of different users, a malicious user may choose to carry out the following attacks:
+For the Laplace mechanism, \RLap, and randomized response mechanism, $RR_\rho$,  outlined in Sec.~\ref{chap4-sec:ldp}, we present two concrete motivating attacks. We consider the attacks in the context of the task of influential node identification, where the goal of the data aggregator is to identify certain nodes with a high measure of ``influence". This is useful for various applications where the influential nodes are selected for disseminating information/advertisement. Here, we consider the simplest measure of influence -- degree; nodes with the top-$k$ degrees are selected as the influencers. With the goal of modifying the influence of different users, a malicious user may choose to carry out the following attacks:
   \vspace{-0.2cm}  \\\\\noindent\textbf{Degree Inflation Attack.} In this attack, a target malicious user $\DO_t$ wants to get themselves selected as an influential node. For \RLap, since each user sends their degree $d_i$ plus Laplace noise, the target user maximizes their degree estimate by simply sending $n-1$. 
 
 For $RR_\rho$, the target malicious user $\DO_t$ colludes with a set of other users  (for instance, by injecting fake users) as follows. All the non-target malicious users $\DO_i, i \in \calM\setminus t$ report $1$ for the edges corresponding to $\DO_t$. Additionally, $\DO_t$ reports an all-one list.   \vspace{-0.2cm}  \\\\

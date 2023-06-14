@@ -222,7 +222,7 @@ $OPT \geq \alpha - (\alpha-\beta)\delta_{max}(c)$. Furthermore, $w(L) + w(R) \ge
 \subsection{Lower Bound Method 2}
 We do this by exhibiting a class of graphs which are a packing with respect to the Dasgupta objective. The class of graph consists of random spanning trees. The following lemma first appeared in~\cite{goyal2009expanders}.
 
-\begin{lem}\label{lem:tree-expander}
+\begin{lem}\label{chap5-lem:tree-expander}
 Let $T_1, T_2$ be two independent random trees on $n > 100$ vertices. Then, with probability $1-0.8^{n/4}$, $T_1 \cup T_2$ is a $0.1$-vertex expander on all sufficiently large vertex sets. That is, for any $S$ satisfying $\frac{n}{3} \leq S \leq \frac{n}{2}$, we have $|\delta_{T_1 \cup T_2}(S) \setminus S| \geq 0.1 |S|$. 
 \end{lem}
 \begin{proof}
@@ -246,11 +246,11 @@ When $\beta \rightarrow 0$, we see that $f(\frac{1}{3}) \rightarrow \frac{3}{e^{
 
 
 \end{proof}
-\begin{lem}\label{lem:packing}
+\begin{lem}\label{chap5-lem:packing}
 For $n > 100$, there exists a set of graphs $G \subseteq \calG_n$ with $|G| = 2^{0.03 n}$ such that for any $G_1, G_2 \in G$, we have for any balanced cut $S$ that $w_{G_1 \cup G_2}(S, V \setminus S) \geq \frac{n}{30}$.
 \end{lem}
 \begin{proof}
-    We generate a set $\calT$ of cardinality $M = 2^{0.03n}$ consisting of trees on $n$ vertices independently at random. By Lemma~\ref{lem:tree-expander}, the probability that the union of any two trees will fail to be a $0.1$-vertex expander on balanced cuts is at most $0.8^{n/4}$. By the union bound, the probability that any two trees in $\calT$ will fail to be a $0.1$-vertex expander is at most $M^2 0.8^{n/4} < 1$, and thus there exists a $\calT$ such that for each $T_1, T_2 \in \calT$, $T_1 \cup T_2$ is a $0.1$-vertex expander on balanced cuts. However, if $T_1 \cup T_2$ is a $0.1$-vertex expander for balanced cuts, then there must be at least $0.1 \frac{n}{3}$ edges crossing the cut, and thus $w_{T_1 \cup T_2}(S, V\setminus S) \geq \frac{n}{30}$.
+    We generate a set $\calT$ of cardinality $M = 2^{0.03n}$ consisting of trees on $n$ vertices independently at random. By Lemma~\ref{chap5-lem:tree-expander}, the probability that the union of any two trees will fail to be a $0.1$-vertex expander on balanced cuts is at most $0.8^{n/4}$. By the union bound, the probability that any two trees in $\calT$ will fail to be a $0.1$-vertex expander is at most $M^2 0.8^{n/4} < 1$, and thus there exists a $\calT$ such that for each $T_1, T_2 \in \calT$, $T_1 \cup T_2$ is a $0.1$-vertex expander on balanced cuts. However, if $T_1 \cup T_2$ is a $0.1$-vertex expander for balanced cuts, then there must be at least $0.1 \frac{n}{3}$ edges crossing the cut, and thus $w_{T_1 \cup T_2}(S, V\setminus S) \geq \frac{n}{30}$.
 \end{proof}
 
 \begin{thm}
@@ -260,7 +260,7 @@ For any $\epsilon < 0.01$, and any $\epsilon$-edge DP algorithm $A(G)$ which out
 \]
 \end{thm}
 \begin{proof}
-Let $\calG$ be the set of graphs guaranteed by Lemma~\ref{lem:packing}; namely, $|\calG| = 2^{c_1n}$ and $w_{G \cup G'}(S, V\setminus S) \geq c_2 n$ for any $G, G' \in \calG$ and balanced cut $S$. It clearly holds that $\dcost_G^* \leq O(n \log n)$ for all $G \in \calG$. We claim that any hierarchical clustering $T$ can achieve $\dcost_G(T) \leq \frac{c_2}{4}n^2$ error on at most one $G \in \calG$.
+Let $\calG$ be the set of graphs guaranteed by Lemma~\ref{chap5-lem:packing}; namely, $|\calG| = 2^{c_1n}$ and $w_{G \cup G'}(S, V\setminus S) \geq c_2 n$ for any $G, G' \in \calG$ and balanced cut $S$. It clearly holds that $\dcost_G^* \leq O(n \log n)$ for all $G \in \calG$. We claim that any hierarchical clustering $T$ can achieve $\dcost_G(T) \leq \frac{c_2}{4}n^2$ error on at most one $G \in \calG$.
 
 To prove this claim, suppose $T$ achieves $\dcost_G(T) \leq \frac{c_2}{4}n^2$ for some $G$. Let $B$ be the balanced cut of $T$. We know that $\dcost_G(T) \geq w_G(B, V \setminus B) \frac{2n}{3}$. For any other $G' \in \calG$, we also have $\dcost_{G'}(T) \geq w_{G'}(B, V \setminus B) \frac{2n}{3}$. However, we know that
 \[
@@ -373,7 +373,7 @@ From our observation, we have $\dcost_{\calH(S)}(T) \geq w_{\calH(S)}(U,V)\frac{
 \section{Omitted Details from HSBM}
 
 \iffalse 
-\begin{thm}\label{thm:SBM-recovery}
+\begin{thm}\label{chap5-thm:SBM-recovery}
 (Theorem 12 from~\cite{mcsherry2001spectral}): Let $\sigma = \max_{i,j} \sqrt{A_{ij}(1-A_{ij})}$, and suppose this value is at least $\frac{\log^3(n)}{\sqrt{n}}$. Let $s = \min_{i=1}^k |B_i|$. Split the columns of $\hat{A}$ into two equal pieces $\hat{A}_1$ and $\hat{A}_2$. Define $P_1, P_2$ to be projection operators given by $P_1 = SVD_k(\hat{A}_1)$ and $P_2 = SVD_k(\hat{A}_2)$ If $i$ is a column in $\hat{A}$, then let $\zeta(i) = P_1((\hat{A}_2)_i$; otherwise let $\zeta(i) = P_2((\hat{A}_1))_i$. The following holds for all $1 \leq i \leq \frac{n}{2}$ with probability at least $1-\frac{1}{n^6}$:
 \begin{align*}
     \|A_i - \zeta(i)\|_2 \leq 8 \sigma \sqrt{\tfrac{nk}{s}} + \sqrt{10k \log n}

@@ -1,9 +1,9 @@
-In this section, we design private algorithms for hierarchical clustering which work on any input graph. In Section~\ref{sec:hc-poly}, we propose a polynomial time $(\alpha, O(\frac{n^{2.5}}{\epsilon}))$ approximation algorithm, where $\alpha$ is the best approximation ratio of a black-box, \emph{non-private} hierarchical clustering algorithm. Then, in Section~\ref{sec:hc-exp}, we show that the exponential mechanism is a $(1, O(\frac{n^{2} \log n}{\epsilon}))$-approximation algorithm, implying our lower bound is tight. The proofs of the results in this section appear in Appendix~\ref{app:hc-cuts}
+In this section, we design private algorithms for hierarchical clustering which work on any input graph. In Section~\ref{chap5-sec:hc-poly}, we propose a polynomial time $(\alpha, O(\frac{n^{2.5}}{\epsilon}))$ approximation algorithm, where $\alpha$ is the best approximation ratio of a black-box, \emph{non-private} hierarchical clustering algorithm. Then, in Section~\ref{chap5-sec:hc-exp}, we show that the exponential mechanism is a $(1, O(\frac{n^{2} \log n}{\epsilon}))$-approximation algorithm, implying our lower bound is tight. The proofs of the results in this section appear in Appendix~\ref{chap5-app:hc-cuts}
 
-\subsection{Polynomial-Time Algorithm}~\label{sec:hc-poly}
+\subsection{Polynomial-Time Algorithm}~\label{chap5-sec:hc-poly}
 
 Our algorithm makes use of a recent algorithm which releases a sanitized, synthetic graph $G'$ that approximates the cuts in the private graph $G$~\citep{eliavs2020differentially,arora2019differentially}. Via post-processing, it is then possible to run a non-private, black-box clustering algorithm. We are able to relate the cost in $G'$ to that of $G$ by reducing the cost $\cost_G(T)$ to a sum of cuts. We start by defining the notion of $G'$ approximating the cuts in $G$.
-\begin{defn}\label{def:cut-approx}
+\begin{defn}\label{chap5-def:cut-approx}
     For a given graph $G = (V, E, w)$, we say $G' = (V, E', w')$ is an $(\alpha_n, \beta_n)$-approximation to cut queries in $G$ if for all $S \subseteq V$, we have
     \begin{multline*}
         (1-\alpha_n) w(S, \overline{S}) - \beta_n \min \{|S|, n - |S|\} \\ \leq w'(S, \overline{S}) \leq (1+\alpha_n) w(S, \overline{S}) + \beta_n \min \{|S|, n - |S|\}.
@@ -18,7 +18,7 @@ there exists an $(\epsilon, \delta)$-DP algorithm which, with probability at lea
 
 Plugging in a state-of-the-art, $\sqrt{\log n}$ hierarchical clustering algorithm of~\citet{charikar2017approximate}, we obtain a $((1+o(1)) \sqrt{\log n}, \tilde{O}(\frac{n^{2.5}}{\epsilon}))$-approximation. In a graph with total edge weight $W$, we have $W \leq \cost_G(T) \leq nW$, and thus an approximation is possible if $W > \frac{n^{1.5}}{\epsilon}$. This means the graph can have an average degree of $\frac{\sqrt{n}}{\epsilon}$.
 
-\subsection{Exponential Mechanism}~\label{sec:hc-exp}
+\subsection{Exponential Mechanism}~\label{chap5-sec:hc-exp}
 We consider an algorithm based on the well-known exponential mechanism~\citep{mcsherry2007mechanism}. This algorithm takes exponential time, but achieves greater performance that is nearly tight with our lower bound (showing that the lower bound can't be improved significantly from an information-theoretic point of view).
 
 The exponential mechanism $M : \calX \rightarrow \calY$ releases an element from $\calY$ with probability proportional to 
@@ -41,7 +41,7 @@ For two adjacent input graphs $G = (V,E,w)$ and $G' = (V,E,w')$, we have for all
         &\leq n \textstyle{\sum_{u,v \in V^2} |w(u,v) - w'(u,v)| \leq n}. \hfill \qed
     \end{align*}
 Having controlled the sensitivity, we can apply utility results for the exponential mechanism.
-\begin{lem}\label{lem:exp-util}
+\begin{lem}\label{chap5-lem:exp-util}
 There exists an $(\epsilon, 0)$-DP, $(1, O(\frac{n^2 \log n}{\epsilon}))$-approximation algorithm for hierarchical clustering.
 \end{lem}
 

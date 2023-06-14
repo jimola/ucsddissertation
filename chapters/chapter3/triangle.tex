@@ -2,7 +2,7 @@
 % \section{Differentially Private Triangle Counting under the Shuffle Model}
 % \section{Triangle Counting}
 \section{Triangle Counting Based on Wedge Shuffling}
-\label{sec:triangle}
+\label{chap3-sec:triangle}
 % The existing one-round local triangle algorithms \cite{Imola_USENIX21,Imola_USENIX22,Ye_ICDE20,Ye_TKDE21} suffer from an extremely large estimation error; e.g., when $\epsilon=1$ in edge DP, the relative error is much larger than $1$ in our experiments.
 % To address this issue, we propose a differentially private one-round triangle counting algorithm based on wedge shuffling.
 Based on our wedge shuffle technique, we first propose a
@@ -10,29 +10,29 @@ Based on our wedge shuffle technique, we first propose a
 one-round triangle counting algorithm.
 % in the shuffle model.
 %
-% Section~\ref{sub:challenges} explains technical challenges in our work.
+% Section~\ref{chap3-sub:challenges} explains technical challenges in our work.
 % In particular, we explain why it is challenging to apply the shuffle model to graph data.
-Section~\ref{sub:triangle_overview} describes the overview of our algorithms.
-Section~\ref{sub:wedge} proposes an algorithm for counting triangles involving a specific user-pair
+Section~\ref{chap3-sub:triangle_overview} describes the overview of our algorithms.
+Section~\ref{chap3-sub:wedge} proposes an algorithm for counting triangles involving a specific user-pair
 % proposes a wedge shuffle technique
 as a building block of our triangle counting algorithm.
-Section~\ref{sub:triangle} proposes
+Section~\ref{chap3-sub:triangle} proposes
 our triangle counting algorithm.
 %an algorithm for counting triangles in the entire graph.
 % a one-round triangle counting algorithm based on the wedge shuffling.
-Section~\ref{sub:var_red} proposes a technique to significantly reduce the variance in our triangle counting algorithm. 
+Section~\ref{chap3-sub:var_red} proposes a technique to significantly reduce the variance in our triangle counting algorithm. 
 % by ignoring sparse user-pairs.
-Section~\ref{sub:summary} summarizes the performance guarantees of our triangle algorithms. 
-% The proofs of all statements in this section are given in Appendix~\ref{sec:triangle_proof}.
+Section~\ref{chap3-sub:summary} summarizes the performance guarantees of our triangle algorithms. 
+% The proofs of all statements in this section are given in Appendix~\ref{chap3-sec:triangle_proof}.
 
 % \subsection{Technical Challenges}
-% \label{sub:challenges}
+% \label{chap3-sub:challenges}
 % The limitation of the one-round local triangle algorithms is an extremely large estimation error.
-% This limitation comes from the fact that all three edges are noisy in any noisy edge the data collector can see, as described in Section~\ref{sec:intro}.
+% This limitation comes from the fact that all three edges are noisy in any noisy edge the data collector can see, as described in Section~\ref{chap3-sec:intro}.
 
 % \subsection{Algorithm Overview}
 \subsection{Overview}
-\label{sub:triangle_overview}
+\label{chap3-sub:triangle_overview}
 Our wedge shuffle technique tells the data collector the number of common friends of $v_i$ and $v_j$.
 However, this information is not sufficient to count triangles in the entire graph.
 % the data collector still cannot count triangles, because she does not know whether $v_i$ and $v_j$ are friends.
@@ -53,7 +53,7 @@ three additional techniques:
 and
 \textit{(iii) variance reduction by ignoring sparse user-pairs}.
 % Our wedge shuffle algorithm uses the first and second strategies, whereas our one-round triangle counting algorithm uses the third and fourth strategies.
-% Figures~\ref{fig:local_edges} and \ref{fig:triangle_count} show the overview of our wedge shuffle and triangle counting algorithms, respectively.
+% Figures~\ref{chap3-fig:local_edges} and \ref{chap3-fig:triangle_count} show the overview of our wedge shuffle and triangle counting algorithms, respectively.
 % the first two strategies and the third strategy, respectively.
 Below, we briefly explain each technique.
 
@@ -65,7 +65,7 @@ Below, we briefly explain each technique.
   %our wedge shuffle algorithm with inputs $v_i$ and $v_j$.
   %(marked with gray).
   }
-  \label{fig:local_edges}
+  \label{chap3-fig:local_edges}
 % \end{figure}
 \vspace{2mm}
 % \begin{figure}[t]
@@ -79,7 +79,7 @@ Below, we briefly explain each technique.
   algorithm with each user-pair.
   %Independent pairs of nodes do share common nodes, e.g., $(v_1, v_3)$, $(v_2, v_6)$, $(v_4, v_5)$.
   }
-  \label{fig:triangle_count}
+  \label{chap3-fig:triangle_count}
 \end{figure}
 
 \smallskip
@@ -92,7 +92,7 @@ We call this the \AlgWSLE{} (Wedge Shuffling with Local Edges) algorithm.
 %algorithm \AlgWSLE{} (Wedge Shuffle Edge Local).
 % the \textit{wedge shuffling with local edges} algorithm and abbreviate it to \AlgWSLE{}.
 
-Figure~\ref{fig:local_edges} shows the overview of \AlgWSLE{}.
+Figure~\ref{chap3-fig:local_edges} shows the overview of \AlgWSLE{}.
 In this algorithm, users $v_i$ and $v_j$ obfuscate edge indicators $a_{i,j}$ and $a_{j,i}$, respectively, using $\epsilon$-RR and send them to the data collector directly (or through the shuffler without shuffling).
 %\footnote{It is also possible to send the noisy edge indicators from users $v_i$ and $v_j$ to the data collector through the shuffler. In this case, the shuffler does not shuffle these data.}.
 Then, the data collector calculates an unbiased estimate of the triangle count
@@ -117,7 +117,7 @@ disjoint user-pairs, ensuring that no user falls in two pairs.
 % which share no common users.
 % and then uses the wedge shuffling algorithm for each sampled edge.
 
-Figure~\ref{fig:triangle_count} shows the overview of our triangle algorithm.
+Figure~\ref{chap3-fig:triangle_count} shows the overview of our triangle algorithm.
 The data collector sends the sampled user-pairs to users.
 Then, users apply
 %our wedge shuffling algorithm
@@ -146,11 +146,11 @@ When we do not shuffle wedges, the
 MSE is
 % $O(n^5)$.
 $O(n^4)$.
-% This is much smaller than the existing one-round local algorithm with the same time complexity, whose $l_2$ loss is $O(n^5)$, as shown in Section~\ref{sub:upper}.
+% This is much smaller than the existing one-round local algorithm with the same time complexity, whose $l_2$ loss is $O(n^5)$, as shown in Section~\ref{chap3-sub:upper}.
 In addition, the MSE of the existing one-round local algorithm \cite{Imola_USENIX22} with the same time complexity is $O(n^6)$, as proved in
 \conference{the full version \cite{Imola_CCSFull22}}\arxiv{
-Appendix~\ref{sec:upper}}.
-% Section~\ref{sub:upper}.
+Appendix~\ref{chap3-sec:upper}}.
+% Section~\ref{chap3-sub:upper}.
 % Thus, our algorithm has a much smaller estimation error than the local algorithm.
 Thus, our
 % wedge shuffling
@@ -176,11 +176,11 @@ We prove that our variance reduction technique reduces the MSE from $O(n^3)$ to 
 
 
 % \subsection{Triangle Counting Including a Specific User-Pair}
-% \label{sub:triangle_edge}
+% \label{chap3-sub:triangle_edge}
 % \subsection{Wedge Shuffling with Local Edges}
 \subsection{WSLE (Wedge Shuffling with Local Edges)}
 % \subsection{Sending Local Edges}
-\label{sub:wedge}
+\label{chap3-sub:wedge}
 % Each user $v_k$ ($k \ne i, j$) calculates wedge information $w_{i-k-j} \in \{0,1\}$ that takes $1$ if there is a two-hop path $v_i-v_k-v_j$ and 0 otherwise.
 % Then $v_k$ obfuscates $w_{i-k-j}$ using $\epsilon_L$-RR and sends the noisy wedge to the shuffler.
 % The shuffler randomly shuffles the noisy wedges to provide $(\epsilon, \delta)$-DP with $\epsilon \ll \epsilon_L$ and sends them to the data collector.
@@ -199,7 +199,7 @@ as a building block of our triangle counting algorithm.
 triangles involving a specific user-pair $(v_i,v_j)$.
 % We denote this algorithm by \AlgWSLE{}.
 
-Algorithm~\ref{alg:WSLE} shows \AlgWSLE{}.
+Algorithm~\ref{chap3-alg:WSLE} shows \AlgWSLE{}.
 % This algorithm estimates the number of triangles including a specific user-pair $(v_i,v_j)$.
 Let $f_{i,j}^\triangle: \calG \rightarrow \nnints$ be a function that takes $G \in \calG$ as input and outputs the number $f_{i,j}^\triangle(G)$ of triangles involving $(v_i,v_j)$ in $G$.
 Let $\hf_{i,j}^\triangle(G) \in \reals$ be an estimate of $f_{i,j}^\triangle(G)$.
@@ -244,21 +244,21 @@ Let $\hf_{i,j}^\triangle(G) \in \reals$ be an estimate of $f_{i,j}^\triangle(G)$
   \caption{\AlgWSLE{}
   %Our wedge shuffle algorithm
   (Wedge Shuffling with Local Edges).
-  \AlgWS{} is shown in Algorithm~\ref{alg:WShuffle}.
+  \AlgWS{} is shown in Algorithm~\ref{chap3-alg:WShuffle}.
   %[$v_i$], [s], and [d] represent that the process is run by user $v_i$, the shuffler, and the data collector, respectively.
   % Lines 1 and 2 are run by all parties.
-  }\label{alg:WSLE}
+  }\label{chap3-alg:WSLE}
 \end{algorithm}
 
 % Given $\epsilon$ and $\delta$,
 We first call the function \texttt{LocalPrivacyBudget}, which calculates a local privacy budget $\epsilon_L$ from $n$, $\epsilon$, and $\delta$ (line 1).
 Specifically, this function calculates $\epsilon_L$
-such that $\epsilon$ is a closed-form upper bound (i.e., $\epsilon = f(n-2, \epsilon_L, \delta)$ in (\ref{eq:shuffle_epsilon_f})) or numerical upper bound in the shuffle model with $n-2$ users.
+such that $\epsilon$ is a closed-form upper bound (i.e., $\epsilon = f(n-2, \epsilon_L, \delta)$ in (\ref{chap3-eq:shuffle_epsilon_f})) or numerical upper bound in the shuffle model with $n-2$ users.
 % \cite{Feldman_FOCS21}.
-Given $\epsilon_L$, we can easily calculate the closed-form or numerical upper bound $\epsilon$ by (\ref{eq:shuffle_epsilon}) and the open source code in \cite{Feldman_FOCS21}\footnote{\url{https://github.com/apple/ml-shuffling-amplification}.}, respectively.
+Given $\epsilon_L$, we can easily calculate the closed-form or numerical upper bound $\epsilon$ by (\ref{chap3-eq:shuffle_epsilon}) and the open source code in \cite{Feldman_FOCS21}\footnote{\url{https://github.com/apple/ml-shuffling-amplification}.}, respectively.
 Thus, we can also easily calculate $\epsilon_L$ from $\epsilon$ by calculating a lookup table for pairs $(\epsilon, \epsilon_L)$ in advance.
 
-Then, we run our wedge shuffle algorithm \AlgWS{} in Algorithm~\ref{alg:WShuffle} (line 2); i.e., each user $v_k \in I_{-(i,j)}$ sends her obfuscated wedge indicator
+Then, we run our wedge shuffle algorithm \AlgWS{} in Algorithm~\ref{chap3-alg:WShuffle} (line 2); i.e., each user $v_k \in I_{-(i,j)}$ sends her obfuscated wedge indicator
 % obfuscates $w_{i-k-j}$ using $\epsilon_L$-RR $\calR_{\epsilon_L}^W$ and sends the result
 $y_k = \calR_{\epsilon_L}^W(w_{i-k-j})$ to the shuffler, and the shuffler sends
 shuffled wedge indicators $\{y_{\pi(k)} | k \in I_{-(i,j)}\}$ to the data collector.
@@ -280,22 +280,22 @@ Specifically, the data collector calculates the estimate $\hf_{i,j}^\triangle(G)
 \begin{align}
     \textstyle{\hf_{i,j}^\triangle(G) = \frac{(z_i+z_j-2q)\sum_{k \in I_{-(i,j)}} (y_{k} -
     q_L)}{2(1-2q)(1-2q_L)},}
-    \label{eq:hfij_triangle}
+    \label{chap3-eq:hfij_triangle}
 \end{align}
 where $q_L = \frac{1}{e^{\epsilon_L}+1}$ and $q = \frac{1}{e^\epsilon+1}$ (lines 5-6).
 Note that this estimate involves simply summing over the set $\{y_{\pi(k)}\}$ and does not require knowing the value of $\pi$. This is
 consistent with the shuffle model.
-As we prove later, $\hf_{i,j}^\triangle(G)$ in (\ref{eq:hfij_triangle}) is an unbiased estimate of $f_{i,j}^\triangle(G)$.
+As we prove later, $\hf_{i,j}^\triangle(G)$ in (\ref{chap3-eq:hfij_triangle}) is an unbiased estimate of $f_{i,j}^\triangle(G)$.
 
 \smallskip
 \noindent{\textbf{Theoretical Properties.}}~~Below, we show some theoretical properties of \AlgWSLE{}.
 % First, we prove that \AlgWSLE{} provides DP:
 % \begin{theorem}
-% \label{thm:DP_I}
+% \label{chap3-thm:DP_I}
 % \AlgWSLE{} provides $(\epsilon, \delta)$-element DP and $(2\epsilon, 2\delta)$-edge DP.
 % \end{theorem}
-% Intuitively, Theorem~\ref{thm:DP_I} comes from the fact that \AlgWSLE{} uses only the $i$-th and $j$-th columns of the adjacency matrix $\bmA$ and protects each element with $(\epsilon,\delta)$-DP.
-% See Appendix~\ref{sec:triangle_proof} for details.
+% Intuitively, Theorem~\ref{chap3-thm:DP_I} comes from the fact that \AlgWSLE{} uses only the $i$-th and $j$-th columns of the adjacency matrix $\bmA$ and protects each element with $(\epsilon,\delta)$-DP.
+% See Appendix~\ref{chap3-sec:triangle_proof} for details.
 %
 % Next,
 First, we prove that
@@ -303,7 +303,7 @@ the estimate $\hf_{i,j}^\triangle(G)$
 % of \AlgWSLE{}
 is unbiased:
 \begin{theorem}
-\label{thm:unbiased_I}
+\label{chap3-thm:unbiased_I}
   For any indices $i,j \in [n]$, the estimate produced by
   $\AlgWSLE{}$ satisfies $\E[\hf_{i,j}^\triangle(G)] = f_{i,j}^\triangle(G)$.
 % \AlgWSLE{} provides an unbiased estimate, i.e.,
@@ -318,12 +318,12 @@ we show the MSE ($=$ variance).
 % of \AlgWSLE{}.
 % $\hf_{i,j}^\triangle(G)$.
 Recall that in the shuffle model, $\epsilon_L = \log n + O(1)$ when $\epsilon$ and $\delta$ are constants.
-%see Section~\ref{sub:shuffle}
+%see Section~\ref{chap3-sub:shuffle}
 We show
 % the expected $l_2$ losses for a general case and the case where $\epsilon_L = \Theta(\log n)$:
 the MSE for a general case and for the shuffle model:
 \begin{theorem}
-\label{thm:l2-loss_I}
+\label{chap3-thm:l2-loss_I}
   For any indices $i,j \in [n]$, the estimate produced by
   \AlgWSLE{} provides the following utility guarantee:
 % In \AlgWSLE{},
@@ -331,21 +331,21 @@ the MSE for a general case and for the shuffle model:
 & \MSE(\hf_{i,j}^\triangle(G)) = \V[\hf_{i,j}^\triangle(G)] \nonumber\\
   & \leq \frac{n q_L + q(1-2q_L)^2 d_{max}^2}{(1-2q)^2(1-2q_L)^2} \triangleq
   err_{\AlgWSLE}(n,d_{max},q,q_L).
-\label{eq:l2_I_general}
+\label{chap3-eq:l2_I_general}
 \end{align}
   When $\epsilon$ and $\delta$ are constants and $\epsilon_L = \log n + O(1)$, we
   have
 \begin{align}
   & err_{\AlgWSLE{}}(n,d_{max}, q, q_L) = O(d_{max}^2).
-\label{eq:l2_I_shuffle}
+\label{chap3-eq:l2_I_shuffle}
 \end{align}
 \end{theorem}
-The equation (\ref{eq:l2_I_shuffle}) follows from (\ref{eq:l2_I_general}) because $q_L = \frac{1}{e^{\epsilon_L}+1} = \frac{1}{n e^{O(1)} + 1}$. 
-% Theorem~\ref{thm:l2-loss_I} states that
+The equation (\ref{chap3-eq:l2_I_shuffle}) follows from (\ref{chap3-eq:l2_I_general}) because $q_L = \frac{1}{e^{\epsilon_L}+1} = \frac{1}{n e^{O(1)} + 1}$. 
+% Theorem~\ref{chap3-thm:l2-loss_I} states that
 Because \AlgWSLE{} is a building block for our triangle counting algorithms, we
 introduce the notation $err_{\AlgWSLE{}}(n,d_{max}, q, q_L)$ for our upper bound
-in~\eqref{eq:l2_I_general}. Observing
-\eqref{eq:l2_I_general}, if we do not use the shuffling technique (i.e.,
+in~\eqref{chap3-eq:l2_I_general}. Observing
+\eqref{chap3-eq:l2_I_general}, if we do not use the shuffling technique (i.e.,
 $\epsilon_L = \epsilon$), then $err_{\AlgWSLE{}}(n,d_{max}, q, q_L) = O(n + d_{max}^2)$ when we
 treat $\epsilon$ and $\delta$ as constants.
 In contrast, in the shuffle model where we have $\epsilon_L = \log n + O(1)$,
@@ -357,7 +357,7 @@ This means that wedge shuffling reduces the MSE from $O(n + d_{max}^2)$ to $O(d_
 % \subsection{WSLE-Based Triangle Counting}
 \subsection{Triangle Counting}
 % \subsection{Sampling Independent User-Pairs}
-\label{sub:triangle}
+\label{chap3-sub:triangle}
 \noindent{\textbf{Algorithm.}}~~Based on
 %Now, we turn our attention to the problem of counting triangles in the entire graph $G$ and propose a triangle counting algorithm
 % Our wedge shuffle algorithm \AlgWSLE{} estimates the number of triangles including a specific user-pair $(v_i,v_j)$.
@@ -367,7 +367,7 @@ This means that wedge shuffling reduces the MSE from $O(n + d_{max}^2)$ to $O(d_
 we propose an algorithm that counts triangles in the entire graph $G$.
 We denote this algorithm by \AlgWSTri{}, as it applies wedge shuffling to triangle counting.
 
-Algorithm~\ref{alg:wshuffle_triangle} shows \AlgWSTri{}.
+Algorithm~\ref{chap3-alg:wshuffle_triangle} shows \AlgWSTri{}.
 First, the data collector samples disjoint user-pairs, 
 ensuring that no user falls in two pairs. 
 % which share no common users.
@@ -403,19 +403,19 @@ The data collector sends the sampled user-pairs to users (line 2).
   \caption{Our triangle counting algorithm \AlgWSTri{}.
   %Our wedge shuffle-based triangle counting algorithm \AlgWSTri{}.
   %[d] represents that the process is run by the data collector.
-  \AlgWSLE{} is shown in Algorithm~\ref{alg:WSLE}.
-  }\label{alg:wshuffle_triangle}
+  \AlgWSLE{} is shown in Algorithm~\ref{chap3-alg:WSLE}.
+  }\label{chap3-alg:wshuffle_triangle}
 \end{algorithm}
 
-Then, we run our wedge algorithm \AlgWSLE{} in Algorithm~\ref{alg:WSLE} with each sampled user-pair as input (lines 3-5).
+Then, we run our wedge algorithm \AlgWSLE{} in Algorithm~\ref{chap3-alg:WSLE} with each sampled user-pair as input (lines 3-5).
 Finally, the data collector estimates the triangle count $f^\triangle(G)$ as follows:
 \begin{align}
     \textstyle{\hf^\triangle(G) = \frac{n(n-1)}{6t} \sum_{i=1, 3, \ldots, 2t-1} \hf_{\sigma(i),\sigma(i+1)}^\triangle(G)}
-   \label{eq:hf_triangle_II}
+   \label{chap3-eq:hf_triangle_II}
 \end{align}
 (line 6). 
 Note that a single triangle is never counted by more than one user-pair, as the user-pairs never overlap. 
-Later, we prove that $\hf^\triangle(G)$ in (\ref{eq:hf_triangle_II}) is unbiased.
+Later, we prove that $\hf^\triangle(G)$ in (\ref{chap3-eq:hf_triangle_II}) is unbiased.
 
 \smallskip
 \noindent{\textbf{Theoretical Properties.}}~~We prove that
@@ -424,10 +424,10 @@ Later, we prove that $\hf^\triangle(G)$ in (\ref{eq:hf_triangle_II}) is unbiased
 % Below, we show the privacy and utility of \AlgWSTri{}.
 % We first prove that \AlgWSTri{} provides DP:
 \begin{theorem}
-\label{thm:DP_II}
+\label{chap3-thm:DP_II}
 \AlgWSTri{} provides $(\epsilon, \delta)$-element DP and $(2\epsilon, 2\delta)$-edge DP.
 \end{theorem}
-Theorem~\ref{thm:DP_II} comes from the fact that
+Theorem~\ref{chap3-thm:DP_II} comes from the fact that
 \AlgWSLE{} with a user-pair $(v_i,v_j)$ provides $(\epsilon,\delta)$-DP for each element in the $i$-th and $j$-th columns of the adjacency matrix $\bmA$ and that \AlgWSTri{} samples disjoint user-pairs, i.e., it uses each element of $\bmA$ at most once.
 % and protect each element with $(\epsilon,\delta)$-DP.
 
@@ -444,7 +444,7 @@ We also prove that
 \AlgWSTri{} provides an unbiased estimate:
 % Next, we show the utility of \AlgWSTri{}:
 \begin{theorem}
-\label{thm:unbiased_II}
+\label{chap3-thm:unbiased_II}
 The estimate produced by \AlgWSTri{} satisfies $\allowbreak \E[\hf^\triangle(G)] = f^\triangle(G)$.
 % \AlgWSTri{} provides an unbiased estimate, i.e.,
 % \begin{align*}
@@ -459,35 +459,35 @@ non-trivial
 because \AlgWSTri{} samples each user-pair \textit{without replacement}.
 In this case, the sampled user-pairs are not independent.
 However, we can prove that
-$t$ estimates in (\ref{eq:hf_triangle_II}) are negatively correlated with each other (\conference{see the full version \cite{Imola_CCSFull22} for details}\arxiv{Lemma~\ref{lem:sampling_replacement_var} in Appendix~\ref{sub:l2-loss_II_proof}}).
-%the covariance of two estimates $\hf_{\sigma(i),\sigma(i+1)}^\triangle(G)$ and $\hf_{\sigma(j),\sigma(j+1)}^\triangle(G)$ in (\ref{eq:hf_triangle_II})
+$t$ estimates in (\ref{chap3-eq:hf_triangle_II}) are negatively correlated with each other (\conference{see the full version \cite{Imola_CCSFull22} for details}\arxiv{Lemma~\ref{chap3-lem:sampling_replacement_var} in Appendix~\ref{chap3-sub:l2-loss_II_proof}}).
+%the covariance of two estimates $\hf_{\sigma(i),\sigma(i+1)}^\triangle(G)$ and $\hf_{\sigma(j),\sigma(j+1)}^\triangle(G)$ in (\ref{chap3-eq:hf_triangle_II})
 Thus, the variance of the sum of $t$ estimates
 %$\sum_{i=1, 3, \ldots, 2t-1} \hf_{\sigma(i),\sigma(i+1)}^\triangle(G)$
-in (\ref{eq:hf_triangle_II}) is upper bounded by the sum of their variances, each of which is given by Theorem~\ref{thm:l2-loss_I}.
+in (\ref{chap3-eq:hf_triangle_II}) is upper bounded by the sum of their variances, each of which is given by Theorem~\ref{chap3-thm:l2-loss_I}.
 This brings us to the following result:
 
 \begin{theorem}
-\label{thm:l2-loss_II}
+\label{chap3-thm:l2-loss_II}
 The estimate produced by \AlgWSTri{} provides the following utility guarantee:
 \begin{align}
 & \MSE(\hf^\triangle(G)) = \V[\hf^\triangle(G)] \nonumber\\
   &\leq
   \frac{n^4}{36t}err_{\AlgWSLE{}}(n,d_{max},q,q_L) +
-  \frac{n^3}{36t}d_{max}^3, \label{eq:thm:l2_II}
+  \frac{n^3}{36t}d_{max}^3, \label{chap3-eq:thm:l2_II}
 \end{align}
-where $err_{\AlgWSLE{}}(n,d_{max},q,q_L)$ is given by (\ref{eq:l2_I_general}).
+where $err_{\AlgWSLE{}}(n,d_{max},q,q_L)$ is given by (\ref{chap3-eq:l2_I_general}).
   When $\epsilon$ and $\delta$ are constants,  $\epsilon_L = \log(n) + O(1)$, and
   $t = \lfloor\frac{n}{2}\rfloor$, we have
 \begin{align}
 \MSE(\hf^\triangle(G))
   &\leq
-  O(n^3d_{max}^2). \label{eq:thm:l2_II_simp}
+  O(n^3d_{max}^2). \label{chap3-eq:thm:l2_II_simp}
 \end{align}
 \end{theorem}
-% Theorem~\ref{thm:unbiased_II} states that the estimate of \AlgWSTri{} is unbiased.
+% Theorem~\ref{chap3-thm:unbiased_II} states that the estimate of \AlgWSTri{} is unbiased.
 
-The inequality (\ref{eq:thm:l2_II_simp}) follows from (\ref{eq:l2_I_shuffle}) and (\ref{eq:thm:l2_II}). 
-The first and second terms in~(\ref{eq:thm:l2_II}) are caused by
+The inequality (\ref{chap3-eq:thm:l2_II_simp}) follows from (\ref{chap3-eq:l2_I_shuffle}) and (\ref{chap3-eq:thm:l2_II}). 
+The first and second terms in~(\ref{chap3-eq:thm:l2_II}) are caused by
 % the randomness in
 Warner's RR
 % for local edges
@@ -499,7 +499,7 @@ and user-pair sampling.
 For example, assume that $t = \lfloor \frac{n}{2} \rfloor$.
 When we do not shuffle wedges (i.e., $\epsilon_L = \epsilon$), then
 $err_{\AlgWSLE{}}(n,d_{max},q,q_L) = O(n + d_{max}^2)$, and
-MSE in (\ref{eq:thm:l2_II}) is $O(n^4 + n^3 d_{max}^2)$.
+MSE in (\ref{chap3-eq:thm:l2_II}) is $O(n^4 + n^3 d_{max}^2)$.
 When we shuffle wedges, the MSE is $O(n^3 d_{max}^2)$.
 Thus, when we ignore the factor of $d_{max}$, our wedge shuffle technique reduces the MSE from $O(n^4)$ to $O(n^3)$ in triangle counting.
 The factor of $n^3$ is caused by the RR for local edges.
@@ -516,7 +516,7 @@ i.e., $t \ll \lfloor \frac{n}{2} \rfloor$.
 
 % \subsection{Variance Reduction Based on Ignoring Sparse User-Pairs}
 \subsection{Variance Reduction}
-\label{sub:var_red}
+\label{chap3-sub:var_red}
 \noindent{\textbf{Algorithm.}}~~\AlgWSTri{}
 % Our triangle counting algorithm \AlgWSTri{}
 achieves the MSE of $O(n^3)$ when we ignore the factor of $d_{max}$.
@@ -528,7 +528,7 @@ we propose a variance reduction technique that ignores sparse user-pairs.
 We denote our triangle counting algorithm with the variance reduction technique by \AlgWSTriVR{}.
 
 % Let $d_{i,j} = \min\{d_i, d_j\}$ be the minimum degree of users $v_i$ and $v_j$.
-As explained in Section~\ref{sub:triangle}, the factor of $n^3$ is caused by the RR for local edges.
+As explained in Section~\ref{chap3-sub:triangle}, the factor of $n^3$ is caused by the RR for local edges.
 However, most user-pairs $v_i$ and $v_j$ have a very small minimum degree
 % $d_{i,j} \ll d_{max}$,
 $\min\{d_i, d_j\} \ll d_{max}$,
@@ -546,8 +546,8 @@ This is an intuition behind our variance reduction technique.
 % Let $d_{i,j} = \min\{d_i, d_j\}$ be the minimum degree of users $v_i$ and $v_j$.
 % Below, we assume that the data collector knows each user $v_i$'s degree $d_i$ for ease of explanation.
 % Note that $d_i$ can leak the information about edges of $v_i$.
-% Thus, we explain how to privately estimate $d_i$ with edge DP within one-round at the end of Section~\ref{sub:var_red}.
-Algorithm~\ref{alg:wshuffle_triangle_vr} shows \AlgWSTriVR{}.
+% Thus, we explain how to privately estimate $d_i$ with edge DP within one-round at the end of Section~\ref{chap3-sub:var_red}.
+Algorithm~\ref{chap3-alg:wshuffle_triangle_vr} shows \AlgWSTriVR{}.
 This algorithm detects sparse user-pairs based on the degree information.
 However, user $v_i$'s degree $d_i$ can leak the information about edges of $v_i$.
 Thus, \AlgWSTriVR{} calculates a differentially private estimate of $d_i$ within one round.
@@ -582,15 +582,15 @@ Thus, \AlgWSTriVR{} calculates a differentially private estimate of $d_i$ within
   [d] \KwRet{$\hf^\triangle(G)$}
   \caption{Our triangle counting algorithm with variance reduction \AlgWSTriVR{}.
   %[$v_i$] and [d] represent that the process is run by user $v_i$ and the data collector, respectively.
-  \AlgWSLE{} is shown in Algorithm~\ref{alg:WSLE}.
-  }\label{alg:wshuffle_triangle_vr}
+  \AlgWSLE{} is shown in Algorithm~\ref{chap3-alg:WSLE}.
+  }\label{chap3-alg:wshuffle_triangle_vr}
 \end{algorithm}
 
 Specifically, \AlgWSTriVR{} uses two privacy budgets: $\epsilon_1, \epsilon_2 \in \nnreals$.
 The first budget $\epsilon_1$ is for privately estimating $d_i$, whereas the second budget $\epsilon_2$ is for
 \AlgWSLE{}.
 % wedge shuffling.
-Lines 1 to 5 in Algorithm~\ref{alg:wshuffle_triangle_vr} are the same as those in Algorithm~\ref{alg:wshuffle_triangle}, except that Algorithm~\ref{alg:wshuffle_triangle_vr} uses $\epsilon_2$
+Lines 1 to 5 in Algorithm~\ref{chap3-alg:wshuffle_triangle_vr} are the same as those in Algorithm~\ref{chap3-alg:wshuffle_triangle}, except that Algorithm~\ref{chap3-alg:wshuffle_triangle_vr} uses $\epsilon_2$
 % rather than $\epsilon$.
 to provide $(\epsilon_2, \delta)$-element DP.
 After these processes, each user $v_i$ adds the Laplacian noise $\Lap(\frac{1}{\epsilon_1})$ with mean $0$ and scale $\frac{1}{\epsilon_1}$ to her degree $d_i$ and sends the noisy degree $\td_i$ ($= d_i + \Lap(\frac{1}{\epsilon_1})$) to the data collector (lines 6-8).
@@ -606,7 +606,7 @@ Finally, the data collector estimates $f^\triangle(G)$ as
 %follows:
 \begin{align}
     \textstyle{\hf^\triangle(G) = \frac{n(n-1)}{6t} \sum_{i \in D} \hf_{\sigma(i),\sigma(i+1)}^\triangle(G),}
-   \label{eq:hf_triangle_II_ast}
+   \label{chap3-eq:hf_triangle_II_ast}
 \end{align}
 where
 \begin{align*}
@@ -614,7 +614,7 @@ D = \{i | i = 1, 3, \ldots, 2t-1,
   \min\{\td_{\sigma(i)}, \td_{\sigma(i+1)}\} > d_{th}\}
 \end{align*}
 (lines 10-11).
-The difference between (\ref{eq:hf_triangle_II}) and (\ref{eq:hf_triangle_II_ast}) is that (\ref{eq:hf_triangle_II_ast}) ignores sparse user-pairs $v_{\sigma(i)}$ and $v_{\sigma(i+1)}$ such that $\min\{\td_{\sigma(i)}, \td_{\sigma(i+1)}\} \leq d_{th}$.
+The difference between (\ref{chap3-eq:hf_triangle_II}) and (\ref{chap3-eq:hf_triangle_II_ast}) is that (\ref{chap3-eq:hf_triangle_II_ast}) ignores sparse user-pairs $v_{\sigma(i)}$ and $v_{\sigma(i+1)}$ such that $\min\{\td_{\sigma(i)}, \td_{\sigma(i+1)}\} \leq d_{th}$.
 % Because
 Since
 $d_{avg} \ll d_{max}$ in practice,
@@ -650,7 +650,7 @@ then most user-pairs are ignored (i.e., $|D| \ll t$), which leads to a significa
 % In our experiments, we set $c=1$.
 
 Recall that the parameter $t$ in \AlgWSTriVR{} controls the trade-off between the MSE and the time complexity. 
-Although \AlgWSTriVR{} always samples $t$ disjoint user-pairs, we can modify \AlgWSTriVR{} so that it stops sampling user-pairs right after the estimate $\hf^\triangle(G)$ in (\ref{eq:hf_triangle_II_ast}) is converged. 
+Although \AlgWSTriVR{} always samples $t$ disjoint user-pairs, we can modify \AlgWSTriVR{} so that it stops sampling user-pairs right after the estimate $\hf^\triangle(G)$ in (\ref{chap3-eq:hf_triangle_II_ast}) is converged. 
 We can also sample dense user-pairs $(v_i, v_j)$ with large noisy degrees $\td_i$ and $\td_j$ at the beginning (e.g., by sorting users in descending order of noisy degrees) to improve the MSE for small $t$. 
 Evaluating such improved algorithms is left for future work. 
 
@@ -660,7 +660,7 @@ Evaluating such improved algorithms is left for future work.
 %\AlgWSTriVR{} also provides DP:
 
 \begin{theorem}
-\label{thm:DP_II_ast}
+\label{chap3-thm:DP_II_ast}
 \AlgWSTriVR{} provides $(\epsilon_1 + \epsilon_2, \delta)$-element DP and $(2(\epsilon_1 + \epsilon_2), 2\delta)$-edge DP.
 \end{theorem}
 
@@ -684,7 +684,7 @@ using parameters $\lambda \in \nnreals$ and $\alpha \in [0,1)$:
 % most applications.
 
 \begin{theorem}
-\label{thm:bias_II_ast}
+\label{chap3-thm:bias_II_ast}
   Suppose that in $G$, there exist $\lambda \in \nnreals$ and $\alpha \in [0,1)$
   such that at most $n^\alpha$ users have a degree larger than
   $\lambda d_{avg}$. Suppose \AlgWSTriVR{} is run with $c \geq \lambda$.
@@ -698,16 +698,16 @@ using parameters $\lambda \in \nnreals$ and $\alpha \in [0,1)$:
     %\frac{1}{3}n(c d_{avg})^2 +
     \frac{4 n^\alpha}{3 \epsilon_1^2}.
     %\frac{1}{3} n^\alpha \left(\frac{2}{\epsilon_1}\right)^2.
-    \label{eq:thm:bias_II_ast}
+    \label{chap3-eq:thm:bias_II_ast}
 \end{align}
 \end{theorem}
-% The bias in (\ref{eq:thm:bias_II_ast}) depends on $\lambda$ $\alpha$
+% The bias in (\ref{chap3-eq:thm:bias_II_ast}) depends on $\lambda$ $\alpha$
 The values of $\lambda$ and $\alpha$ depend on the original graph $G$.
 In the scale-free networks, $\alpha$ is small for a moderate value of $\lambda$.
-For example, in the BA graph with $n=107614$ and $d_{avg}=200$ used in \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sec:BA-graph}}, $\alpha = 0.5$, $0.6$, $0.8$, and $0.9$ when $\lambda = 10.1$, $5.4$, $1.6$, and $0.9$, respectively.
+For example, in the BA graph with $n=107614$ and $d_{avg}=200$ used in \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{chap3-sec:BA-graph}}, $\alpha = 0.5$, $0.6$, $0.8$, and $0.9$ when $\lambda = 10.1$, $5.4$, $1.6$, and $0.9$, respectively.
 When $c$ and $\epsilon_1$ are constants,
 % Since $\alpha \in [0,1]$,
-% In Theorem~\ref{thm:bias_II_ast}, the $\log n$ term arises due to the Laplacian noise $\Lap(\frac{1}{\epsilon_1})$ to obtain
+% In Theorem~\ref{chap3-thm:bias_II_ast}, the $\log n$ term arises due to the Laplacian noise $\Lap(\frac{1}{\epsilon_1})$ to obtain
 % the private degree $\td_{i}$.
 % Note that $\log n$ is much smaller than $d_{avg}$ in most graph data, e.g., $(\log n, d_{avg}) = (11.6, \allowbreak 227.4)$ or $(13.7, 127.3)$ in our experiments.
 % applications.
@@ -730,7 +730,7 @@ $\log n$ is much smaller than $d_{avg}$.
 % $\underline{d}_{th}$. In practice, this quantity is much less than $O(n)$
 
 \begin{theorem}
-\label{thm:var_II_ast}
+\label{chap3-thm:var_II_ast}
   Suppose that in $G$, there exist $\lambda \in \nnreals$ and $\alpha \in [0,1)$
   such that at most $n^\alpha$ users have a degree larger than
   $\lambda d_{avg}$. Suppose \AlgWSTriVR{} is
@@ -743,7 +743,7 @@ $\log n$ is much smaller than $d_{avg}$.
   d_{max}^3 }{36t}.
 %   &\frac{n^2 d_{max}^4}{9} + \frac{n^{2+2\alpha}}{6t}err_{\AlgWSLE}(n,d_{max},q,q_L) + \frac{n^{2+\alpha}
 %   d_{max}^3 }{36t}.
-  \label{eq:thm:l2_II_ast}
+  \label{chap3-eq:thm:l2_II_ast}
 \end{align}
 When $\epsilon_1$, $\epsilon_2$, and $\delta$ are constants,
 % $\alpha$ satisfies $\alpha < \frac{1}{2}$, and
@@ -752,7 +752,7 @@ $\epsilon_L = \log n + O(1)$, and $t = \lfloor\frac{n}{2}\rfloor$,
 \begin{align}
 %   \V[\hf_*^\triangle(G)] \leq O(n^2 d_{max}^4).
   \V[\hf^\triangle(G)] \leq O(n^2 d_{max}^4 + n^{1+2\alpha} d_{max}^2).
-  \label{eq:thm:l2_II_ast_simp}
+  \label{chap3-eq:thm:l2_II_ast_simp}
 \end{align}
 \end{theorem}
 
@@ -762,47 +762,47 @@ $\epsilon_L = \log n + O(1)$, and $t = \lfloor\frac{n}{2}\rfloor$,
 % Under this assumption, we show the variance:}
 %
 % \begin{theorem}
-% \label{thm:var_II_ast_wo_Lap}
+% \label{chap3-thm:var_II_ast_wo_Lap}
 % \colorB{The estimate produced by \AlgWSTriVR{} without the Laplacian noise ($\td_i = d_i$ for $i\in[n]$) provides the following variance guarantee:
 % \begin{align}
 % \V[\hf^\triangle(G)] \leq
 %   \frac{|D|n^4}{36t^2}err_{\AlgWSLE{}}(n,d_{max},q,q_L) +
-%   \frac{|D|n^3}{36t^2}d_{max}^3, \label{eq:thm:l2_II_ast_wo_Lap}
+%   \frac{|D|n^3}{36t^2}d_{max}^3, \label{chap3-eq:thm:l2_II_ast_wo_Lap}
 % \end{align}
-% where $err_{\AlgWSLE{}}(n,d_{max},q,q_L)$ is given by (\ref{eq:l2_I_general}).
+% where $err_{\AlgWSLE{}}(n,d_{max},q,q_L)$ is given by (\ref{chap3-eq:l2_I_general}).
 %   When $\epsilon$ and $\delta$ are constants,  $\epsilon_L = \log(n) + O(1)$, and
 %   $t = \lfloor\frac{n}{2}\rfloor$, we have
 % \begin{align}
 % l_2^2(f^\triangle(G), \hf^\triangle(G))
 %   &\leq
-%   O(|D|n^2d_{max}^2). \label{eq:thm:l2_II_ast_wo_Lap_simp}
+%   O(|D|n^2d_{max}^2). \label{chap3-eq:thm:l2_II_ast_wo_Lap_simp}
 % \end{align}}
 % \end{theorem}
 
-% The first term in (\ref{eq:thm:l2_II_ast}) comes from the Laplacian noise $\Lap(\frac{1}{\epsilon_1})$ to obtain
+% The first term in (\ref{chap3-eq:thm:l2_II_ast}) comes from the Laplacian noise $\Lap(\frac{1}{\epsilon_1})$ to obtain
 % the private degree $\td_i$.
 % The latter two terms are similar to those
-% of~\eqref{eq:thm:l2_II}.
+% of~\eqref{chap3-eq:thm:l2_II}.
 % \colorR{In practice, $K$ is much less than $n$}.
 % Since $K \ll n$, the second term
-% in~\eqref{eq:thm:l2_II_ast_simp} is $O(n)$ (ignoring $d_{max},K$ factors), as
+% in~\eqref{chap3-eq:thm:l2_II_ast_simp} is $O(n)$ (ignoring $d_{max},K$ factors), as
 % opposed to $O(n^3)$ which \AlgWSTri{} suffers from.
 % $O(n^2 d_{max}^2 (|D| + d_{max}))$.
 % Thus, when we ignore the factor of $d_{max}$ and $K$,
 % (both of which are much smaller than $n$),
-The first\footnote{The first term in (\ref{eq:thm:l2_II_ast}) is actually $\frac{(\sum_{i=1}^n d_i^2)^2}{9}$ and is much smaller than $\frac{n^2 d_{max}^4}{9}$. 
-We express it as $O(n^2 d_{max}^4)$ in (\ref{eq:thm:l2_II_ast_simp}) for simplicity. 
-See \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sub:var_II_ast_proof}} for details.}, second, and third terms in (\ref{eq:thm:l2_II_ast}) are caused by the randomness in the choice of $D$, the RR, and user-pair sampling, respectively. 
-By (\ref{eq:thm:l2_II_ast_simp}), our variance reduction technique reduces the variance from $O(n^3)$ to $O(n^\gamma)$ where $\gamma\in[2,3)$ when we ignore the factor of $d_{max}$.
+The first\footnote{The first term in (\ref{chap3-eq:thm:l2_II_ast}) is actually $\frac{(\sum_{i=1}^n d_i^2)^2}{9}$ and is much smaller than $\frac{n^2 d_{max}^4}{9}$. 
+We express it as $O(n^2 d_{max}^4)$ in (\ref{chap3-eq:thm:l2_II_ast_simp}) for simplicity. 
+See \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{chap3-sub:var_II_ast_proof}} for details.}, second, and third terms in (\ref{chap3-eq:thm:l2_II_ast}) are caused by the randomness in the choice of $D$, the RR, and user-pair sampling, respectively. 
+By (\ref{chap3-eq:thm:l2_II_ast_simp}), our variance reduction technique reduces the variance from $O(n^3)$ to $O(n^\gamma)$ where $\gamma\in[2,3)$ when we ignore the factor of $d_{max}$.
 Because the MSE is the sum of the squared bias and the variance, it is also $O(n^\gamma)$.
 
 The value of $\gamma$ in our bound $O(n^\gamma)$ depends on the parameter $c$ in \AlgWSTriVR{}.
 For example, in the BA graph ($n=107614$, $d_{avg} = 200$), $\gamma=2$, $2.2$, $2.6$, and $2.8$ ($\alpha=0.5$, $0.6$, $0.8$, and $0.9$) when $c=10.4$, $5.6$, $1.7$, and $1.0$, respectively, and $\epsilon_1=0.1$.
 Thus, the variance decreases with increase in $c$.
-However, by (\ref{eq:thm:bias_II_ast}), a larger $c$ results in a larger bias. 
+However, by (\ref{chap3-eq:thm:bias_II_ast}), a larger $c$ results in a larger bias. 
 In our experiments, we show that \AlgWSTriVR{} provides a small estimation error when $c=1$ to $4$.
 When $c=1$, \AlgWSTriVR{} empirically works well despite a large $\gamma$ because most users' degrees are smaller than $d_{avg}$ in practice, as explained above.
-This indicates that our upper bound in (\ref{eq:thm:l2_II_ast_simp}) might not be tight when $c$ is around $1$.
+This indicates that our upper bound in (\ref{chap3-eq:thm:l2_II_ast_simp}) might not be tight when $c$ is around $1$.
 Improving the bound is left for future work.
 
 % our technique reduces the variance from $O(n^3)$ to $O(n^2)$.
@@ -811,9 +811,9 @@ Improving the bound is left for future work.
 % \commentT{$K$ can be $n$, e.g., in our experiments using \IMDB{}, $\epsilon_1=0.1$, $n=896308$, $d_{avg}=127.3$, and $c=1$. In this case, $\underline{d}_{th} = 127.3 - 1918.8 < 0$.}
 
 \subsection{Summary}
-\label{sub:summary}
+\label{chap3-sub:summary}
 
-Table~\ref{tab:upper_bounds_triangle} summarizes the
+Table~\ref{chap3-tab:upper_bounds_triangle} summarizes the
 performance guarantees
 % upper bounds
 of one-round triangle algorithms providing edge DP.
@@ -834,8 +834,8 @@ of \AlgARRTri{} is $O(n^2)$ when we set the sampling probability $p_0 \in [0,1]$
 We prove the variance of \AlgARRTri{} in this case and \AlgRRTri{}
 % We prove the variance of \AlgARRTri{} \cite{Imola_USENIX22} and \AlgRRTri{} \cite{Imola_USENIX21}
 %as existing one-round local algorithms.
-in \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sec:upper}}.
-We do not show the other one-round local algorithms \cite{Ye_ICDE20,Ye_TKDE21} in Table~\ref{tab:upper_bounds_triangle} for two reasons: (i) they have the time complexity of $O(n^3)$ and suffer from a larger estimation error than \AlgRRTri{} \cite{Imola_USENIX22};
+in \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{chap3-sec:upper}}.
+We do not show the other one-round local algorithms \cite{Ye_ICDE20,Ye_TKDE21} in Table~\ref{chap3-tab:upper_bounds_triangle} for two reasons: (i) they have the time complexity of $O(n^3)$ and suffer from a larger estimation error than \AlgRRTri{} \cite{Imola_USENIX22};
 % it is reported in \cite{Imola_USENIX22} that they are outperformed by \AlgRRTri{};
 (ii) their upper-bounds on the variance and bias are unclear.
 
@@ -874,10 +874,10 @@ We do not show the other one-round local algorithms \cite{Ye_ICDE20,Ye_TKDE21} i
     \AlgARRTri{} \cite{Imola_USENIX22} & local & $O(n^6)$ & $0$ & $O(n^2)$ \\ \hline
     \AlgRRTri{} \cite{Imola_USENIX21} & local & $O(n^4)$ & $0$ & $O(n^3)$ \\ \hline
   \end{tabular}
-  \label{tab:upper_bounds_triangle}
+  \label{chap3-tab:upper_bounds_triangle}
 \end{table}
 
-Table~\ref{tab:upper_bounds_triangle} shows that our \AlgWSTriVR{} dramatically outperforms the three local algorithms -- when we ignore $d_{max}$, the MSE of \AlgWSTriVR{} is 
+Table~\ref{chap3-tab:upper_bounds_triangle} shows that our \AlgWSTriVR{} dramatically outperforms the three local algorithms -- when we ignore $d_{max}$, the MSE of \AlgWSTriVR{} is 
 $O(n^\gamma)$ where $\gamma\in[2,3)$, 
 whereas that of the local algorithms is $O(n^4)$ or $O(n^6)$.
 We also show this through experiments. 
@@ -903,20 +903,20 @@ In addition, the estimate is unbiased, and the variance is $\frac{2d_{max}^2}{\e
 Thus, the central algorithm provides a much smaller MSE ($=$ variance) than \AlgWSTriVR{}. 
 
 However, our \AlgWSTriVR{} is preferable to central algorithms in terms of the trust model -- the central model assumes that a single party accesses personal data of all users and therefore has a risk that the entire graph is leaked from the party. 
-\AlgWSTriVR{} can also be applied to decentralized social networks, as described in Section~\ref{sec:intro}. 
+\AlgWSTriVR{} can also be applied to decentralized social networks, as described in Section~\ref{chap3-sec:intro}. 
 
 % \subsection{Lower Bounds for Local Algorithms}
-% \label{sub:two-rounds}
+% \label{chap3-sub:two-rounds}
 % TBD
 
 % \subsection{Algorithm}
-% \label{sub:triangle_algorithm}
+% \label{chap3-sub:triangle_algorithm}
 % TBD
 
 % \subsection{Theoretical Analysis}
-% \label{sub:triangle_theoretical}
+% \label{chap3-sub:triangle_theoretical}
 % TBD
 
 % \subsection{4-Cycle Counting}
-% \label{sub:4-cycle}
+% \label{chap3-sub:4-cycle}
 % TBD

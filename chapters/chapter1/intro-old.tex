@@ -1,6 +1,6 @@
 \section{Introduction}
 %-------------------------------------------------------------------------------
-\label{sec:intro}
+\label{chap1-sec:intro}
 % With the widespread use of social networking services and other internet services, 
 % Graph analytics is a useful tool to extract valuable statistics or 
 Graph statistics is a useful tool for finding the structure or meaningful patterns in various graph data; e.g., social networks, e-mail networks, co-actor networks, and citation networks. 
@@ -65,15 +65,15 @@ Since the data collector does not hold the original personal data, it does not s
 Therefore, LDP has recently attracted attention from both the academic field \cite{Acharya_AISTATS19,Bassily_STOC15,Bassily_NIPS17,Fanti_PoPETs16,Kairouz_ICML16,Kairouz_JMLR16,Murakami_USENIX19,Qin_CCS16,Wang_USENIX17,Ye_ISIT17} and industry \cite{Erlingsson_CCS14,Ding_NIPS17,Thakurta_USPatent17}. 
 % Most of the studies on LDP focus on 
 However, LDP has mostly been used in the context of tabular data where each row corresponds to an individual, and little attention has been made on LDP for graph statistics (see 
-Section~\ref{sec:related} for details). 
-% Related work at the end of Section~\ref{sec:intro}). 
+Section~\ref{chap1-sec:related} for details). 
+% Related work at the end of Section~\ref{chap1-sec:intro}). 
 
 \begin{figure}
 \centering
 \includegraphics[width=0.9\linewidth]{fig/subgraph.pdf}
 \vspace{-2mm}
 \caption{Example of subgraph counts.}
-\label{fig:subgraph}
+\label{chap1-fig:subgraph}
 \end{figure}
 
 In this paper, we consider LDP for graph data, and 
@@ -84,11 +84,11 @@ In particular, we focus on counting triangles and $k$-stars, which are the most 
 % such as triangles and $k$-stars. 
 A triangle is a set of three nodes with three edges (we exclude automorphisms; i.e., \#closed triplets $= 3 \times$ \#triangles). 
 A $k$-star consists of a central node connected to $k$ other nodes. 
-Figure~\ref{fig:subgraph} shows an example of triangles and $k$-stars. 
+Figure~\ref{chap1-fig:subgraph} shows an example of triangles and $k$-stars. 
 Counting them is a fundamental task of analyzing the connection patterns in a graph. 
 % , as explained above. 
 % In addition, 
-The clustering coefficient can also be calculated from triangle counts and $2$-star counts as: $\frac{3 \times \text{\#triangles}}{\#2\text{-stars}}$ (in Figure~\ref{fig:subgraph}, $\frac{3 \times 5}{20} = 0.75$). 
+The clustering coefficient can also be calculated from triangle counts and $2$-star counts as: $\frac{3 \times \text{\#triangles}}{\#2\text{-stars}}$ (in Figure~\ref{chap1-fig:subgraph}, $\frac{3 \times 5}{20} = 0.75$). 
 
 Counting subgraphs in the local model is very challenging. 
 The main challenge is that existing LDP techniques and theory do not directly apply. 
@@ -96,14 +96,14 @@ The existing work on LDP for tabular data assumed that
 % each user's data value 
 each data value to be counted 
 is independently and identically distributed from an underlying distribution. 
-% (see Section~\ref{sec:related}). 
+% (see Section~\ref{chap1-sec:related}). 
 In graphs, this is no longer the case; e.g., 
 each triangle is not independent, because multiple triangles can involve the same edge; 
 each $k$-star is not independent for the same reason. 
 % both triangles and $k$-stars are not independent, because multiple triangles and multiple $k$-stars can involve the same edge. 
 Moreover, complex interdependency involving multiple people is possible in graphs. 
 For example, each user cannot count triangles involving her, because she cannot see edges between other users; 
-e.g., in Figure~\ref{fig:subgraph}, user (node) $v_1$ cannot see an edge between $v_3$ and $v_4$. 
+e.g., in Figure~\ref{chap1-fig:subgraph}, user (node) $v_1$ cannot see an edge between $v_3$ and $v_4$. 
 
 % This simultaneously presents both challenges and opportunities. 
 Although the complex interdependency introduces challenges, it also presents opportunities -- the interdependency also implies that interaction between users and a data collector may be particularly helpful depending on the prior responses. 

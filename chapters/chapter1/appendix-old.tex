@@ -2,12 +2,12 @@
 
 %-------------------------------------------------------------------------------
 \section{Extension of the Two-Rounds Algorithm}
-\label{sec:modified_two_rounds}
+\label{chap1-sec:modified_two_rounds}
 %-------------------------------------------------------------------------------
 aaa
 
 \section{Omitted proofs}
-\begin{proof}(Of Theorem~\ref{thm:rr-algo})
+\begin{proof}(Of Theorem~\ref{chap1-thm:rr-algo})
   Let $|G| = n$ and $|T|=k$.
   The number of subgraphs in graph $G$ isomorphic to $T$ is
   \[
@@ -15,7 +15,7 @@ aaa
     \sum_{I \in {n \choose k}} \delta(\texttt{Canonical}(G[I]) = T)
   \]
   Thus, $\textbf{t} = \{\texttt{Count}(G,T) : T \in \mathcal{T}\}$.
-  In Algorithm~\ref{alg:subgraph-non}, it is easy to see that for $\textbf{G}$ 
+  In Algorithm~\ref{chap1-alg:subgraph-non}, it is easy to see that for $\textbf{G}$ 
   drawn from the distribution induced by randomized response,
   \[
     \hat{\textbf{t}} = \{\texttt{Count}(\textbf{G},T) : T \in \mathcal{T}\}
@@ -32,7 +32,7 @@ aaa
   \[
     \E[\hat{\textbf{t}}] = M \textbf{t}
   \]
-  By Lemma~\ref{}, $M$ is computed by Algorithm~\ref{alg:subgraph-kernel} and is an 
+  By Lemma~\ref{chap1-}, $M$ is computed by Algorithm~\ref{chap1-alg:subgraph-kernel} and is an 
   invertible matrix, so
   \[
     \E[\textbf{a}] = M^{-1}\E[\hat{\textbf{t}}] = \textbf{t}
@@ -40,6 +40,6 @@ aaa
   
   Now, we focus our attention on $\V[\textbf{a}(\textbf{G}, k)]$. Assuming
   $\textbf{G} \sim G(n,p)$, we have by randomized response that $P$ in
-  Line~\ref{} of Algorithm~\ref{alg:subgraph-kernel} is drawn from $G(n, p')$
+  Line~\ref{chap1-} of Algorithm~\ref{chap1-alg:subgraph-kernel} is drawn from $G(n, p')$
   where $p' = p\rho + (1-p)(1-\rho)$.
 \end{proof}

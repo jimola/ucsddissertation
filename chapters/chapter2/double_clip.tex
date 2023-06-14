@@ -1,49 +1,49 @@
 \section{Double Clipping}
-\label{sec:double_clip}
+\label{chap2-sec:double_clip}
 
 % However, 
 % all of our three algorithms still suffer from a very large estimation error. due to a large amount of the Laplacian noise. 
-In Section~\ref{sec:algorithms}, 
-% \ref{sub:algorithms_theoretical_analysis}, 
-we showed that the estimation error caused by empirical estimation (i.e., the first term in Theorem~\ref{thm:l2loss_algorithms}) is significantly reduced by the $4$-cycle trick. 
+In Section~\ref{chap2-sec:algorithms}, 
+% \ref{chap2-sub:algorithms_theoretical_analysis}, 
+we showed that the estimation error caused by empirical estimation (i.e., the first term in Theorem~\ref{chap2-thm:l2loss_algorithms}) is significantly reduced by the $4$-cycle trick. 
 However, 
 % all of the upper-bounds in 
 the estimation error is 
 % caused by the Laplacian noise (i.e., the second term)  
-% Theorem~\ref{thm:l2loss_algorithms} are 
-still very large in our algorithms presented in Section~\ref{sec:algorithms}, as shown in our experiments. 
+% Theorem~\ref{chap2-thm:l2loss_algorithms} are 
+still very large in our algorithms presented in Section~\ref{chap2-sec:algorithms}, as shown in our experiments. 
 % due to a large amount of the Laplacian noise (as shown in our experiments). 
 % In particular, 
 This is because 
-the estimation error by the Laplacian noise (i.e., the second term in Theorem~\ref{thm:l2loss_algorithms}) 
+the estimation error by the Laplacian noise (i.e., the second term in Theorem~\ref{chap2-thm:l2loss_algorithms}) 
 % the Laplacian noise 
 is very large, especially for small $\epsilon_2$ or 
 % $\mu_F$ ($=\mu_O^2 = \mu_T^3$), 
 $\mu$. 
-% as shown in Theorem~\ref{thm:l2loss_algorithms}. 
-% In Section~\ref{sec:double_clip}, we introduce a double clipping technique to significantly reduce the amount of Laplacian noise.
+% as shown in Theorem~\ref{chap2-thm:l2loss_algorithms}. 
+% In Section~\ref{chap2-sec:double_clip}, we introduce a double clipping technique to significantly reduce the amount of Laplacian noise.
 This error term is tight and unavoidable as long as we use $d_{max}$ as a global sensitivity, which suggests that we need a better global sensitivity analysis.
 % In 
-% Section~\ref{sec:double_clip}, 
+% Section~\ref{chap2-sec:double_clip}, 
 % the next section, 
 % we introduce \textit{double clipping} to significantly reduce the amount of Laplacian noise.
 % 
-% Our three algorithms in Section~\ref{sec:algorithms} suffer from a large amount of the Laplacian noise. 
+% Our three algorithms in Section~\ref{chap2-sec:algorithms} suffer from a large amount of the Laplacian noise. 
 % due to the large global sensitivity. 
 % To address this issue, 
 % Thus, we propose a double clipping technique, which significantly reduces the global sensitivity of the Laplacian noise. 
 To significantly reduce the global sensitivity, we propose a novel \textit{double clipping} technique. 
 % Therefore, we propose a double clipping technique, which significantly reduces the global sensitivity of the Laplacian noise. 
 
-We describe the overview and details of our double clipping in Sections~\ref{sub:clip_overview} and \ref{sub:algorithms}, respectively. 
-Then we perform theoretical analysis in Section~\ref{sub:clip_theoretical_analysis}.
+We describe the overview and details of our double clipping in Sections~\ref{chap2-sub:clip_overview} and \ref{chap2-sub:algorithms}, respectively. 
+Then we perform theoretical analysis in Section~\ref{chap2-sub:clip_theoretical_analysis}.
 
 \subsection{Overview}
-\label{sub:clip_overview}
+\label{chap2-sub:clip_overview}
 
 % \smallskip
-\noindent{\textbf{Motivation.}}~~Figure~\ref{fig:reduce_noisy_triangles} shows noisy triangles involving edge $(v_i,v_j)$ counted by user $v_i$ in our three algorithms. 
-Our algorithms in Section~\ref{sec:algorithms} 
+\noindent{\textbf{Motivation.}}~~Figure~\ref{chap2-fig:reduce_noisy_triangles} shows noisy triangles involving edge $(v_i,v_j)$ counted by user $v_i$ in our three algorithms. 
+Our algorithms in Section~\ref{chap2-sec:algorithms} 
 % (and the two-rounds algorithm in \cite{Imola_USENIX21}) 
 use the fact that the number of such noisy triangles (hence the global sensitivity) is upper-bounded by the maximum degree $d_{max}$ because 
 %user $v_i$'s degree is at most $d_{max}$). 
@@ -61,9 +61,9 @@ expected to be around
 $\mu d_i$ 
 % ($\mu \ll 1$, $d_i < d_{max}$) 
 % with high probability (larger than $0.5$) 
-because one noisy edge is included in each noisy triangle (as shown in Figure~\ref{fig:reduce_noisy_triangles}) and all noisy edges are independent. 
+because one noisy edge is included in each noisy triangle (as shown in Figure~\ref{chap2-fig:reduce_noisy_triangles}) and all noisy edges are independent. 
 $\mu d_i$ is very small, especially when we set $\mu \ll 1$ to reduce the communication cost.  
-% Similarly, the expected number of noisy triangles involving $(v_i,v_j)$ in \AlgTwo is $\mu_O^2 d_i$ because two independent noisy edges are in each noisy triangle (as in Figure~\ref{fig:reduce_noisy_triangles}).
+% Similarly, the expected number of noisy triangles involving $(v_i,v_j)$ in \AlgTwo is $\mu_O^2 d_i$ because two independent noisy edges are in each noisy triangle (as in Figure~\ref{chap2-fig:reduce_noisy_triangles}).
 
 However, we cannot directly use $\mu d_i$ as an upper-bound of the global sensitivity in \AlgOne for two reasons. 
 First, $\mu d_i$ leaks the exact value of user $v_i$'s degree $d_i$ 
@@ -79,7 +79,7 @@ Thus, the noisy triangle count cannot be upper-bounded by $\mu d_i$.
   \includegraphics[width=0.78\linewidth]{fig/double_clipping.pdf}
   \vspace{-4mm}
   \caption{Noisy triangles involving edge $(v_i,v_j)$ counted by user $v_i$ ($j<k,l,m<i$).} 
-  \label{fig:reduce_noisy_triangles}
+  \label{chap2-fig:reduce_noisy_triangles}
 %\end{figure}
 \vspace{2mm}
 %\begin{figure}[t]
@@ -87,7 +87,7 @@ Thus, the noisy triangle count cannot be upper-bounded by $\mu d_i$.
   \includegraphics[width=0.99\linewidth]{fig/clip_overview.pdf}
   \vspace{-4mm}
   \caption{Overview of double clipping applied to edge ($v_1,v_7$).} 
-  \label{fig:double-clip_overview}
+  \label{chap2-fig:double-clip_overview}
 \end{figure}
 
 % To address the first and second issues explained above, we introduce an edge clipping and triangle clipping, respectively. 
@@ -97,7 +97,7 @@ we propose a double clipping technique, which is explained below.
 % which consists of an \textit{adaptive edge clipping} and \textit{noisy triangle clipping}. 
 
 \smallskip
-\noindent{\textbf{Algorithm Overview.}}~~Figure~\ref{fig:double-clip_overview} shows 
+\noindent{\textbf{Algorithm Overview.}}~~Figure~\ref{chap2-fig:double-clip_overview} shows 
 % its overview. 
 the overview of our double clipping, which consists of an 
 % \textit{adaptive edge clipping} 
@@ -191,10 +191,10 @@ $\kappa_i$ is also very small when $\mu \ll 1$, as it is determined based on $\m
 % by adaptive edge clipping.
 
 \subsection{Algorithms}
-\label{sub:algorithms}
-Algorithm~\ref{alg:clip} shows our double clipping algorithm. 
+\label{chap2-sub:algorithms}
+Algorithm~\ref{chap2-alg:clip} shows our double clipping algorithm. 
 All the processes are run by user $v_i$ at the second round. 
-Thus, there is no interaction with the server in Algorithm~\ref{alg:clip}.
+Thus, there is no interaction with the server in Algorithm~\ref{chap2-alg:clip}.
 
 \setlength{\algomargin}{5mm}
 \begin{algorithm}[t]
@@ -232,11 +232,11 @@ Thus, there is no interaction with the server in Algorithm~\ref{alg:clip}.
   ``F'', ``O'', ``T'' are shorthands for 
   \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively.
   All the processes are run by user $v_i$.
-  }\label{alg:clip}
+  }\label{chap2-alg:clip}
 \end{algorithm}
 
 \smallskip
-\noindent{\textbf{Edge Clipping.}}~~The edge clipping appears in lines 2-3 of Algorithm~\ref{alg:clip}. 
+\noindent{\textbf{Edge Clipping.}}~~The edge clipping appears in lines 2-3 of Algorithm~\ref{chap2-alg:clip}. 
 It uses a privacy budget $\epsilon_0 \in \nnreals$. 
 % for privately computing $d_i$. 
 
@@ -315,22 +315,22 @@ of $v_i$ never exceeds $\td_i$.
   %($C_4$: \#$4$-cycles, $P_3$: \#$3$-paths, $S_k$: \#$k$-stars). 
   %($\lambda_i$: clipping coefficient, $\td_i$: noisy degree).
   The expected $l_2$ loss assumes that $\mu$ is small. 
-  The download (resp.~upload) cost is an upper-bound in (\ref{eq:CostDL_F}) 
-  %, (\ref{eq:CostDL_O}), (\ref{eq:CostDL_T}), 
-  (resp.~(\ref{eq:CostUL_proposal})).
+  The download (resp.~upload) cost is an upper-bound in (\ref{chap2-eq:CostDL_F}) 
+  %, (\ref{chap2-eq:CostDL_O}), (\ref{chap2-eq:CostDL_T}), 
+  (resp.~(\ref{chap2-eq:CostUL_proposal})).
   %approximation when $d_{max} \ll n$. 
   %the graph $G$ is sparse.
   }
-  \label{tab:privacy_utility_cost}
+  \label{chap2-tab:privacy_utility_cost}
 \end{table*}
 
 \smallskip
-\noindent{\textbf{Noisy Triangle Clipping.}}~~The noisy triangle clipping appears in lines 4-11 of Algorithm~\ref{alg:clip}. 
+\noindent{\textbf{Noisy Triangle Clipping.}}~~The noisy triangle clipping appears in lines 4-11 of Algorithm~\ref{chap2-alg:clip}. 
 
 % First, 
 In lines 4-6, 
 user $v_i$ calculates the number $t_{i,j} \in \nnints$ of noisy triangles ($v_i, v_j, v_k$) ($j<k<i$) involving $(v_i,v_j)$ 
-(as shown in Figure~\ref{fig:reduce_noisy_triangles}). 
+(as shown in Figure~\ref{chap2-fig:reduce_noisy_triangles}). 
 %such that only one edge ($v_j, v_k$) is noisy 
 % for her neighbor $v_j$. 
 % (lines 4-6). 
@@ -351,7 +351,7 @@ the triangle excess probability does not exceed some constant $\beta \in \nnreal
 We explain how to calculate 
 % $\kappa_i$ from $\mu$ and $\td_i$ 
 the triangle excess probability 
-in Section~\ref{sub:clip_theoretical_analysis}. 
+in Section~\ref{chap2-sub:clip_theoretical_analysis}. 
 % in detail. 
 In line 8, $v_i$ calculates the total number $t_i$ of noisy triangles by summing up $t_{i,j}$, with the exception that $v_i$ adds $\kappa_i$ 
 %(rather than $t_{i,j}$) 
@@ -367,36 +367,36 @@ the number
 % $t_{i,j}$ 
 of noisy triangles involving $(v_i,v_j)$ never exceeds $\kappa_i$. 
 
-Lines 9-11 in Algorithm~\ref{alg:clip} are the same as lines 12-14 in Algorithm~\ref{alg:unify}, except that 
+Lines 9-11 in Algorithm~\ref{chap2-alg:clip} are the same as lines 12-14 in Algorithm~\ref{chap2-alg:unify}, except that 
 the global sensitivity in the former (resp.~latter) is $\kappa_i$ (resp.~$d_{max}$). 
-% the global sensitivity in Algorithm~\ref{alg:clip} is $\kappa_i$. 
-Line 11 in Algorithm~\ref{alg:clip} provides $\epsilon_2$-edge LDP because the number of triangles involving $(v_i,v_j)$ is now upper-bounded by $\kappa_i$. 
+% the global sensitivity in Algorithm~\ref{chap2-alg:clip} is $\kappa_i$. 
+Line 11 in Algorithm~\ref{chap2-alg:clip} provides $\epsilon_2$-edge LDP because the number of triangles involving $(v_i,v_j)$ is now upper-bounded by $\kappa_i$. 
 
 \smallskip
-\noindent{\textbf{Our Entire Algorithms with Double Clipping.}}~~We can run our algorithms \AlgOne{}, \AlgTwo{}, \AlgThree{} with double clipping just by replacing lines 11-14 in Algorithm~\ref{alg:unify} with lines 2-11 in Algorithm~\ref{alg:clip}. 
-That is, after calculating $\hw_i$ by Algorithm~\ref{alg:clip}, $v_i$ uploads $\hw_i$ to the server. 
+\noindent{\textbf{Our Entire Algorithms with Double Clipping.}}~~We can run our algorithms \AlgOne{}, \AlgTwo{}, \AlgThree{} with double clipping just by replacing lines 11-14 in Algorithm~\ref{chap2-alg:unify} with lines 2-11 in Algorithm~\ref{chap2-alg:clip}. 
+That is, after calculating $\hw_i$ by Algorithm~\ref{chap2-alg:clip}, $v_i$ uploads $\hw_i$ to the server. 
 Then the server calculates an estimate of $f_\triangle(G)$ as $\hf_\triangle(G) = \frac{1}{\mu^*(1-\rho)}\sum_{i=1}^n \hw_i$. 
-%as in line 17 of Algorithm~\ref{alg:unify}. 
+%as in line 17 of Algorithm~\ref{chap2-alg:unify}. 
 % where $\mu^* = \mu$, $\mu^2$, and $\mu^3$ in 
 % ``F'', ``O'', and ``T'', respectively). 
 
-We also note that the input $d_{max}$ in Algorithm~\ref{alg:unify} is no longer necessary thanks to the edge clipping; i.e., our entire algorithms with double clipping do not assume that $d_{max}$ is public. 
+We also note that the input $d_{max}$ in Algorithm~\ref{chap2-alg:unify} is no longer necessary thanks to the edge clipping; i.e., our entire algorithms with double clipping do not assume that $d_{max}$ is public. 
 % , because $v_i$ privately calculates $d_i$ by edge clipping.
 
 \subsection{Theoretical Analysis}
-\label{sub:clip_theoretical_analysis}
+\label{chap2-sub:clip_theoretical_analysis}
 % \paragraph{Privacy}
 % \smallskip
 We now perform a theoretical analysis on the privacy and utility of our double clipping. 
-% All the proofs appear in \arxiv{Appendix~\ref{sec:proof_double_clip}}\conference{the full version \cite{Imola_arXiv22}}. 
+% All the proofs appear in \arxiv{Appendix~\ref{chap2-sec:proof_double_clip}}\conference{the full version \cite{Imola_arXiv22}}. 
 
 \smallskip
 \noindent{\textbf{Privacy.}}~~We begin with the privacy guarantees:
 % Our algorithms with double clipping have the following privacy guarantees:
-\begin{theorem}\label{thm:privacy_DC}
+\begin{theorem}\label{chap2-thm:privacy_DC}
   For $i \in [n]$, 
   let $\calR_i^1, \calR_i^2(M_i)$ be the randomizers used by user $v_i$ in
-  rounds $1$ and $2$ of our algorithms with double clipping (Algorithms~\ref{alg:unify} and \ref{alg:clip}). 
+  rounds $1$ and $2$ of our algorithms with double clipping (Algorithms~\ref{chap2-alg:unify} and \ref{chap2-alg:clip}). 
   Let $\calR_i(\bma_i) = (\calR_i^1(\bma_i), \calR_i^2(M_i)(\bma_i))$ 
   be the composition of the two randomizers. 
   Then,
@@ -410,17 +410,17 @@ We now perform a theoretical analysis on the privacy and utility of our double c
 \noindent{\textbf{Utility.}}~~Next, we show the triangle excess probability: 
 % the probability that the noisy triangle count $t_{i,j}$ exceeds $\kappa_i$:
 
-\begin{theorem}\label{thm:triangle_excess}
+\begin{theorem}\label{chap2-thm:triangle_excess}
 %Let $\mu^* = \mu_F$ and $\mu_O^2$ in \AlgOne{} and \AlgTwo{}, respectively. 
 %In \AlgOne{} and \AlgTwo{}, 
 %In \AlgOne{}, \AlgTwo{}, \AlgThree{}, 
 % Let $\mu_F, \mu_O, \mu_T \in [0,\frac{e^{\epsilon}}{e^{\epsilon_1} + 1}]$. 
 % For $i \in [n]$, let $\td_i \in \nnreals$ be a noisy degree of user $v_i$ output by edge clipping. 
 % Let $\kappa_i$
-In Algorithm~\ref{alg:clip}, the triangle excess probability (i.e., probability that the number of noisy triangles $t_{i,j}$ involving edge $(v_i, v_j)$ exceeds a clipping threshold $\kappa_i$) is:
+In Algorithm~\ref{chap2-alg:clip}, the triangle excess probability (i.e., probability that the number of noisy triangles $t_{i,j}$ involving edge $(v_i, v_j)$ exceeds a clipping threshold $\kappa_i$) is:
   \begin{align}
-    \hspace{-1mm} \Pr(t_{i,j} > \kappa_i) &\leq \textstyle{\exp \left[-\td_i D \left(\frac{\kappa_i}{\td_i} \parallel \mu \right) \right]} \label{eq:AlgI_clip_bound} \\
-    \hspace{-1mm} \Pr(t_{i,j} > \kappa_i) &\leq \textstyle{\exp \left[-\td_i D \left(\frac{\kappa_i}{\td_i} \parallel \mu^2 \right) \right]} \label{eq:AlgII_clip_bound}\\
+    \hspace{-1mm} \Pr(t_{i,j} > \kappa_i) &\leq \textstyle{\exp \left[-\td_i D \left(\frac{\kappa_i}{\td_i} \parallel \mu \right) \right]} \label{chap2-eq:AlgI_clip_bound} \\
+    \hspace{-1mm} \Pr(t_{i,j} > \kappa_i) &\leq \textstyle{\exp \left[-\td_i D \left(\frac{\kappa_i}{\td_i} \parallel \mu^2 \right) \right]} \label{chap2-eq:AlgII_clip_bound}\\
 %   \end{align}
 %   \begin{align}
     \hspace{-1mm} \Pr(t_{i,j} > \kappa_i) &\leq 
@@ -429,7 +429,7 @@ In Algorithm~\ref{alg:clip}, the triangle excess probability (i.e., probability 
     %     \mu_T \exp \left[-\td_i D \left(\frac{\kappa_i}{\td_i} \parallel \mu_T^2 \right) \right]   &   \mathrm{(if}~ \kappa_i \geq \mu_T^2 \td_i)\\
     %     \mu_T   &   \mathrm{(if}~ \mu_T^3 \td_i \leq \kappa_i < \mu_T^2 \td_i),
     % \end{cases}
-    \label{eq:AlgIII_clip_bound}
+    \label{chap2-eq:AlgIII_clip_bound}
   \end{align}
   in \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively, 
   where 
@@ -442,14 +442,14 @@ In Algorithm~\ref{alg:clip}, the triangle excess probability (i.e., probability 
     \textstyle{D(p_1 \parallel p_2) = p_1 \log \frac{p_1}{p_2} + (1-p_1) \log \frac{1-p_1}{1-p_2}.}
 \end{align*}
 \end{theorem}
-In all of (\ref{eq:AlgI_clip_bound}), (\ref{eq:AlgII_clip_bound}), and (\ref{eq:AlgIII_clip_bound}), we use the Chernoff bound, which is known to be reasonably tight \cite{Arratia_BMB89}. 
+In all of (\ref{chap2-eq:AlgI_clip_bound}), (\ref{chap2-eq:AlgII_clip_bound}), and (\ref{chap2-eq:AlgIII_clip_bound}), we use the Chernoff bound, which is known to be reasonably tight \cite{Arratia_BMB89}. 
 
 \smallskip
-\noindent{\textbf{Setting $\kappa_i$.}}~~The function \texttt{ClippingThreshold} in Algorithm~\ref{alg:clip} sets a clipping threshold $\kappa_i$ of user $v_i$ based on Theorem~\ref{thm:triangle_excess}. 
+\noindent{\textbf{Setting $\kappa_i$.}}~~The function \texttt{ClippingThreshold} in Algorithm~\ref{chap2-alg:clip} sets a clipping threshold $\kappa_i$ of user $v_i$ based on Theorem~\ref{chap2-thm:triangle_excess}. 
 Specifically, we set $\kappa_i = \lambda_i \mu^* \td_i$, where $\lambda_i \in \nats$, and calculate $\lambda_i$ as follows. 
 We initially set $\lambda_i = 1$ and keep increasing $\lambda_i$ by $1$ 
 % initially set $\kappa_i = \mu^* \td_i$ and keep increasing $\kappa_i$ by $\mu^* \td_i$ 
-until the upper-bound (i.e., right-hand side of (\ref{eq:AlgI_clip_bound}), (\ref{eq:AlgII_clip_bound}), or (\ref{eq:AlgIII_clip_bound})) is smaller than or equal to the triangle excess probability $\beta$. 
+until the upper-bound (i.e., right-hand side of (\ref{chap2-eq:AlgI_clip_bound}), (\ref{chap2-eq:AlgII_clip_bound}), or (\ref{chap2-eq:AlgIII_clip_bound})) is smaller than or equal to the triangle excess probability $\beta$. 
 In our experiments, we set $\beta = 10^{-6}$. 
 % We call $\lambda_i$ the \textit{clipping coefficient} of $v_i$. 
 
@@ -457,28 +457,28 @@ In our experiments, we set $\beta = 10^{-6}$.
 \noindent{\textbf{Large $\kappa_i$ of \AlgThree{}.}}~~By 
 % In our experiments, we set $\mu$ so that $\mu$ in \AlgOne{} is equal to $\mu^2$ in \AlgTwo{} and also equal to $\mu^3$ in \AlgThree{}. 
 % Then by 
-(\ref{eq:AlgI_clip_bound}) and (\ref{eq:AlgII_clip_bound}), the upper-bound on the triangle excess probability is the same between \AlgOne{} and \AlgTwo{}. 
+(\ref{chap2-eq:AlgI_clip_bound}) and (\ref{chap2-eq:AlgII_clip_bound}), the upper-bound on the triangle excess probability is the same between \AlgOne{} and \AlgTwo{}. 
 % However, 
 In contrast, 
 \AlgThree{} has a larger upper-bound. 
 For example, 
 when $\kappa_i = 15 \mu^* \td_i$, $\mu^* = 10^{-3}$, and $\td_i=1000$, 
-the right-hand sides of (\ref{eq:AlgI_clip_bound}), (\ref{eq:AlgII_clip_bound}), and (\ref{eq:AlgIII_clip_bound}) are $2.5 \times 10^{-12}$, $2.5 \times 10^{-12}$, and $3.3 \times 10^{-2}$, respectively. 
+the right-hand sides of (\ref{chap2-eq:AlgI_clip_bound}), (\ref{chap2-eq:AlgII_clip_bound}), and (\ref{chap2-eq:AlgIII_clip_bound}) are $2.5 \times 10^{-12}$, $2.5 \times 10^{-12}$, and $3.3 \times 10^{-2}$, respectively. 
 Consequently, \AlgThree{} has a larger global sensitivity $\kappa_i$ for the same value of $\beta$.
 
 % \smallskip
-% \noindent{\textbf{\AlgTwo{} vs. \AlgThree{}.}}~~Now we explain the reason that \AlgTwo can reduce the global sensitivity more effectively than \AlgThree (as described in Section~\ref{sub:algorithms_overview}).  
-% using Figure~\ref{fig:reduce_noisy_triangles}. 
+% \noindent{\textbf{\AlgTwo{} vs. \AlgThree{}.}}~~Now we explain the reason that \AlgTwo can reduce the global sensitivity more effectively than \AlgThree (as described in Section~\ref{chap2-sub:algorithms_overview}).  
+% using Figure~\ref{chap2-fig:reduce_noisy_triangles}. 
 % As with \AlgOne, 
 We can explain a large global sensitivity $\kappa_i$ of \AlgThree{} as follows. 
 The number $t_{i,j}$ of noisy triangles involving $(v_i,v_j)$ in 
-\AlgOne{} is expected to be around $\mu d_i$ because one noisy edge is in each noisy triangle (as in Figure~\ref{fig:reduce_noisy_triangles}) and all noisy edges are independent. 
+\AlgOne{} is expected to be around $\mu d_i$ because one noisy edge is in each noisy triangle (as in Figure~\ref{chap2-fig:reduce_noisy_triangles}) and all noisy edges are independent. 
 For the same reason, $t_{i,j}$ in \AlgTwo{} is expected to be around $\mu^2 d_i$.  
-% \AlgTwo{} is expected to be around $\mu_O^2 d_i$ because two noisy edges are in each noisy triangle (as in Figure~\ref{fig:reduce_noisy_triangles}) and all noisy edges are independent. 
+% \AlgTwo{} is expected to be around $\mu_O^2 d_i$ because two noisy edges are in each noisy triangle (as in Figure~\ref{chap2-fig:reduce_noisy_triangles}) and all noisy edges are independent. 
 % 
 However, 
 % the number of noisy triangles involving $(v_i,v_j)$ 
-$t_{i,j}$ in \AlgThree{} is \textit{not} expected to be around $\mu^3 d_i$, because all the noisy triangles have noisy edge $(v_i,v_j)$ in common (as in Figure~\ref{fig:reduce_noisy_triangles}). 
+$t_{i,j}$ in \AlgThree{} is \textit{not} expected to be around $\mu^3 d_i$, because all the noisy triangles have noisy edge $(v_i,v_j)$ in common (as in Figure~\ref{chap2-fig:reduce_noisy_triangles}). 
 Then, 
 % the expected noisy triangle count 
 the expectation of $t_{i,j}$ 
@@ -490,13 +490,13 @@ it is $\mu^2 d_i$; otherwise, $0$.
 Thus, 
 $\kappa_i$ 
 cannot be effectively reduced by double clipping. 
-% Section~\ref{sub:clip_theoretical_analysis} shows a more formal result on this. 
+% Section~\ref{chap2-sub:clip_theoretical_analysis} shows a more formal result on this. 
 
 \smallskip
 \noindent{\textbf{Summary.}}~~The 
 % privacy, expected $l_2$ loss, download/upload cost 
 performance guarantees 
-of our three algorithms with double clipping can be summarized in Table~\ref{tab:privacy_utility_cost}.
+of our three algorithms with double clipping can be summarized in Table~\ref{chap2-tab:privacy_utility_cost}.
 
 % The expected $l_2$ loss can be expressed $O(n d_{max}^3)$, $O(n d_{max}^2)$, and $O(n d_{max}^2)$, 
 % For the $l_2$ loss, 
@@ -505,7 +505,7 @@ $l_2$ loss are the $l_2$ loss of empirical estimation and that of the Laplacian 
 For small 
 % $\mu_F$ ($=\mu_O^2 = \mu_T^3$), 
 $\mu$, 
-the $l_2$ loss of empirical estimation can be expressed as $O(n d_{max}^3)$, $O(n d_{max}^2)$, and $O(n d_{max}^2)$ in \AlgOne{}, \AlgTwo{}, \AlgThree{}, respectively, as explained in Section~\ref{sub:algorithms_theoretical_analysis}. 
+the $l_2$ loss of empirical estimation can be expressed as $O(n d_{max}^3)$, $O(n d_{max}^2)$, and $O(n d_{max}^2)$ in \AlgOne{}, \AlgTwo{}, \AlgThree{}, respectively, as explained in Section~\ref{chap2-sub:algorithms_theoretical_analysis}. 
 % (when we regard $\epsilon_1$ and $\epsilon_2$ as constants). 
 % The large $l_2$ loss of \AlgOne{} is caused by the number $C_4$ of $4$-cycles that is written as $O(n d_{max}^3)$. 
 The $l_2$ loss of the Laplacian noise is 

@@ -1,6 +1,6 @@
 \section{Experimental Evaluation}
-\label{sec:experiments}
-Based on the performance guarantees summarized in Tables~\ref{tab:upper_bounds_triangle} and \ref{tab:upper_bounds_4cycle}, we pose the following research questions: 
+\label{chap3-sec:experiments}
+Based on the performance guarantees summarized in Tables~\ref{chap3-tab:upper_bounds_triangle} and \ref{chap3-tab:upper_bounds_4cycle}, we pose the following research questions: 
 
 \begin{description}[leftmargin=8.75mm]
 % \begin{description}[leftmargin=9.75mm]
@@ -22,7 +22,7 @@ Based on the performance guarantees summarized in Tables~\ref{tab:upper_bounds_t
 We designed experiments to answer these questions. 
 
 \subsection{Experimental Set-up}
-\label{sub:set-up}
+\label{chap3-sub:set-up}
 We used the following two real graph datasets: 
 \begin{itemize}
     \item \textbf{Gplus}: The first dataset is the Google+ dataset \cite{McAuley_NIPS12} denoted by \Gplus{}. 
@@ -35,8 +35,8 @@ We used the following two real graph datasets:
     From this, we extracted a graph $G=(V,E)$ with $n=896308$ actors and $57064358$ edges, where an edge represents that two actors have played in the same movie. 
     The average and maximum degrees are $d_{avg} = 127.3$ and $d_{max} = 15451$, respectively; i.e., \IMDB{} is more sparse than \Gplus{}. 
 \end{itemize}
-In \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sec:BA-graph}}, we also evaluate our algorithms using the Barab\'{a}si-Albert graphs \cite{NetworkScience,Hagberg_SciPy08}, which have a power-law degree distribution. 
-Moreover, in \conference{\cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sec:bipartite}}, we evaluate our 4-cycle algorithms using bipartite graphs generated from \Gplus{} and \IMDB{}. 
+In \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{chap3-sec:BA-graph}}, we also evaluate our algorithms using the Barab\'{a}si-Albert graphs \cite{NetworkScience,Hagberg_SciPy08}, which have a power-law degree distribution. 
+Moreover, in \conference{\cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{chap3-sec:bipartite}}, we evaluate our 4-cycle algorithms using bipartite graphs generated from \Gplus{} and \IMDB{}. 
 
 For triangle counting, we evaluated the following four one-round algorithms: \AlgWSTriVR{}, \AlgWSTri{}, \AlgWLTri{}, and \AlgARRTri{} \cite{Imola_USENIX22}. 
 We did not evaluate \AlgRRTri{} \cite{Imola_USENIX21}, because it was too inefficient -- it was reported in \cite{Imola_USENIX21} that when $n=10^6$, \AlgRRTri{} would require over $30$ years even on a supercomputer. 
@@ -48,21 +48,21 @@ Because \AlgWLCyc{} is the first local 4-cycle counting algorithm (to our knowle
 
 In our shuffle algorithms \AlgWSTriVR{}, \AlgWSTri{}, and \AlgWSCyc{}, we set $\delta = 10^{-8}$ ($\ll \frac{1}{n}$) and $t=\frac{n}{2}$. 
 We used the numerical upper bound in \cite{Feldman_FOCS21} for calculating $\epsilon$ in the shuffle model. 
-% In \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sec:numerical_closed}}, we compare the numerical bound with the closed-form bound in Theorem~\ref{thm:shuffle}. 
+% In \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{chap3-sec:numerical_closed}}, we compare the numerical bound with the closed-form bound in Theorem~\ref{chap3-thm:shuffle}. 
 In \AlgWSTriVR{}, we set 
 % $c=1$ 
 $c\in[0.1,4]$ 
 and 
-%(as described in Section~\ref{sub:var_red}) 
+%(as described in Section~\ref{chap3-sub:var_red}) 
 divided the total privacy budget $\epsilon$ as $\epsilon_1 = \frac{\epsilon}{10}$ and $\epsilon_2 = \frac{9\epsilon}{10}$. 
 Here, we assigned a small budget to $\epsilon_1$ because a degree $d_i$ has a very small sensitivity ($=1$) and $\Lap(\frac{1}{\epsilon_1})$ is very small. 
 In \AlgARRTri{}, we set the sampling probability $p_0$ to $p_0 = n^{-1/3}$ or $0.1n^{-1/3}$ so that the time complexity is $O(n^2)$. 
 
 We ran each algorithm $20$ times and evaluated the average relative error over the $20$ runs. 
-In \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sec:standard_error}}, we show that the standard error of the average relative error is small. 
+In \conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{chap3-sec:standard_error}}, we show that the standard error of the average relative error is small. 
 
 \subsection{Experimental Results}
-\label{sub:results}
+\label{chap3-sub:results}
 
 % \smallskip
 \noindent{\textbf{Relative Error vs. $\epsilon$.}}~~We first evaluated the relation between the relative error and 
@@ -81,7 +81,7 @@ We also measured the time to estimate the triangle/4-cycle count from the adjace
   $p_0$ is the sampling probability in the ARR. 
   %; numerical bound in \cite{Feldman_FOCS21}). 
   }
-  \label{fig:res1_eps}
+  \label{chap3-fig:res1_eps}
 \end{figure}
 
 % \begin{table}[t]
@@ -102,7 +102,7 @@ We also measured the time to estimate the triangle/4-cycle count from the adjace
 %   \end{tabular}
 %   \caption{Relative error when $\epsilon=0.5$ or $1$ ($n=107614$ in \Gplus{} and $896308$ in \IMDB{}; $c=1$). 
 %   }
-%   \label{tab:res1_eps_tri_0.5}
+%   \label{chap3-tab:res1_eps_tri_0.5}
 % \end{table}
 
 \begin{table}[t]
@@ -143,23 +143,23 @@ We also measured the time to estimate the triangle/4-cycle count from the adjace
 %     \AlgWSCyc{} & $XXX$ & $XXX$ & $XXX$ \\ \hline
 %     \AlgWLCyc{} & $XXX$ & $XXX$ & $XXX$ \\ \hline
 %   \end{tabular}\\
-  \label{tab:res1_eps_tri_time}
+  \label{chap3-tab:res1_eps_tri_time}
 \end{table}
 
-Figure~\ref{fig:res1_eps} shows the relative error ($c=1$). 
+Figure~\ref{chap3-fig:res1_eps} shows the relative error ($c=1$). 
 % Here, we used the numerical upper bound in \cite{Feldman_FOCS21} for $\epsilon$ in the shuffle algorithms. 
 % We also 
 Here, we show the performance of \AlgWSTri{} when we do not add the Laplacian noise (denoted by \AlgWSTri{} (w/o Lap)). 
 In \IMDB{}, we do not show \AlgARRTri{} with $p_0 = n^{-1/3}$, because it takes too much time (longer than one day). 
-Table~\ref{tab:res1_eps_tri_time} highlights the relative error when $\epsilon=0.5$ or $1$. 
+Table~\ref{chap3-tab:res1_eps_tri_time} highlights the relative error when $\epsilon=0.5$ or $1$. 
 It also shows the running time of counting triangles or 4-cycles when $\epsilon=1$ (we verified that the running time had little dependence on $\epsilon$). 
 
-Figure~\ref{fig:res1_eps} and Table~\ref{tab:res1_eps_tri_time} show that our shuffle algorithms dramatically improve the local algorithms. 
+Figure~\ref{chap3-fig:res1_eps} and Table~\ref{chap3-tab:res1_eps_tri_time} show that our shuffle algorithms dramatically improve the local algorithms. 
 % For example, 
 In triangle counting, 
 \AlgWSTriVR{} outperforms \AlgWLTri{} by one or two orders of magnitude and \AlgARRTri{} by even more\footnote{Note that \AlgARRTri{} uses only the lower-triangular part of the adjacency matrix $\bmA$ and therefore provides 
 % $\epsilon$-edge LDP and 
-$\epsilon$-edge DP (rather than $2\epsilon$-edge DP); i.e., it does not suffer from the doubling issue explained in Section~\ref{sub:privacy}. However, Figure~\ref{fig:res1_eps} shows that \AlgWSTriVR{} significantly outperforms \AlgARRTri{} 
+$\epsilon$-edge DP (rather than $2\epsilon$-edge DP); i.e., it does not suffer from the doubling issue explained in Section~\ref{chap3-sub:privacy}. However, Figure~\ref{chap3-fig:res1_eps} shows that \AlgWSTriVR{} significantly outperforms \AlgARRTri{} 
 % with the same privacy budget in edge DP.
 even if we double $\epsilon$ for only \AlgWSTriVR{}.}. 
 % Although the relative error of \AlgARRTri{} can be improved by using a larger $p_0$, it results in longer running time. 
@@ -169,16 +169,16 @@ Although the running time of \AlgARRTri{} can be improved by using a smaller $p_
 In 4-cycle counting, 
 \AlgWSCyc{} significantly outperforms \AlgWLCyc{}. 
 The difference between our shuffle algorithms and the local algorithms is larger in \IMDB{} because it is more sparse; i.e., the difference between $d_{max}$ and $n$ is larger in \IMDB{}. 
-This is consistent with our theoretical results in Tables~\ref{tab:upper_bounds_triangle} and \ref{tab:upper_bounds_4cycle}. 
+This is consistent with our theoretical results in Tables~\ref{chap3-tab:upper_bounds_triangle} and \ref{chap3-tab:upper_bounds_4cycle}. 
 
-Figure~\ref{fig:res1_eps} and Table~\ref{tab:res1_eps_tri_time} also show that \AlgWSTriVR{} outperforms \AlgWSTri{}, especially when $\epsilon$ is small. 
+Figure~\ref{chap3-fig:res1_eps} and Table~\ref{chap3-tab:res1_eps_tri_time} also show that \AlgWSTriVR{} outperforms \AlgWSTri{}, especially when $\epsilon$ is small. 
 % or the dataset is sparse, i.e., \IMDB{}. 
 This is because the variance is large when $\epsilon$ is small. 
-In addition, \AlgWSTriVR{} significantly outperforms \AlgWSTri{} in \IMDB{} because \AlgWSTriVR{} significantly reduces the variance when $d_{max} \ll n$, as shown in Table~\ref{tab:upper_bounds_triangle}. 
+In addition, \AlgWSTriVR{} significantly outperforms \AlgWSTri{} in \IMDB{} because \AlgWSTriVR{} significantly reduces the variance when $d_{max} \ll n$, as shown in Table~\ref{chap3-tab:upper_bounds_triangle}. 
 In other words, this is also consistent with our theoretical results. 
 For example, when $\epsilon=0.5$, our variance reduction technique reduces the relative error from $1.41$ to $0.488$ (about one-third) in \IMDB{}. 
 
-Furthermore, Figure~\ref{fig:res1_eps} shows that the relative error of \AlgWSTriVR{} is hardly changed by adding the Laplacian noise. 
+Furthermore, Figure~\ref{chap3-fig:res1_eps} shows that the relative error of \AlgWSTriVR{} is hardly changed by adding the Laplacian noise. 
 This is because the sensitivity of each user's degree $d_i$ is very small ($=1$). 
 In this case, the Laplacian noise is also very small. 
 
@@ -188,10 +188,10 @@ In this case, the Laplacian noise is also very small.
   \vspace{-4mm}
   \caption{Relative error vs. $n$ ($\epsilon=1$, $c=1$).
   }
-  \label{fig:res2_n}
+  \label{chap3-fig:res2_n}
 \end{figure}
 
-% Table~\ref{tab:res1_eps_tri_time} shows that 
+% Table~\ref{chap3-tab:res1_eps_tri_time} shows that 
 Our \AlgWSTriVR{} achieves a relative error of $0.3$ ($\ll 1$) 
 % and \AlgWSCyc{} achieve relative errors of $0.15$ to $0.3$ ($\ll 1$) 
 % with a reasonable privacy budget -- $\epsilon = 0.5$ or $1$ in element DP and $2\epsilon = 1$ or $2$ in edge DP. 
@@ -207,7 +207,7 @@ Specifically, we randomly selected $n$ users from all users and extracted a grap
 Then we set $\epsilon = 1$ and changed $n$ to various values starting from $2000$. 
 %from $2000$ to $107614$ and $896308$ in \Gplus{} and \IMDB{}, respectively. 
 
-Figure~\ref{fig:res2_n} shows the results ($c=1$). 
+Figure~\ref{chap3-fig:res2_n} shows the results ($c=1$). 
 % We observe that 
 When $n=2000$, \AlgWSTri{} and \AlgWSCyc{} provide 
 %almost the same relative error as 
@@ -217,7 +217,7 @@ For example, when $n=2000$ and $\epsilon=1$,
 % and $\delta=10^{-8}$, 
 the numerical bound is $\epsilon_L=1.88$. 
 The value of $\epsilon_L$ increases with increase in $n$; e.g., when $n=107614$ and $896308$, the numerical bound is $\epsilon_L= 5.86$ and $7.98$, respectively. 
-This explains the reason that our shuffle algorithms significantly outperform the local algorithms when $n$ is large in Figure~\ref{fig:res2_n}. 
+This explains the reason that our shuffle algorithms significantly outperform the local algorithms when $n$ is large in Figure~\ref{chap3-fig:res2_n}. 
 % the large difference between our shuffle algorithms and the local algorithms. 
 % in Figure~XX. 
 
@@ -234,7 +234,7 @@ This explains the reason that our shuffle algorithms significantly outperform th
 Recall that as $c$ increases, the bias is increased, and the variance is reduced. 
 We set $\epsilon=0.1$ or $1$ and changed $c$ from $0.1$ to $4$. 
 
-Figure~\ref{fig:res4_thr} shows the results. 
+Figure~\ref{chap3-fig:res4_thr} shows the results. 
 Here, we also show the relative error of \AlgWSTri{}. 
 We observe that the optimal $c$ is different for $\epsilon=0.1$ and $\epsilon=1$. The optimal $c$ is around $3$ to $4$ for $\epsilon=0.1$, whereas the optimal $c$ is around $0.5$ to $1$ for $\epsilon=1$. 
 This is because the variance of \AlgWSTri{} is large (resp.~small) when $\epsilon$ is small (resp.~large). 
@@ -243,7 +243,7 @@ For a large $\epsilon$, a small $c$ is effective in keeping a small bias.
 % The optimization of $c$ in \AlgWSTriVR{} is an interesting future research direction. 
 
 We also observe that \AlgWSTriVR{} is always better than (or almost the same as) \AlgWSTri{} when $c=1$ or $2$. 
-This is because most users' degrees are smaller than the average degree $d_{avg}$, as described in Section~\ref{sub:var_red}. 
+This is because most users' degrees are smaller than the average degree $d_{avg}$, as described in Section~\ref{chap3-sub:var_red}. 
 When $c=1$ or $2$, most user-pairs are ignored. 
 Therefore, we can significantly reduce the variance at the cost of a small bias. 
 
@@ -253,11 +253,11 @@ Therefore, we can significantly reduce the variance at the cost of a small bias.
   \vspace{-4mm}
   \caption{Relative error vs. parameter $c$ in \AlgWSTriVR{} ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}).
   }
-  \label{fig:res4_thr}
+  \label{chap3-fig:res4_thr}
 \end{figure}
 
 \smallskip
-\noindent{\textbf{Summary.}}~~In summary, our answers to the three questions at the beginning of Section~\ref{sec:experiments} are as follows. 
+\noindent{\textbf{Summary.}}~~In summary, our answers to the three questions at the beginning of Section~\ref{chap3-sec:experiments} are as follows. 
 RQ1: Our \AlgWSTriVR{} and \AlgWSCyc{} outperform the one-round local algorithms by one or two orders of magnitude (or even more). 
 % \AlgWSTriVR{} is even comparable to the two-rounds local algorithm in \cite{Imola_USENIX22} (\AlgTwoRS{}) that requires a lot of user effort 
 % and synchronization 

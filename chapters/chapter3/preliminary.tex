@@ -1,13 +1,13 @@
 \section{Preliminaries}
-\label{sec:preliminaries}
+\label{chap3-sec:preliminaries}
 In this section, we describe some preliminaries for our work. 
-Section~\ref{sub:notations} defines the basic notation used in this paper. 
-% Sections~\ref{sub:privacy} and \ref{sub:utility} explain privacy notions and utility metrics, respectively. 
-Sections~\ref{sub:privacy} and \ref{sub:shuffle} introduce DP on graphs and the shuffle model, respectively. 
-Section~\ref{sub:utility} explains utility metrics. 
+Section~\ref{chap3-sub:notations} defines the basic notation used in this paper. 
+% Sections~\ref{chap3-sub:privacy} and \ref{chap3-sub:utility} explain privacy notions and utility metrics, respectively. 
+Sections~\ref{chap3-sub:privacy} and \ref{chap3-sub:shuffle} introduce DP on graphs and the shuffle model, respectively. 
+Section~\ref{chap3-sub:utility} explains utility metrics. 
 
 \subsection{Notation}
-\label{sub:notations}
+\label{chap3-sub:notations}
 Let $\reals$, $\nnreals$, $\nats$, and $\nnints$ be the sets of real numbers, non-negative real numbers, natural numbers, and non-negative integers, respectively. 
 % For $z\in\reals$, let $[z]$ be the set of natural numbers that do not exceed $z$. 
 For $a\in\nats$, let $[a]$ be the set of natural numbers that do not exceed $a$, i.e., $[a] = \{1, 2, \ldots, a\}$. 
@@ -34,8 +34,8 @@ an adjacency matrix corresponding to $G$.
 If $(v_i,v_j) \in E$, then $a_{i,j} = 1$; otherwise, $a_{i,j} = 0$. 
 We call $a_{i,j}$ an \textit{edge indicator}. 
 Let $\bma_i \in \{0,1\}^n$ be a neighbor list of user $v_i$, i.e., the $i$-th row of $\bmA$. 
-\arxiv{Table~\ref{tab:notations} shows the basic notation in this paper.} 
-% We summarize the basic notation in Table~\ref{tab:notations} of Appendix~\ref{sec:notation_table}.
+\arxiv{Table~\ref{chap3-tab:notations} shows the basic notation in this paper.} 
+% We summarize the basic notation in Table~\ref{chap3-tab:notations} of Appendix~\ref{chap3-sec:notation_table}.
 
 \arxiv{\begin{table}[t]
 \caption{Basic notation in this paper.}
@@ -66,17 +66,17 @@ $\bma_i$	&		Neighbor list of $v_i$, i.e., the $i$-th row of $\bmA$.\\
 \hline
 \end{tabular}
 \hfil}
-\label{tab:notations}
+\label{chap3-tab:notations}
 \end{table}}
 
 % \subsection{Privacy Notions}
 \subsection{Differential Privacy}
-\label{sub:privacy}
+\label{chap3-sub:privacy}
 % \smallskip
 % \noindent{\textbf{$(\epsilon,\delta)$-DP.}}~~
 \noindent{\textbf{DP and LDP.}}~~We use differential privacy, and more specifically $(\epsilon,\delta)$-DP \cite{DP}, as a privacy metric: 
 
-\begin{definition} [$(\epsilon,\delta)$-DP \cite{DP}] \label{def:DP} 
+\begin{definition} [$(\epsilon,\delta)$-DP \cite{DP}] \label{chap3-def:DP} 
 Let $n \in \nats$ be the number of users. 
 Let $\epsilon \in \nnreals$ and $\delta \in [0,1]$. 
 Let $\calX$ be the set of input data for each user. 
@@ -90,7 +90,7 @@ provides \emph{$(\epsilon,\delta)$-DP} if for any neighboring databases $D,D' \i
 $S \subseteq \mathrm{Range}(\calM)$, 
 \begin{align*}
 \Pr[\calM(D) \in S] \leq e^\epsilon \Pr[\calM(D') \in S] + \delta.
-%\label{eq:DP}
+%\label{chap3-eq:DP}
 \end{align*}
 % We say $\calM$ provides \emph{$\epsilon$-DP} if it provides \emph{$(\epsilon,0)$-DP}.
 \end{definition}
@@ -99,22 +99,22 @@ The parameter $\epsilon$ is called the privacy budget.
 It is well known that $\epsilon \leq 1$ is acceptable and $\epsilon \geq 5$ is unsuitable in many practical scenarios \cite{DP_Li}. 
 In addition, the parameter $\delta$ needs to be much smaller than $\frac{1}{n}$ \cite{Barber_arXiv14,DP}. 
 
-% Note that $(\epsilon,\delta)$-LDP (Local DP) is a special case of $(\epsilon,\delta)$-DP in Definition~\ref{def:DP} where $n=1$. 
-% Note that $(\epsilon,\delta)$-DP in Definition~\ref{def:DP} covers the local model where each user obfuscates her personal data by herself. 
+% Note that $(\epsilon,\delta)$-LDP (Local DP) is a special case of $(\epsilon,\delta)$-DP in Definition~\ref{chap3-def:DP} where $n=1$. 
+% Note that $(\epsilon,\delta)$-DP in Definition~\ref{chap3-def:DP} covers the local model where each user obfuscates her personal data by herself. 
 % Specifically, we can apply $(\epsilon,\delta)$-DP to the local model by setting $n=1$. 
 % In this case, a randomized algorithm $\calM$ is called a \textit{local randomizer}. 
 LDP \cite{Kasiviswanathan_FOCS08} is a special case of DP where $n=1$. 
 In this case, a randomized algorithm is called a \textit{local randomizer}. 
 We denote the local randomizer by $\calR$ to distinguish it from the randomized algorithm $\calM$ in the central model. 
 Formally, LDP is defined as follows: 
-\begin{definition} [$\epsilon$-LDP \cite{Kasiviswanathan_FOCS08}] \label{def:LDP} 
+\begin{definition} [$\epsilon$-LDP \cite{Kasiviswanathan_FOCS08}] \label{chap3-def:LDP} 
 Let $\epsilon \in \nnreals$. 
 Let $\calX$ be the set of input data for each user. 
 A local randomizer $\calR$ with domain $\calX$ 
 provides \emph{$\epsilon$-LDP} if for any $x,x' \in \calX$ and any $S \subseteq \mathrm{Range}(\calR)$, 
 \begin{align}
 \Pr[\calR(x) \in S] \leq e^\epsilon \Pr[\calR(x') \in S].
-\label{eq:LDP}
+\label{chap3-eq:LDP}
 \end{align}
 \end{definition}
 
@@ -146,7 +146,7 @@ provides \emph{$\epsilon$-LDP} if for any $x,x' \in \calX$ and any $S \subseteq 
 % \hline
 % \end{tabular}
 % \hfil}
-% \label{tab:notations}
+% \label{chap3-tab:notations}
 % \end{table}
 
 \smallskip
@@ -164,9 +164,9 @@ Given $\epsilon \in \nnreals$, Warner's RR $\calR_{\epsilon}^W: \{0,1\} \rightar
 \end{align*}
 $\calR_{\epsilon}^W$ 
 % $\epsilon$-RR 
-provides $\epsilon$-LDP in Definition~\ref{def:LDP}, where $\calX = \{0,1\}$. 
+provides $\epsilon$-LDP in Definition~\ref{chap3-def:LDP}, where $\calX = \{0,1\}$. 
 We refer to Warner's RR $\calR_{\epsilon}^W$ with parameter $\epsilon$ as \textit{$\epsilon$-RR}. 
-% $\epsilon$-DP in Definition~\ref{def:DP}, where $\calX = \{0,1\}$ and $n=1$. 
+% $\epsilon$-DP in Definition~\ref{chap3-def:DP}, where $\calX = \{0,1\}$ and $n=1$. 
 % We call $\calR_{\epsilon}^W$ the $\epsilon$-RR.
 
 % \commentTM{Below, we could include the following:
@@ -202,23 +202,23 @@ In contrast, edge LDP
 \cite{Qin_CCS17} considers two neighbor lists that differ in one bit: 
 %element (bit). 
 
-\begin{definition} [$(\epsilon,\delta)$-edge DP \cite{Raskhodnikova_Encyclopedia16}] \label{def:edge_DP} 
+\begin{definition} [$(\epsilon,\delta)$-edge DP \cite{Raskhodnikova_Encyclopedia16}] \label{chap3-def:edge_DP} 
 Let $n \in \nats$, $\epsilon \in \nnreals$, and $\delta \in [0,1]$. 
 A randomized algorithm $\calM$ with domain $\calG$ provides \emph{$(\epsilon, \delta)$-edge DP} 
 if for any two neighboring graphs $G, G' \in \calG$ that differ in \textbf{one edge} and any $S \subseteq \mathrm{Range}(\calM)$, 
 \begin{align*}
 \Pr[\calM(G) \in S] \leq e^\epsilon \Pr[\calM(G') \in S] + \delta.
-%\label{eq:edge_DP}
+%\label{chap3-eq:edge_DP}
 \end{align*}
 % We say $\calM$ provides \emph{$\epsilon$-edge DP} if it provides \emph{$(\epsilon,0)$-edge DP}.
 \end{definition}
 
-\begin{definition} [$\epsilon$-edge LDP~\cite{Qin_CCS17}] \label{def:edge_LDP} 
+\begin{definition} [$\epsilon$-edge LDP~\cite{Qin_CCS17}] \label{chap3-def:edge_LDP} 
 Let $\epsilon \in \nnreals$. 
 A local randomizer $\calR$ with domain $\{0,1\}$ provides \emph{$\epsilon$-edge LDP} if for any two neighbor lists $\bma_i, \bma'_i \in \{0,1\}^n$ that differ in \textbf{one bit} and any $S \subseteq \mathrm{Range}(\calR)$, 
 \begin{align*}
 \Pr[\calR(\bma_i) \in S] \leq e^\epsilon \Pr[\calR(\bma'_i) \in S].
-%\label{eq:edge_LDP}
+%\label{chap3-eq:edge_LDP}
 \end{align*}
 \end{definition}
 
@@ -226,14 +226,14 @@ A local randomizer $\calR$ with domain $\{0,1\}$ provides \emph{$\epsilon$-edge 
 As with edge LDP,  
 we define \textit{element DP}, which considers two adjacency matrices that differ in one bit, in the central model:
 
-\begin{definition} [$(\epsilon,\delta)$-element DP] \label{def:element_DP} 
+\begin{definition} [$(\epsilon,\delta)$-element DP] \label{chap3-def:element_DP} 
 Let $n \in \nats$, $\epsilon \in \nnreals$, and $\delta \in [0,1]$. 
 A randomized algorithm $\calM$ with domain $\calG$ provides \emph{$(\epsilon, \delta)$-element DP} 
 if for any two neighboring graphs $G, G' \in \calG$ that differ in \textbf{one bit} in the corresponding adjacency matrices $\bmA, \bmA' \in \{0,1\}^{n \times n}$
 and any $S \subseteq \mathrm{Range}(\calM)$, 
 \begin{align*}
 \Pr[\calM(G) \in S] \leq e^\epsilon \Pr[\calM(G') \in S] + \delta.
-%\label{eq:element_DP}
+%\label{chap3-eq:element_DP}
 \end{align*}
 % We say $\calM$ provides \emph{$\epsilon$-element DP} if it provides \emph{$(\epsilon,0)$-element DP}.
 \end{definition}
@@ -241,20 +241,20 @@ and any $S \subseteq \mathrm{Range}(\calM)$,
 % Element DP considers two graphs that differ in one element, as with edge LDP. 
 % In contrast, edge DP \cite{Raskhodnikova_Encyclopedia16} considers two graphs that differ in one edge: 
 
-% \begin{definition} [$(\epsilon,\delta)$-edge DP \cite{Raskhodnikova_Encyclopedia16}] \label{def:edge_DP} 
+% \begin{definition} [$(\epsilon,\delta)$-edge DP \cite{Raskhodnikova_Encyclopedia16}] \label{chap3-def:edge_DP} 
 % Let $n \in \nats$, $\epsilon \in \nnreals$, and $\delta \in [0,1]$. 
 % A randomized algorithm $\calM$ with domain $\calG$ provides \emph{$(\epsilon, \delta)$-edge DP} 
 % if for any two neighboring graphs $G, G' \in \calG$ that differ in \textbf{one edge} and any $S \subseteq \mathrm{Range}(\calM)$, 
 % \begin{align}
 % \Pr[\calM(G) \in S] \leq e^\epsilon \Pr[\calM(G') \in S] + \delta.
-% \label{eq:edge_DP}
+% \label{chap3-eq:edge_DP}
 % \end{align}
 % % We say $\calM$ provides \emph{$\epsilon$-edge DP} if it provides \emph{$(\epsilon,0)$-edge DP}.
 % \end{definition}
 
 Although element DP and edge DP have different definitions of neighboring data, they are closely related to each other:
 
-\begin{proposition}\label{prop:element_edge_DP}
+\begin{proposition}\label{chap3-prop:element_edge_DP}
 If a randomized algorithm $\calM$ provides $(\epsilon, \delta)$-element DP, it also provides $(2\epsilon, 2\delta)$-edge DP. 
 \end{proposition}
 \begin{proof}
@@ -272,12 +272,12 @@ a randomized algorithm $\calM$ in the central model
 %consists of $n$ local randomizers $\calR$
 applies a local randomizer $\calR$ providing $\epsilon$-edge LDP to each neighbor list $\bma_i$ ($1 \leq i \leq n$), it provides $2\epsilon$-edge DP \cite{Imola_USENIX21}. 
 
-In this work, we use the shuffling technique to provide $(\epsilon, \delta)$-element DP and then Proposition~\ref{prop:element_edge_DP} to provide $(2\epsilon, 2\delta)$-edge DP. 
+In this work, we use the shuffling technique to provide $(\epsilon, \delta)$-element DP and then Proposition~\ref{chap3-prop:element_edge_DP} to provide $(2\epsilon, 2\delta)$-edge DP. 
 We also compare our shuffle algorithms providing $(\epsilon, \delta)$-element DP and $(2\epsilon, 2\delta)$-edge DP with local algorithms providing $\epsilon$-edge LDP and $2\epsilon$-edge DP to see how much the estimation error is reduced by introducing the shuffle model and a very small $\delta$ ($\ll \frac{1}{n}$). 
 
 % \subsection{Shuffle Privacy Model}
 \subsection{Shuffle Model}
-\label{sub:shuffle}
+\label{chap3-sub:shuffle}
 We consider the following shuffle model. 
 % for graphs. 
 % Each user $v_i \in V$ obfuscates input data calculated from her neighbor list $\bma_i$ 
@@ -295,7 +295,7 @@ Hereinafter, we omit the encryption/decryption process because it is clear from 
 
 % We use the following privacy amplification result provided by Feldman \textit{et al.} \cite{Feldman_FOCS21}:
 We use the privacy amplification result by Feldman \textit{et al.} \cite{Feldman_FOCS21}:
-\begin{theorem} [Privacy amplification by shuffling \cite{Feldman_FOCS21}] \label{thm:shuffle}
+\begin{theorem} [Privacy amplification by shuffling \cite{Feldman_FOCS21}] \label{chap3-thm:shuffle}
 Let $n \in \nats$ and $\epsilon_L \in \nnreals$. 
 Let $\calX$ be the set of input data for each user. 
 Let $x_i \in \calX$ be input data of the $i$-th user, and 
@@ -306,12 +306,12 @@ Let $\calM_S: \calX^n \rightarrow \calY^n$ be an algorithm that given a dataset 
 Then for any $\delta \in [0,1]$ such that $\epsilon_L \leq \log (\frac{n}{16 \log (2/\delta)})$, $\calM_S$ provides $(\epsilon, \delta)$-DP, where
 \begin{align}
 \epsilon = f(n, \epsilon_L, \delta)
-\label{eq:shuffle_epsilon_f}
+\label{chap3-eq:shuffle_epsilon_f}
 \end{align}
 and 
 \begin{align}
 f(n, \epsilon_L, \delta) = \log \left( 1 + \frac{e^{\epsilon_L}-1}{e^{\epsilon_L}+1} \left( \frac{8\sqrt{e^{\epsilon_L} \log(4/\delta)}}{\sqrt{n}} + \frac{8 e^{\epsilon_L}}{n} \right) \right).
-\label{eq:shuffle_epsilon}
+\label{chap3-eq:shuffle_epsilon}
 \end{align}
 \end{theorem}
 % \begin{figure}[t]
@@ -324,25 +324,25 @@ f(n, \epsilon_L, \delta) = \log \left( 1 + \frac{e^{\epsilon_L}-1}{e^{\epsilon_L
 %   and sends the obfuscated data $y_i$ to the shuffler. 
 %   The shuffler sends shuffled data $y_{\pi(1)}, \ldots, y_{\pi(n)}$ to the data collector.
 %   }
-%   \label{fig:shuffle_model}
+%   \label{chap3-fig:shuffle_model}
 % \end{figure}
-% Figure~\ref{fig:shuffle_model} shows the shuffle model assumed in this paper. 
+% Figure~\ref{chap3-fig:shuffle_model} shows the shuffle model assumed in this paper. 
 Thanks to the shuffling, the shuffled data $y_{\pi(1)}, \ldots, y_{\pi(n)}$ available to the data collector provides $(\epsilon, \delta)$-DP, where $\epsilon \ll \epsilon_L$. 
 
-Feldman \textit{et al.} \cite{Feldman_FOCS21} also propose an efficient method to numerically compute a tighter upper bound than the closed-form upper bound in Theorem~\ref{thm:shuffle}. 
+Feldman \textit{et al.} \cite{Feldman_FOCS21} also propose an efficient method to numerically compute a tighter upper bound than the closed-form upper bound in Theorem~\ref{chap3-thm:shuffle}. 
 We use both the closed-form and numerical upper bounds in our experiments. 
-Specifically, we use the numerical upper bounds in Section~\ref{sec:experiments} and compare the numerical bound with the closed-form bound in 
-\conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sec:numerical_closed}}. 
+Specifically, we use the numerical upper bounds in Section~\ref{chap3-sec:experiments} and compare the numerical bound with the closed-form bound in 
+\conference{the full version \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{chap3-sec:numerical_closed}}. 
 
-Assume that $\epsilon$ and $\delta$ in (\ref{eq:shuffle_epsilon}) are constants. 
+Assume that $\epsilon$ and $\delta$ in (\ref{chap3-eq:shuffle_epsilon}) are constants. 
 Then, by solving for $\epsilon_L$ and changing to big $O$ notation, we obtain  $\epsilon_L = \log(n) + O(1)$. 
 This is consistent with the upper bound $\epsilon = O(e^{\epsilon_L / 2} / \sqrt{n})$ in \cite{Feldman_FOCS21}, from which we obtain $\epsilon_L = \log(n) + O(1)$. 
-% By (\ref{eq:shuffle_epsilon}), when we treat $\epsilon$ and $\delta$ as constants, $\epsilon_L$ can be expressed as 
+% By (\ref{chap3-eq:shuffle_epsilon}), when we treat $\epsilon$ and $\delta$ as constants, $\epsilon_L$ can be expressed as 
 % $\epsilon_L = \log(n) + O(1)$. 
 % Similarly, the privacy amplification bounds in \cite{Balle_CRYPTO19,Cheu_EUROCRYPT19} can also be expressed as $\epsilon_L = \Theta(\log(n))$. 
 Similarly, the privacy amplification bound in \cite{Cheu_EUROCRYPT19} can also be expressed as $\epsilon_L = \log(n) + O(1)$. 
 % This is smaller than other bounds, such as \cite{Balle_CRYPTO19,Erlingsson_SODA19}. 
-We use the bound in \cite{Feldman_FOCS21} because it is the state-of-the-art, as described in Section~\ref{sec:related}. 
+We use the bound in \cite{Feldman_FOCS21} because it is the state-of-the-art, as described in Section~\ref{chap3-sec:related}. 
 % -- it provides smaller $\epsilon$ than other bounds, such as \cite{Balle_CRYPTO19,Cheu_EUROCRYPT19,Erlingsson_SODA19}. 
 %and is more general than the bound in \cite{Cheu_EUROCRYPT19} that is specific to binary RR. 
 % The bound in \cite{Feldman_FOCS21} also outperforms the bound in \cite{Girgis_CCS21} when it is used without composition, which is the case with this work. 
@@ -351,10 +351,10 @@ We use the bound in \cite{Feldman_FOCS21} because it is the state-of-the-art, as
 % However, 
 % shuffling outputs of the same local randomizers (randomize-then-shuffle) 
 % is equivalent to first shuffling input data and then applying the local randomizers (shuffle-then-randomize) as described in \cite{Erlingsson_SODA19}. 
-% Thus, if all users adopt the same local randomizer, the result in \cite{Feldman_FOCS21} can be applied to the randomize-then-shuffle model, which gives Theorem~\ref{thm:shuffle}. 
+% Thus, if all users adopt the same local randomizer, the result in \cite{Feldman_FOCS21} can be applied to the randomize-then-shuffle model, which gives Theorem~\ref{chap3-thm:shuffle}. 
 
 \subsection{Utility Metrics}
-\label{sub:utility}
+\label{chap3-sub:utility}
 % Following the existing work, 
 We use 
 the MSE (Mean Squared Error) 

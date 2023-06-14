@@ -1,6 +1,6 @@
 %-------------------------------------------------------------------------------
 \section{Related Work}
-\label{sec:related}
+\label{chap1-sec:related}
 %-------------------------------------------------------------------------------
 % Here we review the prior work related to ours. 
 % Here we review the previous work on graph DP (Differential Privacy), LDP (Local DP), and upper/lower-bounds.
@@ -40,8 +40,8 @@ However, it introduces a very large bias for triangle counts.
 In \cite{Ye_TKDE21}, they propose a method for reducing the bias in the estimate of triangle counts. 
 However, the method in \cite{Ye_TKDE21} introduces some approximation, and it is unclear whether their estimate is unbiased. 
 In this paper, we propose a one-round algorithm for triangles that uses empirical estimation as a post-processing step, and prove that our estimate is unbiased. 
-We also show in Appendix~\ref{sec:RR_emp} that our one-round algorithm significantly outperforms the one-round algorithm in \cite{Ye_ICDE20}. 
-Moreover, we show in Section~\ref{sec:experiments} that our two-rounds algorithm significantly outperforms our one-round algorithm.
+We also show in Appendix~\ref{chap1-sec:RR_emp} that our one-round algorithm significantly outperforms the one-round algorithm in \cite{Ye_ICDE20}. 
+Moreover, we show in Section~\ref{chap1-sec:experiments} that our two-rounds algorithm significantly outperforms our one-round algorithm.
 
 Our work also differs from \cite{Sun_CCS19,Ye_ICDE20,Ye_TKDE21} in that we provide lower-bounds on the estimation error.
 
@@ -51,7 +51,7 @@ Our work also differs from \cite{Sun_CCS19,Ye_ICDE20,Ye_TKDE21} in that we provi
 % lower-bounds on the estimation error. 
 % We note that although Warner's RR (Randomized Response) has been applied to an adjacency matrix in \cite{Qin_CCS17,Ye_ICDE20} for different purposes than ours, it can be used for counting triangles. 
 % However, it suffers from a very large estimation error. 
-% Our one-round algorithm for triangles uses empirical estimation as a post-processing step, and we show in Appendix~\ref{sec:RR_emp} that this empirical estimation step significantly reduces the estimation error.
+% Our one-round algorithm for triangles uses empirical estimation as a post-processing step, and we show in Appendix~\ref{chap1-sec:RR_emp} that this empirical estimation step significantly reduces the estimation error.
 
 \smallskip
 \noindent{\textbf{LDP.}}~~Apart from graphs, a number of works have looked at analyzing statistics (e.g., discrete distribution estimation\cite{Acharya_AISTATS19,Fanti_PoPETs16,Kairouz_ICML16,Kairouz_JMLR16,Murakami_USENIX19,Wang_USENIX17,Ye_ISIT17}, 
@@ -59,7 +59,7 @@ Our work also differs from \cite{Sun_CCS19,Ye_ICDE20,Ye_TKDE21} in that we provi
 heavy hitters \cite{Bassily_STOC15,Bassily_NIPS17,Qin_CCS16}) under LDP. 
 % Warner's RR \cite{Warner_JASA65}, $k$-ary RR \cite{Kairouz_ICML16}, RAPPOR \cite{Erlingsson_CCS14}, ...
 
-However, they use LDP in the context of tabular data, and do not consider the kind of complex interdependency in graph data (as described in Section~\ref{sec:intro}). 
+However, they use LDP in the context of tabular data, and do not consider the kind of complex interdependency in graph data (as described in Section~\ref{chap1-sec:intro}). 
 % it can happen that their algorithms do not work well for graph data which have complex interdependency. 
 For example, the RR with empirical estimation is optimal in the low privacy regimes for estimating a distribution for tabular data \cite{Kairouz_ICML16,Kairouz_JMLR16}. 
 We apply the RR and empirical estimation to counting triangles, and show that it is suboptimal and significantly outperformed by a more sophisticated 
@@ -79,7 +79,7 @@ Joseph_ArXiv19_Gauss, Joseph_SODA20} on the estimation error (or sample complexi
 distribution estimation of tabular data. 
 % can be found in \cite{Acharya_AISTATS19,Duchi_ArXiv14,Kairouz_ICML16,Kairouz_JMLR16,Ye_ISIT17}. 
 However, they assume that each original data value is independently sampled from an underlying distribution. 
-They cannot be directly applied to our graph setting, because each triangle and each $k$-star involve multiple edges and are not independent (as described in Section~\ref{sec:intro}). 
+They cannot be directly applied to our graph setting, because each triangle and each $k$-star involve multiple edges and are not independent (as described in Section~\ref{chap1-sec:intro}). 
 % Acharya \textit{et al.} \cite{Acharya_arXiv20} provides lower-bounds on ...
 Rashtchian \textit{et al.} \cite{Rashtchian_arXiv20} provide lower-bounds on communication complexity (i.e., number of queries) of vector-matrix-vector queries for estimating subgraph counts. 
 However, their lower-bounds are not on the estimation error, and cannot be applied to our problem.

@@ -1,7 +1,7 @@
 %-------------------------------------------------------------------------------
 \section{Introduction}
 %-------------------------------------------------------------------------------
-\label{sec:intro}
+\label{chap1-sec:intro}
 % With the widespread use of social networking services and other internet services, 
 % Graph analytics is a useful tool to extract valuable statistics or 
 
@@ -56,15 +56,15 @@ Since the data collector does not hold the original personal data, it does not s
 Therefore, LDP has recently attracted attention from both academia \cite{Acharya_AISTATS19,Bassily_STOC15,Bassily_NIPS17,Fanti_PoPETs16,Kairouz_ICML16,Kairouz_JMLR16,Murakami_USENIX19,Qin_CCS16,Wang_USENIX17,Ye_ISIT17} as well as industry \cite{Erlingsson_CCS14,Ding_NIPS17,Thakurta_USPatent17}. 
 % Most of the studies on LDP focus on 
 However, the use of LDP has mostly been in the context of tabular data where each row corresponds to an individual, and little attention has been paid to LDP for more complex data such as graphs (see 
-Section~\ref{sec:related} for details). 
-% Related work at the end of Section~\ref{sec:intro}). 
+Section~\ref{chap1-sec:related} for details). 
+% Related work at the end of Section~\ref{chap1-sec:intro}). 
 
 \begin{figure}
 \centering
 \includegraphics[width=0.9\linewidth]{fig/subgraph.pdf}
 \vspace{-5.8mm}
 \caption{Example of subgraph counts.}
-\label{fig:subgraph}
+\label{chap1-fig:subgraph}
 \end{figure}
 
 In this paper, we consider LDP for graph data, and 
@@ -75,10 +75,10 @@ In particular, we focus on counting triangles and $k$-stars -- the most basic an
 % such as triangles and $k$-stars. 
 A triangle is a set of three nodes with three edges (we exclude automorphisms; i.e., \#closed triplets $= 3 \times$ \#triangles). 
 A $k$-star consists of a central node connected to $k$ other nodes. 
-Figure~\ref{fig:subgraph} shows an example of triangles and $k$-stars. 
+Figure~\ref{chap1-fig:subgraph} shows an example of triangles and $k$-stars. 
 Counting them is a fundamental task of analyzing the connection patterns in a graph, as 
 % measures of centrality such as 
-the clustering coefficient can be calculated from triangle and $2$-star counts as: $\frac{3 \times \text{\#triangles}}{\#2\text{-stars}}$ (in Figure~\ref{fig:subgraph}, $\frac{3 \times 5}{20} = 0.75$). 
+the clustering coefficient can be calculated from triangle and $2$-star counts as: $\frac{3 \times \text{\#triangles}}{\#2\text{-stars}}$ (in Figure~\ref{chap1-fig:subgraph}, $\frac{3 \times 5}{20} = 0.75$). 
 
 When we look to protect privacy of relationship information modeled by edges in a graph, 
 we need to pay attention to the fact 
@@ -88,7 +88,7 @@ that some relationship information
 could be leaked from subgraph counts. 
 For example, 
 % consider an adversary who 
-suppose that user (node) $v_2$ in Figure~\ref{fig:subgraph} knows 
+suppose that user (node) $v_2$ in Figure~\ref{chap1-fig:subgraph} knows 
 all edges connected to $v_2$ and 
 all edges between $v_3, \ldots, v_7$ 
 as background knowledge, and that $v_2$ wants to know who are friends with $v_1$. 
@@ -105,7 +105,7 @@ The main challenge in counting subgraphs in the local model is that existing tec
 The existing work on LDP for tabular data assumes that 
 each person's data 
 is independently and identically drawn from an underlying distribution. 
-% (see Section~\ref{sec:related}). 
+% (see Section~\ref{chap1-sec:related}). 
 In graphs, this is no longer the case; e.g., 
 each triangle is not independent, 
 because multiple triangles can involve the same edge; 
@@ -116,10 +116,10 @@ are
 possible in graphs. 
 For example, each user cannot count triangles involving herself, because she cannot see edges between other users; 
 e.g., 
-% in Figure~\ref{fig:subgraph}, 
+% in Figure~\ref{chap1-fig:subgraph}, 
 user 
 % (node) 
-$v_1$ cannot see an edge between $v_3$ and $v_4$ in Figure~\ref{fig:subgraph}. 
+$v_1$ cannot see an edge between $v_3$ and $v_4$ in Figure~\ref{chap1-fig:subgraph}. 
 
 % This simultaneously presents both challenges and opportunities. 
 We show that although these complex dependency among users introduces challenges, it also presents opportunities. Specifically, this kind of interdependency also implies that extra interaction between users and a data collector may be helpful depending on the prior responses. 

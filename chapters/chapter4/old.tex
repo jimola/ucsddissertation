@@ -3,7 +3,7 @@ In this section, we discuss the necessary background: the definition of local di
 \textit{Graph Notation.}
 We consider a social network consisting of users $\DO_1, \ldots, \DO_n$. The users belong to an undirected graph $G = ([n], E)$, where user $\DO_i$ corresponds to vertex $i$. Each user is aware of his adjacency list $l_i \in \{0,1\}^n$ which indicates the users to which he shares an edge. We write $l_i[j]$ to indicate the $j$th bit of $l_i$, so that $l_i[j]=1$ if and only if there is an edge between $\DO_i$ and $\DO_j$. We let $\textbf{d}=\langle d_1, \ldots, d_n\rangle \in \R^n$ denote the vector of degrees in $G$, with $d_i$ being the degree of $\DO_i$.
 
-\subsection{Local Differential Privacy for Graphs}\label{sec:ldp}
+\subsection{Local Differential Privacy for Graphs}\label{chap4-sec:ldp}
 
 Our privacy setting is local differential privacy for graphs~\cite{imola2021locally}, in which each user $\DO_i$ is privately queried about his adjacency list $l_i$ by an untrusted analyst. We consider \emph{one-round, non-interactive} protocols, where the analyst independently queries each user once, and user $i$ is queried with a \emph{randomizer} $R_i$. The randomizers use noise to provide privacy such that the effect of adding or removing an entire edge (or relationship) from the graph will produce similar output distributions. Formally, we have:
 
@@ -26,7 +26,7 @@ Relationship DP provides the following privacy guarantee to each user: If the us
 
 \subsubsection{Randomized Response} Denoted $RR_\rho(\cdot)$, randomized response~\cite{RR} releases a bit $b \in \{0,1\}$ by
 flipping it with probability $\rho = \frac{1}{1+e^\epsilon}$. We naturally extend the mechanism to edge lists in $\{0,1\}^n$ by flipping each bit independently with probability $\rho$.
-%(depicted by Algorithm~\ref{alg:rr} in Appendix~\ref{app:background}). 
+%(depicted by Algorithm~\ref{chap4-alg:rr} in Appendix~\ref{chap4-app:background}). 
 As we will see later, when each user applies $RR_\rho$ to his adjacency list, the entire protocol satisfies $2\epsilon$-relationship DP.
 
 \subsubsection{Laplace Mechanism} 
@@ -38,7 +38,7 @@ The \textit{Laplace mechanism} is a standard algorithm to achieve \DP~\cite{Dwor
 At the end of the protocol, the analyst receives $q_i = R_i(l_i) \in \calX$ from each user $\DO_i$. The goal of the analyst is to produce a degree estimate $\hat{d}_i$ for each user. However, we consider a set $\calM \subseteq [n]$ of \emph{malicious user indices}, consisting of compromised users who choose to not apply the randomizers and instead may return arbitrary output with the goal of poisoning the data. We make no assumptions about the malicious users---they may be spam accounts in the social network, compromised accounts of honest users, or any other type of malicious account. Our only assumptions are that the honest users indexed by $\calH = [n] \setminus \calM$ honestly apply their randomizers.
 
 
-%(see Section \ref{sec:attack:naive} for details).
+%(see Section \ref{chap4-sec:attack:naive} for details).
 
 \textit{Summary of Attack Notation:}
 User $\DO_i$ sends $q_i = R_i(l_i) \in \calX$ to the analyst. Based on the responses, the analyst computes a degree estimate $\hat{d}_i$ for each user. A set of $m$ malicious users indexed by $\calM \in [n]$ may choose to poison the outputs. We denote the honest users by $\calH = [n] \setminus \calM$.
@@ -48,7 +48,7 @@ User $\DO_i$ sends $q_i = R_i(l_i) \in \calX$ to the analyst. Based on the respo
 \begin{comment}\noindent\textbf{Note.} Allour results are attack-agnostic, i.e.,
 We reiterate that our correctness and soundness definitions take strict approaches as to what constitutes an ``abnormal'' execution and thus when a protocol is allowed to return $\bottom$. Under correctness, all honest users receive an accurate estimate, regardless of any data poisoning attack. Under soundness, only malicious users who may poison their data are allowed to receive $\bottom$. 
 
-For both correctness and soundness, error terms of $m$ are generally possible against any protocol, as if $m$ users act maliciously, they can corrupt the information of $m$ edges to any user. As described in Section~\ref{sec:price-privacy}, even non-private protocols are susceptible to such attacks. Thus, our correctness and soundness guarantees will all contain terms of $m$---since $m$ is generally small, this term is the lowest-order term in our bounds.
+For both correctness and soundness, error terms of $m$ are generally possible against any protocol, as if $m$ users act maliciously, they can corrupt the information of $m$ edges to any user. As described in Section~\ref{chap4-sec:price-privacy}, even non-private protocols are susceptible to such attacks. Thus, our correctness and soundness guarantees will all contain terms of $m$---since $m$ is generally small, this term is the lowest-order term in our bounds.
 
 Finally, our definitions are attack-agnostic: an algorithm which is correct or sound up to $m$ malicious users must satisfy the claims regardless of the attack used.
 \end{comment}

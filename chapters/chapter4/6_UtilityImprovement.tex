@@ -1,10 +1,10 @@
-\section{Improving Correctness with A Hybrid Protocol}\label{sec:hybrid}
+\section{Improving Correctness with A Hybrid Protocol}\label{chap4-sec:hybrid}
 The robustness guarantees for $\DegRRCheck{}$ contain a $\tilde{O}(\frac{\sqrt{n}}{\epsilon})$ term coming from the error in randomized response.
 This is inherent in \textit{any} randomized response based mechanism  ~\cite{error1,error2,error3} since each of the $n$ bits of the adjacency list need to be independently randomized. Unfortunately, this dependence on $n$ has an adverse effect on the utility of the degree estimates. Typically, real-world graphs are sparse in nature with maximum degree $d_{max}\ll n$. Hence, the $\tilde{O}(\frac{\sqrt{n}}{\epsilon})$ noise term completely dominates the degree estimates resulting in poor accuracy for the honest users %\footnote{The ``utility'' of the malicious users is inconsequential -- our goal is to minimize the impact of poisoning from the worst-case error of $n-1$.} 
-(i.e. poor correctness). On the other hand, \RLap{} provides a more accurate degree estimate for the honest users but has the worst-case $(n-1)$-tight soundness (see Thm.~\ref{thm:response:laplace}). In this section, we present a mitigation strategy. The key idea is to combine the two approaches and use a hybrid protocol, \DegHybrid, that achieves the best of both worlds: 
+(i.e. poor correctness). On the other hand, \RLap{} provides a more accurate degree estimate for the honest users but has the worst-case $(n-1)$-tight soundness (see Thm.~\ref{chap4-thm:response:laplace}). In this section, we present a mitigation strategy. The key idea is to combine the two approaches and use a hybrid protocol, \DegHybrid, that achieves the best of both worlds: 
 \begin{itemize} \item correctness guarantee of \RLap, and \item soundness guarantee of \DegRRCheck. \end{itemize}
 
-The $\DegHybrid$ protocol is outlined in Alg. \ref{alg:deghybrid} and described as follows. Each user $\DO_i$ prepares two responses -- the noisy adjacency list, $q_i$, randomized via $\textsf{RR}_{\rho}$, and a noisy degree estimate, $\tilde{d}^{lap}_i$, perturbed via \RLap, and sends them to the data aggregator. $\DO_i$ divides the privacy budget between the two responses according to some constant $c \in (0,1)$. The data aggregator first processes each list $q_i$ to employ the same consistency check on $count^{01}_i$ as that of the \DegRRCheck{} protocol (Step 9).
+The $\DegHybrid$ protocol is outlined in Alg. \ref{chap4-alg:deghybrid} and described as follows. Each user $\DO_i$ prepares two responses -- the noisy adjacency list, $q_i$, randomized via $\textsf{RR}_{\rho}$, and a noisy degree estimate, $\tilde{d}^{lap}_i$, perturbed via \RLap, and sends them to the data aggregator. $\DO_i$ divides the privacy budget between the two responses according to some constant $c \in (0,1)$. The data aggregator first processes each list $q_i$ to employ the same consistency check on $count^{01}_i$ as that of the \DegRRCheck{} protocol (Step 9).
 In case the check passes, the aggregator computes the unbiased degree estimate $\tilde{d}^{rr}_i$ from $count_i^{11}$, in the exact same way as \DegRRCheck. Note that $\tilde{d}^{rr}_i$ and $\tilde{d}^{lap}_i$ are the noisy estimates of the \textit{same} ground truth degree, $d_i$, computed via two different randomization mechanisms. To this end, the aggregator employs a second check (Step 10) to verify the consistency of the two estimates as follows:
 \begin{gather*} |\tilde{d}_i^{rr} - \tilde{d}_i^{lap}| \leq \frac{2\tau}{1-2\rho} + \frac{1}{(1-c)\epsilon}\ln \tfrac{2n}{\delta} ,\end{gather*} 
 where $\rho$ in this case is equal to $\frac{1}{1+e^{c\epsilon}}$.
@@ -43,11 +43,11 @@ In the event that both the checks pass, the aggregator uses $\tilde{d}_i^{lap}$ 
 		}
 	}
   \KwRet{$(\hd_1, \hd_2, \ldots, \hd_n)$}
-  \caption{\DegHybrid: $\{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{alg:deghybrid}
+  \caption{\DegHybrid: $\{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{chap4-alg:deghybrid}
 \end{algorithm}
 
 %\begin{algorithm}[bt]
-%  \caption{\DegHybrid: $\{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{alg:deghybrid}
+%  \caption{\DegHybrid: $\{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{chap4-alg:deghybrid}
 %  \begin{algorithmic}[1]
 %  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;\Statex \hspace{1.8cm} $\tau$ - Threshold for consistency check;
 %  
@@ -86,10 +86,10 @@ In the event that both the checks pass, the aggregator uses $\tilde{d}_i^{lap}$ 
 
 Each $\hd^{rr}_i$ estimate is computed identically to that of \DegRRCheck{}. \DegHybrid{} allows a user to send an even more accurate estimate of their degree -- to prevent malicious users from outright lying about this value, $\hd_i^{lap}$ is compared to $\hd_i^{rr}$. This allows \DegHybrid{} to enjoy the correctness guarantee of \RLap{} and the soundness guarantee of \DegRRCheck{}. Formally,
 
-\begin{thm}\label{thm:rrlapchecka3}
+\begin{thm}\label{chap4-thm:rrlapchecka3}
 	Let $\calM$ be a set of malicious users with $|\calM| = m$.
-    Then, for all $c \in (0,1)$, the \DegHybrid{} protocol run with $\tau = \threshresphybrid$ is $(\frac{\ln \frac{2n}{\delta}}{(1-c)\epsilon}, \delta)$-correct and $\left( 4m (\frac{e^{c\epsilon}+1}{e^{c\epsilon}-1}) + 8\sqrt{n}\frac{ \sqrt{(e^{c\epsilon}+1)\ln \frac{8n}{\delta}}}{e^{c\epsilon}-1} + \frac{\ln \frac{2n}{\delta}}{(1-c)\epsilon}, \delta\right)$-sound with respect to any response poisoning attack. \label{thm:response:hybrid}
+    Then, for all $c \in (0,1)$, the \DegHybrid{} protocol run with $\tau = \threshresphybrid$ is $(\frac{\ln \frac{2n}{\delta}}{(1-c)\epsilon}, \delta)$-correct and $\left( 4m (\frac{e^{c\epsilon}+1}{e^{c\epsilon}-1}) + 8\sqrt{n}\frac{ \sqrt{(e^{c\epsilon}+1)\ln \frac{8n}{\delta}}}{e^{c\epsilon}-1} + \frac{\ln \frac{2n}{\delta}}{(1-c)\epsilon}, \delta\right)$-sound with respect to any response poisoning attack. \label{chap4-thm:response:hybrid}
 \end{thm}
 
-The proof is in App. \ref{app:thm:rrlapchecka3}. We remark that \DegHybrid{} achieves the optimal correctness of $\tilde{O}(\frac{1}{\epsilon})$ that is achievable under \ldp. This is due to the fact that the data aggregator uses $\tilde{d}^{lap}_i$ as its final degree estimate. The soundness guarantee can be written as $\tO(m(1+\frac{1}{\epsilon}) + \frac{\sqrt{n}}{\epsilon})$ which is the same as that of \DegRRCheck{}. This is enforced by the two consistency checks.   Hence, the hybrid mechanism achieves the best of both worlds.
+The proof is in App. \ref{chap4-app:thm:rrlapchecka3}. We remark that \DegHybrid{} achieves the optimal correctness of $\tilde{O}(\frac{1}{\epsilon})$ that is achievable under \ldp. This is due to the fact that the data aggregator uses $\tilde{d}^{lap}_i$ as its final degree estimate. The soundness guarantee can be written as $\tO(m(1+\frac{1}{\epsilon}) + \frac{\sqrt{n}}{\epsilon})$ which is the same as that of \DegRRCheck{}. This is enforced by the two consistency checks.   Hence, the hybrid mechanism achieves the best of both worlds.
  %Using verification based on randomized response, this soundness cannot be improved, as the error inherent to randomized response has to be accepted for honest users, but malicious users are then able to manipulate their degrees by this much. \ji{Can I prove this formally?}

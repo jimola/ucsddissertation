@@ -1,8 +1,8 @@
 \section{Preliminaries}
-\label{sec:preliminaries}
+\label{chap2-sec:preliminaries}
 
 \subsection{Notations}
-\label{sub:notations}
+\label{chap2-sub:notations}
 We begin with basic notations. 
 % Below we describe notations. 
 Let $\nats$, $\reals$, $\nnints$, and $\nnreals$ be the sets of natural numbers, real numbers, non-negative integers, and non-negative real numbers, respectively. 
@@ -30,12 +30,12 @@ a \textit{local randomizer}
 % a randomized mechanism 
 $\calR_i$ with domain $\{0,1\}^n$ and sends obfuscated data $\calR_i(\bma_i)$ to a server. 
 We also assume a two-rounds algorithm in which user $v_i$ downloads a message $M_i$ from the server at the second round. 
-% Table~\ref{tab:notations} shows the basic notations in this paper.
+% Table~\ref{chap2-tab:notations} shows the basic notations in this paper.
 
-We also show the basic notations in Table~\ref{tab:notations} of Appendix~\ref{sec:notations_subgraphs}.
+We also show the basic notations in Table~\ref{chap2-tab:notations} of Appendix~\ref{chap2-sec:notations_subgraphs}.
 
 \subsection{Local Differential Privacy on Graphs}
-\label{sub:LDP}
+\label{chap2-sub:LDP}
 
 % \noindent{\textbf{Local graph model.}}~~TBD
 
@@ -88,7 +88,7 @@ as prior knowledge.
 Then we 
 use the following definition for $\calR_i$:
 
-\begin{definition} [$\epsilon$-edge LDP~\cite{Qin_CCS17}] \label{def:edge_LDP} 
+\begin{definition} [$\epsilon$-edge LDP~\cite{Qin_CCS17}] \label{chap2-def:edge_LDP} 
 Let $\epsilon \in \nnreals$. 
   For 
   % some $1 \leq i \leq n$, 
@@ -108,7 +108,7 @@ Let $\epsilon \in \nnreals$.
 \begin{align}
 % \Pr[\calR_i(\bma_i) \in S] \leq e^\epsilon \Pr[\calR_i(\bma'_i) \in S].
 \Pr[\calR_i(\bma_i) = s] \leq e^\epsilon \Pr[\calR_i(\bma'_i) = s].
-\label{eq:edge_LDP}
+\label{chap2-eq:edge_LDP}
 \end{align}
 \end{definition}
 % The parameter $\epsilon$ is called the privacy budget. 
@@ -154,7 +154,7 @@ an edge between them.
 This also applies to Facebook -- even if $v_i$ keeps $\bma_i$ secret, her edge with $v_j$ can be disclosed if $v_j$ reveals $\bma_j$. 
 To protect each edge during the whole process, 
 % Since the level
-% of trust is higher than that of Definition~\ref{def:edge_LDP}, 
+% of trust is higher than that of Definition~\ref{chap2-def:edge_LDP}, 
 we use 
 another 
 % definition of privacy 
@@ -164,7 +164,7 @@ called relationship DP~\cite{Imola_USENIX21}:
 % distinguished definition of privacy that applies to undirected graphs.
 
 \begin{definition} [$\epsilon$-relationship DP~\cite{Imola_USENIX21}] 
-\label{def:entire_edge_LDP} 
+\label{chap2-def:entire_edge_LDP} 
   Let $\epsilon \in \nnreals$. For 
   %$1 \leq i \leq n$, 
   $i \in [n]$, 
@@ -181,7 +181,7 @@ if for any two neighboring graphs $G, G' \in \calG$ that differ in one edge and
   &\Pr[(\calR_1(\bma_1), \ldots, \calR_n(\bma_n)) = (s_1, \ldots, s_n)] \nonumber\\
   &\leq e^\epsilon \Pr[(\calR_1(\bma'_1), \ldots, \calR_n(\bma'_n)) = (s_1,
   \ldots, s_n)],
-\label{eq:entire_edge_LDP}
+\label{chap2-eq:entire_edge_LDP}
 \end{align}
   where $\bma_i$ (resp. $\bma_i'$) $\in \{0,1\}^n$ is the $i$-th row of the
   adjacency matrix of graph $G$ (resp. $G'$).
@@ -190,7 +190,7 @@ if for any two neighboring graphs $G, G' \in \calG$ that differ in one edge and
 If 
 users $v_i$ and $v_j$ follow the protocol, 
 % (i.e., output $R_i(\bma_i)$ and $R_j(\bma_j)$), 
-\eqref{eq:entire_edge_LDP} holds for graphs $G,G'$ that differ 
+\eqref{chap2-eq:entire_edge_LDP} holds for graphs $G,G'$ that differ 
 % on exactly $e$. 
 in $(v_i, v_j)$. 
 % In conclusion, 
@@ -222,7 +222,7 @@ Thus, although the trust assumption in relationship DP is stronger than that of 
 It is possible to use
 a tuple of local randomizers with edge LDP to obtain a relationship DP guarantee:
 \begin{proposition} [Edge LDP and relationship DP~\cite{Imola_USENIX21}] 
-\label{prop:edge_LDP_entire_edge_LDP} 
+\label{chap2-prop:edge_LDP_entire_edge_LDP} 
   If 
   % a fixed set 
   each 
@@ -235,9 +235,9 @@ a tuple of local randomizers with edge LDP to obtain a relationship DP guarantee
   $\epsilon$-relationship DP. 
 \end{proposition}
 The doubling factor in $\epsilon$ comes from the fact that 
-\eqref{eq:entire_edge_LDP} applies to an entire edge, whereas
-\eqref{eq:edge_LDP} applies to just one neighbor list, 
-% \eqref{eq:edge_LDP} and \eqref{eq:entire_edge_LDP} apply to one neighbor list and an entire edge, respectively, 
+\eqref{chap2-eq:entire_edge_LDP} applies to an entire edge, whereas
+\eqref{chap2-eq:edge_LDP} applies to just one neighbor list, 
+% \eqref{chap2-eq:edge_LDP} and \eqref{chap2-eq:entire_edge_LDP} apply to one neighbor list and an entire edge, respectively, 
 and 
 adding an entire
 edge may cause changes to two neighbor lists. 
@@ -254,7 +254,7 @@ factor can be avoided.
 Our algorithms also use only the lower triangular part of $\bmA$ to avoid this doubling issue.
 
 \smallskip
-\noindent{\textbf{Interaction among Users and Multiple Rounds.}}~~While interaction in LDP has been studied before~\cite{Joseph_SODA20}, neither of Definitions~\ref{def:edge_LDP} and \ref{def:entire_edge_LDP} 
+\noindent{\textbf{Interaction among Users and Multiple Rounds.}}~~While interaction in LDP has been studied before~\cite{Joseph_SODA20}, neither of Definitions~\ref{chap2-def:edge_LDP} and \ref{chap2-def:entire_edge_LDP} 
 % the privacy definitions we use 
 allows the interaction among users in a one-round protocol where 
 % the server sends a query $\calR_i$ to each user $v_i$ and then 
@@ -297,10 +297,10 @@ provides
 DP by 
 % composition (which is known as a general sequential composition~\cite{DP_Li}):
 a (general) sequential composition \cite{DP_Li}: 
-% (the proof appears in Appendix~\ref{sec:proof_seq_comp_edge_LDP}):
+% (the proof appears in Appendix~\ref{chap2-sec:proof_seq_comp_edge_LDP}):
 
 \begin{proposition} [Sequential composition of edge LDP] 
-\label{prop:seq_comp_edge_LDP} 
+\label{chap2-prop:seq_comp_edge_LDP} 
   For 
   % any 
   $i \in [n]$, let 
@@ -324,7 +324,7 @@ $(\calR_i^1(\bma_i), \calR_i^2(M_i)(\bma_i))$
 % $\calR_i^2(M_i)(\bma_i, \calR_i^1(\bma_i))$
 provides $(\epsilon_1 + \epsilon_2)$-edge LDP.
 \end{proposition}
-We provide a proof of Proposition~\ref{prop:seq_comp_edge_LDP} in \conference{the full version \cite{Imola_arXiv22}}\arxiv{Appendix~\ref{sec:proof_seq_comp_edge_LDP}}.
+We provide a proof of Proposition~\ref{chap2-prop:seq_comp_edge_LDP} in \conference{the full version \cite{Imola_arXiv22}}\arxiv{Appendix~\ref{chap2-sec:proof_seq_comp_edge_LDP}}.
 
 % This property is known as a general sequential composition~\cite{DP_Li}. 
 % It allows us to show that over $k \in \nats$ rounds, when each
@@ -333,14 +333,14 @@ We provide a proof of Proposition~\ref{prop:seq_comp_edge_LDP} in \conference{th
 % and also $2k\epsilon$-relationship DP.
 
 % \begin{proposition} [Sequential composition of edge LDP] 
-% \label{prop:seq_comp_edge_LDP} 
+% \label{chap2-prop:seq_comp_edge_LDP} 
 % For any $i \in [n]$, let $\calR_i^1$ and $\calR_i^2$ be two randomized mechanisms of user $v_i$. 
 % If $\calR_i^1$ provides $\epsilon_1$-edge LDP and for any $s \in \mathrm{Range}(\calR_1^1) \times \ldots \times \mathrm{Range}(\calR_n^1)$ and for any post-processing algorithm $\lambda$ on $s$, $\calR_i^2(\lambda(s))$ provides $\epsilon_2$-edge LDP, 
 % then the sequential composition $\calR_i^2 \circ \calR_i^1$ provides $(\epsilon_1 + \epsilon_2)$-edge LDP.
 % \end{proposition}
 
 % \begin{proposition} [Sequential composition of edge LDP] 
-% \label{prop:seq_comp_edge_LDP} 
+% \label{chap2-prop:seq_comp_edge_LDP} 
 % Let $\calU$ be a set of auxiliary input. 
 % For any $i \in [n]$, let $\calR_i^1$ be a randomized mechanism of user $v_i$, and $\calR_i^2$ be a randomized mechanism of $v_i$ that takes auxiliary input $u \in \calU$. 
 % If $\calR_i^1$ provides $\epsilon_1$-edge LDP and for any $u \in \calU$, $\calR_i^2(u)$ provides $\epsilon_2$-edge LDP, 
@@ -355,7 +355,7 @@ We provide a proof of Proposition~\ref{prop:seq_comp_edge_LDP} in \conference{th
 % the global sensitivity is defined as follows:
 \begin{definition}
 % The global sensitivity of a function $f: \calD \rightarrow \reals$ is given by:
-In edge LDP (Definition~\ref{def:edge_LDP}), the global sensitivity of a function $f: \{0,1\}^n \rightarrow \reals$ is given by:
+In edge LDP (Definition~\ref{chap2-def:edge_LDP}), the global sensitivity of a function $f: \{0,1\}^n \rightarrow \reals$ is given by:
 \begin{align*}
     GS_f = \underset{\bma_i, \bma'_i \in \{0,1\}^n, \bma_i \sim \bma'_i}{\max} |f(\bma_i) - f(\bma'_i)|,
     % GS_f = \underset{\bma, \bma' \in \{0,1\}^n, \bma \sim \bma'}{\max} |f(\bma) - f(\bma')|,
@@ -372,7 +372,7 @@ provides $\epsilon$-edge LDP.
 % Thus, the global sensitivity of the triangle count query $f_\triangle$ is at most $d_{max}$. 
 
 \subsection{Utility and Communication-Efficiency}
-\label{sub:utility_communication_efficiency}
+\label{chap2-sub:utility_communication_efficiency}
 \noindent{\textbf{Utility.}}
 %\colorB{\begin{itemize}
 %    \item Expected $l_2$ loss (for theoretical analysis).
@@ -442,8 +442,8 @@ describe $\calR_i^j(M_i^j)(\bma_i)$.
 % round. 
 Over all rounds and all users, we evaluate the \textit{maximum per-user download/upload cost}, which is given by:
 \begin{align}
-  \CostDL &= \textstyle{\max_{i=1}^n \sum_{j=1}^\tau \E[|M_i^j|] ~~~~ \text{(bits)}} \label{eq:cost_DL}\\
-  \CostUL &= \textstyle{\max_{i=1}^n \sum_{j=1}^\tau \E[|\calR_i^j(M_i^j)(\bma_i)|]} ~~~~ \text{(bits)}. \label{eq:cost_UL}
+  \CostDL &= \textstyle{\max_{i=1}^n \sum_{j=1}^\tau \E[|M_i^j|] ~~~~ \text{(bits)}} \label{chap2-eq:cost_DL}\\
+  \CostUL &= \textstyle{\max_{i=1}^n \sum_{j=1}^\tau \E[|\calR_i^j(M_i^j)(\bma_i)|]} ~~~~ \text{(bits)}. \label{chap2-eq:cost_UL}
 \end{align}
 
 The above expectations go over the probability distributions of computing the local

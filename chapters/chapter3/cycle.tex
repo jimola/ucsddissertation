@@ -1,15 +1,15 @@
 %!TEX root=main.tex
 \section{4-Cycle Counting Based on Wedge Shuffling}
-\label{sec:4cycle}
+\label{chap3-sec:4cycle}
 
 Next, we propose a one-round 4-cycle counting algorithm in the shuffle model.
-Section~\ref{sub:4cycle_overview} explains its overview.
-Section~\ref{sub:4cycle_details} proposes our 4-cycle counting algorithm and shows its theoretical properties. 
-Section~\ref{sub:summary_4cycle} summarizes the performance guarantees of our 4-cycle algorithms. 
-% The proofs of all statements in this section are given in Appendix~\ref{sec:4cycle_proof}.
+Section~\ref{chap3-sub:4cycle_overview} explains its overview.
+Section~\ref{chap3-sub:4cycle_details} proposes our 4-cycle counting algorithm and shows its theoretical properties. 
+Section~\ref{chap3-sub:summary_4cycle} summarizes the performance guarantees of our 4-cycle algorithms. 
+% The proofs of all statements in this section are given in Appendix~\ref{chap3-sec:4cycle_proof}.
 
 \subsection{Overview}
-\label{sub:4cycle_overview}
+\label{chap3-sub:4cycle_overview}
 % \textbf{Sending Local Wedges}
 % To count 4-cycles in the graph based on our wedge shuffling technique, we introduce 
 We apply our wedge shuffling technique to 4-cycle counting with two additional techniques: \textit{(i) bias correction} and \textit{(ii) sampling disjoint user-pairs}. 
@@ -49,7 +49,7 @@ To avoid this, we sample disjoint user-pairs and obtain an unbiased estimate of 
 %Naively, we could obtain estimates $\hf_{i,j}^\square(G)$ for all pairs $i,j$, to obtain a concentrated estimate of $\hf^\square(G)$. However, this would not be good for privacy, as each user would send wedge information about all pairs of other vertices, using each value of his adjacency list up to $n$ times. Instead, and identical to the design of \AlgWSTri{}, our algorithm estimates $\hf^\square_{i,j}(G)$ for $t$ disjoint pairs of users with $1 \leq t \leq \lfloor \frac{n}{2} \rfloor$.
 
 \subsection{4-Cycle Counting}
-\label{sub:4cycle_details}
+\label{chap3-sub:4cycle_details}
 
 \setlength{\algomargin}{5mm}
 \begin{algorithm}[t]
@@ -80,16 +80,16 @@ To avoid this, we sample disjoint user-pairs and obtain an unbiased estimate of 
   [d] \KwRet{$\hf^\square(G)$}
   \caption{Our 4-cycle counting algorithm \AlgWSCyc{}.
   %$\hf^\wedge$ is a shorthand for $\hf_{\sigma(i),\sigma(i+1)}^\wedge(G)$.
-  \AlgWS{} is shown in Algorithm~\ref{alg:WShuffle}.
-  }\label{alg:wshuffle_cycle}
+  \AlgWS{} is shown in Algorithm~\ref{chap3-alg:WShuffle}.
+  }\label{chap3-alg:wshuffle_cycle}
 \end{algorithm}
 
-\noindent{\textbf{Algorithm.}}~~Algorithm \ref{alg:wshuffle_cycle} shows our 4-cycle counting algorithm. 
+\noindent{\textbf{Algorithm.}}~~Algorithm \ref{chap3-alg:wshuffle_cycle} shows our 4-cycle counting algorithm. 
 We denote it by \AlgWSCyc{}. 
 % Our algorithm \AlgWSCyc{} produces an unbiased estimator $\hf^\square_{i,j}(G)$. 
-% The algorithm appears in Algorithm~\ref{alg:wshuffle_cycle}. 
+% The algorithm appears in Algorithm~\ref{chap3-alg:wshuffle_cycle}. 
 First, we set a local privacy budget $\epsilon_L$ from $n$, $\epsilon$, and $\delta$ in the same way as \AlgWSLE{} (line 1). 
-%line 1 sets $\epsilon_L$ to be a value such that the entire algorithm in the shuffle model achieves $(\epsilon, \delta)$-DP. This value is given by Theorem~\ref{thm:shuffle}.
+%line 1 sets $\epsilon_L$ to be a value such that the entire algorithm in the shuffle model achieves $(\epsilon, \delta)$-DP. This value is given by Theorem~\ref{chap3-thm:shuffle}.
 %In lines 3-4, 
 Then, we sample $t$ disjoint pairs of users using the permutation $\sigma$ (lines 3-4). 
 Each pair is given by $(v_{\sigma(i), \sigma(i+1)})$ for $i \in \{1, 3, \ldots, 2t-1\}$.
@@ -104,16 +104,16 @@ $(v_{\sigma(i)} v_{\sigma(i+1)})$ to obtain an unbiased estimate $\hf_{\sigma(i)
 \sigma(i+1)}^\wedge(G)$ of the wedge count (lines 6-7). 
 We calculate an estimate $\hf_{i,j}^\wedge(G)$ of the number $f_{i,j}^\wedge(G)$ of wedges between $v_i$ and $v_j$ in $G$ as follows:
 % and is given by
-\begin{equation}\label{eq:wedge-estimate}
+\begin{equation}\label{chap3-eq:wedge-estimate}
   \textstyle{\hf^\wedge_{i,j}(G) = \sum_{k \in I_{-(i,j)}} \frac{y_k - q_L}{1-2q_L}.}
 \end{equation}
 Later, we will prove that $\hf^\wedge_{i,j}(G)$ is an unbiased estimator. 
-As with (\ref{eq:hfij_triangle}), this estimate involves the sum over the set $\{y_{\pi(k)}\}$ and does not require knowing the permutation $\pi$ produced by the shuffler. 
+As with (\ref{chap3-eq:hfij_triangle}), this estimate involves the sum over the set $\{y_{\pi(k)}\}$ and does not require knowing the permutation $\pi$ produced by the shuffler. 
 %Note that each permutation $\pi_i$ used to shuffle the data is distinct for each iteration of the loop, and it is unknown to the data collector.
 % In line 8, 
 Then, we obtain an unbiased estimator of $f_{\sigma(i), \sigma(i+1)}^\square$ as follows:
 %, given by
-\begin{equation}\label{eq:4-cycle-ij-estimate}
+\begin{equation}\label{chap3-eq:4-cycle-ij-estimate}
   \textstyle{\hf_{i,j}^\square(G) = \frac{\hf^\wedge_{i, j}(G)(\hf^\wedge_{i, j}(G)-1)}{2} - \frac{n-2}{2}\frac{q_L(1-q_L)}{(1-2q_L)^2}}
 \end{equation}
 (line 8). 
@@ -127,7 +127,7 @@ Thus,
 even though $\hf_{i, j}^\wedge(G)$ is unbiased, 
 we must subtract a term from $\binom{\hf_{i, j}^\wedge(G)}{2}$ (i.e., bias correction) to obtain an unbiased estimator $\hf_{i, j}^\square(G)$. 
 This forms the righthand side of
-~\eqref{eq:4-cycle-ij-estimate} and ensures that $\hf_{i,j}^\square(G)$ is unbiased. 
+~\eqref{chap3-eq:4-cycle-ij-estimate} and ensures that $\hf_{i,j}^\square(G)$ is unbiased. 
 % as we prove later.
 
 Finally, 
@@ -137,7 +137,7 @@ we sum and scale
 $\hf_{\sigma(i), \sigma(i+1)}^\square(G)$ for each $i$ to obtain an estimate $\hf^\square(G)$ of the 4-cycle count $f^\square(G)$ in the entire graph $G$: 
 % is summed and scaled by the proper amount to produce an final estimate:
 
-\begin{equation}\label{eq:4-cycle-estimate}
+\begin{equation}\label{chap3-eq:4-cycle-estimate}
   \textstyle{\hf^\square(G) = \frac{n(n-1)}{4t}\sum_{i=1,3,\ldots,2t-1} \hf_{\sigma(i),\sigma(i+1)}^\square(G)}
 \end{equation}
 %The factor $\frac{n(n-1)}{4t}$ serves to scale up the estimate, as only $t$ out of a possible $\binom{n}{2}$ samples of $f_{i,j}^\square(G)$ are estimated.
@@ -147,38 +147,38 @@ Note that it is possible that a single 4-cycle is counted twice; e.g.,
 % by $\hf_{\sigma(1),\sigma(2)}^\square, \ldots, \hf_{\sigma(2t-1),\sigma(2t)}^\square$. 
 a 4-cycle $v_i$-$v_j$-$v_k$-$v_l$-$v_i$ is possibly counted by $(v_i,v_k)$ and $(v_j,v_l)$ if these user-pairs are selected. 
 However, this is not an issue, because all 4-cycles are equally likely to be counted zero times, once, or twice. 
-We also prove later that $\hf^\square(G)$ in (\ref{eq:4-cycle-estimate}) is an unbiased estimate of $f^\square(G)$. 
+We also prove later that $\hf^\square(G)$ in (\ref{chap3-eq:4-cycle-estimate}) is an unbiased estimate of $f^\square(G)$. 
 
 \smallskip
 \noindent{\textbf{Theoretical Properties.}}~~First, \AlgWSCyc{} guarantees DP:
 % In the same way as \AlgWSTri{}, we can show that 
-\begin{theorem}\label{thm:DP_IV}
+\begin{theorem}\label{chap3-thm:DP_IV}
 \AlgWSCyc{} provides $(\epsilon, \delta)$-element DP and $(2\epsilon, 2\delta)$-edge DP.
 \end{theorem}
 
-In addition, thanks to the design of~\eqref{eq:4-cycle-ij-estimate}, we can show that \AlgWSCyc{} produces an unbiased estimate of $f^\square(G)$:
-\begin{theorem}\label{thm:unbiased_IV}
+In addition, thanks to the design of~\eqref{chap3-eq:4-cycle-ij-estimate}, we can show that \AlgWSCyc{} produces an unbiased estimate of $f^\square(G)$:
+\begin{theorem}\label{chap3-thm:unbiased_IV}
   The estimate produced by \AlgWSCyc{} satisfies $\allowbreak \E[\hf^\square(G)] =
   f^\square(G)$.
 \end{theorem}
 
 Finally, we show the MSE ($=$ variance) of $f^\square(G)$:
 
-\begin{theorem}\label{thm:l2-loss_IV}
+\begin{theorem}\label{chap3-thm:l2-loss_IV}
   The estimate produced by \AlgWSCyc{} satisfies 
   \begin{align}
     & \MSE(\hf^\square(G)) = \V[\hf^\square(G)] \nonumber \\
     &\leq \frac{9n^5 q_L(d_{max} +
-    nq_L)^2}{16t(1-2q_L)^4} + \frac{n^3d_{max}^6}{64t}. \label{eq:4-cycle-var}
+    nq_L)^2}{16t(1-2q_L)^4} + \frac{n^3d_{max}^6}{64t}. \label{chap3-eq:4-cycle-var}
   \end{align}
   When $\epsilon$ and $\delta$ are constants, $\epsilon_L = \log n + O(1)$, and $t
   = \lfloor \frac{n}{2} \rfloor$, we have
-  \begin{equation}\label{eq:4-cycle-var-simp}
+  \begin{equation}\label{chap3-eq:4-cycle-var-simp}
     \MSE(\hf^\square(G)) = \V[\hf^\square(G)] 
     = O\left( n^3 d_{max}^2 + n^2d_{max}^6 \right).
   \end{equation}
 \end{theorem}
-The first and second terms in (\ref{eq:4-cycle-var}) are caused by the RR and the sampling of disjoint user-pairs, respectively. 
+The first and second terms in (\ref{chap3-eq:4-cycle-var}) are caused by the RR and the sampling of disjoint user-pairs, respectively. 
 
 \begin{table}[t]
   \caption{Performance guarantees of one-round 4-cycle counting algorithms providing edge DP.
@@ -192,19 +192,19 @@ The first and second terms in (\ref{eq:4-cycle-var}) are caused by the RR and th
     \AlgWSCyc{} & shuffle & $O(n^3 d_{max}^2 + n^2 d_{max}^6)$ & $0$ & $O(n^2)$ \\ \hline
     \AlgWLCyc{} & local & $O(n^6 + n^2 d_{max}^6)$ & $0$ & $O(n^2)$ \\ \hline
   \end{tabular}
-  \label{tab:upper_bounds_4cycle}
+  \label{chap3-tab:upper_bounds_4cycle}
 \end{table}
 
 % \smallskip
 % \noindent{\textbf{Summary.}}~~
 \subsection{Summary}
-\label{sub:summary_4cycle}
-Table~\ref{tab:upper_bounds_4cycle} summarizes the performance guarantees of the 4-cycle counting algorithms. 
+\label{chap3-sub:summary_4cycle}
+Table~\ref{chap3-tab:upper_bounds_4cycle} summarizes the performance guarantees of the 4-cycle counting algorithms. 
 As a one-round local algorithm, we consider a local model version of \AlgWSCyc{} that does not shuffle wedges (i.e., $\epsilon_L = \epsilon$). 
 We denote it by \AlgWLCyc{}. 
 To our knowledge, \AlgWLCyc{} is the first local 4-cycle counting algorithm. 
 
-By (\ref{eq:4-cycle-var}), when $t = \lfloor \frac{n}{2} \rfloor$, the MSE of \AlgWLCyc{} can be expressed as $O(n^6 + n^2 d_{max}^6)$. 
+By (\ref{chap3-eq:4-cycle-var}), when $t = \lfloor \frac{n}{2} \rfloor$, the MSE of \AlgWLCyc{} can be expressed as $O(n^6 + n^2 d_{max}^6)$. 
 Thus, our wedge shuffle technique dramatically reduces the MSE from $O(n^6 + n^2 d_{max}^6)$ to $O(n^3 d_{max}^2 + n^2 d_{max}^6)$. 
 Note that the square of the true count $f^\square(G)$ is $O(n^2 d_{max}^6)$. 
 This indicates that our \AlgWSCyc{} may not work well in an extremely sparse graph where $d_{max} < n^{\frac{1}{4}}$. 
@@ -221,14 +221,14 @@ we can consider a central algorithm that outputs $f^\square(G) + \Lap(\frac{d_{m
 This algorithm provides 
 $(\epsilon, 0)$-edge DP and the variance of $\frac{2d_{max}^4}{\epsilon^2} = O(d_{max}^4)$. 
 Because $d_{max}$ is much smaller than $n$, this central algorithm provides a much smaller MSE ($=$ variance) than \AlgWSCyc{}. 
-% Together with the results in Section~\ref{sub:summary}, this result suggests 
+% Together with the results in Section~\ref{chap3-sub:summary}, this result suggests 
 This indicates 
 that there is a trade-off between the trust model and the estimation error. 
 
 % \subsection{Algorithm}
-% \label{sub:4cycle_algorithm}
+% \label{chap3-sub:4cycle_algorithm}
 % TBD
 
 % \subsection{Theoretical Analysis}
-% \label{sub:4cycle_theoretical}
+% \label{chap3-sub:4cycle_theoretical}
 % TBD

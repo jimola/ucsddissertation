@@ -1,6 +1,6 @@
 %-------------------------------------------------------------------------------
 \section{Algorithms}
-\label{sec:algorithms}
+\label{chap1-sec:algorithms}
 %-------------------------------------------------------------------------------
 When the data collector does not have access to the adjacency matrix
 $\bmA$, a unique communication challenge arises. There are several ways in
@@ -18,7 +18,7 @@ We call this the
 % \textit{non-interactive graph LDP model}. 
 \textit{one-round LDP model}. 
 % This model is also called the \textit{non-interactive model}~\cite{Duchi_FOCS13,Joseph_SODA20} because there is no interaction among users (note that there is interaction between each user and the data collector). 
-For example, the RR (Randomized Response) for a neighbor list in Section~\ref{sub:LDP} assumes this model.
+For example, the RR (Randomized Response) for a neighbor list in Section~\ref{chap1-sub:LDP} assumes this model.
 
 However, in certain cases it may be possible 
 for the data collector to send a query to each user multiple times. 
@@ -48,8 +48,8 @@ For example, a synthetic graph generation technique in the two-rounds LDP model 
 % model in the graph setting is left as future work.
 
 In 
-% Section~\ref{sub:one_round}, 
-Sections~\ref{sub:non-interactive_k_stars} and \ref{sub:non-interactive_triangles}, 
+% Section~\ref{chap1-sub:one_round}, 
+Sections~\ref{chap1-sub:non-interactive_k_stars} and \ref{chap1-sub:non-interactive_triangles}, 
 we consider the problems of computing $f_{k\star}(G)$ 
 and $f_\triangle(G)$ 
 for a graph $G \in \calG$ in the 
@@ -69,22 +69,22 @@ well.
 % as well as the
 % sequentially-interactive graph 
 % two-rounds LDP algorithm, as we will see in
-% Section~\ref{sub:two_rounds}. 
+% Section~\ref{chap1-sub:two_rounds}. 
 % we consider some algorithms for computing the numbers of $k$-stars $f_{k\star}(G)$ and triangles $f_\triangle(G)$ for a graph $G \in \calG$ in the one-round LDP model, and analyze their expected $l_2$ loss. 
 % We also show lower bounds on the expected $l_2$ loss in this model. 
-In Section~\ref{sub:two_rounds}, we propose a more sophisticated algorithm for computing  $f_\triangle(G)$ in the two-rounds LDP model, and show that it provides much smaller expected $l_2$ loss than the algorithm in the one-round LDP model.
-In Section~\ref{sub:lower_bounds}, we show a general result about lower bounds on the expected $l_2$ loss of graph statistics in LDP. 
-The proofs of all statements in Section~\ref{sec:algorithms} are given in Appendix~\ref{sec:proof}.
+In Section~\ref{chap1-sub:two_rounds}, we propose a more sophisticated algorithm for computing  $f_\triangle(G)$ in the two-rounds LDP model, and show that it provides much smaller expected $l_2$ loss than the algorithm in the one-round LDP model.
+In Section~\ref{chap1-sub:lower_bounds}, we show a general result about lower bounds on the expected $l_2$ loss of graph statistics in LDP. 
+The proofs of all statements in Section~\ref{chap1-sec:algorithms} are given in Appendix~\ref{chap1-sec:proof}.
 
 \subsection{One-Round LDP Algorithms for $k$-Stars}
-\label{sub:non-interactive_k_stars}
+\label{chap1-sub:non-interactive_k_stars}
 % \colorR{Non-interactive Graph LDP Algorithms}}
-% \label{sub:one_round}
+% \label{chap1-sub:one_round}
 
 % \smallskip
 % \noindent{\textbf{\colorB{Non-interactive algorithm for $k$-stars.}}}~~
 % \subsubsection{\colorB{One-round LDP algorithm for $k$-stars.}}
-% \label{subsub:non-interactive_k_stars}
+% \label{chap1-subsub:non-interactive_k_stars}
 \noindent{\textbf{Algorithm.}}~~We begin with the problem of computing $f_{k\star}(G)$ in the 
 % non-interactive graph 
 one-round 
@@ -111,11 +111,11 @@ For this model, we introduce a simple algorithm using the Laplacian mechanism, a
     $release(\hat{r}_i)$\;
   }
   \KwRet{$\sum_{i=1}^n \hat{r}_i$}
-%   \caption{CountKStars\label{alg:k-stars}}
-  \caption{\alg{LocalLap$_{k\star}$}\label{alg:k-stars}}
+%   \caption{CountKStars\label{chap1-alg:k-stars}}
+  \caption{\alg{LocalLap$_{k\star}$}\label{chap1-alg:k-stars}}
 \end{algorithm}
 
-Algorithm~\ref{alg:k-stars} shows the one-round algorithm for $k$-stars. 
+Algorithm~\ref{chap1-alg:k-stars} shows the one-round algorithm for $k$-stars. 
 It takes as input a graph $G$ (represented as neighbor lists $\bma_1, \ldots, \bma_n \in \{0,1\}^n$), the privacy budget $\epsilon$, and a non-negative integer $\td_{max} \in \nnints$. 
 % such that $\td_{max} \geq d_{max}$. 
 % $\td_{max}$ is an upper-bound on the maximum degree $d_{max}$ of $G$. 
@@ -135,9 +135,9 @@ For example, if $n=6$, $\bma_1=(0,1,0,1,1,1)$, $\td_{max}=3$, and the permutatio
 it selects the second, fourth, and sixth users; i.e., $\bma_1$ becomes $\bma_1=(0,1,0,1,0,1)$ after the graph projection. 
 This guarantees that each user's degree never exceeds $\td_{max}$; i.e., $d_i \leq \td_{max}$ after line 4. 
 
-% In Algorithm~\ref{alg:k-stars}, each user $v_i$ has her neighbor list $\bma_i$. 
+% In Algorithm~\ref{chap1-alg:k-stars}, each user $v_i$ has her neighbor list $\bma_i$. 
 % Based on $\bma_i$, 
-% Algorithm~\ref{alg:k-stars} computes the number of $k$-stars in $G$ with no interaction. Each 
+% Algorithm~\ref{chap1-alg:k-stars} computes the number of $k$-stars in $G$ with no interaction. Each 
 After the graph projection, 
 user $v_i$ 
 counts the number of $k$-stars $r_i \in \nnints$ of which she is a center (line 5), and 
@@ -159,10 +159,10 @@ is at most $\binom{\td_{max}}{k-1}$ (after graph projection).
 Therefore, we add $\Lap(\frac{\Delta}{\epsilon})$ to $r_i$, where $\Delta = \binom{\td_{max}}{k-1}$ and 
 for $b \in \nnreals$ 
 $\Lap(b)$ is a random variable that represents the Laplacian noise with mean $0$ and scale $b$. 
-% in Algorithm~\ref{alg:k-stars}. 
+% in Algorithm~\ref{chap1-alg:k-stars}. 
 % does the Laplace mechanism using the sensitivity of the $k$-star query which is
 % $O(d_{max}^{2k-2})$. 
-The final answer of Algorithm~\ref{alg:k-stars} is
+The final answer of Algorithm~\ref{chap1-alg:k-stars} is
 simply the sum of all the noisy $k$-star counts. 
 We denote this algorithm by \alg{LocalLap$_{k\star}$}.
 
@@ -190,28 +190,28 @@ In some applications, the data collector may not have such prior knowledge about
 In this case, we can 
 % It is also possible to 
 privately estimate $d_{max}$ by allowing an additional round between each user and the data collector, and use the private estimate of $d_{max}$ as $\td_{max}$. 
-We describe how to privately estimate $d_{max}$ with edge LDP at the end of Section~\ref{sub:non-interactive_k_stars}. 
+We describe how to privately estimate $d_{max}$ with edge LDP at the end of Section~\ref{chap1-sub:non-interactive_k_stars}. 
 
 
 
 \smallskip
 \noindent{\textbf{Theoretical properties.}}~~\alg{LocalLap$_{k\star}$} 
-%Algorithm~\ref{alg:k-stars} 
+%Algorithm~\ref{chap1-alg:k-stars} 
 has the following guarantees:
 
-\begin{theorem}\label{thm:k-stars_LDP}
+\begin{theorem}\label{chap1-thm:k-stars_LDP}
   %If the maximum degree $d_{max}$ of $G$ is at most $\td_{max}$, 
-  %Algorithm~\ref{alg:k-stars} 
+  %Algorithm~\ref{chap1-alg:k-stars} 
   \alg{LocalLap$_{k\star}$}
   provides $\epsilon$-edge LDP.
 \end{theorem}
 
-\begin{theorem}\label{thm:k-stars}
+\begin{theorem}\label{chap1-thm:k-stars}
   Let
   % $A(G,k,d_{max}, \epsilon)$ 
   $\hf_{k\star}(G, \epsilon, \td_{max})$ 
   be the output of 
-  %Algorithm~\ref{alg:k-stars}. 
+  %Algorithm~\ref{chap1-alg:k-stars}. 
   \alg{LocalLap$_{k\star}$}. 
   %If $\td_{max} \geq d_{max}$, 
   Then, 
@@ -229,18 +229,18 @@ has the following guarantees:
   $\mathbb{E}[l_2^2(\hf_{k\star}(G, \epsilon, \td_{max}), f_{k\star}(G))] = 
   %O\left( \frac{nd_{max}^{2k-2}}{\epsilon^2} \right)$. 
   O\left( \frac{n \td_{max}^{2k-2}}{\epsilon^2} \right)$. 
-  % Furthermore, Algorithm~\ref{alg:k-stars} provides $\epsilon$-edge LDP.
+  % Furthermore, Algorithm~\ref{chap1-alg:k-stars} provides $\epsilon$-edge LDP.
 \end{theorem}
 
 % Note that 
-% We assume $\td_{max} \geq d_{max}$ in Theorem~\ref{thm:k-stars} 
+% We assume $\td_{max} \geq d_{max}$ in Theorem~\ref{chap1-thm:k-stars} 
 % to simplify the utility analysis. 
 % guarantees the performance when $\td_{max} \geq d_{max}$. 
 The factor of $n$ in the 
 % $l_2^2$ error 
 expected $l_2$ loss 
 of 
-% Algorithm~\ref{alg:k-stars} 
+% Algorithm~\ref{chap1-alg:k-stars} 
 \alg{LocalLap$_{k\star}$} 
 comes from the fact that we are adding 
 % $n$ noisy variables. 
@@ -278,7 +278,7 @@ improve
 % this 
 the factor of $n$.
 
-\begin{corollary}\label{cor:kstars-lb}
+\begin{corollary}\label{chap1-cor:kstars-lb}
   Let 
   %$A(G,k,d_{max},\epsilon)$ 
   $\hf_{k\star}(G,\td_{max},\epsilon)$
@@ -308,7 +308,7 @@ the factor of $n$.
   \Omega\left(\min \{1, \frac{e^{2\epsilon}}{(e^{2\epsilon}-1)^2}\}\td_{max}^{2k-2}n \right)$.
 \end{corollary}
 
-This is a corollary of a more general result of Section~\ref{sub:lower_bounds}. Thus,
+This is a corollary of a more general result of Section~\ref{chap1-sub:lower_bounds}. Thus,
 any algorithm computing $k$-stars cannot avoid the factor of $n$ in its $l_2^2$
 loss. $k$-stars 
 is an example where the non-interactive graph LDP model is strictly weaker than
@@ -353,7 +353,7 @@ with input $G$ (represented as $\bma_1, \ldots, \bma_n$), $\epsilon$, and $\lflo
 % We run \alg{LocalLap$_{k\star}$} with input $\bma'_1, \ldots, \bma'_n$, $\epsilon_1$, and $\hd_{max}$. 
 
 At the first round, the calculation of $\hd_{max}$  provides $\epsilon_0$-edge LDP because each user's degree has the sensitivity $1$ under edge LDP. 
-At the second round, Theorem~\ref{thm:k-stars_LDP} guarantees that 
+At the second round, Theorem~\ref{chap1-thm:k-stars_LDP} guarantees that 
 \alg{LocalLap$_{k\star}$} provides $\epsilon_1$-edge LDP. 
 % because each user $v_i$'s degree in $\bma'_i$ never exceeds $\hd_{max}$. 
 Then by the composition theorem~\cite{DP}, this two-rounds algorithm provides $\epsilon$-edge LDP in total ($\epsilon =\epsilon_0 + \epsilon_1$). 
@@ -361,9 +361,9 @@ Then by the composition theorem~\cite{DP}, this two-rounds algorithm provides $\
 In our experiments, we show that this algorithm provides the utility close to \alg{LocalLap$_{k\star}$} with the true max degree $d_{max}$. 
 
 \subsection{One-Round LDP Algorithms for Triangles.}
-\label{sub:non-interactive_triangles}
+\label{chap1-sub:non-interactive_triangles}
 % \subsubsection{\colorB{Non-interactive algorithm for triangles.}}
-% \label{subsub:non-interactive_triangles}
+% \label{chap1-subsub:non-interactive_triangles}
 \noindent{\textbf{Algorithm.}}~~Now, we focus our attention on the more challenging $f_\triangle$ query. This
 query is more challenging in the graph LDP model because no user is aware of any
 triangle; i.e., user $v_i$ is not aware of any triangle formed by $(v_i, v_j, v_k)$ because $v_i$ cannot see any edge $(v_j, v_k) \in E$ in graph $G$. 
@@ -381,7 +381,7 @@ to a neighbor list.
 % graph $G$. 
 For example, user $v_i$ applies the RR to 
 $a_{i,1}, \ldots, a_{i,i-1}$ (which corresponds to users $v_1, \ldots, v_{i-1}$ with smaller user IDs) in her neighbor list $\bma_i$; i.e., 
-we apply the RR to the lower triangular part of adjacency matrix $\bmA$, as described in Section~\ref{sub:LDP}. 
+we apply the RR to the lower triangular part of adjacency matrix $\bmA$, as described in Section~\ref{chap1-sub:LDP}. 
 Then the data collector constructs a noisy graph $G'=(V,E') \in \calG$ from the lower triangular part of the noisy adjacency matrix, and 
 % \colorB{i.e., generate edges in $G'$ by flipping 
 % $1/0$ ($1$: edge, $0$: no edge) for all pairs ($v_i, v_j$) 
@@ -390,7 +390,7 @@ Then the data collector constructs a noisy graph $G'=(V,E') \in \calG$ from the 
 estimates the number of triangles 
 % using $P$.
 from $G'$. 
-% This is the general idea of Algorithm~\ref{alg:subgraph-rr}, but 
+% This is the general idea of Algorithm~\ref{chap1-alg:subgraph-rr}, but 
 However, 
 simply counting
 the triangles in 
@@ -416,7 +416,7 @@ will be extremely large.
 \includegraphics[width=0.9\linewidth]{fig/triplet_shape.pdf}
 \vspace{-4mm}
 \caption{Four types of subgraphs with three nodes.}
-\label{fig:triplet_shape}
+\label{chap1-fig:triplet_shape}
 \end{figure}
 
 Through 
@@ -435,27 +435,27 @@ from $G'$.
 Specifically, a subgraph with three nodes can be divided into four types depending on the number of edges. 
 Three nodes with three edges form a triangle. 
 We refer to three nodes with two edges, one edge, and no edges as \textit{2-edges},  \textit{1-edge}, and  \textit{no-edges}, respectively. 
-Figure~\ref{fig:triplet_shape} shows their shapes. 
+Figure~\ref{chap1-fig:triplet_shape} shows their shapes. 
 % Let $m_3, m_2, m_1, m_0 \in \nnints$ be respectively the number of triangles, 2-edges, 1-edge, and no-edges in $G'$. 
 % Note that $\sum_{i=0}^3 m_i = \binom{n}{3}$. 
 % The expectation of 
 $f_\triangle(G)$ can be expressed using $m_3$, $m_2$, $m_1$, and $m_0$ as follows:
 
-\begin{proposition}\label{prop:triangle_emp}
+\begin{proposition}\label{chap1-prop:triangle_emp}
   Let $\mu = e^\epsilon$. 
   Let $G'=(V,E')$ be a noisy graph generated by applying the RR to the lower triangular part of $\bmA$.
   Let $m_3, m_2, m_1, m_0 \in \nnints$ be respectively the number of triangles, 2-edges, 1-edge, and no-edges in $G'$. 
   Then 
   \begin{align}
       \textstyle{\mathbb{E}\left[ \frac{\mu^3}{(\mu-1)^3} m_3 - \frac{\mu^2}{(\mu-1)^3} m_2 + \frac{\mu}{(\mu-1)^3} m_1 - \frac{1}{(\mu-1)^3} m_0 \right] = f_\triangle(G).}
-      \label{eq:triangle_emp}
+      \label{chap1-eq:triangle_emp}
   \end{align}
 \end{proposition}
 
 % This significantly reduces the $l_2$ error. 
-Therefore, the data collector can count $m_3$, $m_2$, $m_1$, and $m_0$ from $G'$, and calculate an unbiased estimate of $f_\triangle(G)$ by (\ref{eq:triangle_emp}). 
-% Algorithm~\ref{alg:subgraph-rr} contains the precise way to do this.
-In Appendix~\ref{sec:RR_emp}, we show that the $l_2$ loss is significantly reduced by this empirical estimation.
+Therefore, the data collector can count $m_3$, $m_2$, $m_1$, and $m_0$ from $G'$, and calculate an unbiased estimate of $f_\triangle(G)$ by (\ref{chap1-eq:triangle_emp}). 
+% Algorithm~\ref{chap1-alg:subgraph-rr} contains the precise way to do this.
+In Appendix~\ref{chap1-sec:RR_emp}, we show that the $l_2$ loss is significantly reduced by this empirical estimation.
 
 \begin{algorithm}
   \SetAlgoLined
@@ -479,21 +479,21 @@ In Appendix~\ref{sec:RR_emp}, we show that the $l_2$ loss is significantly reduc
   %\KwRet{$b \cdot \hat{\textbf{m}}$}
   \KwRet{$\frac{1}{(\mu-1)^3}(\mu^3 m_3 -\mu^2 m_2 + \mu m_1 - m_0)$}
 
-  %\caption{CountSubgraphsRR\label{alg:subgraph-rr}}
-  \caption{\alg{LocalRR$_\triangle$}\label{alg:subgraph-rr}}
+  %\caption{CountSubgraphsRR\label{chap1-alg:subgraph-rr}}
+  \caption{\alg{LocalRR$_\triangle$}\label{chap1-alg:subgraph-rr}}
 \end{algorithm}
 
-Algorithm~\ref{alg:subgraph-rr} shows this algorithm. 
+Algorithm~\ref{chap1-alg:subgraph-rr} shows this algorithm. 
 In line 2, user $v_i$ applies the RR with privacy budget $\epsilon$ (denoted by $RR_\epsilon$) to $a_{i,1}, \ldots, a_{i,i-1}$ 
 % (which corresponds to users $v_1, \ldots, v_{i-1}$ with smaller user IDs) 
 in her neighbor list $\bma_i$, and outputs $R_i = (RR_\epsilon(a_{i,1}), \ldots, RR_\epsilon(a_{i,i-1}))$. 
 In line 5, the data collector uses a function (denoted by \texttt{UndirectedGraph}) that calculates $G'=(V,E')$ from $(R_1, \ldots, R_n)$. 
 In line 6, the data collector uses a function (denoted by 
 \texttt{Count}) that calculates $m_3$, $m_2$, $m_1$, and $m_0$ from $G'$. 
-Finally, the data collector outputs the right-hand side of (\ref{eq:triangle_emp}). 
+Finally, the data collector outputs the right-hand side of (\ref{chap1-eq:triangle_emp}). 
 We denote this algorithm by \alg{LocalRR$_\triangle$}.
 
-% One subtlety of Algorithm~\ref{alg:subgraph-rr} is that, since each edge is known by two users, releasing users' edges through the RR may result in disagreements over the noisy edges. User $i$ may claim that he is
+% One subtlety of Algorithm~\ref{chap1-alg:subgraph-rr} is that, since each edge is known by two users, releasing users' edges through the RR may result in disagreements over the noisy edges. User $i$ may claim that he is
 % connected to $j$, and user $j$ may claim he is not connected to $i$. 
 % To avoid this problem, we assume an ordering on users, and we let user $i$ ignore edge
 % $(i,j)$ if $i<j$. This means each edge is the responsibility of just one user.
@@ -504,21 +504,21 @@ We denote this algorithm by \alg{LocalRR$_\triangle$}.
 
 \smallskip
 \noindent{\textbf{Theoretical properties.}}~~\alg{LocalRR$_\triangle$} 
-% Algorithm~\ref{alg:subgraph-rr} 
+% Algorithm~\ref{chap1-alg:subgraph-rr} 
 provides the following guarantee.
 
-\begin{theorem}\label{thm:subgraph-rr_LDP}
+\begin{theorem}\label{chap1-thm:subgraph-rr_LDP}
   \alg{LocalRR$_\triangle$} provides $\epsilon$-edge LDP and $\epsilon$-entire edge LDP.
 \end{theorem}
 
-\alg{LocalRR$_\triangle$} does not have the doubling issue (i.e., it provides not $2\epsilon$ but $\epsilon$-entire edge LDP) because we apply the RR to the lower triangular part of $\bmA$, as explained in Section~\ref{sub:LDP}.
+\alg{LocalRR$_\triangle$} does not have the doubling issue (i.e., it provides not $2\epsilon$ but $\epsilon$-entire edge LDP) because we apply the RR to the lower triangular part of $\bmA$, as explained in Section~\ref{chap1-sub:LDP}.
 
 Unlike the RR and empirical estimation for tabular data \cite{Kairouz_ICML16}, the expected $l_2$ loss of \alg{LocalRR$_\triangle$} is complicated. 
 % due to the fact that multiple triangles can involve the same edge. 
 To simplify the utility analysis, we assume that $G$ is generated from the Erd\"os-R\'enyi graph distribution $\bmG(n,\alpha)$ with edge existence probability $\alpha$; i.e., each edge in $G$ with $n$ nodes is independently generated with probability $\alpha \in [0,1]$.
 % which generates $G=(V,E)$ with $|V|=n$ with
 
-\begin{theorem}\label{thm:subgraph-rr}
+\begin{theorem}\label{chap1-thm:subgraph-rr}
   Let $\bmG(n,\alpha)$ be the Erd\"os-R\'enyi graph distribution with edge existence probability $\alpha \in [0,1]$. 
   Let $p = \frac{1}{e^\epsilon+1}$ and 
   $\beta = \alpha(1-p) + (1-\alpha)p$. 
@@ -526,7 +526,7 @@ To simplify the utility analysis, we assume that $G$ is generated from the Erd\"
   %$A(G, \epsilon)$ 
   $\hf_{\triangle}(G, \epsilon)$ 
   be the output of 
-  %Algorithm~\ref{alg:subgraph-rr}.
+  %Algorithm~\ref{chap1-alg:subgraph-rr}.
   \alg{LocalRR$_\triangle$}.
   %Suppose 
   %$G \sim \bmG(n,\frac{d_{max}}{n})$, 
@@ -541,31 +541,31 @@ To simplify the utility analysis, we assume that $G$ is generated from the Erd\"
   f_\triangle(G))] = 
   %O(\frac{e^{6\epsilon}}{(e^\epsilon-1)^6}d_{max}n^3)$.
   O\left(\frac{e^{6\epsilon}}{(e^\epsilon-1)^6}\beta n^4\right)$.
-  %Furthermore, Algorithm~\ref{alg:subgraph-rr} provides $\epsilon$-edge LDP.
+  %Furthermore, Algorithm~\ref{chap1-alg:subgraph-rr} provides $\epsilon$-edge LDP.
 \end{theorem}
 
-% Note that Theorem~\ref{thm:subgraph-rr} is a statement about the expected 
+% Note that Theorem~\ref{chap1-thm:subgraph-rr} is a statement about the expected 
 % % average $l_2^2$ error
 % $l_2$ loss 
 % over graphs 
 % % $G \sim \bmG(n,\frac{d_{max}}{n})$. 
 % $G \sim \bmG(n,\alpha)$. 
 % This is less ideal than the case of
-% Theorem~\ref{thm:k-stars} which upper bounds the 
+% Theorem~\ref{chap1-thm:k-stars} which upper bounds the 
 % % $l_2^2$ error 
 % $l_2$ loss for all $G \in \calG$. 
 % However, 
 % % $\textbf{G}(n,\frac{d_{max}}{n})$ 
 % $\textbf{G}(n,\alpha)$ 
 % is considered a realistic model from which
-% graphs of max degree $d_{max}$ are drawn, so Theorem~\ref{thm:subgraph-rr} is
+% graphs of max degree $d_{max}$ are drawn, so Theorem~\ref{chap1-thm:subgraph-rr} is
 % still 
 % % a strong bound.
 % valid. 
 
 Note that we assume the Erd\"os-R\'enyi model only for the utility analysis of \alg{LocalRR$_\triangle$}, and do not assume this model for the other algorithms. 
-The upper-bound of \alg{LocalRR$_\triangle$} in Theorem~\ref{thm:subgraph-rr} is less ideal than the upper-bounds of the other algorithms in that it does not consider all possible graphs $G \in \calG$. 
-Nevertheless, we also show that the $l_2$ loss of \alg{LocalRR$_\triangle$} is roughly consistent with Theorem~\ref{thm:subgraph-rr} in our experiments. 
+The upper-bound of \alg{LocalRR$_\triangle$} in Theorem~\ref{chap1-thm:subgraph-rr} is less ideal than the upper-bounds of the other algorithms in that it does not consider all possible graphs $G \in \calG$. 
+Nevertheless, we also show that the $l_2$ loss of \alg{LocalRR$_\triangle$} is roughly consistent with Theorem~\ref{chap1-thm:subgraph-rr} in our experiments. 
 
 % The parameter $\alpha$ is very small in a sparse graph. 
 % For example, it is reasonable to assume that $\alpha \leq \frac{d_{max}}{n} \ll 1$. 
@@ -575,7 +575,7 @@ Although $\alpha$ is very small in a sparse graph, $\beta$ can be large for smal
 For example, if $\alpha \approx 0$ and $\epsilon=1$, then $\beta \approx \frac{1}{e+1} = 0.27$. 
 % In this case, the expected $l_2$ loss of \alg{LocalRR$_\triangle$} can be expressed as: $O\left(\frac{e^{6\epsilon}}{(e^\epsilon-1)^6}d_{max} n^3\right)$.
 
-Theorem~\ref{thm:subgraph-rr} states that for large $n$, the $l_2$ loss of \alg{LocalRR$_\triangle$} 
+Theorem~\ref{chap1-thm:subgraph-rr} states that for large $n$, the $l_2$ loss of \alg{LocalRR$_\triangle$} 
 ($=O(n^4)$) 
 % ($=O(d_{max}n^3)$) 
 is much larger than the $l_2$ loss of \alg{LocalRR$_k\star$} ($=O(n)$). 
@@ -599,9 +599,9 @@ outputs $f_{\triangle}(G) + \Lap(\td_{max}/\epsilon)$.
 We denote this algorithm by \alg{CentralLap$_{\triangle}$}. 
 \alg{CentralLap$_{\triangle}$} attains the expected $l_2$ loss ($=$ variance) of $O\left(\frac{\td_{max}^2}{\epsilon^2}\right)$. 
 
-% \colorB{In Section~\ref{sub:two_rounds}, we propose a two-rounds LDP algorithm for triangles to significantly reduce the $l_2$ loss in the local model.}
+% \colorB{In Section~\ref{chap1-sub:two_rounds}, we propose a two-rounds LDP algorithm for triangles to significantly reduce the $l_2$ loss in the local model.}
 
-% In Algorithm~\ref{alg:subgraph-rr}, 
+% In Algorithm~\ref{chap1-alg:subgraph-rr}, 
 The large $l_2$ loss of \alg{LocalRR$_\triangle$} is caused by the fact that 
 each edge is released independently with
 some probability of being flipped. 
@@ -629,14 +629,14 @@ the existence of two edges for any triangle that involves the user.
 
 \subsection{Two-Rounds LDP Algorithms for Triangles}
 % \colorR{Sequentially Interactive Graph LDP Algorithms}}
-\label{sub:two_rounds}
+\label{chap1-sub:two_rounds}
 
 \noindent{\textbf{Algorithm.}}~~Allowing for 
 % sequential interaction, 
 two-rounds interaction, 
 we are able to compute $f_{\triangle}$ with
 a significantly improved $l_2$ loss. 
-As described in Section~\ref{sub:non-interactive_triangles}, it is impossible for user $v_i$ to see edge $(v_j, v_k) \in E$ in graph $G=(V,E)$ at the first round. 
+As described in Section~\ref{chap1-sub:non-interactive_triangles}, it is impossible for user $v_i$ to see edge $(v_j, v_k) \in E$ in graph $G=(V,E)$ at the first round. 
 However, if 
 % each user $v_i$ applies the RR to her neighbor list $\bma_i$ as in \alg{LocalRR$_\triangle$} and 
 the data collector publishes a noisy graph $G'=(V,E')$ calculated by \alg{LocalRR$_\triangle$} at the first round, then 
@@ -650,7 +650,7 @@ there is only one noisy edge in any noisy triangle
 % that influences the existence of the triangle $(v_i, v_j, v_k)$ in $G$. 
 This is an intuition behind our proposed two-rounds algorithm. 
 
-As with the RR in Section~\ref{sub:non-interactive_triangles}, simply counting the noisy triangles can introduce a bias. 
+As with the RR in Section~\ref{chap1-sub:non-interactive_triangles}, simply counting the noisy triangles can introduce a bias. 
 Therefore, we calculate an empirical estimate of $f_\triangle(G)$ from the noisy triangle counts. 
 Specifically, 
 % we calculate the expectation of 
@@ -664,7 +664,7 @@ the following is the empirical estimate of $f_\triangle(G)$:
 % the number of $2$-stars of which user $v_i$ is a center. 
 % Then the expectation of $f_\triangle(G)$ can be calculated from $\epsilon_0$, $t_i$, and $s_i$ as follows:
 
-\begin{proposition}\label{prop:triangle_emp_2rounds}
+\begin{proposition}\label{chap1-prop:triangle_emp_2rounds}
   Let $G'=(V,E')$ be a noisy graph generated by applying the RR with privacy budget $\epsilon_1 \in \nnreals$   to the lower triangular part of $\bmA$.
   Let $p_1 = \frac{1}{e^{\epsilon_1}+1}$. 
   Let $t_i \in \nnints$ be the number of triplets $(v_i, v_j, v_k)$ such that 
@@ -680,11 +680,11 @@ the following is the empirical estimate of $f_\triangle(G)$:
   \begin{align}
       %\textstyle{\mathbb{E}[f_\triangle(G)] = \frac{1}{1-2p_1} \sum_{i=1}^n (t_i - p_1 s_i)}.
       \textstyle{\mathbb{E}\left[ \frac{1}{1-2p_1} \sum_{i=1}^n w_i \right] = f_\triangle(G).}
-      \label{eq:triangle_emp_2rounds}
+      \label{chap1-eq:triangle_emp_2rounds}
   \end{align}
 \end{proposition}
 
-Note that in Proposition~\ref{prop:triangle_emp_2rounds}, 
+Note that in Proposition~\ref{chap1-prop:triangle_emp_2rounds}, 
 we count only triplets $(v_i, v_j, v_k)$ with 
 % $j < i < k$ 
 $j < k < i$ 
@@ -692,14 +692,14 @@ $j < k < i$
 to use only the lower triangular part of $\bmA$. 
 $t_i$ is the number of noisy triangles user $v_i$ can see at the second round. 
 $s_i$ is the number of $2$-stars of which user $v_i$ is a center. 
-Since $t_i$ and $s_i$ can reveal information about an edge in $G$, user $v_i$ adds the Laplacian noise to $w_i$ $(= t_i - p_1 s _i)$ in (\ref{eq:triangle_emp_2rounds}), and sends it to the data collector. 
-Then the data collector calculates an unbiased estimate of $f_\triangle(G)$ by (\ref{eq:triangle_emp_2rounds}). 
+Since $t_i$ and $s_i$ can reveal information about an edge in $G$, user $v_i$ adds the Laplacian noise to $w_i$ $(= t_i - p_1 s _i)$ in (\ref{chap1-eq:triangle_emp_2rounds}), and sends it to the data collector. 
+Then the data collector calculates an unbiased estimate of $f_\triangle(G)$ by (\ref{chap1-eq:triangle_emp_2rounds}). 
 
 % Instead of releasing each edge through 
 % randomized
 % response, user $i$ is given a specific query depending on $P_{i-1}$, the
 % subgraph of $G$ on users $1$ through $i-1$ released through randomized response.
-% Like Algorithm~\ref{alg:subgraph-rr}, we assume user $i$ ignores edge $(i,j)$ if
+% Like Algorithm~\ref{chap1-alg:subgraph-rr}, we assume user $i$ ignores edge $(i,j)$ if
 % $i<j$. The query to user $i$ is to noisily count the number of triangles of which he is
 % a part, using two of his edges and one edge in $P_{i-1}$. He releases this
 % number and a randomized response on his edges so that future users may build
@@ -746,11 +746,11 @@ Then the data collector calculates an unbiased estimate of $f_\triangle(G)$ by (
   }
   %$ans \leftarrow \frac{1}{1-2\rho}\sum_{i=1}^n w_i$\;
   \KwRet{$\frac{1}{1-2p_1}\sum_{i=1}^n \hw_i$}
-  %\caption{CountSubgraphsTwoRound\label{alg:subgraph-interactive}}
-  \caption{\alg{Local2Rounds$_\triangle$}}\label{alg:subgraph-interactive}
+  %\caption{CountSubgraphsTwoRound\label{chap1-alg:subgraph-interactive}}
+  \caption{\alg{Local2Rounds$_\triangle$}}\label{chap1-alg:subgraph-interactive}
 \end{algorithm}
 
-Algorithm~\ref{alg:subgraph-interactive} contains the formal
+Algorithm~\ref{chap1-alg:subgraph-interactive} contains the formal
 description of this process. 
 It takes as input a graph $G$ (represented as neighbor lists $\bma_1, \ldots, \bma_n$), the privacy budgets $\epsilon_1, \epsilon_2 \in \nnreals$ at the first and second rounds, respectively, 
 and 
@@ -758,7 +758,7 @@ and
 % an upper-bound $\td_{max}$ on the maximum degree $d_{max}$ of $G$ 
 a non-negative integer $\td_{max} \in \nnints$. 
 % in the same way as \alg{LocalLap$_{k\star}$}. 
-% We will describe the private computation of $d_{max}$ with edge LDP at the end of Section~\ref{sub:two_rounds}. 
+% We will describe the private computation of $d_{max}$ with edge LDP at the end of Section~\ref{chap1-sub:two_rounds}. 
 At the first round, we apply the RR to the lower triangular part of $\bmA$. 
 At the second round, each user $v_i$ adds the Laplacian noise to $w_i$ $(= t_i - p_1 s _i)$, whose 
 % local 
@@ -766,23 +766,23 @@ At the second round, each user $v_i$ adds the Laplacian noise to $w_i$ $(= t_i -
 sensitivity is at most 
 % $d_{max} (1-p_1)$, 
 $\td_{max}$ (after graph projection), 
-as we will prove in Theorem~\ref{thm:local2rounds_LDP}. 
+as we will prove in Theorem~\ref{chap1-thm:local2rounds_LDP}. 
 We call this algorithm \alg{Local2Rounds$_\triangle$}.
 
-% The intuitive reason Algorihtm~\ref{alg:subgraph-interactive} performs better than 
-% Algorithm~\ref{alg:subgraph-rr} is that a noisy triangle is counted using two 
+% The intuitive reason Algorihtm~\ref{chap1-alg:subgraph-interactive} performs better than 
+% Algorithm~\ref{chap1-alg:subgraph-rr} is that a noisy triangle is counted using two 
 % noisy computations, the noisy edge in
-% $P_{i-1}$ and user $i$'s noisy count. In Algorithm~\ref{alg:subgraph-rr}, each
+% $P_{i-1}$ and user $i$'s noisy count. In Algorithm~\ref{chap1-alg:subgraph-rr}, each
 % subgraph of size $3$ in $P$ is the result of three noisy computations.
 
 \smallskip
 \noindent{\textbf{Theoretical properties.}}~~\alg{Local2Rounds$_\triangle$} 
-% Algorithm~\ref{alg:subgraph-interactive} 
+% Algorithm~\ref{chap1-alg:subgraph-interactive} 
 has the following 
 % performance 
 guarantee.
 
-\begin{theorem}\label{thm:local2rounds_LDP}
+\begin{theorem}\label{chap1-thm:local2rounds_LDP}
   %If the maximum degree $d_{max}$ of $G$ is at most $\td_{max}$, 
   \alg{Local2Rounds$_\triangle$}
   provides $(\epsilon_1 + \epsilon_2)$-edge LDP and $(\epsilon_1 + \epsilon_2)$-entire edge LDP.
@@ -797,12 +797,12 @@ i.e., we assume
 $j<k<i$ 
 in counting $t_i$ and $s_i$. 
 
-\begin{theorem}\label{thm:local2rounds}
+\begin{theorem}\label{chap1-thm:local2rounds}
   Let 
   %$A(G, d_{max}, \epsilon_0, \epsilon_1)$ 
   $\hf_{\triangle}(G, \epsilon_1, \epsilon_2, \td_{max})$ 
   be the output of 
-  %Algorithm~\ref{alg:subgraph-interactive}. 
+  %Algorithm~\ref{chap1-alg:subgraph-interactive}. 
   \alg{LocalRR$_\triangle$}. 
   Then, for all 
   %$d_{max} \in \nats$,
@@ -819,7 +819,7 @@ in counting $t_i$ and $s_i$.
     \frac{e^{\epsilon_1}}{\epsilon_2^2}\td_{max}^2 n\right)\right)$
 \end{theorem}
 
-Theorem~\ref{thm:local2rounds} means that for triangles, the $l_2$ loss 
+Theorem~\ref{chap1-thm:local2rounds} means that for triangles, the $l_2$ loss 
 % of \alg{LocalRR_$\triangle$} 
 is reduced from $O(n^4)$ to $O(\td_{max}^3n)$ by introducing an additional round.
 
@@ -830,7 +830,7 @@ is reduced from $O(n^4)$ to $O(\td_{max}^3n)$ by introducing an additional round
 % % local sequentially interactive 
 % two-rounds local 
 % models discussed in
-% this section appear in Table~\ref{tab:perf}.
+% this section appear in Table~\ref{chap1-tab:perf}.
 
 \begin{table*}
   \centering
@@ -860,16 +860,16 @@ is reduced from $O(n^4)$ to $O(\td_{max}^3n)$ by introducing an additional round
 \caption{Bounds on $l_2$ losses for privately estimating $f_{k\star}$ and
 $f_{\triangle}$. For upper-bounds, we assume that  $\td_{max}=d_{max}$. 
 For the centralized model, we use the Laplace mechanism. For
-the one-round $f_\triangle$ algorithm, we apply Theorem~\ref{thm:subgraph-rr} 
+the one-round $f_\triangle$ algorithm, we apply Theorem~\ref{chap1-thm:subgraph-rr} 
 with constant $\alpha$. For the two-round protocol $f_\triangle$ algorithm, we
-apply Theorem~\ref{thm:local2rounds} with
-$\epsilon_1=\epsilon_2=\frac{\epsilon}{2}$. }\label{tab:perf}
+apply Theorem~\ref{chap1-thm:local2rounds} with
+$\epsilon_1=\epsilon_2=\frac{\epsilon}{2}$. }\label{chap1-tab:perf}
 \end{table*}
 
 \smallskip
 \noindent{\textbf{Private calculation of $d_{max}$.}}~~As with $k$-stars, we can privately calculate $d_{max}$ 
 % with edge LDP 
-by using the method described in Section~\ref{sub:non-interactive_k_stars}. 
+by using the method described in Section~\ref{chap1-sub:non-interactive_k_stars}. 
 Furthermore, the private calculation of $d_{max}$ does not increase the number of rounds; i.e., we can run \alg{Local2Rounds$_\triangle$} with the private calculation of $d_{max}$ in two rounds. 
 
 Specifically, let $\epsilon_0 \in \nnreals$ be the privacy budget for the private calculation of $d_{max}$. 
@@ -889,9 +889,9 @@ At the first round, the calculation of $\hd_{max}$ provides $\epsilon_0$-edge LD
 % because each user's degree has the sensitivity $1$ under edge LDP. 
 Note that it provides $2\epsilon_0$-entire edge LDP (i.e., it has the doubling issue) because one edge $(v_i,v_j) \in E$ affects both of the degrees $d_i$ and $d_j$ by 1. 
 At the second round, \alg{LocalLap$_{k\star}$} provides $(\epsilon_1 + \epsilon_2)$-edge LDP and 
-$(\epsilon_1 + \epsilon_2)$-entire edge LDP (Theorem~\ref{thm:local2rounds_LDP}). 
+$(\epsilon_1 + \epsilon_2)$-entire edge LDP (Theorem~\ref{chap1-thm:local2rounds_LDP}). 
 % because each user $v_i$'s degree in $\bma'_i$ never exceeds $\hd_{max}$. 
-% (and then Theorem~\ref{thm:local2rounds_LDP} holds). 
+% (and then Theorem~\ref{chap1-thm:local2rounds_LDP} holds). 
 Then by the composition theorem~\cite{DP}, this two-rounds algorithm provides $(\epsilon_0 + \epsilon_1 + \epsilon_2)$-edge LDP and $(2\epsilon_0 + \epsilon_1 + \epsilon_2)$-entire edge LDP. 
 Although the total privacy budget is larger for entire edge LDP, the difference ($=\epsilon_0$) can be very small. 
 In fact, we set $(\epsilon_0, \epsilon_1, \epsilon_2) = (0.1, 0.45, 0.45)$ or $(0.2, 0.9, 0.9)$ in our experiments (i.e., the difference is $0.1$ or $0.2$), and show that this algorithm provides almost the same utility as \alg{Local2Rounds$_\triangle$} with the true max degree $d_{max}$. 
@@ -917,7 +917,7 @@ $O(n^2 + n d_{max}^2)$, including the private calculation of $d_{max}$.
 % $O(n + d_{max}^2)$ for each user's part and $O(n)$ for the data collector's part at the second round. 
 When we want to evaluate the utility of \alg{Local2Rounds$_\triangle$}, 
 % When we evaluate the utility of \alg{Local2Rounds$_\triangle$} on one computer, 
-we can apply the RR to only edges that are required at the second round; i.e., $(v_j,v_k) \in G'$ in line 8 of Algorithm~\ref{alg:subgraph-interactive}. 
+we can apply the RR to only edges that are required at the second round; i.e., $(v_j,v_k) \in G'$ in line 8 of Algorithm~\ref{chap1-alg:subgraph-interactive}. 
 Then the time complexity 
 % is 
 can be reduced to 
@@ -926,7 +926,7 @@ We also confirmed that
 when $n=1000000$, the running time of \alg{Local2Rounds$_\triangle$} was $311$ seconds (on one node the ABCI), which is $3.5 \times 10^6$ times faster than \alg{LocalRR$_\triangle$}. 
 
 \subsection{Lower Bounds}
-\label{sub:lower_bounds}
+\label{chap1-sub:lower_bounds}
 
 We show a general lower bound on the $l_2$ loss of private estimators $\hat{f}$ of
 real-valued functions $f$ in the one-round LDP model. Treating $\epsilon$ as a
@@ -936,7 +936,7 @@ when $\td_{max}=d_{max}$,
 the expected $l_2$ loss of \alg{LocalLaplace$_{k\star}$} is 
 % $l_2^2(\alg{LocalLaplace$_{k\star}$}(G), f_{k\star}(G)) = 
 $O(nd_{max}^{2k-2})$
-(Theorem~\ref{thm:k-stars}). 
+(Theorem~\ref{chap1-thm:k-stars}). 
 % and 
 % the expected $l_2$ loss of 
 % \alg{Local2Rounds$_\triangle$} is 
@@ -946,8 +946,8 @@ $O(nd_{max}^{2k-2})$
 % $O(nd_{max}^2)$ 
 % $O(nd_{max}^3)$ 
 % $O(n^4)$ 
-% (Theorem~\ref{thm:local2rounds}). 
-% (Theorem~\ref{thm:subgraph-rr}). 
+% (Theorem~\ref{chap1-thm:local2rounds}). 
+% (Theorem~\ref{chap1-thm:subgraph-rr}). 
 However, in
 the centralized 
 % edge-DP 
@@ -1014,7 +1014,7 @@ More specifically, we define the following cube-like structure on the input matr
 % The exact structure on $\mathcal{A}$ that we need is the following, cube-like
 % structure:
 
-\begin{definition}\label{def:mono-cube}[$(n,D)$-monotone cube for $f$]
+\begin{definition}\label{chap1-def:mono-cube}[$(n,D)$-monotone cube for $f$]
   Let $D \in \nats$. 
   For $k \in \nats$, let $G \in \calG$ be a graph on $n = 2k$ nodes and $M = \{(v_{i_1}, v_{i_2}),
   (v_{i_3},v_{i_4}),\ldots,(v_{i_{2k-1}},v_{i_{2k}})\}$ for integers $i_j \in [n]$ denote a perfect
@@ -1049,7 +1049,7 @@ More specifically, we define the following cube-like structure on the input matr
 % that if $\hf$ privately estimates $f_{k\star}^{ext}$ in the one-round
 % edge LDP model, then there is a private estimator $\hat{g}$ that estimates
 % $f_{k\star}$ in the one-round edge-LDP model such that
-% \begin{multline}\label{eq:sym-lower-bound}
+% \begin{multline}\label{chap1-eq:sym-lower-bound}
 %   \E_{\bmA \sim U(\mathcal{A}_{k\star})}[l_2^2(f^{ext}_{k\star}(\bmA),
 %   \hf(\bmA))] \\ \leq 
 %   \E_{\bmA \sim U(sym(\mathcal{A}_{k\star}))} [l_2^2(f_{k\star}(\bmA),
@@ -1094,7 +1094,7 @@ the cube-like structure of the $(n,D)$ monotone cube,
 Then 
 we can prove a lower
 bound:
-\begin{theorem}\label{thm:lower-bound}
+\begin{theorem}\label{chap1-thm:lower-bound}
   Let $\hf$ satisfy 
 %   $\epsilon$-differential privacy 
   $\epsilon$-edge LDP
@@ -1115,14 +1115,14 @@ bound:
 % consider a different input structure for $f$ than the $(n,D)$ monotone cube, 
 % but we leave this for future work.
 
-Theorem~\ref{thm:lower-bound}, combined with the fact that there exists an
+Theorem~\ref{chap1-thm:lower-bound}, combined with the fact that there exists an
 $(n,\binom{d_{max}-2}{k-1})$ monotone cube for 
 a $k$-star function 
 % $f_{k\star}$ 
-% and~\eqref{eq:sym-lower-bound}, 
-implies Corollary~\ref{cor:kstars-lb}. 
-% (see Appendix~\ref{sub:proof_cor_kstars-lb} for details).
-In Appendix~\ref{sub:cube_triangle}, we also construct an $(n, d_{max}-2)$ monotone cube for
+% and~\eqref{chap1-eq:sym-lower-bound}, 
+implies Corollary~\ref{chap1-cor:kstars-lb}. 
+% (see Appendix~\ref{chap1-sub:proof_cor_kstars-lb} for details).
+In Appendix~\ref{chap1-sub:cube_triangle}, we also construct an $(n, d_{max}-2)$ monotone cube for
 $f_\triangle$ and establish a lower bound of 
 $\Omega(\min\{1, \frac{e^{2\epsilon}}{(e^{2\epsilon}-1)^2}\} nd_{max}^2)$ for
 $f_\triangle$. 
@@ -1136,4 +1136,4 @@ The upper and lower bounds on the $l_2$ losses
 % two-rounds local 
 % models discussed 
 shown in
-this section appear in Table~\ref{tab:perf}.
+this section appear in Table~\ref{chap1-tab:perf}.

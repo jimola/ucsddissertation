@@ -1,5 +1,5 @@
 \section{Introduction}
-\label{sec:intro}
+\label{chap3-sec:intro}
 Graph statistics is useful for finding meaningful connection patterns in network data, and 
 % counting subgraphs (e.g., triangles, $k$-stars, cycles, cliques) 
 subgraph counting is known as a fundamental task in graph analysis. 
@@ -26,7 +26,7 @@ The 4-cycle count is useful for measuring the clustering ability in bipartite gr
 % sexual contact networks \cite{Lind_PRE05}) 
 online dating networks, mentor-student networks \cite{Kutty_WWW14}) 
 where a triangle never appears \cite{Lind_PRE05,Robins_CMOT04,Sanei-Mehri_CIKM19}. 
-Figure~\ref{fig:subgraphs} shows examples of triangles, 2-stars, and 4-cycles. 
+Figure~\ref{chap3-fig:subgraphs} shows examples of triangles, 2-stars, and 4-cycles. 
 % 
 % Although subgraph counts are important for analyzing the connection patterns or clustering tendency, they can leak sensitive edges (friendships). 
 Although these subgraphs are important for analyzing the connection patterns or clustering tendencies, their exact numbers can leak sensitive edges (friendships) \cite{Imola_USENIX21}. 
@@ -39,7 +39,7 @@ Although these subgraphs are important for analyzing the connection patterns or 
   \vspace{-2mm}
   \caption{Examples of subgraph counts.
   }
-  \label{fig:subgraphs}
+  \label{chap3-fig:subgraphs}
 \end{figure}
 
 DP (Differential Privacy) \cite{Dwork_ICALP06,DP} -- the gold standard of privacy notions -- has been widely used to strongly protect edges in graph data \cite{Day_SIGMOD16,Ding_TKDE21,Hay_ICDM09,Imola_USENIX21,Imola_USENIX22,Karwa_PVLDB11,Kasiviswanathan_TCC13,Qin_CCS17,Sun_CCS19,Ye_ICDE20,Ye_TKDE21}. 
@@ -117,13 +117,13 @@ apply the shuffle model to graph data to accurately count subgraphs within one r
 % However, it is very challenging to apply the shuffle model to subgraph counting because 
 The main challenge in subgraph counting in the shuffle model is that each user's neighbor list is \textit{high-dimensional data}, i.e., $n$-dim binary string where $n$ is the number of users. 
 % we cannot use the entire neighbor list as input data. 
-Consequently, applying the RR to each bit of the neighbor list, as in the existing work \cite{Imola_USENIX21,Imola_USENIX22,Ye_ICDE20,Ye_TKDE21}, results in an extremely large privacy budget $\epsilon$ even after applying the shuffling (see Section~\ref{sub:technical} for more details). 
+Consequently, applying the RR to each bit of the neighbor list, as in the existing work \cite{Imola_USENIX21,Imola_USENIX22,Ye_ICDE20,Ye_TKDE21}, results in an extremely large privacy budget $\epsilon$ even after applying the shuffling (see Section~\ref{chap3-sub:technical} for more details). 
 
 We address this issue by introducing a new, basic technique called \textit{wedge shuffling}. 
 In graphs, a wedge between $v_i$ and $v_j$ is defined by a 2-hop path with endpoints $v_i$ and $v_j$. 
 % Our wedge shuffle technique obfuscates a wedge (2-hop path) between a specific user-pair. 
 % rather than the entire neighbor list. 
-For example, in Figure~\ref{fig:subgraphs}, 
+For example, in Figure~\ref{chap3-fig:subgraphs}, 
 there are two wedges between $v_2$ and $v_3$: $v_2$-$v_1$-$v_3$ and $v_2$-$v_4$-$v_3$. 
 In other words, users $v_1$ and $v_4$ have a wedge between $v_2$ and $v_3$, whereas $v_5, \ldots, v_8$ do not. 
 Each user obfuscates such wedge information by the RR, and the shuffler randomly shuffles them. 
@@ -168,7 +168,7 @@ accurately estimate these subgraph counts within one round under the shuffle mod
     \item We propose a wedge shuffle technique to enable privacy amplification 
     %in subgraph counting. 
     of graph data. 
-    To our knowledge, we are the first to shuffle graph data (see Section~\ref{sec:related} for more details). 
+    To our knowledge, we are the first to shuffle graph data (see Section~\ref{chap3-sec:related} for more details). 
     %apply the shuffle model to graph data. 
     \item We propose one-round triangle and 4-cycle counting algorithms 
     %with theoretical performance guarantees 
@@ -183,9 +183,9 @@ accurately estimate these subgraph counts within one round under the shuffle mod
     %dramatically the estimation error of the one-round local algorithms 
     and achieve a small estimation error (relative error $\ll 1$) with a reasonable privacy budget, e.g., smaller than $1$ in edge DP. 
 \end{itemize}
-In \conference{the full version of this paper \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{sec:cluster}}, we show that our triangle algorithm is also useful for accurately estimating the clustering coefficient within one round. 
+In \conference{the full version of this paper \cite{Imola_CCSFull22}}\arxiv{Appendix~\ref{chap3-sec:cluster}}, we show that our triangle algorithm is also useful for accurately estimating the clustering coefficient within one round. 
 % we can also accurately estimate the clustering coefficient within one round by using our triangle algorithm. 
 We can use our algorithms to analyze the clustering tendency or the effectiveness of friend suggestions in decentralized social networks by introducing a shuffler. 
 We implemented our algorithms in C/C++. 
 Our code is available on GitHub \cite{SubgraphShuffle}. 
-The proofs of all statements in the main body are given in \conference{\cite{Imola_CCSFull22}}\arxiv{Appendices~\ref{sec:triangle_proof} and \ref{sec:4cycle_proof}}. 
+The proofs of all statements in the main body are given in \conference{\cite{Imola_CCSFull22}}\arxiv{Appendices~\ref{chap3-sec:triangle_proof} and \ref{chap3-sec:4cycle_proof}}. 

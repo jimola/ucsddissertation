@@ -5,14 +5,14 @@ Our results involve the key concepts of hierarchical clustering and differential
 Hierarchical clustering seeks to produce a tree clustering a set $V$ of $n$ items by their similarity. It takes as input an undirected graph $G = (V, E, w)$, where $E \subseteq V \times V$ is the set of edges and $w : V \times V \rightarrow \R^+$ is a weight function indicating similarity; i.e. a higher $w(u,v)$ indicates $u,v$ are more similar. We extend the weight function $w$ and say that $w(u,v) = 0$ if $w(u,v) \notin E$.
 
 A hierarchical clustering (HC) of $G$ is a tree $T$ whose leaves are $V$. The tree can be viewed as a sequence of merges of subtrees of $T$, with the final merge being the root node. A good hierarchical clustering merges more similar items closer to the bottom of the tree. The cost function $\cost_G(T)$ of Dasgupta~\citep{dasgupta2016cost}, captures this intuition. We have
-\begin{equation}\label{eq:hc-cost}
+\begin{equation}\label{chap5-eq:hc-cost}
     \cost_G(T) = \sum_{(u,v) \in V^2} w(u,v) |\text{leaves}(T[u\wedge v])|,
 \end{equation}
 where $T[u \wedge v]$ indicates the smallest subtree containing $u,v$ in $T$ and $|\text{leaves}(T[u \wedge v])|$ indicates the number of leaves in this subtree. This cost function charges a tree $T$ for each edge based on the similarity $w(u,v)$ and how many leaves are in the subtree in which it is merged. 
 
 \paragraph{Additional Notation}
 We let $\cost_G^* = \min_T \omega_G(T)$ denote the best possible cost attained by any tree $T$. We write $w(A,B) = \sum_{a \in A, b \in B} w(a,b)$ and we say $w(G) = w(G,G)$. Let $\calA(G)$ be a hierarchical clustering algorithm. We say $\calA$ is an $(a_n, b_n)$-approximation if
-\begin{equation}\label{eq:hc-obj}
+\begin{equation}\label{chap5-eq:hc-obj}
     \E[\cost_G(\calA(G))] \leq a_n \cost_G^* + b_n,
 \end{equation}
 where the expectation is over the random coins of $\calA$. If an algorithm is a $(a_n, 0)$-approximation algorithm, we often refer to it as simply an $a_n$-approximation.
@@ -20,11 +20,11 @@ where the expectation is over the random coins of $\calA$. If an algorithm is a 
 \subsection{Differential Privacy}
 For hierarchical clustering we use the notion of graph privacy known as edge differential privacy. Intuitively, our private algorithm behaves similarly whether or not the adjacency matrix of $G$ is altered in $L_1$ distance by up to $1$. Specifically, we say $G = (V, E, w)$ and $G' = (V, E', w')$ are \emph{adjacent graphs} if $\sum_{u,v \in V} |w(u,v) - w'(u,v)| \leq 1$, meaning that the adjacency matrices have $L_1$ distance at most one \footnote{the constant one may be changed to any constant to match the application, and our results carry over easily.}. This notion has been used before by~\citet{ eliavs2020differentially, blocki2012johnson} and it has many real-world applications, such as when the graph is a social network and the edges between users encode relationships between them~\citep{epasto2022differentially}.
 The definition of edge-DP is as follows:
-\begin{defn}\label{def:privacy}
+\begin{defn}\label{chap5-def:privacy}
 An algorithm $\calA : \calG \rightarrow \calY$ satisfies $(\epsilon, \delta)$-edge DP if, for any $G = (V,E,w), G' = (V,E',w')$ that are adjacent, and any set of trees $\calT$,
 \[
     \Pr[\calA(G') \in \calT ] \leq e^\epsilon \Pr[\calA(G) \in \calT] + \delta.
 \]
 \end{defn}
 Edge DP states that given any output $\calT$ of $\calA$, it is provably hard to tell whether an adjacent $G$ or $G'$ was used.
-For 0/1 weighted graphs, Definition~\ref{def:privacy} is equivalent to standard edge DP for unweighted graphs (c.f. Definition 2.2.1 in \cite{pinot2018minimum}).
+For 0/1 weighted graphs, Definition~\ref{chap5-def:privacy} is equivalent to standard edge DP for unweighted graphs (c.f. Definition 2.2.1 in \cite{pinot2018minimum}).
