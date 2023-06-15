@@ -454,7 +454,6 @@ because $G'$ is denser than $G$ especially when $\epsilon$ is small.
 \begin{figure}
 \centering
 \includegraphics[width=0.9\linewidth]{fig/triplet_shape.pdf}
-\vspace{-4mm}
 \caption{Four types of subgraphs with three nodes.}
 \label{chap1-fig:triplet_shape}
 \end{figure}
@@ -1019,7 +1018,7 @@ An interesting avenue of future work is how to compress the graph size (e.g., vi
 
 \begin{table*}
   \centering
-\begin{tabular}{|l|l|l|l|l|l|l|}
+\begin{tabular}{|l|l|p{3.5cm}|p{3cm}|l|l|l|}
   \hline
   & Centralized & \spantwo{One-round local} & Two-rounds local \\
   \hline
@@ -1041,8 +1040,6 @@ An interesting avenue of future work is how to compress the graph size (e.g., vi
   \frac{e^\epsilon}{\epsilon^2}d_{max}^2 n)\right)$ \\ \hline
 
 \end{tabular}
-% \vspace{-3.5mm}
-\vspace{-2mm}
 \caption{Bounds on $l_2$ losses for privately estimating $f_{k\star}$ and
 $f_{\triangle}$ with $\epsilon$-edge LDP. For upper-bounds, we assume that  $\td_{max}=d_{max}$. 
 For the centralized model, we use the Laplace mechanism. For
@@ -1222,7 +1219,6 @@ The specific structure of input graphs we require is as follows:
   \centering
 %   \includegraphics[width=0.88\linewidth]{fig/MonoCube.pdf}
   \includegraphics[width=0.9\linewidth]{fig/IndCube.pdf}
-  \vspace{-2mm}
   \caption{
     $(4,2)$-independent cube $\calA$ for $f$. 
     In this example, $M = \{(v_1,v_2),(v_3,v_4)\}$, $G_1=(V,E)$, $\calA = \{(V, E \cup N): N \subseteq M\}$, 
@@ -1236,7 +1232,6 @@ The specific structure of input graphs we require is as follows:
   \centering
   %\includegraphics[width=0.88\linewidth]{fig/MonoCube_kstar.pdf}
   \includegraphics[width=0.9\linewidth]{fig/IndCube_kstar.pdf}
-  \vspace{-2mm}
   \caption{
     Construction of an independent cube for a $k$-star function ($n=6$, $d_{max}=4$). 
     From a 

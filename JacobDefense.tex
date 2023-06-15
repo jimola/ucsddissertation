@@ -77,7 +77,7 @@
 This work is dedicated to my family. First, to my parents Martha and Mario,
 who inspired me to strive to be my best from a young age. Second, to my
 sister Lauren and brother David, for helping and supporting me along the way. 
-I love you all!
+Much love to you all!
 \end{dedication}
 % Next comes the table of contents, list of figures, list of tables,
 % etc. If you have code listings, you can use \listoflistings (or
@@ -143,8 +143,9 @@ Takao Murakami, and Kamalika Chaudhuri, 31st USENIX Security Symposium, 2022.
 The dissertation author was a joint first author of this paper.
 
 Chapter 3, in full, is a reprint of the material as it appears in Jacob Imola,
-Takao Murakami, and Kamalika Chaudhuri, Proceedings of the 2022 ACM SIGSAC Conference on Computer and Communications Security, 2022. "Differentially Private Triangle and 4-Cycle Counting in the Shuffle Model." 
-The dissertation author was a joint first author of this paper.
+Takao Murakami, and Kamalika Chaudhuri, Proceedings of the 2022 ACM SIGSAC Conference on 
+Computer and Communications Security, 2022. "Differentially Private Triangle and 4-Cycle 
+Counting in the Shuffle Model." The dissertation author was a joint first author of this paper.
 
 Chapter 4, in full, is currently being prepared for submission for publication of the material.
 Jacob Imola, Amrita Roy Chowdhury, and Kamalika Chaudhuri.
@@ -223,7 +224,7 @@ I will focus on collecting certain graph statistics, such as the degree vector
 and number of triangles in the graph, under local DP. I will 
 obtain formal performance guarantees in the presence of different real-world constraints.
 
-First, I will detail a one-round algorithm which is simple, but not guaranteed to work 
+First, I will detail a one-round triangle counting algorithm which is simple, but not guaranteed to work 
 well on sparse graphs. To improve these matters,
 I will propose a two-round algorithm with improved performance 
 for sparse graphs. Unfortunately, it may have prohibitively large per-user 
@@ -232,10 +233,10 @@ edge sampling to reduce download cost, and exhibit another two-round algorithm w
 trades off between the download cost and error.
 
 Third, given that it requires significant synchronization overhead to implement multiple rounds, I will 
-focus on improved one-round algorithms. I propose such an algorithm which satisfies a slightly weaker
+focus on improved one-round algorithms for triangle counting. I propose such an algorithm which satisfies a slightly weaker
 notion of DP, the shuffled model. This algorithm uses a novel wedge-shuffling approach
 to count wedges, and gives rise to an accurate algorithm for counting 
-4-cycles as well. Fourth, I will shift gears to computing the degree histogram in the presence
+4-cycles as well. Fourth, I will shift gears to computing the degree vector in the presence
 of malicious users who do not follow the local DP protocol. Many ubiquitous local DP mechanisms are susceptible to such users.
  I will detail robust algortihms which
 makes use of the fact that every edge in a graph is shared by two users in order to design 
@@ -254,13 +255,70 @@ are of interest to designing future local DP protocols on graphs.
 
 % Optional Introduction
 \begin{dissertationintroduction}
-This optional section is barely described in the OGS manual other than
-saying it is optional and that it appears in the table of contents
-between the Abstract and the first chapter.
+In our data-driven world, an increasing amount of data is collected by personal devices 
+surrounding us, such as personal phones and home assistants. This data contains valuable
+information, but it is usually sensitive, opening the door for privacy attacks. With
+increased pressure from users and policy-makers to provide better privacy~\cite{voigt2017eu}, 
+it is becoming standard to not let the sensitive data leave the devices, and to protect users
+with privacy-preserving schemes.
 
-No formatting guidelines appear so presumably, it should be formatted
-like an ordinary chapter. It should appear after the
-\verb!\mainmatter! macro because it should start on page~1.
+The state-of-the-art way of protecting user privacy is through local differential privacy (DP),
+which stipulates that each part of a user's data will not affect the outcome of the 
+server's analysis, regardless of what the analysis is and of any side-information about
+the user. A large body of work beginning with~\cite{Kasiviswanathan_FOCS08} exists on local 
+differential privacy for tabular data, in which users hold i.i.d. samples from some distribution.
+We will explore local DP in the much less well-studied area of graph data, which 
+is a common data type used in various types of networks.
+
+For example, we might consider a dataset which consists of recent calls made between users, where 
+phone numbers are public and the calls are private. To ensure privacy, any analysis would collect
+calling information from the phones through local differential privacy.
+Similarly, the recent rise of decentralized social media networks such as Mastodon~\cite{Mastodon} 
+and Diaspora~\cite{Diaspora} is a good candidate for local DP, since there is no trusted 
+central authority to conduct analysis.
+
+In this dissertation, I advance the study of data collection in graphs under local DP, 
+considering additional constraints imposed by modern applications such as download cost, 
+number of rounds of interaction, and data poisoning.
+
+In Chapters~\ref{chap:1}, to~\ref{chap:3}, I will focus on algorithms for subgraph counting.
+In Chapter~\ref{chap:1},
+I will detail a one-round triangle counting algorithm which is simple, but not guaranteed to work 
+well on sparse graphs. To improve these matters,
+I then propose a two-round algorithm with better performance 
+for sparse graphs, which uses a second round counting query to reduce the noise introduced by privacy.
+Then, I empirically validate the performance of both algorithms.
+I conclude this chapter by proving a lower bound for any one-round algorithm for triangle
+counting. This lower bound was subsequently improved by~\cite{eden2023triangle} to 
+show that the one-round algorithm is tight for some graphs.
+
+In Chapter~\ref{chap:2}, I will show how to reduce the download cost of the two-round algorithm
+using edge sampling techniques, which can often be prohibitively high. This allows one to use the 
+sampling factor to trade off between the error of the algortihm and the download cost. The end 
+result is an algorithm for counting triangles accurately in which users download just a tiny 
+portion of the graph---in our experiments on graphs with millions of nodes, users merely
+needed to download data on the order of 100MB.
+
+In Chapter~\ref{chap:3}, I revisit one-round triangle counting algorithms, given that it requires significant 
+synchronization overhead to implement multiple rounds which is not always possible in practice. 
+I propose an improved one-round algorithm which satisfies a slightly weaker
+notion of DP, the shuffle model. This algorithm uses a novel wedge-shuffling approach
+to count wedges, and gives rise to an accurate algorithm for counting 
+4-cycles as well. 
+
+In Chapter~\ref{chap:4}, I will shift gears to data poisoning, in which
+malicious users who do not follow the local DP protocol send poisoned responses. 
+I will demonstrate that some ubiquitous local DP mechanisms are susceptible to such users.
+I will detail robust algortihms for computing the degree vector which
+makes use of the fact that every edge in a graph is shared by two users. Leveraging this, one 
+can design edge consistency checks capable of flagging malicious users.
+
+In Chapter~\ref{chap:5}, I will describe my work on private hierarchical clustering,
+a common clustering algorithm used for graphs and other data. I propose two algorithms and 
+a lower bound in the general setting of the problem, and a further algorithm in the stochastic 
+block model of graphs. Though the results are in the central, not local, model of DP, the algorithm 
+design and lower bounds are of interest to designing future local DP protocols on graphs.
+
 \end{dissertationintroduction}
 
 % Chapter 1
