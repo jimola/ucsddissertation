@@ -18,7 +18,7 @@ The most popular privacy guarantee for graphs in the local setting is known as \
 as input. We say $R(\cdot)$ provides $\epsilon$-edge LDP if for any two
 neighboring lists $l,l' \in \{0,1\}^
 n$ that differ in one bit (i.e., one
-edge) and any output $s \in \mathcal{X}$,\vspace{-0.3cm}
+edge) and any output $s \in \mathcal{X}$,
 \begin{gather} \mathrm{Pr}
 [R(l) = s]\leq e^{\epsilon}\mathrm{Pr}[R(l') = s]
 \end{gather}
@@ -62,7 +62,7 @@ Every protocol used in this paper is based on randomized response, the Laplace m
 We consider single round,  non-interactive protocols in which each user $\DO_i, i \in [n]$ runs the local randomizer
 $R_i : \{0,1\}^n \rightarrow \calX$ for some output space $\calX$ on their adjacency lists $l_i$ (Fig. \ref{chap4-fig:setting}). The data aggregator collects the noisy responses and applies a function 
 $D : \calX^n \rightarrow (\mathbb{N} \cup \{\bottom\})^d$ to produce final degree estimates  $\hat{\textbf{d}}=\langle \hd_1, \ldots, \hd_n\rangle)$. Here, $\hd_i$ is the aggregator's estimate for $d_i$ for user $\DO_i$. Note that the aggregator is allowed to output a special symbol $\bottom$ for a user $\DO_i$ if they believe the estimate $\hat{d}_i$ to be invalid (i.e., $\DO_i$ is malicious).
-  \vspace{-0.2cm}  \\\\
+    \\\\
 \noindent\textbf{Threat Model.}
 In the execution of a protocol $\calP$, a subset of users $\calM \in [n]$ may be malicious. The malicious users may return arbitrary output with the goal of carrying out a poisoning attack on  $\calP$. Let
 $m=|\calM|$ denote the number of malicious users. We refer to 
@@ -81,30 +81,30 @@ Note that input poisoning attack applies to \textit{any} protocol, private or no
 
 
 \begin{figure}
-    \vspace{-0.5cm}
+    
     \centering
     \includegraphics[width=0.8\columnwidth]{graph_pic_3.pdf}
-    \vspace{-0.5cm}
+    
     \caption{Input Poisoning Attack}
     \label{chap4-fig:input} 
-        \vspace{-0.6cm}
+        
 \end{figure}
 \begin{figure}[bt]
     \centering
  \includegraphics[width=0.8\columnwidth]{graph_pic_2.pdf}
-     \vspace{-0.5cm}
+     
    \caption{Response Poisoning Attack}
-    \label{chap4-fig:response} \vspace{-0.5cm}
+    \label{chap4-fig:response} 
 \end{figure}
 
 
 
 
 
-  \vspace{-0.2cm}  \subsection{Motivating Attacks}\label{chap4-sec:attacks}
+    \subsection{Motivating Attacks}\label{chap4-sec:attacks}
 
 For the Laplace mechanism, \RLap, and randomized response mechanism, $RR_\rho$,  outlined in Sec.~\ref{chap4-sec:ldp}, we present two concrete motivating attacks. We consider the attacks in the context of the task of influential node identification, where the goal of the data aggregator is to identify certain nodes with a high measure of ``influence". This is useful for various applications where the influential nodes are selected for disseminating information/advertisement. Here, we consider the simplest measure of influence -- degree; nodes with the top-$k$ degrees are selected as the influencers. With the goal of modifying the influence of different users, a malicious user may choose to carry out the following attacks:
-  \vspace{-0.2cm}  \\\\\noindent\textbf{Degree Inflation Attack.} In this attack, a target malicious user $\DO_t$ wants to get themselves selected as an influential node. For \RLap, since each user sends their degree $d_i$ plus Laplace noise, the target user maximizes their degree estimate by simply sending $n-1$. 
+    \\\\\noindent\textbf{Degree Inflation Attack.} In this attack, a target malicious user $\DO_t$ wants to get themselves selected as an influential node. For \RLap, since each user sends their degree $d_i$ plus Laplace noise, the target user maximizes their degree estimate by simply sending $n-1$. 
 
-For $RR_\rho$, the target malicious user $\DO_t$ colludes with a set of other users  (for instance, by injecting fake users) as follows. All the non-target malicious users $\DO_i, i \in \calM\setminus t$ report $1$ for the edges corresponding to $\DO_t$. Additionally, $\DO_t$ reports an all-one list.   \vspace{-0.2cm}  \\\\
+For $RR_\rho$, the target malicious user $\DO_t$ colludes with a set of other users  (for instance, by injecting fake users) as follows. All the non-target malicious users $\DO_i, i \in \calM\setminus t$ report $1$ for the edges corresponding to $\DO_t$. Additionally, $\DO_t$ reports an all-one list.     \\\\
 \noindent\textbf{Degree Deflation Attack.}   In this attack, the target is an honest user $\DO_t \in \calH$ who is being victimized by a set of malicious users (for instance, the adversary compromises a set of real accounts with an edge to $\DO_t$) -- $\calM$ wants to ensure that $\DO_t$ is \textit{not} selected as an influential node. The attack strategy is to decrease the aggregator's degree estimate $\hd_t$ for $\DO_t$. For \RLap, there is no way for the malicious party to influence $\hd_t$. However, for randomized response, the malicious users may report $0$ for each edge in $\calM$ connected to $\DO_t$, reducing their degree by this amount. %\ji{We might be able to improve degree deflation attacks!}

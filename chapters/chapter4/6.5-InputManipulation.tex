@@ -31,7 +31,7 @@ The protocol $\DegRRCheck$ run with $\tau = m(1-2\rho) + \sqrt{8 \max\{\rho n, m
 The proof is in App.~\ref{chap4-app:b3a2}.
 For typical values of $\epsilon$, the correctness and soundness guarantees can be written as $(\tilde{O}(m + \frac{\sqrt{n}}{\epsilon}), \delta)$ (because $\sqrt{m(e^\epsilon+1)} \leq \sqrt{n}$). Compared to Thm.~\ref{chap4-thm:response:check} for response poisoning attacks, there is an improvement of $\frac{m}{\epsilon}$ which is a direct consequence of a smaller $\tau$. 
 
-For \DegHybrid{}, we have: \vspace{-0.2cm}
+For \DegHybrid{}, we have: 
 \begin{thm}\label{chap4-thm:rrlapchecka2}
 	Let $\calM$ be a set of malicious users with $|\calM| = m$. 
   For any $c \in (0,1)$, the \DegHybrid{} protocol run with threshold $\tau = m(1-2\rho) + \sqrt{8 \max\{\rho n, m\} \ln \frac{8n}{\delta}}$ is $(\frac{1}{(1-c)\epsilon}\ln \tfrac{4n}{\delta} ,\delta)$-correct and $(4m+8\sqrt{\max\{n, m(e^{c\epsilon}+1)\}}\frac{\sqrt{2(e^{c\epsilon}-1) \ln \frac{8n}{\delta}}}{e^{c\epsilon}+1}, \delta)$-sound with respect to any input poisoning attack from $\calM$. \label{chap4-thm:input:hybrid}

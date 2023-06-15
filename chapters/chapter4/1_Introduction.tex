@@ -8,10 +8,10 @@ The distributed nature of \ldp, however, leaves the door open for poisoning atta
 \begin{figure}
     \centering
     \includegraphics[width=0.78\columnwidth]{graph_pic_1_new.pdf}
-     \vspace{-0.3cm}
+     
   \caption{Graph analysis in the \ldp~setting}
     \label{chap4-fig:setting}   
-    \vspace{-1cm}
+    
 \end{figure}
 
 Prior work, which focuses on tabular data~\cite{Cheu21,Cao_USENIX21,Li22}, finds that  poisoning attacks can be carried out against naive \ldp{} protocols. However, the impact of poisoning under \ldp{} for graph analysis is largely unexplored. In this paper, we initiate a formal study on the impact of such poisoning attacks on \ldp{} protocols for graph statistics. We focus on the task of degree estimation, one of the most fundamental tasks in graph analysis. 
@@ -78,9 +78,9 @@ even with a large number of malicious users $(m = 37.5\%)$.
 
 %Second, utilizing redundancy in graph data, we design protocols protocols utilizing the redundancy in graphs which also satisfy \ldp{}. Our results demonstrate the following:  (1) that adversarial manipulation becomes worse when the adversary is able to manipulate their (noisy) response, rather than their input data, and (2) that it is possible to leverage the redundancy in graph data to significantly reduce adversarial manipulation.In graphs, redundancy may be used to reduce the influence a malicious party has over \ldp{} protocols. If allowed to return $\bottom$ when auser is believed to be adversarial, a protocol is able to limit theadvantage of an adversary to much below what is achieved by naive approaches.
 
-%\ji{ TODO: Table of results}
 \begin{table*}
 \centering
+\rotatebox{270}{
 \begin{tabular}{|c|ccc|ccc|c|}
 \hline 
 \multirow{2}{*}{Protocol} & \multicolumn{3}{|c|}{Response Poisoning} & \multicolumn{3}{|c|}{Input Poisoning} & \multirow{2}{*}{Privacy Guarantee} \\
@@ -90,6 +90,7 @@ even with a large number of malicious users $(m = 37.5\%)$.
 \DegRRCheck & $(\tO(m + \frac{m}{\epsilon} + \frac{\sqrt{n}}{\epsilon}), \delta)$ & $(\tO(m + \frac{m}{\epsilon} + \frac{\sqrt{n}}{\epsilon}), \delta)$ & Thm.~\ref{chap4-thm:response:check} & $(\tO(m + \frac{\sqrt{n}}{\epsilon}), \delta)$ & $(\tO(m + \frac{\sqrt{n}}{\epsilon}), \delta)$ & Thm.~\ref{chap4-thm:input:check} & $\epsilon$-Edge \ldp\\ \hline
 \DegHybrid & $(\tO(\frac{1}{\epsilon}), \delta)$ & $(\tO(m + \frac{m}{\epsilon} + \frac{\sqrt{n}}{\epsilon}), \delta)$ & Thm.~\ref{chap4-thm:response:hybrid} & $(\tO(\frac{1}{\epsilon}), \delta)$ & $(\tO(m + \frac{\sqrt{n}}{\epsilon}), \delta)$ & Thm.~\ref{chap4-thm:input:hybrid} & $\epsilon$-Edge \ldp \\ \hline
 \end{tabular}
+}
 \caption{Summary of correctness and soundness results in the paper. The $\tilde{O}$ notation asymptotically holds for $\epsilon<1$, and hides factors of $\log \frac{1}{\delta}$. $n-1$-tight  indicates that there exists a worst-case attack that can skew the degree estimates by $n-1$. All the above results are attack-agnostic. }\label{chap4-tab:results}
- \vspace{-0.5cm}
+ 
 \end{table*}

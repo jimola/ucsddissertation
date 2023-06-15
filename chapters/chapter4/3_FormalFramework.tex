@@ -7,7 +7,7 @@ In this section, we present our formal framework for analyzing the robustness of
 \subsection{Metrics}\label{chap4-sec:robustframework}
 
 %In order to achieve robustness, we permit our algorithms to return $\hat{d}_i = \bottom$ (abort the estimate for user $\DO_i$) if it detects poisoning in that user's data. The symbol $\bottom$ means that the data received about $\DO_i$ does not constitute a valid input and their degree estimate is aborted. 
-Our notion of correctness guarantees that the protocol will produce an accurate degree estimate $\hat{d}_i$ for an honest user $\DO_i \in \mathcal{H}$ even under poisoning. On the other hand, good soundness prevents a malicious user $\DO_i \in \calM$ from  manipulating their degree estimate by too much \textit{without} detection.   We describe them in details as follows.  \vspace{-0.2cm}  
+Our notion of correctness guarantees that the protocol will produce an accurate degree estimate $\hat{d}_i$ for an honest user $\DO_i \in \mathcal{H}$ even under poisoning. On the other hand, good soundness prevents a malicious user $\DO_i \in \calM$ from  manipulating their degree estimate by too much \textit{without} detection.   We describe them in details as follows.    
 \\\\
 \noindent\textbf{Correctness (For Honest Users).}
 The \textit{correctness} of a protocol assesses its resilience to manipulation of an honest user's estimator. Specifically,  malicious users can adversely affect an honest user $\DO_i \in \calH$ by \squishlist\item tampering with the value of $\DO_i$'s degree estimate $\hat{d}_i$ (by introducing additional error), or \item attempting to mislabel $\DO_i$ as malicious (by influencing the aggregator to report $\hat{d}_i=\bot$) \squishend
@@ -17,7 +17,7 @@ Correctness protects the honest user $\DO_i$ along the above dimensions and is f
 \begin{defn}\label{chap4-def:correct}(\textbf{Correctness}) Let 
   $\langle R_1, \ldots, R_n\rangle$ be a non-interactive, \ldp{} protocol for degree estimation producing estimates $\langle \hd_1, \ldots, \hd_n\rangle$. Let $\calM$ be a set of malicious users with $|\calM| = m$ and $\calH$ be the set of honest users. 
 Then, the protocol is defined to be $(\alpha_1,\delta_1)$-correct w.r.t. an attack from $\calM$ if for all input graphs $G\in \calG$ we have:
-  \begin{gather}  \vspace{-0.2cm}  
+  \begin{gather}    
     \forall \DO_i \in \calH, \mathrm{Pr}\left[\hat{d}_i = \bottom \vee
     |\hat{d}_i-d_i|\geq \alpha_1\right]\leq \delta_1,\label{chap4-eq:correct1}
   \end{gather}
@@ -29,7 +29,7 @@ the degree estimate $\hd_i$ for any honest user $\DO_i \in \calH$ has error \tex
 Complementary to the above definition, we introduce the notion of $\alpha_1$-\textit{tight correctness}. A protocol is defined to be $\alpha_1$-tight correct w.r.t an attack, if there exists a graph such that the attack is \textit{guaranteed} to either skew the  the degree estimate of at least one honest user by \textit{exactly} $\alpha_1$.  We use this definition to show the existence of strong attacks that are guaranteed to be very successful in manipulating the data of an honest user, which motivates the need for robust solutions. 
 
 Lower the value of
-$\alpha_1$ and $\delta_1$, better is the robustness of the protocol for honest users.  \vspace{-0.2cm}  \\\\ 
+$\alpha_1$ and $\delta_1$, better is the robustness of the protocol for honest users.    \\\\ 
 %This definition is the complement of Definition~\ref{chap4-def:correct}, and we use it to show that there are attacks which, in a strong sense, are very successful against the protocol: They are always able to return $\bottom$ or an inaccurate response for an honest user. We use this definition to motivate the need for more robust algorithms.\\\\
 \noindent\textbf{Soundness (For Malicious Users). } The \textit{soundness} of a protocol assesses its ability to restrict adversarial manipulations of a malicious user's estimator. In particular, the protocol either returns an accurate estimate or returns $\hd_i = \bottom$ for these malicious users, regardless of the poisoning attack used. Formally, we use the following definition (which uses the complement event $\hd_i \neq \bottom \wedge |\hd_i - d_i| \geq \alpha_2$):
 
@@ -46,7 +46,7 @@ Complementary to the above definition, we introduce the notion of $\alpha_1$-\te
 In other words, an $(n-1)$-tight sound/correct attack represents the strongest possible attack\footnote{We do not consider self-edges or loops in the graph.} -- an user's estimate can \textit{always} be skewed by the worst-case amount. We use this definition to motivate the need for more robust protocols. %Note that this is distinct from $(n-1,1)$ correct/sound which is trivial because all events occur with probability $<1$.
 \par Lower the value of
 $\alpha_2$ and lower the value of $\delta_2$, better is the robustness of the protocol for malicious users.  
-  \vspace{-0.2cm}  \\\\
+    \\\\
 \noindent\textbf{Note.} Our proposed  framework strives to provide a strong notion of robustness -- not only are we able to guarantee accurate estimates, but also detect  \textit{and} flag individual malicious users (by reporting $\bottom$). %This is analogous to the guaranteed output delivery (GOD) model of security multi-party computation in cryptography~\cite{} which is the strongest security model.
 %\arc{Expand on this}
 \section{Impact of Poisoning on Baseline Protocols}

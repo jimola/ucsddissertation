@@ -77,7 +77,7 @@ Thus, the noisy triangle count cannot be upper-bounded by $\mu d_i$.
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.78\linewidth]{fig/double_clipping.pdf}
-  \vspace{-4mm}
+  
   \caption{Noisy triangles involving edge $(v_i,v_j)$ counted by user $v_i$ ($j<k,l,m<i$).} 
   \label{chap2-fig:reduce_noisy_triangles}
 %\end{figure}
@@ -85,7 +85,7 @@ Thus, the noisy triangle count cannot be upper-bounded by $\mu d_i$.
 %\begin{figure}[t]
   \centering
   \includegraphics[width=0.99\linewidth]{fig/clip_overview.pdf}
-  \vspace{-4mm}
+  
   \caption{Overview of double clipping applied to edge ($v_1,v_7$).} 
   \label{chap2-fig:double-clip_overview}
 \end{figure}
@@ -264,6 +264,7 @@ of $v_i$ never exceeds $\td_i$.
 
 \begin{table*}[t]
   \centering
+	\rotatebox{270}{
   \begin{tabular}{|l|c|c|c|}
     \hline
     & \AlgOne & \AlgTwo & \AlgThree \\ \hline
@@ -308,7 +309,7 @@ of $v_i$ never exceeds $\td_i$.
     % $\mu e^{-\epsilon_1} n \log n$ & $\mu e^{-\epsilon_1} n \log n$ & $\mu e^{-\epsilon_1} n \log n$ 
     \\ \hline
   \end{tabular}
-  \vspace{-2mm}
+	}	
   \caption{Performance guarantees 
   %Privacy, expected $l_2$ loss, and download/upload cost 
   of our three algorithms with double clipping when the edge removal and triangle removal do not occur. 

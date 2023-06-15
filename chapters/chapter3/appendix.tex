@@ -56,7 +56,7 @@ In summary, our triangle algorithm \AlgWSTriVR{} is useful for accurately calcul
 
 % \begin{table}[t]
 % \caption{Basic notation in this paper.}
-% \vspace{-4mm}
+% 
 % \centering
 % \hbox to\hsize{\hfil
 % \begin{tabular}{l|l}
@@ -89,7 +89,7 @@ In summary, our triangle algorithm \AlgWSTriVR{} is useful for accurately calcul
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res6_clst.pdf}
-  \vspace{-2mm}
+  
   \caption{Relative errors of the triangle count, 2-star count, and clustering coefficient when \AlgWSTriVR{} and the one-round local 2-star algorithm in \cite{Imola_USENIX21} with edge clipping are used ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
   }
   \label{chap3-fig:res6_clst}
@@ -142,7 +142,7 @@ We denote the two-round algorithm with $p_0=1$ and $\frac{1}{q \sqrt{n}}$ by \Al
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res3_2rounds.pdf}
-  \vspace{-2mm}
+  
   \caption{Comparison with the two-round local algorithm in \cite{Imola_USENIX22}.
   The download costs of \AlgTwoRS{} and \AlgTwoRL{} are $n \log n$ and $\frac{(n-1)(n-2)}{2}$ bits, respectively
   ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
@@ -168,7 +168,7 @@ Here, we compare the numerical bound with the closed-form bound in Theorem~\ref{
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res5_closed.pdf}
-  \vspace{-2mm}
+  
   \caption{Numerical bound vs. closed-form bound ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
   }
   \label{chap3-fig:res5_closed}
@@ -199,7 +199,7 @@ Thus, the BA graphs have much smaller triangles and 4-cycles than \Gplus{}.
 \begin{table}[t]
   \caption{Statistics of \Gplus{} and the BA graphs ($n=107614$).
   }
-  \vspace{-4mm}
+  
   \centering
   \begin{tabular}{|c|c|c|c|c|}
     \hline
@@ -225,7 +225,7 @@ These results show that the relative error tends to be smaller in a dense graph 
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res7_BA.pdf}
-  \vspace{-2mm}
+  
   \caption{Relative error in the BA graph data
   ($n=107614$, $c=1$).
   $p_0$ is the sampling probability in the ARR.
@@ -236,7 +236,7 @@ These results show that the relative error tends to be smaller in a dense graph 
 %\begin{figure}[t]
   \centering
   \includegraphics[width=0.8\linewidth]{fig/res7_BA_box.pdf}
-  \vspace{-2mm}
+  
   \caption{Box plots of counts/estimates in the BA graph data
   ($n=107614$, $c=1$).
   \#Triangles and \#4-Cycles represent the true triangle and 4-cycle counts, respectively.
@@ -270,7 +270,7 @@ Note that we did not evaluate the triangle counting algorithms, because there ar
 % \begin{table}[t]
 %   \caption{4-cycle count in \Gplus{}, \IMDB{}, and the corresponding bipartite graphs (B: bipartite graph).
 %   }
-%   \vspace{-4mm}
+%   
 %   \centering
 %   \begin{tabular}{|c|c|c|c|}
 %     \hline
@@ -283,7 +283,7 @@ Note that we did not evaluate the triangle counting algorithms, because there ar
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res8_Bip.pdf}
-  \vspace{-2mm}
+  
   \caption{Relative error in the bipartite graph data
   ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
   }
@@ -293,7 +293,7 @@ Note that we did not evaluate the triangle counting algorithms, because there ar
 %\begin{figure}[t]
   \centering
   \includegraphics[width=0.92\linewidth]{fig/res8_Bip_box.pdf}
-  \vspace{-2mm}
+  
   \caption{Box plots of counts/estimates in the bipartite graph data
   ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
   \#4-Cycles represents the true 4-cycle count.
@@ -328,7 +328,7 @@ In this appendix, we evaluate the standard error of the average relative error.
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res9_std_err.pdf}
-  \vspace{-4mm}
+  
   \caption{Standard error of the average relative error in Figure~\ref{chap3-fig:res1_eps}. 
   Each error bar represents $\pm$ standard error.
   }
