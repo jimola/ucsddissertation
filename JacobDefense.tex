@@ -107,7 +107,7 @@ this group. In particular, I would like to extend thanks to
 Mary Anne Smart, who has helped me with many problems related to work and to 
 life, and who I can always count on to be a voice of reason. Next,
 thanks to Casey Meehan for his light-heartedness and generosity,
-especially when I was experiencing more difficult times. Next, 
+especially during the more challenging times. Next, 
 thanks to Robi Bhattacharjee from whose uncanny intelligence and varied interests
 I have learned lots. Finally, thanks to Amrita Roy Chowdhury, whose
 extreme aptitude in research and other intellectual pursuits I find quite
@@ -163,46 +163,90 @@ The dissertation author was the first author of this paper.
 \noindent
 \begin{cv}{}
 \begin{cvlist}{}
-\item[1996] Bachelor of Arts, University of California, Berkeley
-\item[1996--2000] U.S. Marines
-\item[2000--2002] Teaching Assistant, Department of Mechanical
-Engineering\\University of California, San Diego
-\item[2002--2006] Research Assistant, University of California, San
+\item[2018] Bachelor of Arts, Carnegie Mellon University
+\item[2018-2023] Graduate Research Assistant, University of California, San
 Diego
-\item[2010] Doctor of Philosophy, University of California, San Diego
+\item[2021] Research Intern, Amazon Arlington, VA.
+\item[2022] Research Intern, Google N.Y.
+\item[2023] Doctor of Philosophy, University of California, San Diego
 \end{cvlist}
 \end{cv}
 
 % This puts in the PUBLICATIONS header. Note that it appears inside
 % the vita environment. It is optional.
 \publications
-\noindent``Distributions of Control Points in a System for Analysis of Stress
-Distribution'' IRE Transactions of the I.R.E\@. Professional Group on
-Automatic Control, vol. AC-7, pp 272--289, September 2005
+\begin{itemize}
+\item
+		Jacob Imola, Amrita Roy Chowdhury, and Kamalika Chaudhuri.
+		\textit{\href{https://arxiv.org/pdf/2210.14376.pdf}{Robustness of Locally Differentially Private Graph Analysis Against Poisoning}}. Preprint, 2023.
+
+\item
+	Jacob Imola, Alessandro Epasto, Mohammad Mahdian, Vincent Cohen-Addad, and Vahab Mirrokni.
+	\textit{\href{https://arxiv.org/abs/2302.00037}{Differentially-Private Hierarchical Clustering with Provable Approximation Guarantees}}. In ICML 2023.
+
+\item
+		Robi Bhattacharjee, Jacob Imola, Michal Moshkovitz, and Sanjoy Dasgupta.
+		\textit{\href{https://arxiv.org/abs/2102.09101}{Online $k$-means Clustering on Arbitrary Data Streams}}. In ALT 2023.
+
+\item
+ Jacob Imola, Takao Murakami, and Kamalika Chaudhuri.
+		\textit{\href{https://arxiv.org/abs/2205.01429.pdf}{Differentially Private Triangle and 4-Cycle Counting in the Shuffle Model}}. In CCS 2022.
+
+\item Jacob Imola, Shiva Kasiviswanathan, Stephen White, Abhinav Aggarwal, Nathanael Teissier.
+		\textit{\href{https://openreview.net/pdf?id=B0l8-wLjql5}{Balancing Utility and Scalability in Metric Differential Privacy}}. In UAI 2022.
+
+\item Jacob Imola, Takao Murakami, and Kamalika Chaudhuri.
+		\textit{\href{https://arxiv.org/abs/2110.06485}{Communication-Efficient Triangle Counting under Local Differential Privacy}}. In USENIX Security 2022.
+
+\item Jacob Imola and Kamalika Chaudhuri.
+		\textit{\href{https://arxiv.org/abs/2105.10594}{Privacy Amplification Via Bernoulli Sampling}}. In TPDP Workshop at ICML 2021.
+
+\item Jacob Imola, Takao Murakami, and Kamalika Chaudhuri.
+		\textit{\href{https://arxiv.org/abs/2010.08688}{Locally Differentially Private Analysis of Graph Statistics}}. In USENIX Security 2021.
+
+\item Kamalika Chaudhuri, Jacob Imola, and Ashwin Machanavajjhala.
+		\textit{\href{https://arxiv.org/abs/1907.02159}{Capacity Bounded Differential Privacy}}.
+	  In NeurIPS 2019.
+\end{itemize}
 
 % This puts in the FIELDS OF STUDY. Also inside vita and also
 % optional.
-\fieldsofstudy
-\noindent Major Field: Engineering (Specialization or Focused Studies)
-\vskip\baselineskip
-Studies in Applied Mathematics\par
-Professors Alpha Beta and Gamma Delta
-\vskip\baselineskip
-Studies in Mechanices\par
-Professors Epsilon Zeta and Eta Theta
-\vskip\baselineskip
-Studies in Electromagnetism\par
-Professors Iota Kappa and Lambda Mu
 \end{vita}
 
 % Put your maximum 350 word abstract here.
 \begin{dissertationabstract}
-The Abstract begins here. The abstract is limited to 350 words for a
-doctoral dissertation. It should consist of a short statement of the
-problem, a brief explanation of the methods and procedures employed in
-generating the data, and a condensed summary of the findings of the
-study. The abstract may continute onto a second page if necessary. The
-text of the abstract must be double spaced.
+In many modern machine learning applications, users hold data on a local device 
+and communicate with an untrusted central analyst. Local differential privacy 
+(local DP) is the state-of-the art way to ensure that all data sent by a user 
+will be protected regardless of who eventually sees the data. In this dissertation,
+I will focus on collecting certain graph statistics, such as the degree vector 
+and number of triangles in the graph, under local DP. I will 
+obtain formal performance guarantees in the presence of different real-world constraints.
+
+First, I will detail a one-round algorithm which is simple, but not guaranteed to work 
+well on sparse graphs. To improve these matters,
+I will propose a two-round algorithm with improved performance 
+for sparse graphs. Unfortunately, it may have prohibitively large per-user 
+download cost. Second, I will show how one can use 
+edge sampling to reduce download cost, and exhibit another two-round algorithm which
+trades off between the download cost and error.
+
+Third, given that it requires significant synchronization overhead to implement multiple rounds, I will 
+focus on improved one-round algorithms. I propose such an algorithm which satisfies a slightly weaker
+notion of DP, the shuffled model. This algorithm uses a novel wedge-shuffling approach
+to count wedges, and gives rise to an accurate algorithm for counting 
+4-cycles as well. Fourth, I will shift gears to computing the degree histogram in the presence
+of malicious users who do not follow the local DP protocol. Many ubiquitous local DP mechanisms are susceptible to such users.
+ I will detail robust algortihms which
+makes use of the fact that every edge in a graph is shared by two users in order to design 
+edge consistency checks which can flag malicious users.
+
+Fifth, I will detail my work on private hierarchical clustering,
+a common clustering algorithm used for graphs and other data. I propose two algorithms and 
+a lower bound in the general setting of the problem, and a further algorithm in the stochastic 
+block model of graphs. The algorithm design and lower bound 
+are of interest to designing future local DP protocols on graphs.
+
 \end{dissertationabstract}
 
 % This is where the main body of your dissertation goes!
