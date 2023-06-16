@@ -13,13 +13,13 @@
 \section{Effectiveness of empirical estimation in \alg{LocalRR$_\triangle$}}
 \label{chap1-sec:RR_emp}
 In Section~\ref{chap1-sub:non-interactive_triangles}, we presented \alg{LocalRR$_\triangle$}, which uses the empirical estimation method after the RR. 
-Here we show the effectiveness of empirical estimation by comparing \alg{LocalRR$_\triangle$} with the RR without empirical estimation \cite{Qin_CCS17,Ye_ICDE20}. 
-% i.e., the randomized neighbor list in \cite{Qin_CCS17}. 
+Here we show the effectiveness of empirical estimation by comparing \alg{LocalRR$_\triangle$} with the RR without empirical estimation \cite{qin2017generating,Ye_ICDE20}. 
+% i.e., the randomized neighbor list in \cite{qin2017generating}. 
 % This method was also used in \cite{Ye_ICDE20}. 
-% We also note that the RR has been applied to the adjacency matrix without empirical estimation in \cite{Qin_CCS17,Ye_ICDE20} for different purposes than counting triangles. 
+% We also note that the RR has been applied to the adjacency matrix without empirical estimation in \cite{qin2017generating,Ye_ICDE20} for different purposes than counting triangles. 
 
 As the RR without empirical estimation, we applied the RR to the lower triangular part of the adjacency matrix $\bmA$; i.e., we ran lines 1 to 6 in Algorithm~\ref{chap1-alg:subgraph-rr}. 
-% This is the extended version of the randomized neighbor list \cite{Qin_CCS17}, as described in Section
+% This is the extended version of the randomized neighbor list \cite{qin2017generating}, as described in Section
 Then we output the number of noisy triangles $m_3$. 
 We denote this algorithm by \alg{RR w/o emp}. 
 % Both \alg{LocalRR$_\triangle$} and \alg{RR w/o emp} provide $\epsilon$-edge LDP and $\epsilon$-entire edge LDP. 

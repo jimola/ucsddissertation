@@ -12,7 +12,7 @@ Our paper focuses on the \textit{local} model of \DP, one of the most popular mo
 The local model consists of a set of individual users (\DO) and an untrusted data aggregator (analyst); each user perturbs their data using a (local) \DP~algorithm and sends it to the aggregator which uses these noisy data to estimate certain statistics of the entire dataset. %Thus, the \ldp~model allows gleaning of useful information from the dataset without requiring the data owners to trust any third-party entity. %This makes it an attractive model for commercial deployment~\cite{Apple,Rappor1,Rappor2,Uber}.
   %An edge $e_{ij}$ is shared between two users $\DO_i$ and $\DO_j$. 
  
-The most popular privacy guarantee for graphs in the local setting is known as \textit{edge \ldp}~\cite{Graph7,Graph11} which protects the existence of an edge between any two users. In other words, on observing the output, an adversary cannot distinguish between two graphs that differ in a single edge. Formally, we have:
+The most popular privacy guarantee for graphs in the local setting is known as \textit{edge \ldp}~\cite{Nissim_STOC07,Raskhodnikova_Encyclopedia16} which protects the existence of an edge between any two users. In other words, on observing the output, an adversary cannot distinguish between two graphs that differ in a single edge. Formally, we have:
 \begin{defn}[$\epsilon$-Edge~\ldp\cite{qin2017generating}]
     Let $R: \{0,1\}^n\mapsto \mathcal{X}$ be a randomized algorithm that takes an adajcency list $l \in \{0,1\}^n$
 as input. We say $R(\cdot)$ provides $\epsilon$-edge LDP if for any two
@@ -39,8 +39,8 @@ where $l_i$ (respectively, $l_i'$)
 is the $i$-th row of the adjacency
 matrix of graph $G$ (respectively, $G'$).\end{defn}
 
-Relationship \DP~is closely connected to the notion of edge \ldp~which is one of the most popular privacy guarantee for graphs \cite{Graph7,Graph11} in the \ldp~setting. 
-$\epsilon$-edge \ldp~protects the information about an edge $e_{ij}$ from the adjacency list $l_i$ of a \textit{single} user $\DO_i$. On the other hand, relationship \DP~consider the outputs from \textit{both} users $\DO_i$ and $\DO_j$ and hides the \textit{edge as a  whole}. Formally, if each of the local randomizers $R_i(\cdot), i \in [n]$ satisfy $\epsilon$-edge \ldp, then $\langle R_1(\cdot),\cdots,R_n(\cdot)\rangle$ satisfies $2\epsilon$-relationship \DP~\cite{Graph7,Graph11}. Next, we describe two common privacy mechanisms for degree estimation.
+Relationship \DP~is closely connected to the notion of edge \ldp~which is one of the most popular privacy guarantee for graphs \cite{Nissim_STOC07,Raskhodnikova_Encyclopedia16} in the \ldp~setting. 
+$\epsilon$-edge \ldp~protects the information about an edge $e_{ij}$ from the adjacency list $l_i$ of a \textit{single} user $\DO_i$. On the other hand, relationship \DP~consider the outputs from \textit{both} users $\DO_i$ and $\DO_j$ and hides the \textit{edge as a  whole}. Formally, if each of the local randomizers $R_i(\cdot), i \in [n]$ satisfy $\epsilon$-edge \ldp, then $\langle R_1(\cdot),\cdots,R_n(\cdot)\rangle$ satisfies $2\epsilon$-relationship \DP~\cite{Nissim_STOC07,Raskhodnikova_Encyclopedia16}. Next, we describe two common privacy mechanisms for degree estimation.
 % For the rest of the paper, we consider $\epsilon$-relationship \DP~degree estimation algorithms.
 \end{comment}
 

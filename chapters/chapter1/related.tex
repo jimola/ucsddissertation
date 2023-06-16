@@ -14,10 +14,10 @@
 In this model, a number of algorithms have been proposed for releasing subgraph counts \cite{Karwa_PVLDB11,Kasiviswanathan_TCC13,Song_arXiv18}, degree distributions \cite{Day_SIGMOD16,Hay_ICDM09,Raskhodnikova_arXiv15}, eigenvalues and eigenvectors 
 \cite{Wang_PAKDD13}, and synthetic graphs \cite{Chen_PoPETs20,Wang_TDP13}. 
 
-% Algorithms for graph DP in the local model are much fewer, and \cite{Qin_CCS17,Ye_ICDE20,Zhang_USENIX20} are such examples. 
+% Algorithms for graph DP in the local model are much fewer, and \cite{qin2017generating,Ye_ICDE20,Zhang_USENIX20} are such examples. 
 % Some studies proposed 
-There has also been a handful of work on graph algorithms in the local DP model~\cite{Qin_CCS17,Sun_CCS19,Ye_ICDE20,Ye_TKDE21,Zhang_USENIX20}. 
-For example, Qin \textit{et al.} \cite{Qin_CCS17} propose an algorithm for generating synthetic graphs. 
+There has also been a handful of work on graph algorithms in the local DP model~\cite{qin2017generating,Sun_CCS19,Ye_ICDE20,Ye_TKDE21,Zhang_USENIX20}. 
+For example, Qin \textit{et al.} \cite{qin2017generating} propose an algorithm for generating synthetic graphs. 
 % while
 % Ye \textit{et al.} \cite{Ye_ICDE20} 
 % provide a method
@@ -49,7 +49,7 @@ Our work also differs from \cite{Sun_CCS19,Ye_ICDE20,Ye_TKDE21} in that we provi
 % (ii) we also 
 % \colorB{provide} 
 % lower-bounds on the estimation error. 
-% We note that although Warner's RR (Randomized Response) has been applied to an adjacency matrix in \cite{Qin_CCS17,Ye_ICDE20} for different purposes than ours, it can be used for counting triangles. 
+% We note that although Warner's RR (Randomized Response) has been applied to an adjacency matrix in \cite{qin2017generating,Ye_ICDE20} for different purposes than ours, it can be used for counting triangles. 
 % However, it suffers from a very large estimation error. 
 % Our one-round algorithm for triangles uses empirical estimation as a post-processing step, and we show in Appendix~\ref{chap1-sec:RR_emp} that this empirical estimation step significantly reduces the estimation error.
 

@@ -171,7 +171,7 @@ We refer to Warner's RR $\calR_{\epsilon}^W$ with parameter $\epsilon$ as \texti
 
 % \commentTM{Below, we could include the following:
 % \begin{itemize}
-% \item Motivation of introducing $(\epsilon, \delta)$-element DP, e.g., to be consistent with existing edge LDP \cite{Qin_CCS17} that considers the difference of one element.
+% \item Motivation of introducing $(\epsilon, \delta)$-element DP, e.g., to be consistent with existing edge LDP \cite{qin2017generating} that considers the difference of one element.
 % \item $(\epsilon, \delta)$-element DP $\rightarrow$ $(2\epsilon, 2\delta)$-edge DP.
 % \end{itemize}}
 
@@ -199,7 +199,7 @@ Note that the central and local models have different definitions of neighboring
 Specifically, edge DP in the central model \cite{Raskhodnikova_Encyclopedia16} considers two graphs that differ in one edge. 
 In contrast, edge LDP 
 % (Local DP) 
-\cite{Qin_CCS17} considers two neighbor lists that differ in one bit: 
+\cite{qin2017generating} considers two neighbor lists that differ in one bit: 
 %element (bit). 
 
 \begin{definition} [$(\epsilon,\delta)$-edge DP \cite{Raskhodnikova_Encyclopedia16}] \label{chap3-def:edge_DP} 
@@ -213,7 +213,7 @@ if for any two neighboring graphs $G, G' \in \calG$ that differ in \textbf{one e
 % We say $\calM$ provides \emph{$\epsilon$-edge DP} if it provides \emph{$(\epsilon,0)$-edge DP}.
 \end{definition}
 
-\begin{definition} [$\epsilon$-edge LDP~\cite{Qin_CCS17}] \label{chap3-def:edge_LDP} 
+\begin{definition} [$\epsilon$-edge LDP~\cite{qin2017generating}] \label{chap3-def:edge_LDP} 
 Let $\epsilon \in \nnreals$. 
 A local randomizer $\calR$ with domain $\{0,1\}$ provides \emph{$\epsilon$-edge LDP} if for any two neighbor lists $\bma_i, \bma'_i \in \{0,1\}^n$ that differ in \textbf{one bit} and any $S \subseteq \mathrm{Range}(\calR)$, 
 \begin{align*}

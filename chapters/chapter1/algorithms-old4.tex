@@ -4,7 +4,7 @@
 %-------------------------------------------------------------------------------
 When the data collector does not have access to the adjacency matrix
 $\bmA$, a unique communication challenge arises. There are several ways in
-which we may model how the data collector interacts with the users~\cite{Duchi_FOCS13,Joseph_SODA20,Qin_CCS17}.
+which we may model how the data collector interacts with the users~\cite{Duchi_FOCS13,Joseph_SODA20,qin2017generating}.
 The simplest model would be to assume that 
 % \colorB{each user $v_i$ independently runs the randomized algorithm $\calR_i$ on the neighbor list $\bma_i$ and sends the output $\calR_i(\bma_i)$ to the data collector.} 
 the data collector sends 
@@ -23,9 +23,9 @@ For example, the RR (Randomized Response) for a neighbor list in Section~\ref{ch
 However, in certain cases it may be possible 
 for the data collector to send a query to each user multiple times. 
 This could allow for more powerful queries that result in more accurate analysis
-of graph statistics or more accurate synthetic graphs~\cite{Qin_CCS17}. 
+of graph statistics or more accurate synthetic graphs~\cite{qin2017generating}. 
 We call this the \textit{multiple-rounds LDP model}. 
-For example, a synthetic graph generation technique in the two-rounds LDP model has been proposed in~\cite{Qin_CCS17}.
+For example, a synthetic graph generation technique in the two-rounds LDP model has been proposed in~\cite{qin2017generating}.
 
 % Note that we assume interaction between each user and the data collector, and do not assume interaction among users in both the one-round and multiple-rounds LDP models.}
 
@@ -372,7 +372,7 @@ triangle; i.e., user $v_i$ is not aware of any triangle formed by $(v_i, v_j, v_
 One way to count $f_\triangle(G)$ with edge LDP is 
 to apply the RR (Randomized Response) 
 to a neighbor list. 
-% as in \cite{Qin_CCS17,Ye_ICDE20}. 
+% as in \cite{qin2017generating,Ye_ICDE20}. 
 % on each of her edges, to release a noisy copy 
 % $P$ 
 % \colorB{$G' \in \calG$}

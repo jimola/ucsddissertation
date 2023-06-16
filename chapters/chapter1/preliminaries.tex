@@ -76,7 +76,7 @@ In this case, the user may not mind sending her user ID,
 % (i.e., who the user is), 
 but may want to hide her edge information (i.e., who she met today). 
 Although we cannot use node DP in such applications, we can use edge DP to deny the presence/absence of each edge (friend). 
-Thus we focus on edge DP in the same way as \cite{Qin_CCS17,Sun_CCS19,Ye_ICDE20,Ye_TKDE21}. 
+Thus we focus on edge DP in the same way as \cite{qin2017generating,Sun_CCS19,Ye_ICDE20,Ye_TKDE21}. 
 
 % We refer to edge DP in the centralized model as \textit{edge centralized DP}, and explain it in detail below.
 Below we explain edge DP in the centralized model. 
@@ -119,7 +119,7 @@ However, in a graph, each edge is connected to two users.
 Thus, when we define edge DP in the local model, 
 % i.e., \textit{edge LDP}, 
 we should consider what we want to protect. 
-In this paper, we consider two definitions of edge DP in the local model: \textit{edge LDP} in \cite{Qin_CCS17} and 
+In this paper, we consider two definitions of edge DP in the local model: \textit{edge LDP} in \cite{qin2017generating} and 
 % \textit{entire edge LDP} 
 \textit{relationship DP} 
 introduced in this paper. 
@@ -129,8 +129,8 @@ Below, we will explain these two definitions in detail.
 % because adding or removing one edge will affect neighbor lists of two users. 
 
 \smallskip
-\noindent{\textbf{Edge LDP.}}~~Qin \textit{et al.} \cite{Qin_CCS17} defined edge LDP based on a user's \textit{neighbor list}. 
-% use the definition of edge LDP in \cite{Qin_CCS17}, which is based on a user's \textit{neighbor list}. 
+\noindent{\textbf{Edge LDP.}}~~Qin \textit{et al.} \cite{qin2017generating} defined edge LDP based on a user's \textit{neighbor list}. 
+% use the definition of edge LDP in \cite{qin2017generating}, which is based on a user's \textit{neighbor list}. 
 Specifically, 
 % given a user in $V$, 
 % let $b_i \in \{0,1\}$ be a binary bit that takes $1$ if there is an edge between the user and user $v_i \in V$ and $0$ otherwise. 
@@ -144,7 +144,7 @@ In other words, graph $G$ can be represented as neighbor lists $\textbf{a}_1, \l
 
 Then edge LDP is defined as follows: 
 
-\begin{definition} [$\epsilon$-edge LDP \cite{Qin_CCS17}] \label{chap1-def:edge_LDP} 
+\begin{definition} [$\epsilon$-edge LDP \cite{qin2017generating}] \label{chap1-def:edge_LDP} 
 Let $\epsilon \in \nnreals$. 
 For any $i \in [n]$, let $\calR_i$ with domain $\{0,1\}^n$ be a randomized algorithm of user $v_i$. 
 % A randomized algorithm $\calR$ with domain $\{0,1\}^n$ 
@@ -194,7 +194,7 @@ providing $\epsilon$-edge LDP, we explain
 Warner's RR (Randomized Response) \cite{Warner_JASA65} applied to a neighbor list, 
 which is called 
 % the RNL (Randomized neighbor List) 
-the randomized neighbor list in \cite{Qin_CCS17}. 
+the randomized neighbor list in \cite{qin2017generating}. 
 % and is also used in \cite{Ye_ICDE20}. 
 
 Given a neighbor list 

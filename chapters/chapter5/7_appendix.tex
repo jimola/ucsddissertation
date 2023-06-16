@@ -5,17 +5,17 @@
 
 \paragraph{Differential Privacy} 
 Differential privacy~\citep{dwork2006calibrating} has recently become the gold standard of privacy used by institutions such as the US census~\citep{dwork2019differential} and large tech companies~\citep{erlingsson2014rappor}. In a nutshell, DP algorithms provide plausible deniability for the input data of any user.   
-There is a vast literature on DP algorithms for a disparate range of problems and many different models for differential privacy~\citep{dwork2006calibrating,mcsherry2007mechanism,chaudhuri2011differentially,roy2020crypte,machanavajjhala2017differential,dwork2019differential} (we refer to~\citet{dwork2014algorithmic} for a survey). 
+There is a vast literature on DP algorithms for a disparate range of problems and many different models for differential privacy~\citep{dwork2006calibrating,mcsherry2007mechanism,chaudhuri2011differentially,roy2020crypte,machanavajjhala2017differential,dwork2019differential} (we refer to~\citet{DP} for a survey). 
 
 Among this rapidly growing literature, our work builds on multiple work on differentially privacy, namely DP PCA algorithms~\citep{dwork2014analyze}, DP Johnson Lindenstrauss projections~ \citep{blocki2012johnson}, DP cut sparsification in graphs~\citep{eliavs2020differentially} as well as DP stochastic block model reconstruction (reviewed later). 
 
 \paragraph{Private graph algorithms}
-Especially relevant to this work is the area of differential privacy in graphs. DP has been  declined in graph problems both as  the edge-level~\citep{epasto2022differentially,eliavs2020differentially} and node-level  model~\citep{kasiviswanathan2013analyzing}. The most related work in this area is that on graph cut approximation~\citep{eliavs2020differentially,arora2019differentially}, as well as that of graph clustering with DP in correlation clustering model~\citep{bun2021differentially, cohen2022near}. 
+Especially relevant to this work is the area of differential privacy in graphs. DP has been  declined in graph problems both as  the edge-level~\citep{epasto2022differentially,eliavs2020differentially} and node-level  model~\citep{Kasiviswanathan_TCC13}. The most related work in this area is that on graph cut approximation~\citep{eliavs2020differentially,arora2019differentially}, as well as that of graph clustering with DP in correlation clustering model~\citep{bun2021differentially, cohen2022near}. 
 
 \paragraph{Hierarchical Clustering}
 As we discussed in the introduction, hierarchical clustering has been studied for decades in multiple fields. For this reason, a significant number of algorithms for hierarchical clustering have been introduced~\citep{murtagh2012algorithms}. Up until recently~\citep{dasgupta2016cost}, most work on hierarchical clustering has been heuristic in nature, defining algorithms based on procedures without specific theoretical guarantees in terms of approximation. Most well-known among such algorithms are the linkage-based ones~\citep{J10,bateni2017affinity}. \citet{dasgupta2016cost} introduced for the first time a combinatorial approximation objective for hierarchical clustering which is the one studied in this paper. Since this work, many authors have designed algorithms for variants of the problem~\citep{cohen2017hierarchical,cohen2019hierarchical, charikar2017approximate,moseley2017approximation, agarwal2022sublinear,chatziafratis2020bisect} exploring maximization/minimization versions of the problem on dissimilarity/similarity graphs.
 
-Limited work has been devoted to DP hierarchical clustering algorithms. One paper~\citep{xiao2014differentially} initiates private clustering via MCMC methods, which are not guaranteed to be polynomial time. Follow-up work~\citep{kolluri2021private} shows that sampling from the Boltzmann distribution (essentially the exponential mechanism~\citep{mcsherry2007mechanism} in DP) produces an approximation to the maximization version of Dasgupta's function, which is a different problem formulation. Again, this algorithm is not provably polynomial time.
+Limited work has been devoted to DP hierarchical clustering algorithms. One paper~\citep{xiao2014differentially} initiates private clustering via MCMC methods, which are not guaranteed to be polynomial time. Follow-up work~\citep{Kolluri_CCS21} shows that sampling from the Boltzmann distribution (essentially the exponential mechanism~\citep{mcsherry2007mechanism} in DP) produces an approximation to the maximization version of Dasgupta's function, which is a different problem formulation. Again, this algorithm is not provably polynomial time.
 
 \paragraph{Private flat clustering}
 Contrary to hierarchical clustering, the area of private {\it flat} clustering on metric spaces has received large attention. Most work in this area has focus on improving the privacy-approximation trade-off~\citep{ghazi2020differentially,balcan2017differentially} and on efficiency~\citep{hegde2021sok,cohennear,cohen2022scalable}.
@@ -306,7 +306,7 @@ Let $\hat{A}_1, \hat{A}_1'$ be matrices where $d_k= \sigma_k(\hat{A}_1) - \sigma
 Furthermore, the above holds replacing $\|\cdot\|_F$ with $\|\cdot \|_2$.
 \end{thm}
 
-Having bounded the $L_2$-sensitivity, we finally use the well-known Gaussian mechanism~\citep{dwork2014algorithmic}
+Having bounded the $L_2$-sensitivity, we finally use the well-known Gaussian mechanism~\citep{DP}
 \begin{thm}\label{chap5-thm:gauss-mech}
     If $x \in \R^m$ has $L_2$ sensitivity at most $S$, then releasing $x + N$, where $N \sim \frac{S}{\epsilon} \sqrt{2 \ln \frac{1.25}{\delta}}\calN(0,1)^{m}$ satisfies $(\epsilon, \delta)$-DP.
 \end{thm}
