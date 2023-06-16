@@ -8,7 +8,7 @@ Table~\ref{chap2-tab:notations} shows the basic notations used in this paper.
 % We also show subgraphs that appear in our theoretical analysis (Theorem~\ref{chap2-thm:l2loss_algorithms}) in Figure~\ref{chap2-fig:subgraphs}.
 
 \begin{table}[t]
-\caption{Basic notations.}
+\caption[Basic notations.]{Basic notations.}
 \centering
 \hbox to\hsize{\hfil
 \begin{tabular}{l|l}
@@ -96,8 +96,9 @@ We averaged the relative error over $10$ runs.
 \begin{figure}[t]
   \centering
   \includegraphics[width=0.99\linewidth]{fig/resB_one_round_small.pdf}
-  
-  \caption{Relative error of one-round algorithms for small datasets ($n=10000$).}
+ 	 
+  \caption[Relative error of one-round algorithms for small datasets ($n=10000$).]
+	{Relative error of one-round algorithms for small datasets ($n=10000$).}
   \label{chap2-fig:resB_small}
 \end{figure}
 
@@ -146,7 +147,8 @@ We averaged the relative error over $10$ runs.
   \centering
   \includegraphics[width=0.99\linewidth]{fig/resB_one_round_large.pdf}
   
-  \caption{Relative error of the one-round algorithm \textsf{ARR (unbiased)} and our three two-rounds algorithms with double clipping for large datasets ($n=107614$ in \GPlus{}, $n=896308$ in \IMDB{}).}
+  \caption[Relative error of the one-round algorithm and our three two-round algorithms with double clipping on large datasets.]
+	{Relative error of the one-round algorithm \textsf{ARR (unbiased)} and our three two-rounds algorithms with double clipping for large datasets ($n=107614$ in \GPlus{}, $n=896308$ in \IMDB{}).}
   \label{chap2-fig:resB_large}
 \end{figure}
 
@@ -211,7 +213,8 @@ where $\hf_\triangle(G)$ (resp.~$\hf_{2\star}(G)$) is the estimate of the triang
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res5_cluster.pdf}
   
-  \caption{Relative errors of \#triangles, \#$2$-stars, and the clustering coefficient in \AlgTwo{} with double clipping.
+  \caption[Relative errors of \#triangles, \#$2$-stars, and the clustering coefficient in \AlgTwo{} with double clipping.]
+	{Relative errors of \#triangles, \#$2$-stars, and the clustering coefficient in \AlgTwo{} with double clipping.
   $\CostDL$ is calculated by (\ref{chap2-eq:CostDL_F})
   (when $\mu^* \geq 0.1$,
   $\CostDL$ can be $6$ Gbits and $400$ Gbits in \GPlus{} and \IMDB{}, respectively).
@@ -312,7 +315,8 @@ As we have shown in Section~\ref{chap2-sec:experiments} and Appendix~\ref{chap2-
   \centering
   \includegraphics[width=0.99\linewidth]{fig/resA_BAGraph.pdf}
   
-  \caption{Relative error of our three algorithms with double clipping in the BA graphs ($n=107614$, $\epsilon=1$, $\mu^* = 10^{-3}$).}
+  \caption[Relative error of our three algorthms with double clipping in the Barab\'{a}si-Albert graphs.]
+	{Relative error of our three algorithms with double clipping in the BA graphs ($n=107614$, $\epsilon=1$, $\mu^* = 10^{-3}$).}
   \label{chap2-fig:resA_BAGraph}
 % \end{figure}
 \vspace{5mm}
@@ -320,7 +324,8 @@ As we have shown in Section~\ref{chap2-sec:experiments} and Appendix~\ref{chap2-
   \centering
   \includegraphics[width=0.95\linewidth]{fig/resA_BAGraph_emp_Lap.pdf}
   
-  \caption{Relative error of empirical estimation and the Laplacian noise in our three algorithms with double clipping in the BA graphs ($n=107614$, $\epsilon=1$, $\mu^* = 10^{-3}$).}
+  \caption[Relative error of empirical estimation and the Laplacian noise in our three algorithms with double clipping in the Barab\'{a}si-Albert graphs.]
+	{Relative error of empirical estimation and the Laplacian noise in our three algorithms with double clipping in the BA graphs ($n=107614$, $\epsilon=1$, $\mu^* = 10^{-3}$).}
   \label{chap2-fig:resA_BAGraph_emp_Lap}
 \end{figure}
 
@@ -339,7 +344,7 @@ edge clipping; i.e., each user calculates a noisy degree $\td_i$ (possibly with 
 Then we compared them with our algorithms with double clipping and without clipping.
 
 \begin{table}[t]
-\caption{\#$4$-cycles $C_4$ in each graph dataset.}
+\caption[\#$4$-cycles $C_4$ in each graph dataset.]{\#$4$-cycles $C_4$ in each graph dataset.}
 \centering
 \hbox to\hsize{\hfil
 \begin{tabular}{l|l|l|l|l}
@@ -357,7 +362,7 @@ $C_4$   &   $8.8 \times 10^8$ &  $1.7 \times 10^{10}$ &   $3.1 \times 10^{12}$ &
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res2_w_Lap_EC.pdf}
   
-  \caption{Relative error of our three algorithms without clipping (``$d_{max}$''), with only edge clipping (``EC''), and double clipping (``DC'') when $\epsilon=1$ and $\mu^* = 10^{-6}$ or $10^{-3}$ ($n=107614$ in \GPlus{}, $n=896308$ in \IMDB{}).}
+  \caption[Relative error of our three algorithms without clipping, with only edge clipping, and with double clipping.]{Relative error of our three algorithms without clipping (``$d_{max}$''), with only edge clipping (``EC''), and double clipping (``DC'') when $\epsilon=1$ and $\mu^* = 10^{-6}$ or $10^{-3}$ ($n=107614$ in \GPlus{}, $n=896308$ in \IMDB{}).}
   \label{chap2-fig:res2_w_Lap_EC}
 \end{figure}
 
@@ -633,7 +638,7 @@ ruled out because they have too many or too few edges, violating edge requiremen
   \centering
   \includegraphics[width=0.99\linewidth]{fig/associated_subgraphs.pdf}
   
-  \caption{Examples of two 4-cycles, six 3-stars, and one 2-stars.}
+  \caption[Examples of two 4-cycles, six 3-stars, and one 2-stars.]{Examples of two 4-cycles, six 3-stars, and one 2-stars.}
   \label{chap2-fig:associated_subgraphs}
 \end{figure}
 

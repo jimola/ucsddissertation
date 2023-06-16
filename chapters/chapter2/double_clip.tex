@@ -78,7 +78,7 @@ Thus, the noisy triangle count cannot be upper-bounded by $\mu d_i$.
   \centering
   \includegraphics[width=0.78\linewidth]{fig/double_clipping.pdf}
   
-  \caption{Noisy triangles involving edge $(v_i,v_j)$ counted by user $v_i$ ($j<k,l,m<i$).} 
+  \caption[Noisy triangles involving edge $(v_i, v_j)$ counted by user $v_i$.]{Noisy triangles involving edge $(v_i,v_j)$ counted by user $v_i$ ($j<k,l,m<i$).} 
   \label{chap2-fig:reduce_noisy_triangles}
 %\end{figure}
 \vspace{2mm}
@@ -86,7 +86,8 @@ Thus, the noisy triangle count cannot be upper-bounded by $\mu d_i$.
   \centering
   \includegraphics[width=0.99\linewidth]{fig/clip_overview.pdf}
   
-  \caption{Overview of double clipping applied to edge ($v_1,v_7$).} 
+  \caption[Overview od double clipping.]{Overview of double clipping applied to edge ($v_1,v_7$).} 
+
   \label{chap2-fig:double-clip_overview}
 \end{figure}
 
@@ -228,7 +229,7 @@ Thus, there is no interaction with the server in Algorithm~\ref{chap2-alg:clip}.
   $w_i \leftarrow t_i - \mu^* \rho s_i$\;
   $\hw_i \leftarrow w_i + \Lap(\frac{\kappa_i}{\epsilon_2})$\;
   \KwRet{$\hw_i$}
-  \caption{Our double clipping algorithm. 
+  \caption[Our double clipping algorithm.]{Our double clipping algorithm. 
   ``F'', ``O'', ``T'' are shorthands for 
   \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively.
   All the processes are run by user $v_i$.
@@ -310,7 +311,8 @@ of $v_i$ never exceeds $\td_i$.
     \\ \hline
   \end{tabular}
 	}	
-  \caption{Performance guarantees 
+  \caption[Performance gurantees of our three algorithms with double clipping when edge and triange removal do not occur.]
+	{Performance guarantees 
   %Privacy, expected $l_2$ loss, and download/upload cost 
   of our three algorithms with double clipping when the edge removal and triangle removal do not occur. 
   %($C_4$: \#$4$-cycles, $P_3$: \#$3$-paths, $S_k$: \#$k$-stars). 

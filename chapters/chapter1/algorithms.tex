@@ -140,7 +140,7 @@ For this model, we introduce a simple algorithm using the Laplacian mechanism, a
   }
   \KwRet{$\sum_{i=1}^n \hat{r}_i$}
 %   \caption{CountKStars\label{chap1-alg:k-stars}}
-  \caption{\alg{LocalLap$_{k\star}$}\label{chap1-alg:k-stars}}
+  \caption[\alg{LocalLap$_{k\star}$}]{\alg{LocalLap$_{k\star}$}}\label{chap1-alg:k-stars}
 \end{algorithm}
 
 Algorithm~\ref{chap1-alg:k-stars} shows the one-round algorithm for $k$-stars. 
@@ -454,7 +454,7 @@ because $G'$ is denser than $G$ especially when $\epsilon$ is small.
 \begin{figure}
 \centering
 \includegraphics[width=0.9\linewidth]{fig/triplet_shape.pdf}
-\caption{Four types of subgraphs with three nodes.}
+\caption[Four types of subgraphs with three nodes.]{Four types of subgraphs with three nodes.}
 \label{chap1-fig:triplet_shape}
 \end{figure}
 
@@ -523,7 +523,7 @@ In Appendix~\ref{chap1-sec:RR_emp}, we show that the $l_2$ loss is significantly
   \KwRet{$\frac{1}{(e^\epsilon-1)^3}(e^{3\epsilon} m_3 - e^{2\epsilon} m_2 + e^\epsilon m_1 - m_0)$}
 
   %\caption{CountSubgraphsRR\label{chap1-alg:subgraph-rr}}
-  \caption{\alg{LocalRR$_\triangle$}\label{chap1-alg:subgraph-rr}}
+  \caption[\alg{LocalRR$_\triangle$}]{\alg{LocalRR$_\triangle$}}\label{chap1-alg:subgraph-rr}
 \end{algorithm}
 
 Algorithm~\ref{chap1-alg:subgraph-rr} shows this algorithm. 
@@ -820,7 +820,7 @@ Then the data collector calculates an unbiased estimate of $f_\triangle(G)$ by (
   %$ans \leftarrow \frac{1}{1-2\rho}\sum_{i=1}^n w_i$\;
   \KwRet{$\frac{1}{1-2p_1}\sum_{i=1}^n \hw_i$}
   %\caption{CountSubgraphsTwoRound\label{chap1-alg:subgraph-interactive}}
-  \caption{\alg{Local2Rounds$_\triangle$}}\label{chap1-alg:subgraph-interactive}
+  \caption[\alg{Local2Rounds$_\triangle$}]{\alg{Local2Rounds$_\triangle$}}\label{chap1-alg:subgraph-interactive}
 \end{algorithm}
 
 Algorithm~\ref{chap1-alg:subgraph-interactive} contains the formal
@@ -1040,7 +1040,8 @@ An interesting avenue of future work is how to compress the graph size (e.g., vi
   \frac{e^\epsilon}{\epsilon^2}d_{max}^2 n)\right)$ \\ \hline
 
 \end{tabular}
-\caption{Bounds on $l_2$ losses for privately estimating $f_{k\star}$ and
+\caption[Bounds on $l_2$ losses for privately estimating $f_{k\star}$ and $f_{\triangle}$ 
+with $\epsilon$-edge LDP.]{Bounds on $l_2$ losses for privately estimating $f_{k\star}$ and
 $f_{\triangle}$ with $\epsilon$-edge LDP. For upper-bounds, we assume that  $\td_{max}=d_{max}$. 
 For the centralized model, we use the Laplace mechanism. For
 the one-round $f_\triangle$ algorithm, we apply Theorem~\ref{chap1-thm:subgraph-rr} 
@@ -1219,8 +1220,8 @@ The specific structure of input graphs we require is as follows:
   \centering
 %   \includegraphics[width=0.88\linewidth]{fig/MonoCube.pdf}
   \includegraphics[width=0.9\linewidth]{fig/IndCube.pdf}
-  \caption{
-    $(4,2)$-independent cube $\calA$ for $f$. 
+  \caption[$(4,2)$-independent cube for given function $f$.]{
+    $(4,2)$-independent cube $\calA$ for given function $f$. 
     In this example, $M = \{(v_1,v_2),(v_3,v_4)\}$, $G_1=(V,E)$, $\calA = \{(V, E \cup N): N \subseteq M\}$, 
     $C_{(v_1,v_2)}=2$, and $C_{(v_3,v_4)}=3$.
     %Definition~\ref{chap1-def:mono-cube} requires that $f$ increase by at least $D=2$ along the dotted gray lines, which it does.
@@ -1232,7 +1233,7 @@ The specific structure of input graphs we require is as follows:
   \centering
   %\includegraphics[width=0.88\linewidth]{fig/MonoCube_kstar.pdf}
   \includegraphics[width=0.9\linewidth]{fig/IndCube_kstar.pdf}
-  \caption{
+  \caption[Construction of an independent cube for a $k$-star function.]{
     Construction of an independent cube for a $k$-star function ($n=6$, $d_{max}=4$). 
     From a 
     %$(d_{max} - 1)$-

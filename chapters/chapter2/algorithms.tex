@@ -59,7 +59,8 @@ We provide a more detailed explanation in Section~\ref{chap2-sub:three_algorithm
   \centering
   \includegraphics[width=0.99\linewidth]{fig/algorithm_overview.pdf}
   
-  \caption{Overview of our communication-efficient triangle counting algorithms
+  \caption[Overview of communication-efficient triangle counting algorithms.]
+	{Overview of our communication-efficient triangle counting algorithms
   ($p_1 =\frac{e^{\epsilon}}{e^{\epsilon}+1}$,
   %$p_1 \in [\frac{1}{2},1]$,
   $p_2 \in [0,1]$).}
@@ -326,8 +327,7 @@ is the same between the three algorithms.
   \centering
   \includegraphics[width=0.99\linewidth]{fig/three_algorithms.pdf}
   
-  \caption{Noisy edges to download
-  % and expected download size
+  \caption[Noisy edges to download in our three algorithms.]{Noisy edges to download
   in our three algorithms.}
   %$\mu_F$, $\mu_O$, and $\mu_T$ are values of $\mu$ in the ARR used for \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively.}
   \label{chap2-fig:noisy_edge_DL}
@@ -337,7 +337,7 @@ is the same between the three algorithms.
   \centering
   \includegraphics[width=0.95\linewidth]{fig/four_cycle.pdf}
   
-  \caption{4-cycle trick.
+  \caption[4-cycle trick]{4-cycle trick.
   % 4-cycle issue.
   \AlgOne{} counts two (incorrect) noisy triangles when one noisy edge appears.
   \AlgTwo{} and \AlgThree{} avoid this by increasing independent noise.}
@@ -449,7 +449,7 @@ do \textit{not} require the assumption that $d_{max}$ is public.
   }
   [s] $\hf_\triangle(G) \leftarrow \frac{1}{\mu^*(1-\rho)}\sum_{i=1}^n \hw_i$\;
   \KwRet{$\hf_\triangle(G)$}
-  \caption{Our three algorithms.
+  \caption[Definition of our three algorithms.]{Our three algorithms.
   ``F'', ``O'', ``T'' are shorthands for
   %$\mu^*=\mu_F$, $\mu_O^2$, and $\mu_T^3$ in
   \AlgOne{}, \AlgTwo{}, and \AlgThree{}, respectively.
