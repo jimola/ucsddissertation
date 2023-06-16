@@ -61,7 +61,7 @@ Below, we briefly explain each technique.
   \centering
   \includegraphics[width=0.99\linewidth]{fig/local_edges.pdf}
   
-  \caption{Overview of our \AlgWSLE{} (Wedge Shuffling with Local Edges) algorithm with inputs $v_i$ and $v_j$.
+  \caption[Overview of our \AlgWSLE{} algorithm.]{Overview of our \AlgWSLE{} (Wedge Shuffling with Local Edges) algorithm with inputs $v_i$ and $v_j$.
   %our wedge shuffle algorithm with inputs $v_i$ and $v_j$.
   %(marked with gray).
   }
@@ -72,7 +72,7 @@ Below, we briefly explain each technique.
   \centering
   \includegraphics[width=0.7\linewidth]{fig/sampling_pairs2.pdf}
   
-  \caption{Overview of our triangle counting algorithm.
+  \caption[Overview of our triangle counting algorithm.]{Overview of our triangle counting algorithm.
   We use our
   %wedge shuffle
   \AlgWSLE{}
@@ -241,7 +241,7 @@ Let $\hf_{i,j}^\triangle(G) \in \reals$ be an estimate of $f_{i,j}^\triangle(G)$
   [d] $\hf_{i,j}^\triangle(G) \leftarrow \frac{(z_i+z_j-2q)\sum_{k \in
   I_{-(i,j)}} (y_{k} - q_L)}{2(1-2q)(1-2q_L)}$\;
   [d] \KwRet{$\hf_{i,j}^\triangle(G)$}
-  \caption{\AlgWSLE{}
+  \caption[\AlgWSLE{} (Wedge Shuffling with Local Edges).]{\AlgWSLE{}
   %Our wedge shuffle algorithm
   (Wedge Shuffling with Local Edges).
   \AlgWS{} is shown in Algorithm~\ref{chap3-alg:WShuffle}.
@@ -400,7 +400,7 @@ The data collector sends the sampled user-pairs to users (line 2).
   \tcc{Calculate an unbiased estimate}
   [d] $\hf^\triangle(G) \leftarrow \frac{n(n-1)}{6t} \sum_{i=1, 3, \ldots, 2t-1} \hf_{\sigma(i),\sigma(i+1)}^\triangle(G)$\;
   [d] \KwRet{$\hf^\triangle(G)$}
-  \caption{Our triangle counting algorithm \AlgWSTri{}.
+  \caption[Our triangle counting algorithm \AlgWSTri{}.]{Our triangle counting algorithm \AlgWSTri{}.
   %Our wedge shuffle-based triangle counting algorithm \AlgWSTri{}.
   %[d] represents that the process is run by the data collector.
   \AlgWSLE{} is shown in Algorithm~\ref{chap3-alg:WSLE}.
@@ -580,7 +580,7 @@ Thus, \AlgWSTriVR{} calculates a differentially private estimate of $d_i$ within
   \min\{\td_{\sigma(i)}, \td_{\sigma(i+1)}\} > d_{th}\}$\;
   [d] $\hf^\triangle(G) \leftarrow \frac{n(n-1)}{6t} \sum_{i \in D} \hf_{\sigma(i),\sigma(i+1)}^\triangle(G)$\;
   [d] \KwRet{$\hf^\triangle(G)$}
-  \caption{Our triangle counting algorithm with variance reduction \AlgWSTriVR{}.
+  \caption[Our triangle counting algorithm with variance reduction \AlgWSTriVR{}.]{Our triangle counting algorithm with variance reduction \AlgWSTriVR{}.
   %[$v_i$] and [d] represent that the process is run by user $v_i$ and the data collector, respectively.
   \AlgWSLE{} is shown in Algorithm~\ref{chap3-alg:WSLE}.
   }\label{chap3-alg:wshuffle_triangle_vr}
@@ -840,9 +840,8 @@ We do not show the other one-round local algorithms \cite{Ye_ICDE20,Ye_TKDE21} i
 (ii) their upper-bounds on the variance and bias are unclear.
 
 \begin{table}[t]
-  \caption{Performance guarantees
-  %Upper bounds
-  of one-round triangle counting algorithms providing edge DP.
+  \caption[Performance guarantees of one-round triangle counting algorithms providing edge DP.]
+	{Performance guarantees of one-round triangle counting algorithms providing edge DP.
   %``Time'' represents the time complexity.
   $\alpha \in [0,1)$. 
   See also footnote 2 for the variance of \AlgWSTriVR{}.

@@ -78,7 +78,7 @@ To avoid this, we sample disjoint user-pairs and obtain an unbiased estimate of 
   [d] $\hf^\square(G) \leftarrow \frac{n(n-1)}{4t}\sum_{i=1,3,\ldots,2t-1} \hf_{\sigma(i),\sigma(i+1)}^\square(G)$\;
   %[d] $\hf^\square(G) \leftarrow \frac{n(n-1)}{4t}\sum_{i=1,3,\ldots,2t-1} \left(\frac{\hf_{\sigma(i),\sigma(i+1)}^\wedge(G)(\hf_{\sigma(i),\sigma(i+1)}^\wedge(G)-1)}{2} - \frac{n-2}{2}\frac{q_L(1-q_L)}{(2q_L-1)^2}\right)$\;
   [d] \KwRet{$\hf^\square(G)$}
-  \caption{Our 4-cycle counting algorithm \AlgWSCyc{}.
+  \caption[Our 4-cycle counting algorithm \AlgWSCyc{}.]{Our 4-cycle counting algorithm \AlgWSCyc{}.
   %$\hf^\wedge$ is a shorthand for $\hf_{\sigma(i),\sigma(i+1)}^\wedge(G)$.
   \AlgWS{} is shown in Algorithm~\ref{chap3-alg:WShuffle}.
   }\label{chap3-alg:wshuffle_cycle}
@@ -181,7 +181,8 @@ Finally, we show the MSE ($=$ variance) of $f^\square(G)$:
 The first and second terms in (\ref{chap3-eq:4-cycle-var}) are caused by the RR and the sampling of disjoint user-pairs, respectively. 
 
 \begin{table}[t]
-  \caption{Performance guarantees of one-round 4-cycle counting algorithms providing edge DP.
+  \caption[Performance guarantees of one-round 4-cycle counting algorithms providing edge DP.]
+	{Performance guarantees of one-round 4-cycle counting algorithms providing edge DP.
   % a``Time'' represents the time complexity.
   }
   

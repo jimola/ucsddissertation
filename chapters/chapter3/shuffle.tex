@@ -14,7 +14,7 @@ Section~\ref{chap3-sub:wedge_shuffle} proposes a wedge shuffle technique to over
   \centering
   \includegraphics[width=0.99\linewidth]{fig/shuffle.pdf}
   
-  \caption{Shuffle model for graphs. 
+  \caption[Shuffle model for graphs.]{Shuffle model for graphs. 
   %User $v_i$ calculates input data from her neighbor list $\bma_i$ and obfuscates the input data. 
   %The shuffler randomly shuffles the obfuscated data. 
   }
@@ -120,7 +120,7 @@ In other words, the shuffled wedges are almost free of noise.
   \centering
   \includegraphics[width=0.99\linewidth]{fig/wedge_shuffle.pdf}
   
-  \caption{Overview of wedge shuffling with inputs $v_i$ and $v_j$. 
+  \caption[Overview of wedge shuffling.]{Overview of wedge shuffling with inputs $v_i$ and $v_j$. 
   %(marked with gray).
   }
   \label{chap3-fig:wedge_shuffle}
@@ -144,7 +144,7 @@ In other words, the shuffled wedges are almost free of noise.
   [s] Send $\{y_{\pi(k)} | k \in I_{-(i,j)}\}$ to the data collector\;
 %   \tcc{Data collector}
   [d] \KwRet{$\{y_{\pi(k)} | k \in I_{-(i,j)}\}$}
-  \caption{Our wedge shuffle algorithm \AlgWS{}. 
+  \caption[Our wedge shuffle algorithm \AlgWS{}.]{Our wedge shuffle algorithm \AlgWS{}. 
   [$v_k$], [s], and [d] represent that the process is run by user $v_i$, the shuffler, and the data collector, respectively. 
   }\label{chap3-alg:WShuffle}
 \end{algorithm}

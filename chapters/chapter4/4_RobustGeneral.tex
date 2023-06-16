@@ -61,7 +61,8 @@ $(1-q_{i}[j]) q_{j}[i]$ follows the $ \bern(\rho(1-\rho))$ distribution, irrespe
 		}
 	}
    \KwRet {$(\hd_1, \hd_2, \ldots, \hd_n)$ }
-	\caption{\DegRRCheck: $\{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{chap4-alg:degrrcheck}
+	\caption[Degree estimation algorithm with checks, \DegRRCheck.]
+	{Degree estimation algorithm with checks, \DegRRCheck: $\{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$.}\label{chap4-alg:degrrcheck}
 \end{algorithm}
 
 %\begin{algorithm}
@@ -116,7 +117,7 @@ It is interesting to note that for response poisoning, the degree deflation atta
 \begin{algorithm}[t]
   \KwData{$\{l_1,\cdots,l_n\}$ where $l_i \in \{0,1\}^n$ is the adjacency list of user $\DO_i$}
   \KwResult{$(\hat{d}_1,\cdots, \hat{d}_n)$ where $\hat{d}_i$ is the degree estimate for user $\DO_i$}
-  \caption{\DegCheck$: \{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$}\label{chap4-alg:degcheck}
+  \caption[Degree checking algorithm without privacy.]{Degree checking algorithm without privacy, \DegCheck$: \{0,1\}^{n\times n}\mapsto \{\mathbb{N}\cup \{\bot\}\}^n$.}\label{chap4-alg:degcheck}
     \textbf{Users}\;
 	  \ForEach{$i \in [n]$}{
       $q_i = l_i$\;

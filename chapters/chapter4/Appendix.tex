@@ -6,7 +6,6 @@
 
 \setlength{\textfloatsep}{2pt}
 %\begin{algorithm}
-%  \caption{$\rr_\rho: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:rr}
 %  \begin{algorithmic}[1]
 %  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
 %  
@@ -28,7 +27,7 @@
   	$q[i]=\rr_\rho(l[i])$\;
 	}
   \KwRet $q$
-  \caption{$\rr_\rho: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:rr}
+  \caption[Definition of randomized respone $\rr_\rho$.]{Definition of randomized response $\rr_\rho: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:rr}
 \end{algorithm}
 
 \section{Proofs}\label{chap4-app:proofs}
@@ -319,7 +318,6 @@ Let $\DO_t, t \in \calM$ denote the target malicious user.
 For honest users to which $\DO_t$ does not share an edge, $\DO_t$ flips some of the bits to $1$ with the hopes of artificially increasing his degree. He does this for a $r_1$-fraction of these neighbors. See Algorithm~\ref{chap4-alg:att-input-inf} for the details; we term this attack $A_{\DegRRCheck}^{inp}$. Note that if $r_1 = 0$, then the malicious user is being completely honest for these users and will not inflate his degree, and if $r_1 = 1$, then he lies about each of these users and will likely be caught. Thus, his strategy is to pick a value in between $0$ and $1$, and in the experiments we found that $r_1 = 15\%$ was a good tradeoff point.
 
 %\begin{algorithm}[bt]
-%  \caption{$A_{\DegRRCheck}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:att-input-inf}
 %  \begin{algorithmic}[1]
 %  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
 %  
@@ -365,14 +363,13 @@ $l'[i]=1$ \;
 	$q[i]=\rr_\rho(l'[i])$\;
 }
 \KwRet{$q$}
-  \caption{$A_{\DegRRCheck}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:att-input-inf}
+  \caption[Definition of input poisoning attack $A_{\DegRRCheck}^{inp}$.]{Definition of input poisoning attack $A_{\DegRRCheck}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:att-input-inf}
 \end{algorithm}
 \noindent \textbf{Response Poisoning.}  For response poisoning, the non-target malicious first find a plausible response by applying $RR_\rho$ to their data. They then set the bit for $\DO_t$ to be $1$, indicating they are connected to this user.
 
 The target malicious user constructs his response by first applying $RR_\rho$ to his data to compute a plausible response. Then, he flips his bits to malicious users to $1$, and for honest users, he takes a $r_1$-fraction of the $0$s in his response and flips them to $1$. The quantity $r_1$ is a tradeoff parameter with the same intuition as for $A_{\DegRRCheck}^{inp}$. The details of this attack appear in Algorithm~\ref{chap4-alg:att-resp-inf}, and it is termed $A_{\DegRRCheck}^{resp}$.
 
 %\begin{algorithm}[bt]
-%  \caption{$A_{\DegRRCheck}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:att-resp-inf}
 %  \begin{algorithmic}[1]
 %  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
 %  
@@ -411,7 +408,7 @@ The target malicious user constructs his response by first applying $RR_\rho$ to
 		$q[i]=1$\;
 	}
   \KwRet{$q$}
-  \caption{$A_{\DegRRCheck}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:att-resp-inf}
+  \caption[Definition of response poisoning attack $A_{\DegRRCheck}^{resp}$.]{Definition of response poisoning attack $A_{\DegRRCheck}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:att-resp-inf}
 \end{algorithm}
 
 \subsubsection{Degree Deflation Attacks}
@@ -433,7 +430,6 @@ computes the expected value of $\tilde{d}_t^{rr}$ given that he submitted $q$ wh
 He finally sets $\tilde{d}_t^{rr} = e_t^{rr,inp} + r_2 \frac{\tau}{1-2\rho}$ where $r_2 \in [0,1]$, which again trades off between how much cheating is possible and getting flagged. During the trials, we used $q_2 = 0.1$ as this did not significantly increase the target's chance of being rejected as $\bottom$. This attack, termed $A_{\DegHybrid}^{inp}$, appears in Algorithm~\ref{chap4-alg:att-resp-inf2}.
 
 %\begin{algorithm}[bt]
-%  \caption{$A_{\DegHybrid}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:att-resp-inf2}
 %  \begin{algorithmic}[1]
 %  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter;
 %
@@ -464,7 +460,7 @@ He finally sets $\tilde{d}_t^{rr} = e_t^{rr,inp} + r_2 \frac{\tau}{1-2\rho}$ whe
 	$ e^{rr,inp} = \frac{\tilde{count}^{11} - \rho^2 n}{1-2\rho}$\;
 	$ \hat{d}^{Lap} = e^{rr,inp} + r_2 \frac{\tau}{1-2\rho} + \eta$ where $\eta \sim Lap(\frac{1}{(1-c)\epsilon})$\;
 	\KwRet{$q,\tilde{d}^{Lap}$}
-\caption{$A_{\DegHybrid}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:att-resp-inf2}
+\caption[Definition of input poisoning attack $A_{\DegHybrid}^{inp}$.]{Definition of input poisoning attack $A_{\DegHybrid}^{inp}: \{0,1\}^n\mapsto\{0,1\}^n$ }\label{chap4-alg:att-resp-inf2}
 \end{algorithm}
 
 \noindent\textbf{Response Poisoning.}
@@ -487,11 +483,10 @@ He finally sets $\tilde{d}_t^{rr} = e^{rr,resp} + r_2 \frac{\tau}{1-2\rho}$ wher
 	$e^{rr,resp} = \frac{m + \tilde{count}^{11} - \rho^2 n}{1-2\rho}$\;
 	$\tilde{d}^{Lap} = e^{rr,resp} + r_2 \frac{\tau}{1-2\rho}$\;
 	\KwRet{$q,\tilde{d}^{Lap}$}
-  \caption{$A_{\DegHybrid}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$ }
+  \caption[Definition of response poisoning attack $A_{\DegHybrid}^{resp}$.]{Definition of response poisoning attack $A_{\DegHybrid}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$. }
 \end{algorithm}
 
 %\begin{algorithm}[bt]
-%  \caption{$A_{\DegHybrid}^{resp}: \{0,1\}^n\mapsto\{0,1\}^n$ }
 %  \begin{algorithmic}[1]
 %  \Statex \textbf{Parameters:} $\epsilon$ - Privacy parameter
 %  

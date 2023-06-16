@@ -90,7 +90,8 @@ In summary, our triangle algorithm \AlgWSTriVR{} is useful for accurately calcul
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res6_clst.pdf}
   
-  \caption{Relative errors of the triangle count, 2-star count, and clustering coefficient when \AlgWSTriVR{} and the one-round local 2-star algorithm in \cite{Imola_USENIX21} with edge clipping are used ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
+  \caption[Relative errors of the triangle count, 2-star count, and clustering coefficient when \AlgWSTriVR{} and the one-round local 2-star algorithm with edge clipping are used.]
+{Relative errors of the triangle count, 2-star count, and clustering coefficient when \AlgWSTriVR{} and the one-round local 2-star algorithm in \cite{Imola_USENIX21} with edge clipping are used ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
   }
   \label{chap3-fig:res6_clst}
 \end{figure}
@@ -143,7 +144,7 @@ We denote the two-round algorithm with $p_0=1$ and $\frac{1}{q \sqrt{n}}$ by \Al
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res3_2rounds.pdf}
   
-  \caption{Comparison with the two-round local algorithm in \cite{Imola_USENIX22}.
+  \caption[Comparison with the two-round local algorithm in~\cite{Imola_USENIX22}.]{Comparison with the two-round local algorithm in \cite{Imola_USENIX22}.
   The download costs of \AlgTwoRS{} and \AlgTwoRL{} are $n \log n$ and $\frac{(n-1)(n-2)}{2}$ bits, respectively
   ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
   }
@@ -169,7 +170,7 @@ Here, we compare the numerical bound with the closed-form bound in Theorem~\ref{
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res5_closed.pdf}
   
-  \caption{Numerical bound vs. closed-form bound ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
+  \caption[Numerical bound vs. closed-form bound.]{Numerical bound vs. closed-form bound ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
   }
   \label{chap3-fig:res5_closed}
 \end{figure}
@@ -197,7 +198,7 @@ It is well known that the BA model has a low clustering coefficient \cite{Holme_
 Thus, the BA graphs have much smaller triangles and 4-cycles than \Gplus{}.
 
 \begin{table}[t]
-  \caption{Statistics of \Gplus{} and the BA graphs ($n=107614$).
+  \caption[Statistics of \Gplus{} and the Barab\'{a}si-Albert graphs.]{Statistics of \Gplus{} and the BA graphs ($n=107614$).
   }
   
   \centering
@@ -226,7 +227,7 @@ These results show that the relative error tends to be smaller in a dense graph 
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res7_BA.pdf}
   
-  \caption{Relative error in the BA graph data
+  \caption[Relative error in the Barab\'{a}si-Albert graphs.]{Relative error in the BA graph data
   ($n=107614$, $c=1$).
   $p_0$ is the sampling probability in the ARR.
   }
@@ -237,7 +238,7 @@ These results show that the relative error tends to be smaller in a dense graph 
   \centering
   \includegraphics[width=0.8\linewidth]{fig/res7_BA_box.pdf}
   
-  \caption{Box plots of counts/estimates in the BA graph data
+  \caption[Box plots of counts/estimates in the Barab\'{a}si-Albert graphs.]{Box plots of counts/estimates in the BA graph data
   ($n=107614$, $c=1$).
   \#Triangles and \#4-Cycles represent the true triangle and 4-cycle counts, respectively.
   The box plot of each algorithm represents the median (red), lower/upper quartile, and outliers (circles) of $20$ estimates.
@@ -284,7 +285,7 @@ Note that we did not evaluate the triangle counting algorithms, because there ar
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res8_Bip.pdf}
   
-  \caption{Relative error in the bipartite graph data
+  \caption[Relative error in the bipartite graphs.]{Relative error in the bipartite graph data
   ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
   }
   \label{chap3-fig:res8_Bip}
@@ -294,7 +295,7 @@ Note that we did not evaluate the triangle counting algorithms, because there ar
   \centering
   \includegraphics[width=0.92\linewidth]{fig/res8_Bip_box.pdf}
   
-  \caption{Box plots of counts/estimates in the bipartite graph data
+  \caption[Box plots of counts/estimates in the bipartite graphs.]{Box plots of counts/estimates in the bipartite graph data
   ($n=107614$ in \Gplus{}, $n=896308$ in \IMDB{}, $c=1$).
   \#4-Cycles represents the true 4-cycle count.
   Each box plot represents the median (red), lower/upper quartile, and outliers (circles) of $20$ estimates.
@@ -329,7 +330,7 @@ In this appendix, we evaluate the standard error of the average relative error.
   \centering
   \includegraphics[width=0.99\linewidth]{fig/res9_std_err.pdf}
   
-  \caption{Standard error of the average relative error in Figure~\ref{chap3-fig:res1_eps}. 
+  \caption[Standard of the average relative error.]{Standard error of the average relative error in Figure~\ref{chap3-fig:res1_eps}. 
   Each error bar represents $\pm$ standard error.
   }
   \label{chap3-fig:res9_std_err}
